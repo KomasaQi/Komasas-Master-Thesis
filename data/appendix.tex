@@ -1,0 +1,542 @@
+% !TeX root = ../thuthesis-example.tex
+
+\chapter{补充内容}
+
+附录是与论文内容密切相关、但编入正文又影响整篇论文编排的条理和逻辑性的资料，例如某些重要的数据表格、计算程序、统计表等，是论文主体的补充内容，可根据需要设置。
+
+附录中的图、表、数学表达式、参考文献等另行编序号，与正文分开，一律用阿拉伯数字编码，
+但在数码前冠以附录的序号，例如“图~\ref{fig:appendix-figure}”，
+“表~\ref{tab:appendix-table}”，“式\eqref{eq:appendix-equation}”等。
+\section{理论补充}
+
+    \subsection{图扩散流匹配理论证明}
+    \label{sub:graphflow_proof}
+      我们希望学习得到的是动态特征速度的边缘向量场：$v_t^\theta$，其不依赖于未来真值$\mathcal{V}_{k+1}$，那么我们使用条件向量场计算出来的速度向量$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$是否可以拿来当做训练的标签，即是否可以将无条件损失式\eqref{loss_fm}替换为有条件损失式\eqref{loss_cfm}。
+
+      \begin{equation}\mathcal{L}_{FM}(\theta) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t}} \left[\lVert v_t^\theta(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}) \rVert^2 \right]\label{loss_fm}\end{equation}
+
+      \begin{equation}\mathcal{L}_{CFM}(\theta) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t(\cdot|z),z\sim p_1}} \left[\lVert v_t^\theta(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2 \right]\label{loss_cfm}\end{equation}
+
+      其实是可以的，下面来进行证明：
+
+      为了简化证明过程，不妨令真值$z = \mathcal{V}_{k+1}$，动态特征场$x = F_{dyn}^{t}$。我们有了条件向量场，现在需要求出边缘向量场，也就是不依赖于$z$的向量场。边缘概率路径是对条件概率路径乘以条件$z$的概率然后对所有可能的$z$积分，即
+      \begin{equation}p_t(x) = \int_{z} p_t(x|z)p_1(z)\mathrm{d}z\end{equation}
+      本质上应用了全概率公式，按照各种条件对$z$进行汇总，然后对所有可能的$z$积分。那么是否可以通过对所有条件向量场乘以$p(z)$，然后对所有可能的$z$积分，得到边缘向量场？即
+      \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)p_1(z)\mathrm{d}z\end{equation}
+
+      答案是不行的，因为这里的$v_t^{target}$是个向量场，不是概率值，不能应用全概率公式。实际上的公式是这样的
+
+      \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)p_t(z|x)\mathrm{d}z\end{equation}
+
+      我们可以利用贝叶斯公式$p_t(z|x)=\frac{p_t(x|z)p(z)}{p_t(x)}$转化一下上述边缘向量场公式，得到
+      \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)\frac{p_t(x|z)p_1(z)}{p_t(x)}\mathrm{d}z\end{equation}
+      这个表达式在后面证明时会用到。
+
+      接下来就来证明为什么边缘向量场的公式是那样的。我们需要验证的是这个边缘向量场公式符合连续性方程：
+
+      \begin{equation}\frac{\partial p_t(x)}{\partial t} + \nabla \left(p_t(x) v_t^{target}(x)\right) =0\end{equation}
+
+      \begin{proof}
+        \begin{theorem}[连续性方程]
+          设存在流，其质量场为$\rho$，速度场为$\mathbf{v}$，时间变量为$t$，则流场满足：
+          \begin{equation}
+            \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+          \end{equation}
+        \end{theorem}
+        连续性方程第一项，概率密度对时间求导，代入边缘概率的公式
+        \begin{equation}\frac{\partial p_t(x)}{\partial t} = \frac{\partial}{\partial t}\int_z p_t(x|z)p_1(z)\mathrm{d}z\end{equation}
+        然后将求导符号移入积分符号，其中$p(z)$可以看做常数项
+        \begin{equation}= \int_z \frac{\partial p_t(x|z)}{\partial t}p_1(z)\mathrm{d}z\end{equation}
+        偏导部分满足连续方程，可代入
+        \begin{equation}= \int_z -\nabla \left(p_t(x|z) v_t^{target}(x|z)\right)p_1(z)\mathrm{d}z\end{equation}
+        因为散度计算是对$x$进行的，而这里的积分是对$z$进行的，所以可以将散度符号移到积分号外边
+        \begin{equation}= -\nabla \left(\int_z p_t(x|z) v_t^{target}(x|z)p_1(z)\mathrm{d}z\right)\end{equation}
+        下一步在积分号外乘$p_t(x)$，在积分号内除$p_t(x)$，得到
+        \begin{equation}= -\nabla \left(p_t(x)\int_z  v_t^{target}(x|z)\frac{p_t(x|z)p_1(z)}{p_t(x)}\mathrm{d}z\right)\end{equation}
+        可以发现这里的积分项就是我们之前定义的边缘向量场公式，故上式为
+        \begin{equation} = -\nabla \left(p_t(x) v_t^{target}(x)\right)\end{equation}
+        证明完毕。
+    \end{proof}
+    故上述流匹配过程在未来预测上应满足连续性方程，从而保证了通过条件流匹配学习得到的边缘向量场的正确性。同时，可以保证自车和周车存在概率在宏观扩散过程中保持一致，即使原本集中的概率扩散到更宽阔的道路空间中以更低的概率存在。
+
+    \subsection{Trailer-MEI指标推导计算}
+    \label{sub:trailer_mei_proof}
+    目前一维替代安全指标（Surrogate Safty Index, SSI）如碰撞时间（Time to Collision, TTC）、车头时距（Time Head Way, THW）等仅在跟车情况下有效，不考虑车辆真实宽度与几何形状，对二维空间中的碰撞无法有效监测；而二维碰撞指标如RTTC虽考虑二维几何形状，对斜碰等问题可以探测，但计算过于乐观且不考虑不同撞击重叠面积风险的不同。Cheng等震碎上述问题在2024年提出紧急因子（Emergency Index, EI）\cite{chenghao2025emergency_index}安全评价指标，并在2025年进一步提出修正紧急因子（Modified Emergency Index, MEI）\cite{chenhao2025mei}。
+
+    MEI通过计算侵入距离（InDepth）来评估车辆最大的安全损失，计算紧急操作时间（Time for Emergency Maneouvour, TEM）即可用于规避风险的操作时间来衡量风险的紧急程度，其定义为：
+    \begin{equation}
+      \text{MEI} = \frac{\text{InDepth}}{\text{TEM}}
+    \end{equation}
+    其中InDepth如图~\ref{fig:indepth}所示，定义为自车和周车都匀速直线运动的前提假设下，将周车在未来无限时域内的空间位置投影在自车坐标系下以后，自车轮廓与周车投影相交的最大距离。当沿着匀速直线运动可能发生碰撞时，InDepth大于0，否则InDepth小于0。
+    \begin{figure}
+      \centering
+      \includegraphics[width=1.0\linewidth]{fig/appx/indepth_illust.png}
+      \caption{InDepth概念描述}
+      \label{fig:indepth}
+    \end{figure}
+    TEM定义为自车和周车都匀速直线运动的前提假设下，两车轮廓最早发生重叠的时间，若不发生重叠则$\text{TEM} = \infty$。
+
+    MEI经过对比测试，相比于现有二维SSI能够有效反映车辆实际风险，且计算速度很快，经过C++编译后单次计算时间大约在\SIrange{6}{10}{\micro s}。但MEI仍存在一些问题，如其匀速直线运动假设过强，且针对如环岛等匀速恒定前轮转角的情况适用性较差，以及针对本文而言，其无法计算辆车中其一或全部为半挂车时的风险，即只能针对两辆单车计算风险。为对包含挂车的车辆对（Vehicle Pair）计算MEI指标，本文提出Trailer-MEI方法。
+
+    假设半挂车的牵引车部分匀速直线运动，挂车后轴轨迹为曳物线（tractix），如图~\ref{fig:drag_line}所示，设铰接角为$\gamma$，牵引车车速为$v_{1x}$，其解析形式可描述为式\eqref{eq:theta}到式\eqref{eq:trailer_traj}。其中铰接角随时间变化为$\theta(t)$如式\eqref{eq:theta}所示，则牵引车轨迹直线为式\eqref{eq:tractor_traj}，挂车曳物线为式\eqref{eq:trailer_traj}。
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\linewidth]{fig/appx/drag_line.png}
+      \caption{挂车曳物线轨迹}
+      \label{fig:drag_line}
+    \end{figure}
+
+    \begin{equation}
+      \theta(t) = \pi - 2 \arctan\left( \tan\frac{\pi - \gamma}{2}  e^{\frac{v_{1x}}{L_g} t} \right)
+      \label{eq:theta}
+    \end{equation}
+    \begin{equation}
+      x_{\text{tractor}}(t) = v_{1x}   t + L_g   \cos\gamma,
+      \quad
+      y_{\text{tractor}}(t) = L_g   \sin\gamma
+      \label{eq:tractor_traj}
+    \end{equation}
+    \begin{equation}
+      \begin{aligned}
+      x_{\text{trailer}}(t) &= - L_g  \left( \ln\left( \tan\frac{\theta(t)}{2} + \cos\theta(t) \right) \right) + L_g  \left( \ln\left( \tan\frac{\gamma}{2} + \cos\gamma \right) \right) 
+      \\
+      y_{\text{trailer}}(t) &= -L_g   \left( \sin\theta(t) - \sin\gamma \right)
+      \end{aligned}
+      \label{eq:trailer_traj}
+    \end{equation}
+
+    由于将曳物线根据相对自车车速投影到坐标系后并没有和直线相交的解析解存在，故需采用数值方法进行近似。为计算在曳物线上距离均匀划分的采样点，如图~\ref{fig:trailer_proj}所示，采用对时间$t$进行均匀划分的方法，得到$N_{pred}$个时间点$t_1, t_2, \dots, t_{N_{pred}}$对应的角度$\theta(t)$，从而可以计算出$N_{pred}$个挂车轮廓位置$B_g^k,k\in\{1,2,\cdots,N_{pred}\}$。可包含半挂车的车辆对共有三种情况：全无挂车、其一有挂车、两者都有挂车。对于第一种情况可以直接采用MEI进行计算；对第二种情形，假设A车为半挂车B车为单车，需要计算A车牵引车与B车的MEI，以及利用离散的时间分别将平移后的A车挂车轮廓$B_g^{k,\prime}$与B车车头轮廓$B_{veh}$进行$N_{pred}$次碰撞检测与InDepth计算，InDepth解析计算方法见\cite{chenhao2025mei}，假设$t_k$时刻挂车发生碰撞，则挂车与自车计算的等效MEI指标为$\tilde{\text{MEI}}=\frac{\text{InDepth}}{t_k}$，最终取$\text{Trailer-MEI} = \max(\tilde{\text{MEI}},\text{MEI})$；对于第三种情况，需要验证A车与B车车头的MEI，以及A车车头与B车挂车、B车车头与A车挂车在第二种情况的$\tilde{\text{MEI}}_1$和$\tilde{\text{MEI}}_2$，并分别对两车挂车在$N_{pred}$个时刻的绝对轮廓进行InDepth计算，计算过程不再赘述，最终取4者中最大者为此情况的Trailer-MEI。
+
+    \begin{figure}
+      \centering
+      \subcaptionbox{挂车曳物线轨迹投影 \label{fig:trailer_proj}}
+        {\includegraphics[width=0.5\linewidth]{fig/appx/trailer_proj.png}}
+      \subcaptionbox{挂车与挂车间计算 \label{fig:trailer_calc}}
+        {\includegraphics[width=0.48\linewidth]{fig/appx/trailer_calc.png}}
+
+      \caption{包含挂车的计算示意}
+      \label{fig:trailer_proj_calc}
+    \end{figure}
+
+    在最坏情况，即需计算SSI的辆车都为半挂车时，Trailer-MEI指标的计算时间仅为MEI的6倍，C++编译后单次计算时间大约在\SIrange{30}{50}{\micro s}，在实现半挂车间计算的同时计算时间依然可以忽略。本文为平衡精度与计算速度，计算Trailer-MEI指标采用的离散步长$\increment t = \SI{0.2}{s}$，预测时域为\SI{5}{s}。
+
+\section{插图}
+
+% 附录中的插图示例（图~\ref{fig:appendix-figure}）。
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
+  \caption{附录中的图片示例}
+  \label{fig:appendix-figure}
+\end{figure}
+
+
+\section{表格}
+
+  % 附录中的表格示例（表~\ref{tab:appendix-table}）。
+
+
+
+  {% 局部作用域，仅修改本表格式
+  \small
+  % \setlength{\tabcolsep}{3pt}       % 压缩列间距，节省横向空间（按要求注释）
+  \renewcommand{\arraystretch}{1.0} 
+  \linespread{0.7}\selectfont       % 强制锁定行高为0.7（按要求设置）
+
+  \begin{longtable}{X c c c c c c c c c c l}  % 最后一列新增「用途」列
+      \caption{仿真训练与验证场景设置}
+      \label{tab:condition_table_all} \\
+      \toprule
+      路口 & 序号 & 名称 & $t_{depr}$ & $t_{start}$ & 终止点 & $q_{main}$ & $q_{merge}$ & $q_{exit}$ & $q_{avg}$ & 用途 \\
+      \midrule
+  \endfirsthead
+      \caption*{续表~\thetable\quad 仿真训练与验证场景设置} \\
+      \toprule
+      路口 & 序号 & 名称 & $t_{depr}$ & $t_{start}$ & 终止点 & $q_{main}$ & $q_{merge}$ & $q_{exit}$ & $q_{avg}$ & 用途 \\
+      \midrule
+  \endhead
+      \bottomrule
+  \endfoot
+
+  %-------------------------------------------------------------------------------
+  % No.1（验证场景）
+  \multirow{4}{*}{No.1} 
+  & 1 & pass\_1 & 280 & 287 & $(3377,125023)$ & 2250 & 1125 & 1125 & 4500 & 验证 \\
+  & 2 & merge\_1 & 120 & 230 & $(3377,125023)$ & 2250 & 1125 & 1125 & 4500 & 验证 \\
+  & 3 & exit\_1 & 120 & 140 & $(1353,127222)$ & 2250 & 1125 & 1125 & 4500 & 验证 \\
+  & 4 & cruise\_1 & 120 & 210 & $(6628,122202)$ & 2250 & 1125 & 1125 & 4500 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.2（验证场景）
+  \multirow{4}{*}{No.2} 
+  & 5 & pass\_2 & 50 & 150 & $(8827,121224)$ & 2000 & 1000 & 1000 & 4000 & 验证 \\
+  & 6 & merge\_2 & 120 & 125 & $(8827,121224)$ & 2000 & 1000 & 1000 & 4500 & 验证 \\
+  & 7 & exit\_2 & 120 & 190 & $(7084,121972)$ & 2000 & 1000 & 1000 & 4500 & 验证 \\
+  & 8 & cruise\_2 & 120 & 225 & $(13358,119455)$ & 2000 & 1000 & 1000 & 4500 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.3（验证场景）
+  \multirow{4}{*}{No.3} 
+  & 9 & pass\_3 & 100 & 145 & $(15097,118843)$ & 1750 & 875 & 875 & 3500 & 验证 \\
+  & 10 & merge\_3 & 100 & 160 & $(15097,118843)$ & 1750 & 875 & 875 & 3500 & 验证 \\
+  & 11 & exit\_3 & 100 & 120 & $(13647,119360)$ & 1750 & 875 & 875 & 3500 & 验证 \\
+  & 12 & cruise\_3 & 100 & 450 & $(26200,113761)$ & 1750 & 875 & 875 & 3500 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.4（验证场景）
+  \multirow{4}{*}{No.4} 
+  & 13 & pass\_4 & 150 & 160 & $(35853,108391)$ & 1500 & 750 & 750 & 3000 & 验证 \\
+  & 14 & merge\_4 & 150 & 185 & $(35853,108391)$ & 1500 & 750 & 750 & 3000 & 验证 \\
+  & 15 & exit\_4 & 150 & 190 & $(34593,108938)$ & 1500 & 750 & 750 & 3000 & 验证 \\
+  & 16 & cruise\_4 & 150 & 250 & $(42564,102705)$ & 1500 & 750 & 750 & 3000 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.5（验证场景）
+  \multirow{4}{*}{No.5} 
+  & 17 & pass\_5 & 150 & 165 & $(44006,101780)$ & 1250 & 625 & 625 & 2500 & 验证 \\
+  & 18 & merge\_5 & 150 & 230 & $(44004,101780)$ & 1250 & 625 & 625 & 2500 & 验证 \\
+  & 19 & exit\_5 & 150 & 160 & $(43231,02663)$ & 1250 & 625 & 625 & 2500 & 验证 \\
+  & 20 & cruise\_5 & 150 & 240 & $(49888,07671)$ & 1250 & 625 & 625 & 2500 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.6（验证场景）
+  \multirow{4}{*}{No.6} 
+  & 21 & pass\_6 & 150 & 190 & $(51242,95154)$ & 1000 & 500 & 500 & 2000 & 验证 \\
+  & 22 & merge\_6 & 150 & 155 & $(51242,95154)$ & 1000 & 500 & 500 & 2000 & 验证 \\
+  & 23 & exit\_6 & 150 & 160 & $(50189,96489)$ & 1000 & 500 & 500 & 2000 & 验证 \\
+  & 24 & cruise\_6 & 150 & 220 & $(58738,87984)$ & 1000 & 500 & 500 & 2000 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.7（验证场景）
+  \multirow{4}{*}{No.7} 
+  & 25 & pass\_7 & 150 & 170 & $(60200,86293)$ & 750 & 375 & 375 & 1500 & 验证 \\
+  & 26 & merge\_7 & 150 & 160 & $(60200,86293)$ & 750 & 375 & 375 & 1500 & 验证 \\
+  & 27 & exit\_7 & 150 & 310 & $(59676,78847)$ & 750 & 375 & 375 & 1500 & 验证 \\
+  & 28 & cruise\_7 & 150 & 310 & $(69330,89515)$ & 750 & 375 & 375 & 1500 & 验证 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.8（训练场景）
+  \multirow{4}{*}{No.8} 
+  & 29 & pass\_8 & 100 & 130 & $(70907,78147)$ & 1250 & 1125 & 1125 & 4500 & 训练 \\
+  & 30 & merge\_8 & 100 & 130 & $(70907,78147)$ & 1250 & 1125 & 1125 & 4500 & 训练 \\
+  & 31 & exit\_8 & 100 & 130 & $(69498,79025)$ & 1250 & 1125 & 1125 & 4500 & 训练 \\
+  & 32 & cruise\_8 & 100 & 130 & $(74891,72481)$ & 1250 & 1125 & 1125 & 4500 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.9（训练场景）
+  \multirow{4}{*}{No.9} 
+  & 33 & pass\_9 & 120 & 150 & $(75573,70800)$ & 2000 & 1000 & 1000 & 4000 & 训练 \\
+  & 34 & merge\_9 & 120 & 150 & $(75573,70800)$ & 2000 & 1000 & 1000 & 4000 & 训练 \\
+  & 35 & exit\_9 & 120 & 150 & $(74896,71940)$ & 2000 & 1000 & 1000 & 4000 & 训练 \\
+  & 36 & cruise\_9 & 120 & 150 & $(85038,58160)$ & 2000 & 1000 & 1000 & 4000 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.10（训练场景）
+  \multirow{4}{*}{No.10} 
+  & 37 & pass\_10 & 100 & 130 & $(92050,46785)$ & 1750 & 875 & 875 & 3500 & 训练 \\
+  & 38 & merge\_10 & 100 & 130 & $(92050,46785)$ & 1750 & 875 & 875 & 3500 & 训练 \\
+  & 39 & exit\_10 & 100 & 130 & $(92054,48293)$ & 1750 & 875 & 875 & 3500 & 训练 \\
+  & 40 & cruise\_10 & 100 & 130 & $(96740,37970)$ & 1750 & 875 & 875 & 3500 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.11（训练场景）
+  \multirow{4}{*}{No.11} 
+  & 41 & pass\_11 & 150 & 180 & $(98075,37971)$ & 1500 & 750 & 750 & 3000 & 训练 \\
+  & 42 & merge\_11 & 150 & 180 & $(98075,37971)$ & 1500 & 750 & 750 & 3000 & 训练 \\
+  & 43 & exit\_11 & 150 & 180 & $(97180,30472)$ & 1500 & 750 & 750 & 3000 & 训练 \\
+  & 44 & cruise\_11 & 150 & 180 & $(34068,110111)$ & 1500 & 750 & 750 & 3000 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.12（训练场景）
+  \multirow{4}{*}{No.12} 
+  & 45 & pass\_12 & 150 & 180 & $(99643,35167)$ & 1250 & 625 & 625 & 2500 & 训练 \\
+  & 46 & merge\_12 & 150 & 180 & $(99643,35167)$ & 1250 & 625 & 625 & 2500 & 训练 \\
+  & 47 & exit\_12 & 150 & 180 & $(98931,36237)$ & 1250 & 625 & 625 & 2500 & 训练 \\
+  & 48 & cruise\_12 & 150 & 180 & $(104324,24317)$ & 1250 & 625 & 625 & 2500 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.13（训练场景）
+  \multirow{4}{*}{No.13} 
+  & 49 & pass\_13 & 150 & 180 & $(104781,21843)$ & 1000 & 500 & 500 & 2000 & 训练 \\
+  & 50 & merge\_13 & 150 & 180 & $(104781,21843)$ & 1000 & 500 & 500 & 2000 & 训练 \\
+  & 51 & exit\_13 & 150 & 180 & $(104332,22626)$ & 1000 & 500 & 500 & 2000 & 训练 \\
+  & 52 & cruise\_13 & 150 & 180 & $(107112,14877)$ & 1000 & 500 & 500 & 2000 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.14（训练场景）
+  \multirow{4}{*}{No.14} 
+  & 53 & pass\_14 & 150 & 180 & $(107705,13226)$ & 750 & 375 & 375 & 1500 & 训练 \\
+  & 54 & merge\_14 & 150 & 180 & $(107705,13226)$ & 750 & 375 & 375 & 1500 & 训练 \\
+  & 55 & exit\_14 & 150 & 180 & $(107203,14112)$ & 750 & 375 & 375 & 1500 & 训练 \\
+  & 56 & cruise\_14 & 150 & 180 & $(111286,6653)$ & 750 & 375 & 375 & 1500 & 训练 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  % No.15（训练场景）
+  \multirow{4}{*}{No.15} 
+  & 57 & pass\_15 & 150 & 180 & $(112301,4704)$ & 500 & 250 & 250 & 1000 & 训练 \\
+  & 58 & merge\_15 & 150 & 180 & $(112301,4704)$ & 500 & 250 & 250 & 1000 & 训练 \\
+  & 59 & exit\_15 & 150 & 180 & $(111604,5761)$ & 500 & 250 & 250 & 1000 & 训练 \\
+  & 60 & cruise\_15 & 150 & 180 & $(108764,3804)$ & 500 & 250 & 250 & 1000 & 训练 \\
+
+  \end{longtable}
+  }% 结束局部作用域
+
+
+
+
+  {% 局部作用域，仅修改本表格式，不影响全文
+  \small
+  % \setlength{\tabcolsep}{3pt}       % 压缩列间距，节省横向空间
+  \renewcommand{\arraystretch}{1.0} % 恢复紧凑行距，解决longtable行距过大问题
+  \linespread{0.7}\selectfont       % 强制锁定行高
+
+  \begin{longtable}{l l c c c}
+      \caption{交通流仿真分任务得分情况 (mean $\pm$ SEM)}
+      \label{tab:reward_task} \\
+      \toprule
+      Task & Reward term & IDM+MOBIL & TreeSearch & Graphflow \\
+      \midrule
+  \endfirsthead
+      \caption*{续表~\thetable\quad 交通流仿真分任务得分情况 (mean $\pm$ SEM)} \\
+      \toprule
+      Task & Reward term & IDM+MOBIL & TreeSearch & Graphflow \\
+      \midrule
+  \endhead
+      \bottomrule
+  \endfoot
+
+  %-------------------------------------------------------------------------------
+  \multirow{9}{*}{Task 1}
+  & Safe-1/TTC       & -4.04$\pm$0.42 & -3.84$\pm$0.27 & \textbf{-3.59$\pm$0.23} \\
+  & Safe-MEI         & -16.14$\pm$9.55 & -2.17$\pm$0.52 & \textbf{-1.69$\pm$0.37} \\
+  & Safe-RTTC        & -0.93$\pm$0.14 & -0.91$\pm$0.12 & \textbf{-0.68$\pm$0.11} \\
+  & Safe-1/HW        & -82.65$\pm$8.03 & -62.00$\pm$4.84 & \textbf{-54.74$\pm$3.93} \\
+  & \textbf{Safe Reward} & -103.76$\pm$12.56 & -68.92$\pm$5.12 & \textbf{-60.70$\pm$4.27} \\
+  & \textbf{Effi Reward} & 183.15$\pm$5.03 & 198.16$\pm$5.58 & \textbf{198.75$\pm$5.39} \\
+  & Navi-Lane        & \textbf{22.53$\pm$1.00} & 21.67$\pm$0.78 & 21.86$\pm$0.75 \\
+  & Navi-Mission     & 2.86$\pm$2.01 & 88.57$\pm$3.83 & \textbf{95.71$\pm$2.44} \\
+  & \textbf{Navi Reward} & 25.39$\pm$2.36 & 110.24$\pm$3.84 & \textbf{117.57$\pm$2.58} \\
+  & \textbf{Comf Reward} & -19.39$\pm$0.94 & -18.34$\pm$0.68 & \textbf{-18.27$\pm$0.68} \\
+  & \textbf{Total Reward} & 85.38$\pm$13.46 & 221.13$\pm$7.27 & \textbf{237.35$\pm$6.02} \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{Task 2}
+  & Safe-1/TTC       & \textbf{-1.43$\pm$0.12} & -1.58$\pm$0.12 & -1.87$\pm$0.13 \\
+  & Safe-MEI         & -26.79$\pm$11.12 & \textbf{-1.51$\pm$0.25} & -2.99$\pm$0.84 \\
+  & Safe-RTTC        & -0.99$\pm$0.09 & \textbf{-0.73$\pm$0.07} & -0.82$\pm$0.08 \\
+  & Safe-1/HW        & -35.22$\pm$3.25 & -18.90$\pm$2.28 & \textbf{-17.45$\pm$2.44} \\
+  & \textbf{Safe Reward} & -64.44$\pm$11.14 & \textbf{-22.71$\pm$2.41} & -23.14$\pm$2.74 \\
+  & \textbf{Effi Reward} & 110.80$\pm$6.37 & 114.58$\pm$5.97 & \textbf{116.03$\pm$6.08} \\
+  & Navi-Lane        & 14.46$\pm$0.69 & 15.48$\pm$0.71 & \textbf{16.77$\pm$0.73} \\
+  & Navi-Mission     & 97.14$\pm$2.01 & \textbf{100.00$\pm$0.00} & \textbf{100.00$\pm$0.00} \\
+  & \textbf{Navi Reward} & 111.60$\pm$2.36 & 115.48$\pm$0.71 & \textbf{116.77$\pm$0.73} \\
+  & \textbf{Rule Reward} & 25.15$\pm$2.30 & 26.19$\pm$2.19 & \textbf{26.31$\pm$2.39} \\
+  & \textbf{Comf Reward} & -11.42$\pm$0.58 & \textbf{-11.11$\pm$0.56} & -11.18$\pm$0.54 \\
+  & \textbf{Total Reward} & 171.70$\pm$14.83 & 222.42$\pm$6.43 & \textbf{224.80$\pm$7.27} \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{11}{*}{Task 3}
+  & Safe-1/TTC       & -3.10$\pm$0.17 & \textbf{-2.82$\pm$0.14} & -3.16$\pm$0.18 \\
+  & Safe-MEI         & -12.42$\pm$5.45 & \textbf{-0.90$\pm$0.14} & -1.37$\pm$0.29 \\
+  & Safe-RTTC        & -0.61$\pm$0.08 & \textbf{-0.26$\pm$0.04} & -0.39$\pm$0.06 \\
+  & Safe-1/HW        & -41.23$\pm$3.13 & \textbf{-24.28$\pm$2.14} & -27.34$\pm$2.35 \\
+  & \textbf{Safe Reward} & -57.36$\pm$6.29 & \textbf{-28.26$\pm$2.19} & -32.25$\pm$2.44 \\
+  & \textbf{Effi Reward} & 105.90$\pm$6.11 & 114.89$\pm$5.68 & \textbf{115.86$\pm$5.58} \\
+  & Navi-Lane        & \textbf{15.77$\pm$0.66} & 14.74$\pm$0.58 & 15.59$\pm$0.65 \\
+  & Navi-Mission     & 98.57$\pm$1.43 & \textbf{100.00$\pm$0.00} & \textbf{100.00$\pm$0.00} \\
+  & \textbf{Navi Reward} & 114.34$\pm$1.69 & 114.74$\pm$0.58 & \textbf{115.59$\pm$0.65} \\
+  & \textbf{Rule Reward} & \textbf{31.29$\pm$1.90} & 26.81$\pm$1.63 & 26.75$\pm$1.85 \\
+  & \textbf{Comf Reward} & -12.85$\pm$0.46 & \textbf{-11.35$\pm$0.40} & -11.72$\pm$0.40 \\
+  & \textbf{Total Reward} & \textbf{181.33$\pm$10.31} & 216.83$\pm$6.63 & 214.22$\pm$6.21 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{Task 4}
+  & Safe-1/TTC       & -4.70$\pm$0.34 & \textbf{-4.10$\pm$0.26} & -4.38$\pm$0.29 \\
+  & Safe-MEI         & -3.00$\pm$0.73 & -1.55$\pm$0.24 & \textbf{-1.38$\pm$0.17} \\
+  & Safe-RTTC        & -0.70$\pm$0.13 & -0.62$\pm$0.07 & \textbf{-0.57$\pm$0.06} \\
+  & Safe-1/HW        & -176.83$\pm$9.12 & \textbf{-135.01$\pm$7.39} & -141.76$\pm$7.12 \\
+  & \textbf{Safe Reward} & -185.23$\pm$9.47 & \textbf{-141.28$\pm$7.59} & -148.09$\pm$7.25 \\
+  & \textbf{Effi Reward} & 547.09$\pm$17.74 & \textbf{559.02$\pm$17.30} & 554.70$\pm$18.17 \\
+  & Navi-Lane        & \textbf{46.24$\pm$1.54} & 45.86$\pm$1.49 & 46.09$\pm$1.60 \\
+  & Navi-Mission     & 1.43$\pm$1.43 & 72.86$\pm$5.35 & \textbf{84.29$\pm$4.38} \\
+  & \textbf{Navi Reward} & 47.67$\pm$2.16 & 118.72$\pm$4.68 & \textbf{130.37$\pm$3.63} \\
+  & \textbf{Rule Reward} & 151.05$\pm$7.44 & \textbf{168.74$\pm$5.89} & 157.62$\pm$7.21 \\
+  & \textbf{Comf Reward} & -46.06$\pm$1.47 & \textbf{-45.62$\pm$1.39} & -45.68$\pm$1.47 \\
+  & \textbf{Total Reward} & 514.52$\pm$23.24 & \textbf{659.59$\pm$19.52} & 648.93$\pm$21.99 \\
+
+  \end{longtable}
+  }% 结束局部作用域，恢复全局格式
+
+
+
+  {% 局部作用域，只改本表行距，不影响全文
+  \small
+  % \setlength{\tabcolsep}{3pt}       % 压缩列间距
+  \renewcommand{\arraystretch}{1.0} % 核心：恢复正常紧凑行距
+  \linespread{0.7}\selectfont       % 强制行高
+
+  \begin{longtable}{l l c c c}
+      \caption{交通流仿真分流量得分情况 (mean $\pm$ SEM)}
+      \label{tab:reward_flow} \\
+      \toprule
+      Flow (veh/h) & Reward term & IDM+MOBIL & TreeSearch & Graphflow \\
+      \midrule
+  \endfirsthead
+      \caption*{续表~\thetable\quad 交通流仿真分流量得分情况 (mean $\pm$ SEM)} \\
+      \toprule
+      Flow (veh/h) & Reward term & IDM+MOBIL & TreeSearch & Graphflow \\
+      \midrule
+  \endhead
+      \bottomrule
+  \endfoot
+
+  %-------------------------------------------------------------------------------
+  \multirow{11}{*}{4500}
+  & Safe-1/TTC       & -4.47$\pm$0.71 & -3.57$\pm$0.44 & \textbf{-3.39$\pm$0.35} \\
+  & Safe-MEI         & -2.75$\pm$0.80 & \textbf{-1.76$\pm$0.30} & -2.65$\pm$0.61 \\
+  & Safe-RTTC        & -1.17$\pm$0.15 & \textbf{-0.92$\pm$0.12} & -1.00$\pm$0.13 \\
+  & Safe-1/HW        & -121.10$\pm$12.19 & -79.61$\pm$9.10 & \textbf{-74.66$\pm$8.29} \\
+  & \textbf{Safe Reward} & -129.48$\pm$13.10 & -85.86$\pm$9.27 & \textbf{-81.70$\pm$8.49} \\
+  & \textbf{Effi Reward} & 224.15$\pm$20.62 & \textbf{257.37$\pm$21.30} & 248.41$\pm$19.29 \\
+  & Navi-Lane        & \textbf{27.23$\pm$1.73} & 27.01$\pm$1.61 & 26.74$\pm$1.52 \\
+  & Navi-Mission     & 52.50$\pm$8.00 & 90.00$\pm$4.80 & \textbf{97.50$\pm$2.50} \\
+  & \textbf{Navi Reward} & 79.73$\pm$6.65 & 117.01$\pm$4.75 & \textbf{124.24$\pm$2.91} \\
+  & \textbf{Rule Reward} & 49.18$\pm$7.87 & \textbf{58.28$\pm$9.30} & 51.02$\pm$7.97 \\
+  & \textbf{Comf Reward} & -25.60$\pm$1.77 & -24.38$\pm$1.69 & \textbf{-23.76$\pm$1.58} \\
+  & \textbf{Total Reward} & 197.98$\pm$28.37 & \textbf{322.41$\pm$26.71} & 318.21$\pm$22.10 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{4000}
+  & Safe-1/TTC       & -3.13$\pm$0.30 & -2.92$\pm$0.28 & \textbf{-2.82$\pm$0.24} \\
+  & Safe-MEI         & -19.19$\pm$8.29 & -2.74$\pm$0.83 & \textbf{-2.56$\pm$0.77} \\
+  & Safe-RTTC        & -1.09$\pm$0.23 & \textbf{-0.74$\pm$0.10} & -0.80$\pm$0.11 \\
+  & Safe-1/HW        & -92.12$\pm$8.08 & \textbf{-61.43$\pm$6.29} & -62.63$\pm$6.49 \\
+  & \textbf{Safe Reward} & -115.53$\pm$10.11 & \textbf{-67.82$\pm$6.50} & -68.81$\pm$6.54 \\
+  & \textbf{Effi Reward} & 183.22$\pm$15.37 & \textbf{198.06$\pm$15.70} & 193.86$\pm$14.40 \\
+  & Navi-Lane        & \textbf{23.72$\pm$0.79} & 21.56$\pm$1.00 & 21.65$\pm$0.82 \\
+  & Navi-Mission     & 50.00$\pm$8.01 & 95.00$\pm$3.49 & \textbf{100.00$\pm$0.00} \\
+  & \textbf{Navi Reward} & 73.72$\pm$7.40 & 116.56$\pm$3.42 & \textbf{121.65$\pm$0.82} \\
+  & \textbf{Rule Reward} & 37.20$\pm$4.82 & \textbf{41.14$\pm$6.07} & 35.77$\pm$5.02 \\
+  & \textbf{Comf Reward} & -20.37$\pm$0.86 & \textbf{-18.86$\pm$1.06} & -19.14$\pm$0.91 \\
+  & \textbf{Total Reward} & 158.24$\pm$12.92 & \textbf{269.08$\pm$17.18} & 263.32$\pm$13.17 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{3500}
+  & Safe-1/TTC       & -2.90$\pm$0.26 & \textbf{-2.83$\pm$0.26} & -3.30$\pm$0.28 \\
+  & Safe-MEI         & -63.06$\pm$24.50 & \textbf{-2.76$\pm$0.42} & -4.77$\pm$1.25 \\
+  & Safe-RTTC        & -1.48$\pm$0.14 & -1.17$\pm$0.16 & \textbf{-1.11$\pm$0.14} \\
+  & Safe-1/HW        & -84.28$\pm$13.73 & \textbf{-64.15$\pm$13.19} & -66.83$\pm$12.05 \\
+  & \textbf{Safe Reward} & -151.72$\pm$25.27 & \textbf{-70.91$\pm$13.51} & -76.02$\pm$11.94 \\
+  & \textbf{Effi Reward} & 217.74$\pm$35.59 & 227.23$\pm$34.80 & \textbf{229.37$\pm$34.92} \\
+  & Navi-Lane        & 23.45$\pm$2.59 & 23.81$\pm$2.36 & \textbf{24.17$\pm$2.41} \\
+  & Navi-Mission     & 45.00$\pm$7.97 & \textbf{95.00$\pm$3.49} & \textbf{95.00$\pm$3.49} \\
+  & \textbf{Navi Reward} & 68.45$\pm$7.19 & 118.81$\pm$3.48 & \textbf{119.17$\pm$4.44} \\
+  & \textbf{Rule Reward} & \textbf{55.01$\pm$12.00} & 53.43$\pm$11.61 & 53.35$\pm$12.12 \\
+  & \textbf{Comf Reward} & -21.25$\pm$2.78 & \textbf{-20.82$\pm$2.63} & \textbf{-20.82$\pm$2.73} \\
+  & \textbf{Total Reward} & 168.22$\pm$45.89 & \textbf{307.75$\pm$35.36} & 305.06$\pm$36.91 \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{3000}
+  & Safe-1/TTC       & -3.24$\pm$0.31 & \textbf{-2.96$\pm$0.28} & -3.27$\pm$0.28 \\
+  & Safe-MEI         & -1.50$\pm$0.42 & -1.08$\pm$0.29 & \textbf{-0.44$\pm$0.13} \\
+  & Safe-RTTC        & -0.61$\pm$0.15 & -0.53$\pm$0.11 & \textbf{-0.35$\pm$0.07} \\
+  & Safe-1/HW        & -73.65$\pm$12.35 & -61.42$\pm$9.19 & \textbf{-58.37$\pm$11.20} \\
+  & \textbf{Safe Reward} & -78.99$\pm$12.48 & -66.00$\pm$9.45 & \textbf{-62.43$\pm$11.35} \\
+  & \textbf{Effi Reward} & 260.07$\pm$37.21 & 253.20$\pm$34.42 & \textbf{264.12$\pm$37.18} \\
+  & Navi-Lane        & 24.66$\pm$2.77 & 23.60$\pm$2.49 & \textbf{26.56$\pm$2.58} \\
+  & Navi-Mission     & 52.50$\pm$8.00 & \textbf{100.00$\pm$0.00} & \textbf{100.00$\pm$0.00} \\
+  & \textbf{Navi Reward} & 77.16$\pm$6.55 & 123.60$\pm$2.49 & \textbf{126.56$\pm$2.58} \\
+  & \textbf{Rule Reward} & 58.11$\pm$12.92 & 56.19$\pm$12.54 & \textbf{59.99$\pm$13.54} \\
+  & \textbf{Comf Reward} & -22.96$\pm$2.92 & \textbf{-21.28$\pm$2.72} & -22.52$\pm$2.93 \\
+  & \textbf{Total Reward} & 293.39$\pm$34.55 & 345.71$\pm$38.04 & \textbf{365.73$\pm$39.82} \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{2500}
+  & Safe-1/TTC       & \textbf{-2.01$\pm$0.17} & -2.56$\pm$0.27 & -2.43$\pm$0.23 \\
+  & Safe-MEI         & -6.73$\pm$2.73 & -1.40$\pm$0.30 & \textbf{-0.92$\pm$0.19} \\
+  & Safe-RTTC        & -0.52$\pm$0.07 & -0.45$\pm$0.07 & \textbf{-0.40$\pm$0.07} \\
+  & Safe-1/HW        & -48.46$\pm$8.90 & \textbf{-37.08$\pm$7.58} & -38.62$\pm$7.76 \\
+  & \textbf{Safe Reward} & -57.72$\pm$8.82 & \textbf{-41.50$\pm$7.82} & -42.38$\pm$7.79 \\
+  & \textbf{Effi Reward} & 166.31$\pm$22.83 & 169.41$\pm$23.67 & \textbf{169.58$\pm$23.14} \\
+  & Navi-Lane        & 16.61$\pm$1.72 & 17.08$\pm$1.71 & \textbf{18.03$\pm$1.72} \\
+  & Navi-Mission     & 50.00$\pm$8.01 & 90.00$\pm$4.80 & \textbf{100.00$\pm$0.00} \\
+  & \textbf{Navi Reward} & 66.61$\pm$6.99 & 107.08$\pm$5.22 & \textbf{118.03$\pm$1.72} \\
+  & \textbf{Rule Reward} & 35.64$\pm$7.38 & \textbf{40.39$\pm$8.56} & 36.54$\pm$7.67 \\
+  & \textbf{Comf Reward} & -14.80$\pm$1.85 & -14.66$\pm$1.87 & \textbf{-14.46$\pm$1.82} \\
+  & \textbf{Total Reward} & 196.04$\pm$19.29 & 260.73$\pm$25.71 & \textbf{267.31$\pm$23.59} \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{11}{*}{2000}
+  & Safe-1/TTC       & -3.93$\pm$0.52 & \textbf{-3.33$\pm$0.34} & -4.00$\pm$0.43 \\
+  & Safe-MEI         & -6.94$\pm$4.29 & \textbf{-0.40$\pm$0.08} & -0.81$\pm$0.19 \\
+  & Safe-RTTC        & -0.39$\pm$0.07 & \textbf{-0.31$\pm$0.06} & -0.33$\pm$0.05 \\
+  & Safe-1/HW        & -92.65$\pm$14.01 & -63.95$\pm$9.85 & \textbf{-62.42$\pm$8.78} \\
+  & \textbf{Safe Reward} & -103.91$\pm$14.75 & -67.99$\pm$10.12 & \textbf{-67.56$\pm$9.20} \\
+  & \textbf{Effi Reward} & 310.64$\pm$38.04 & 316.99$\pm$40.05 & \textbf{319.19$\pm$39.38} \\
+  & Navi-Lane        & 29.58$\pm$3.22 & 29.64$\pm$3.27 & \textbf{30.44$\pm$3.31} \\
+  & Navi-Mission     & 50.00$\pm$8.01 & \textbf{75.00$\pm$6.93} & \textbf{75.00$\pm$6.93} \\
+  & \textbf{Navi Reward} & 79.58$\pm$6.43 & 104.64$\pm$3.79 & \textbf{105.44$\pm$3.75} \\
+  & \textbf{Rule Reward} & 62.71$\pm$12.91 & \textbf{67.59$\pm$14.27} & 66.13$\pm$13.91 \\
+  & \textbf{Comf Reward} & -26.75$\pm$3.15 & \textbf{-26.14$\pm$3.20} & -26.44$\pm$3.18 \\
+  & \textbf{Total Reward} & 322.27$\pm$34.53 & 395.08$\pm$39.24 & \textbf{396.75$\pm$38.07} \\
+  \midrule
+
+  %-------------------------------------------------------------------------------
+  \multirow{10}{*}{1500}
+  & Safe-1/TTC       & -3.55$\pm$0.38 & \textbf{-3.40$\pm$0.30} & -3.53$\pm$0.33 \\
+  & Safe-MEI         & -1.94$\pm$0.67 & \textbf{-0.58$\pm$0.13} & -0.85$\pm$0.23 \\
+  & Safe-RTTC        & -0.41$\pm$0.08 & \textbf{-0.30$\pm$0.04} & -0.32$\pm$0.05 \\
+  & Safe-1/HW        & -75.63$\pm$13.77 & \textbf{-52.70$\pm$9.85} & -58.71$\pm$11.53 \\
+  & \textbf{Safe Reward} & -81.53$\pm$14.53 & \textbf{-56.98$\pm$10.15} & -63.41$\pm$11.94 \\
+  & \textbf{Effi Reward} & 295.01$\pm$38.57 & \textbf{304.37$\pm$39.75} & 299.81$\pm$38.77 \\
+  & Navi-Lane        & 28.01$\pm$2.93 & \textbf{28.38$\pm$2.87} & 27.94$\pm$2.83 \\
+  & Navi-Mission     & 50.00$\pm$8.01 & 87.50$\pm$5.30 & \textbf{97.50$\pm$2.50} \\
+  & \textbf{Navi Reward} & 78.01$\pm$6.58 & 115.88$\pm$4.08 & \textbf{125.44$\pm$3.19} \\
+  & \textbf{Rule Reward} & 65.26$\pm$13.16 & \textbf{71.01$\pm$14.37} & 65.89$\pm$13.18 \\
+  & \textbf{Comf Reward} & -25.28$\pm$3.17 & \textbf{-25.09$\pm$3.22} & -24.83$\pm$3.17 \\
+  & \textbf{Total Reward} & 331.47$\pm$36.95 & \textbf{409.20$\pm$41.14} & 402.90$\pm$42.51 \\
+
+  \end{longtable}
+  }% 结束局部作用域
+
+
+
+\section{数学表达式}
+
+  % 附录中的数学表达式示例（式\eqref{eq:appendix-equation}）。
+  \begin{equation}
+    \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
+    \label{eq:appendix-equation}
+  \end{equation}
+
+
+\section{文献引用}
+
+  附录\cite{dupont1974bone}中的参考文献引用\cite{zhengkaiqing1987}示例
+  \cite{dupont1974bone,zhengkaiqing1987}。
+
+\printbibliography

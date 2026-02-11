@@ -1,0 +1,375 @@
+% !TeX root = ../车云协同液罐车防侧翻行驶规划与控制研究.tex
+
+\chapter{引言}
+
+\section{研究背景及意义}
+
+  我国危化品运输需求持续增长，2025年危化品运输总额已突破3万亿元，其中利用液罐车通过公路运输的超过\SI{80}{\percent}\cite{qianyuyan2023}，液罐车在危化品公路运输中占据重要地位。据统计，截至2025年，我国危化品运输车辆总数超过36万辆，其中液罐车数量接近19万辆，占比高达\SI{52.8}{\percent}\cite{zhongguowuliulianhehui2022}。然而，液罐车在运输过程中存在较高的安全风险。2011年至2025年间，我国共发生超过1万5千起危化品罐车运输重大事故，其中\SI{78.7}{\percent}的事故发生在液罐车行驶过程中，\SI{62.7}{\percent}的事故是由车辆侧翻引起\cite{liuhuipling2023, chengshuo2023, lijian2014,chenxiaoyong2023, wangyang2023}。液罐车侧翻事故在货车严重伤亡事故中占比超过\SI{31}{\percent}，液罐车单方面事故中侧翻占比接近\SI{70}{\percent}\cite{authority_tank_truck2022}，可见液罐车侧倾稳定性差易于侧翻的特性。
+
+  频发的液罐车侧翻事故后果严重。如图~\ref{fig:severe_results}所示，2020年6月13日，浙江温岭G15高速，一辆满载25.36吨液化石油气的液罐车因超速侧翻爆炸，导致20人死亡，175人受伤，数十间房屋倒塌，200余间成危楼\cite{wenling_accident2022}。2022年四川江油县，一辆液罐车因超速失控侧翻造成8死20伤。山东威海，一辆液罐车路口躲避变道车辆侧翻致多人遇难。2023年广西百色，液罐车在高架桥转弯时因车速过快侧翻爆炸多人遇难。北京东六环，液罐车避让施工侧翻爆炸致多人死亡。湖南邵阳，液罐车下坡急转向时因车速过快侧翻40顿柴油泄漏……因侧翻车辆装载液化石油/天然气、汽柴油、甲醇等易燃易爆品的情况占\SI{86}{\percent}以上\cite{qianyuyan2023}，因此事故常伴随危化品液体泄漏，常造成环境污染、燃烧、爆炸等严重次生灾害，酿成重大人员伤亡和财产损失\cite{liuhuipling2023, chengshuo2023, lijian2014,chenxiaoyong2023, wangyang2023,authority_tank_truck2022,wenling_accident2022, baijinghua2023}。故解决液罐车运输过程中的侧翻问题迫在眉睫。
+
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{fig/chap1/severe_results.jpg}
+    % \caption*{图片注释解释说明}
+    \caption{液罐车事故及其严重后果}
+    \label{fig:severe_results}
+  \end{figure} 
+
+  液罐车侧翻事故原因可总结为三大部分：液罐车辆本身非满载车液耦合侧向稳定性差易侧翻的车辆特性，驾驶员对动静态交通信息（道路结构、临时施工、周车状态与意图等）掌握不足（单车局限）、超速行驶疲劳驾驶等违法行为以及救车控制失误的人因失误。
+
+  （1）\textbf{车辆特性}：液罐车因车辆液体耦合的非满载状态下侧向稳定性差，易发生侧翻。根据现行标准，液罐车必须非满载运行，以避免液体膨胀、蒸汽压力升高引发的泄漏或爆炸，最大允许充液量不得超过\SI{95}{\percent}\cite{biaozhun185642006,biaozhunR00052011}。液罐车在卸货途中通常保持中低充液率，这会导致液体晃动，明显降低车辆的侧倾稳定性。
+
+  （2）\textbf{单车局限}：驾驶员对动静态交通信息的掌握不足，是正常路段事故的主要原因，主要受限于以单车视角对周围环境、车辆状态和意图的感知能力\cite{authority_tank_truck2022}。特殊路段以及他车危险动态使得驾驶员需及时响应，大曲率弯道和坡道等将改变液体晃动与车辆的侧倾特性若不注意易引起事故。
+
+  （3）\textbf{人因失误}：超速、疲劳驾驶等违法行为，以及紧急工况下由于驾驶员不够熟练而造成的救车失误等由于人因造成的本可以避免的因素而加剧了危险情况下的侧翻风险。
+
+  根据上述分析，如何兼顾车辆特性、单车局限和人因失误三方因素来防止其发生侧翻事故，对提升危化品运输的安全性和可靠性具有重要意义。现有的解决方案通常针对上述因素中某一方面开展，但智能网联汽车（Intelligent and Connected Vehicles, ICV）与智能交通系统（Intelligent Transportation Systems, ITS）的快速发展使得液罐车侧翻问题有了更多可以兼顾上述因素的解决方案。
+
+  首先，自动驾驶技术飞速发展，商用车自动驾驶取得了显著成果\cite{hasiri2024}。2024年卡尔动力的2-6车混合无人化半挂车队已完成超过820万公里250万吨货物的无事故运输\cite{kargobot2024}；小马智卡L4级自动驾驶卡车大规模商用即将展开\cite{ponyai2024}等标志着商用车自动驾驶技术已经取得长足进步，未来以大宗货物运输为目的的大部分商用货车有望被自动驾驶取代。自动驾驶车辆在不会超速、疲劳驾驶等违反交通法规的前提下可以实现超越人类的感知能力与车辆操纵，为车辆运行安全提供了有效保障。目前小马智卡、卡尔动力、主线科技等自驾重卡公司已获北京市首批智能网联重卡编队路测许可，可在京津冀区域测试道路开展高速自驾货运测试。
+
+  其次，在未来的智慧交通系统中，过去由每辆车组成的交通系统演进为基于智能网联车辆（及存量车、其他交通参与者等）、路侧单元（感知单元、计算单元、通信单元等）、云控基础设施（三层云架构）、相关支撑平台（定位平台、地图平台、交管平台、急救平台）等为一体的车路云一体化融合控制系统，简称云控系统\cite{cuimingyang2022}。云控系统是车、路、云、网、图等成员系统形成的认同型体系\cite{OMG2022,bondavalli2016cyber}，是典型的信息物理系统，包含物理层、信息层和应用层。云控系统利用信息实体对物理实体进行孪生并用于控制物理实体，实现融合感知与推演、协同决策规划与控制，形成系统虚实结合的闭环运行，实现交通安全、高效、经济等性能的综合提升\cite{likeqiang2020cloudcontrol}。目前全国已有20个主要城市开展车路云一体化试点工作，云控系统的建立是未来我国交通发展的趋势\cite{gongxinbu2024pilots}。
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{fig/chap1/cloud_platform.jpg}
+    % \caption*{图片注释解释说明}
+    \caption{车路云一体化融合控制系统架构\cite{icv2023whiteroadcloud}}
+    \label{fig:cloud_platform}
+  \end{figure} 
+
+  车云协同并非是与单车智能互斥的两种方案，而是在其基础上辅助单车做更好的决策。其大面积应用得益于其相对于人工驾驶与单车自动驾驶的三条主要优势：全局感知、强大算力、统一调度\cite{likeqiang2020principles}。
+
+  （1）\textbf{全局感知}：精准的全局感知与长时域历史信息使得所有联网车辆可以获得比任何人类驾驶员或单车自动驾驶感知系统更全面的超视距、被遮挡的视野。利用这些感知信息可以为人类驾驶员提供预警性服务，对自动驾驶车辆提供更精准的周车信息与历史数据。
+
+  （2）\textbf{强大算力}：边缘云强大的实时调度并行算力支持一些原本在车端无法实时运行的大计算量高复杂度算法，作为车端短时域规划控制的补充，辅助车端控制器或驾驶员做出更好的决策。
+
+  （3）\textbf{统一调度}：以云为中心的统一调度便于实现多车间的协同优化控制，避免了单车驾驶可能陷入的“零和博弈”或“囚徒困境”。同时区域云和中心云基于交通大数据的分析可以用于对交通层面的整体优化，实现信号灯等交通基础设施的适应性调整。
+
+  综上采用的，本研究基于云控系统，提出了车云协同液罐车防侧翻行驶规划与控制架构，旨在通过云控系统的全局感知，使得液罐车可以精确掌握周围的道路结构、临时施工、周车状态与意图等动静态交通信息（外因、人因）；通过云控系统的强大并行算力，可以考虑目标液罐车的侧翻特性，结合周围车辆状态与意图信息，进行预测性决策与防侧翻轨迹规划（内因、人因）；通过车端的短时域规划与双模态轨迹跟踪防侧翻控制结合横纵向耦合液体晃动模型，提供紧急时刻的兜底保障（内因、人因），以提高系统可靠性与可应用性，对危化品公路运输安全保障的强化具有十分重要的意义。
+
+
+\section{国内外研究现状}
+
+  本研究针对上述由于液罐车车液耦合易侧翻、单车对动静态交通信息掌握不全面、驾驶员违规驾驶及操作不当引起的液罐车侧翻问题，基于云控系统提出的车云协同液罐车防侧翻行驶规划与控制架构主要通过四大方面技术解决问题，包括：体系工程级防侧翻机制设计、罐内液体的精准孪生建模、车端防侧翻轨迹跟踪控制、车云协同预测性决策与防侧翻轨迹规划。为更好开展与实现上述技术，主要调研四大部分国内外现状：车液耦合机理与液罐车动力学建模研究现状、液罐车防侧翻主被动安全措施研究现状、车云协同预测性决策与规划研究现状、体系工程与车云协同体系架构建立。
+
+  \subsection{车云协同体系架构构建方法研究现状}
+    汽车智能化与网联化融合发展的技术路线已形成全球共识，受到学术界、产业界和政府的高度重视。在此背景下，液罐车的运行将不再是一个独立运行的个体，而将通过网络与路侧、云端等紧密连接，形成智能汽车信息物理系统（Intelligent Vehicle Cyber-Physical System, IVCPS）。而液罐车防侧翻的任务也逐步从单车的局部技术研究转向了车路云一体化体系工程解决方案的探索，车云协同液罐车防侧翻（Cloud-based Collaborative Tank Truck Rollover Prevention, CT2ROP）场景任务体系是IVCPS的重要组成部分之一。
+
+    自1994年美国加州高速公路先进技术（California Partners for Advanced Transportation Technology, PATH）项目\cite{shladover1991path}中关于车路协同前向预警、路口决策支持、车路协同自动驾驶编队行驶等车联网及车辆自动化的工程化应用开始，路侧设施被大量研究系统性地纳入了智能车辆运行的闭环体系中。路侧设备的引入便利了局域交通信息的共享，但车路协同多伴随场景的局限性。云服务融合于该体系主要发生在2016-2021年间，最初目的旨在为联网车辆提供全局化的管理和信息服务，即构建车联网云服务体系，通过网联技术补足单纯基于规则的单车智能感知与决策\cite{chu2021cloudcontrolreview}。主要包含基于自组织网络的分布式架构\cite{wang2020fogbased}和依托公共服务平台的集中式架构\cite{wang2020cloudconnected}两种解决方案。近年来，随着车联网（Vehicle-to-everything, V2X）技术和端到端自动驾驶技术的发展，网联方案和单车方案迅速融合，我国率先结合车联网、云服务和信息物理系统等技术与理论\cite{kaiwartya2016iov}，提出了车路云一体化方案\cite{likeqiang2020cloudcontrol,likeqiang2020principles,icv2023whiteroadcloud}，而IVCPS即车路云一体化方案下未来交通系统的形态。该方案通过将车辆与其他车辆、路侧基础设施、云端计算资源与数据库及第三方平台连接，利用云控系统的广域感知、并行计算、全局优化的优势为智能网联车辆赋能\cite{ran2023vrc,guo2023greeniov}，并考虑车云通信故障下的安全\cite{sasaki2016mec}以及更加多样化的应用场景\cite{jia2016platoonvcps}，以实现未来交通体系安全、便捷、高效、绿色、经济的总体交通体系愿景。
+
+    为实现上述复杂智能交通体系方案的构建，国内外就其开发阶段的架构设计工作开展了大量针对性研究。2015年美国交通部牵头推出了美国网联汽车参考应用架构（Connected Vehicle Reference Implementation Architecture, CVRIA）\cite{hejazi2022iottov2x}，2020年在此基础上进一步发布了协同式智能交通系统参考架构（Architecture Reference for Cooperative and Intelligent Transportation, ARC-IT）9.0，通过企业、功能、物理、通信、服务、防护共6个视角描述架构，并于2024年更新了重点支持多式联运旅行、电子交管等新概念的ARC-IT 9.3\cite{usdot2024arcit93}。欧盟开展的地平线2020研究计划中的加快推进欧洲协同式智能交通系统发展（Accelerating C-ITS Mobility Innovation and depLoyment in Europe, C-MobILE）项目\cite{cmobile2024project}同样意在推进去中心化的协同式智能交通系统（Cooperative Intelligent Transportation System, C-ITS），通过上下文、功能、通信、应用、物理和信息6个视角描述架构\cite{lu2018citsdeployment}，并设计了基于系统建模语言（System Modeling Language, SysML）描述的符合C-MobILE规范的架构设计方法\cite{ferrandez2018cmobilecase}。在国内，2019年国家智能网联汽车创新中心（China Intelligent and Connected Vehicles Research Institute, CICV）在CVRIV架构的基础上结合我国交通特征与云控系统架构发表了智能汽车信息物理系统参考架构1.0\cite{caicv2019cpsarch10}，并于2021年进一步提出包含战略、利益攸关者、服务、系统、安全、防护和标准化7个视角的智能网联汽车7S架构框架（ICV-7S）\cite{xu2023mbseivcps}，并参考达索公司2012年发表的需求-功能-逻辑-物理（Requirement-Functional-Logical-Physical, RFLP）流程设计了方法论\cite{dassault2012strategicse}，发布了智能网联汽车信息物理系统参考架构2.0\cite{caicv2021cpsarch20}。2024年中国汽车工程学会发布了车路云一体化系统云控基础平台功能场景参考架构\cite{sae2024cloudplatformarch10}，为IVCPS的架构设计提供了进一步参考。考虑单车智能随AI技术突破的迅猛发展，大量智能基础设施的建设将结合智慧城市、智慧交通战略共同推进\cite{chu2021cloudcontrolreview}。
+
+    然而，上述欧美开展的智慧交通系统架构设计针对去中心化的协同式交通系统并重点关注分布式网联自动驾驶，车路云一体化方案则在云端融合了更多决策与控制以考虑全局协同优化，形成中心与边缘共治的IVCPS。国内现有IVCPS架构设计以基于文本的设计为主，并逐步探索基于模型的架构设计方法，但仍主要面向单个场景任务以系统工程思路开展，如CICV与清华大学开展的针对云控预测性巡航控制（Cloud-based Predictive Cruise Control, CPCC）系统\cite{xu2023mbseivcps}的架构设计。实际上，IVCPS包含大量类似CPCC的并行发生且相互交互的车路云一体化典型任务场景，是具有显著开放性、演进性与涌现性典型特征的信息物理体系（Cyber Physical System of Systems, CPSoS），其架构设计需体现上述特征，以进一步推动体系的顺利构建。国际上关于体系的研究方法在国内率先被应用于军工领域\cite{wanghailong2023soseoverall,gao2023swarmontology}，衍生出了装备体系等表达，后逐渐在国内被推广\cite{gaoxinghai2017mbdtombe,gao2019digitalsystemmodel}，关于体系架构建模与体系工程流程建模的研究逐渐兴起\cite{wangweiping2019mbse}，体系的波浪模型\cite{fengyimin2024soseframework}与螺旋上升模型被提出\cite{liminghua2021aerospace}以描述其演进过程。在此基础上，基于建模与仿真的体系工程被提出\cite{zhanglin2022sosembs}，将仿真验证从系统设计\cite{liuxinghua2011sysmlsimulink,liutonglei2015tripleredundant, zhangshaojie2018mbsecivilaircraft, weicaise2021airsensor, guoyuliang2023door,qinchangmao2021remoteexpert}纳入到了体系的设计闭环中；敏捷体系工程、物联网、智能交通系统等新方法、新工具和新应用\cite{liuyang2024soseoutlook}也纳入到体系研究中。随通信技术发展与智能化水平不断提升，IVCPS内部各部分越来越联合为一个整体，系统思维导向的架构设计逐渐展露出其局限性，即面对庞大的IVCPS难以描述其全貌。当下更需结合体系特点，设计适合IVCPS的架构设计方法，并建立反映其演进性与多场景涌现性的架构。戚笑景等\cite{qixiaojing2026mbsose}为建立面向体系发展且可实施可验证易拓展的IVCPS体系架构，提出了分场景基于模型与仿真的体系工程（Scenario-oriented Model and Simulation Based SoS Engineering, So-MBSoSE）建模方法，通过迭代构建多个场景任务从而不断完善整体并发现跨场景交互，实现了IVCPS复杂大系统的构建。
+
+  \subsection{车液耦合机理与液罐车动力学建模研究现状}
+    \subsubsection*{(1)车液耦合机理研究现状}
+      液罐车的车液耦合特性取决于两方面，准静态特性与瞬态冲击特性，二者分别降低了车辆的静态和动态侧翻阈值。如图~\ref{fig:vehice_liquid_couple_mechanism}所示，对于目前最常用的类椭圆截面罐体，考虑准静态下液体质心因稳态侧向加速度而发生的转移可知，质心纵向升高增加侧向加速度下车液质量对侧倾中心的力矩、横向偏移加剧车辆液体重力对车辆造成的侧倾力矩\cite{maohaijian2021fsi}，二者均造成静态侧翻阈值低于运载固体的车辆。
+
+      考虑瞬态下液体晃动冲击的影响时，如果将液罐中的液体等效替换为同等体积与质量的固体，显然随固体载运量的增加，车辆质心高度增加，动静态侧翻阈值都会减小，且侧翻阈值通常随货物量增加单调递减。但液罐车的侧翻阈值随充液率的增加却呈现出先快速降低后缓慢升高的趋势。在充液率与晃动情况的研究中，通常认为\SIrange{50}{70}{\percent}的充液率是最危险的工况。茅海剑等\cite{maohaijian2021fsi}通过计算流体动力学（Computational Fluid Dynamics, CFD）仿真分析了不同密度液体的晃动，发现密度较大的液体具有更大的阻尼，晃动衰减更快，且不同密度液体在圆形罐体中侧翻阈值最低的充液率约为\SI{60}{\percent}，此时侧向晃动的瞬间冲击超出平均值\SIrange{40}{50}{\percent}。王小润等\cite{wangxiaorun2022lateralacc}通过建立准静态模型并结合CFD仿真和实车试验，对某椭圆截面液罐内液体的冲击机理进行分析，发现当充液率低于\SI{70}{\percent}时，侧向力波动显著，而充液率高于\SI{80}{\percent}后波动明显被抑制。于志新等\cite{yuzhixin2018mpc}基于势流理论建立了圆形液罐的流动模型，研究得出随着充液率增加，惯性分力增加，晃动分力则呈现先增后减的趋势，二者的合力在充液率\SI{50}{\percent}时达到最大。徐晓美\cite{xuxiaomei2020lanechange}等基于TruckSim与Simulink联合仿真以单摆模型来替代液体，研究了\SI{25}{\percent}、\SI{50}{\percent}、\SI{75}{\percent}充液率下单移线、双移线和蛇形工况车辆的侧倾情况，发现\SI{50}{\percent}充液率和双移线工况分别是半挂液罐车侧向稳定性最差的充液率及工况。李杰等\cite{lijie2020carliquid}通过CFD仿真研究了不同充液率下液体在圆形截面罐体中的晃动情况，得出在\SI{60}{\percent}以下充液率时，晃动力幅度随着充液率的增加而增加，而在\SI{60}{\percent}以上则随着充液率增加而减小，最终得出\SI{60}{\percent}为危险充液率的结论。
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=1.0\linewidth]{fig/chap1/two_factors.png}
+        % \caption*{图片注释解释说明}
+        \caption{车液耦合机理说明\cite{maohaijian2021fsi,huangyang2017impact,wangqiongyao2017sloshing}}
+        \label{fig:vehice_liquid_couple_mechanism}
+      \end{figure} 
+
+      此外，在晃动机理分析方面，陈益苞等\cite{chenyibao2016crosssection}利用准静态模型分析得出液罐车的侧倾特性主要由液体质心高度和侧倾平面内自由液面的长度决定，质心高度越高，产生的侧倾力矩均值越大，自由液面的长度越长，液体晃动越剧烈，晃动响应中的高阶分量也越多。王琼瑶\cite{wangqiongyao2017sloshing}利用CFD仿真的方式对含有弹性气袋与不含弹性气袋两种情况的部分冲液罐车晃动动力学特性进行探究，分析得出液罐车侧向晃动频率响应中占主导的是激励频率或液体晃动固有频率，具体取决于激励加速的幅值大小。
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.65\linewidth]{fig/chap1/coupling_dynamics.png}
+        % \caption*{图片注释解释说明}
+        \caption{车液耦合动力学特征}
+        \label{fig:coupling_dynamics}
+      \end{figure} 
+
+      综上采用的，如图~\ref{fig:coupling_dynamics}所示，车液耦合侧向动力学特性可以总结为，车辆侧向动力学响应的响应幅值（由于质心移动）、超调率（由于瞬时冲击）明显增加，阻尼系数较低持续震荡明显（由于流体阻尼系数小的特性）。
+
+    \subsubsection*{(2)液体晃动建模研究现状}
+
+      对液体晃动建模的研究主要集中于飞行器油箱（飞机油箱、火箭燃料箱等）、船舶配重水仓，以及车辆油箱内液体晃动等领域，后来慢慢开始又学者探究液罐车液体晃动问题的学术领域。针对液体晃动建模问题学术界提出了多种建模方法，贾心红等\cite{jiaxinhong2022review}对这些方法进行了系统归纳，涉及四类研究方法，如图~\ref{fig:liquid_modeling_methods}所示，分别是准静态模型法、机械等效力学模型法、液体晃动动力学模型法，以及实验研究法。
+
+      准静态模型法（Quasi-Static Model, QS），主要关注液体的稳态特性而忽略其动态晃动行为，仅依据储罐截面的几何特性对液体质心的稳态位置进行数学描述。该方法在预测稳态工况下的液体晃动力方面表现尚可，但在反映液体动态晃动过程方面存在较大局限，瞬态工况下由于液体晃动的存在导致QS模型的预测精度显著降低。黄洋等\cite{huangyang2017impact}通过对准静态液体模型和CFD方法进行对比探究液罐车瞬态晃动冲击的影响，发现瞬态下峰值冲击远高于平均值，并定义瞬时液体冲击影响因子以反映实际冲击下车辆侧翻阈值相对于准静态计算结果的减少倍数，该因子在充液率为\SI{0}{\percent}和\SI{100}{\percent}时为0，在\SI{50}{\percent}时最大，达\SI{22.61}{\percent}。何烈云\cite{helieyun2020quasistatic}等建立了椭圆截面罐体液罐车的准静态等效力学模型，分析了罐车侧倾稳定性与罐体横截面形状、液体重装率等因素的关系；
+
+      机械等效力学模型法以系统输入输出不变为原则，将罐内当作黑盒，通过构建与充液系统等效的机械系统模型，如单摆模型、弹簧-质量-阻尼模型和椭圆规摆模型等，来近似表征充液系统的力特性。该模型在动态工况下展现出较高的预测精度和较快的计算速度，能够有效模拟液体的一阶晃动，但通常忽略了一些复杂的晃动现象，例如水跃和飞溅冲击，以及模型能反映的模态取决于内部机械结构设计。如Salem\cite{salem2000rollover}在2000年最早提出了使用椭圆规摆（Trammel Pendulum, TP）来建模液罐车内液体的运动，证明了尤其对椭圆罐体，其在更大的侧向加速度激励范围内特性优于单摆模型；杨秀建等\cite{yangxiujian2018multimass}和吴相稷\cite{wuxiangji2018sloshingmodel}建立了多质量椭圆规摆模型，并选取双质量椭圆规摆模型与椭圆规摆模型进行对比，证明了在多种工况下多质量椭圆规摆模型在液体晃动等效力拟合精度有较高预测精度和研究潜力。
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{准静态模型法\cite{huangyang2017impact} \label{fig:liquid_model_qs}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/quasi_static.png}}
+        \subcaptionbox{机械等效力学模型法\cite{yuzhixin2019optimalcontrol,%
+        zhaoweiqiang2018equivalent,zhaoweiqiang2019semitrailer} \label{fig:liquid_model_equivalent_model}}
+          {\includegraphics[width=0.45\linewidth]{fig/chap1/equivalent_model.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{液体晃动动力学模型法\cite{maohaijian2021fsi,yuzhixin2018mpc} \label{fig:liquid_model_cfd}}
+          {\includegraphics[width=0.35\linewidth]{fig/chap1/fluid_dynamic_model.png}}
+        \subcaptionbox{实验研究法\cite{wangxiaorun2022lateralacc,wanying2020antirolover} \label{fig:liquid_model_experiment}}  
+          {\includegraphics[width=0.45\linewidth]{fig/chap1/experiment_method.png}}
+        \caption{液体晃动建模方法}
+        \label{fig:liquid_modeling_methods}
+      \end{figure}
+
+    液体晃动动力学模型法以流体动力学微分方程为基础，在整个流体域或离散化的有限元内描述液体流动，并利用数值方法求解。该方法包括线性动力学分析和有限体积方法（一般而言的CFD方法）。线性动力学仅适用于特定简单几何形状的储罐，且推导过程繁琐，主要用于理论探讨；而CFD方法尽管在求解精度上具有优势，能够捕捉各种工况下液体的高阶晃动，且借助Fluent、StarCCM+等专业软件可便捷建模，但其计算资源消耗巨大，故而更多用于与实验结果的对比分析，而不适用于实时控制系统的开发。
+
+    实验研究法能够直观展现液体的实际动态行为。然而，鉴于实验的安全性和成本问题，涉及实车和真实危化品的实验较为罕见，且为保障实验安全，大多数试验工况实际并不危险，远无法达到实际车辆遭遇的场景的危险程度。通常，研究者依据相似性原理，采用缩比液罐在实验平台上进行测试，以验证晃动理论或控制策略的有效性。王小润等\cite{wangxiaorun2022lateralacc}在室内场地借助台架辅助进行了挂车的实车实验，在\SI{0.1}{g}侧向加速度激励条件下与CFD仿真结果进行对比，验证了线性晃动下CFD仿真结果的可靠性；万滢\cite{wanying2020antirolover}构建了缩比液罐车模型，并将其安装于改装的皮卡车货斗中，进行了缩比例实车实验，利用采集的行车加速度数据作为输入参数进行CFD仿真，并将仿真结果与实验数据进行了一致性对比分析，验证了所构建的联合仿真平台结果与实际测量结果的一致性。
+
+    综上采用的，在四种建模方案中，机械等效模型在能够表达液体低阶晃动的前提下计算实时性较高，故对于车辆行为与轨迹规划而言较为理想。但其表达能力主要取决于内部机械等效模型的结构，目前只考虑了横向截面内的二维晃动，或纵向截面内的二维晃动，无法反映某些对车辆动力学很重要的输出模态，如横摆力矩、俯仰力矩的动态；且纵向加/减速度客观存在，由于横纵向流动的耦合，对横向晃动带来的影响在现有模型中被忽略。
+
+    \subsubsection*{(3)液罐车动力学建模研究现状}
+
+      考虑液罐车自身动力学特性进行规划与控制的第一步往往需要建立车液耦合晃动系统的动力学模型，且一般应用场景下由于对实时性要求较高，需要模型满足计算简单实时性好的特点。关于液罐车动力学模型的建立，对整体式液罐车横向控制方面使用较多的一般是2自由度（Degree of Freedom, DOF）自行车模型或3DOF模型（包含纵向移动、侧向移动、横摆运动）与液体晃动模型的结合，也有少量研究考虑侧翻特性使用包含侧倾影响的4DOF模型或考虑侧翻、横摆、侧向移动的3DOF模型\cite{yudi2019rollstability}与液体模型结合。任园园等\cite{renyuanyuan2020precisemodel}建立了椭圆规摆模型代替液体，并结合3自由度车辆模型推导了4自由度液罐车动力学模型，利用其进行数值仿真获得了液罐车相比运载固体货物的货车的运动学特性变化；Matthew等\cite{aquaro1999fem}基于有限元方法分割连续的罐体质量，利用梁单元和单摆分别建模车体与罐内液体；万滢\cite{wanying2020antirolover}采用椭圆规摆进行液体建模，并用等效单摆分别于3自由度和4自由度车辆动力学模型结合作为线性二次型调节器（Linear Quadratic Regulator, LQR）分别进行抑晃控制和防侧翻控制的依据。
+
+      半挂车由于增加了一个挂车，故其全自由度应该为8自由度，包含牵引车的纵向移动、横向移动、横摆、侧倾和俯仰，还有挂车的横摆和侧倾以及俯仰。现有研究中依据研究目标不同，常见的车辆部分简化模型包含考虑牵引车纵向、横向、横摆加上挂车横摆的4DOF模型，如用于制动工况的研究\cite{heren2016braking},或牵引车横向、横摆、侧倾，加上挂车横摆、侧倾的5DOF模型\cite{zongchangfu2014identification,niezhigen2015heavyduty}等。于志新等\cite{yuzhixin2018mpc,yuzhixin2019optimalcontrol}基于势流理论建立液体晃动方程，与5自由度半挂车动力学模型进行结合建立6自由度半挂液罐车模型；
+
+      获得相应模型后如何正确识别模型的相应参数成为了下一个必须解决的问题。目前常用的参数辨识方法是利用最优化函数，如遗传算法、粒子群优化算法等进行参数空间的搜索，最小化模型输出与仿真工况输出之间的综合误差最终得到相关参数估计值的方法。万滢\cite{wanying2020antirolover}采用遗传算法对等效单摆模型和椭圆规摆模型分别拟合1m/s2侧向加速度激励下的CFD仿真模型侧向力输出识别两种机械等效模型的参数；Yu等\cite{yudi2016nonfull}通过遗传算法对拟合椭圆规摆模型和CFD结果的侧倾力矩进行参数辨识，对比了\SIrange{0}{10}{\percent}共6种突变率和\SIrange{20}{180}{}共9组不同个体数参数下遗传算法的表现，发现在个体数少于80的情况下突变率过大或过小均会影响解的最优性。在其他车辆的参数识别上，宗长富\cite{zongchangfu2014identification}、聂枝根等\cite{niezhigen2015heavyduty}利用双模型和遗传算法结合的方式对简化模型参数进行辨识，完成多个辨识工况点后形成各参数的插值表，可以在运行时根据工况进行插值。
+
+      总结而言，对半挂液罐车而言，其建模一般在5自由度半挂动力学模型基础上加入各种类型的液体晃动模型为基础，尤其以线性化的单摆模型最为常见。
+
+
+  \subsection{液罐车防侧翻主被动安全措施研究现状}
+    解决液罐车侧倾稳定性差问题的思路有两大类，一类是以改进车辆自身性能的被动措施；另一类是从控制入手的主动安全措施，下面对两种思路分别介绍。
+
+    \subsubsection*{(1)液罐车防侧翻的被动安全措施研究现状}
+      被动防侧翻措施从车辆的结构入手，如图~\ref{fig:passive_methods}所示，由对罐体形状（尤其是截面形状）进行优化、增加特定方向和形状的防浪板、增加固定自由液面的弹性气袋等方法。
+
+      在罐体形状优化方面，陈益苞等\cite{chenyibao2016crosssection}建立了相同面积的圆形截面、2种改进椭圆形截面、和其提出的3种锥形截面的QS模型，并详细对比了5种截面在不同充液比下的几种常见侧倾稳定性评价指标，验证了其提出的后两种锥形截面在提高液罐车侧倾稳定性方面的优势；瞿绘军等\cite{quhuijun2017calculation}根据GB28373-2012《N类和O类罐式车辆侧倾稳定性》\cite{gb28373_2012}中的计算方法，以GB7258-2017《机动车运行安全技术要求》\cite{gb7258_2017}中的稳定性判定条件为依据，对某型号液罐车进行了侧倾稳定性的理论计算，得出了变截面液罐车相较于非变截面液罐车质心高度更低，且在设计条件许可范围内变截面高度越大整车重心越低的结论。于迪\cite{yudi2016nonfull}等建立了n阶弹簧-质量等效模型用于描述罐体的线性横向振动模态，给出了n个质量和弹簧劲度系数的计算公式，研究了5种不同椭圆率的罐体，认为椭圆率$a/b=1.5$时罐车所受馆内液体的侧向冲击力和侧倾力矩最小；Di Yu等\cite{yudi2019rollstability}利用遗传算法调整椭圆规摆等效模型的椭圆率来最小化侧倾力矩，发现长轴$a=$\SIrange{1.6}{1.7}{m},短轴$b=$\SIrange{1.15}{1.25}{m}，即罐体椭圆率$a/b=$\SIrange{1.28}{1.478}{}时罐体稳定性最佳；李显生\cite{lixiansheng2015ga}同样利用遗传算法调整罐体椭圆率，优化液体质心高度和整车侧倾力矩，得出最优椭圆率为1.367的结论。
+
+      在添加防浪板方面Guillermo\cite{moreno2022davies}等人通过建立质点簇-杆件等效模型的方法研究了液罐车内液体的质心位置移动与车辆侧倾稳定性之间的关系，提出了一种新的侧倾稳定性指标，并推导出添加抑制液体侧向流动的装置将有效提高液罐车辆的侧倾稳定性；刘奎等\cite{liukui2009braking,liukui2009steering}用CFD仿真验证了液罐车制动和转向工况下纵向防波板面积大于\SI{40}{\percent}横截面时能有效改善罐体受力，每间隔\SI{3}{m^3}容积设置一个\SI{40}{\percent}横截面有效面积的纵向防波板也是《液化气体汽车罐车安全监察规程》对液罐车罐体设计的硬性规定。但因为无规定且制造成本较高，一般罐车内部不设横向防波板。另外，在还有如利用假装弹性气袋固定自由液面以达到抑晃效果\cite{wangqiongyao2017sloshing}、改进罐体结构以优化其受力\cite{fangliang2022fe}、利用地理信息系统提供道路结构预警信息\cite{zhangweihua2019gist}等方法。
+
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{改进液罐截面\cite{chenyibao2016crosssection}\} \label{fig:cross_sec_improve}}
+          {\includegraphics[width=0.31\linewidth]{fig/chap1/tank_shape.png}}
+        \subcaptionbox{改进防浪板形状\cite{hanyoubin2019vof} \label{fig:wave_board_improve}}
+          {\includegraphics[width=0.31\linewidth]{fig/chap1/wave_proof.png}}
+        \subcaptionbox{增加弹性气袋\cite{wangqiongyao2017sloshing} \label{fig:elastic_bag}}
+          {\includegraphics[width=0.31\linewidth]{fig/chap1/elastic_bag.png}}
+        \caption{液罐车防侧翻被动安全措施}
+        \label{fig:passive_methods}
+      \end{figure}
+
+      综上，从车辆结构入手的被动安全措施目前已经有过大量研究，而受限于车辆成本、罐体减重、检修/清洗要求等约束，难以将罐体内部增加过多复杂的防浪板或气袋，目前大部分符合实际应用条件的方案已经产业化应用，但仍然存在较多因为特殊道路结构特征、驾驶员感知首先/对周车动态预测不准/违规操作等引起的大量液罐车侧翻事故。而在目前车路云一体化应用推进的大背景下，在车云协同架构下进行液罐车防侧翻主动规划与控制将会有更好的应用前景。
+
+    \subsubsection*{(2)液罐车防侧翻主动安全措施研究现状}
+      主动防侧翻安全措施目前包含防侧翻运动规划与防侧翻控制两大类。
+
+      \textbf{(a)车辆侧翻状态衡量指标} 
+
+      车辆的侧翻状态衡量指标通常包括利用质心高度和轮距表示的静态稳定因数（Static Stability Factor, SSF）\cite{huston2014ssf}、动态稳定因数（Dynamic Stability Factor, DSF）\cite{jin2007critical,heyuancha0_2010factor}、侧向载荷转移率（Lateral-load Transfer Ratio, LTR）\cite{zhang2016pulsed,zhao2019hinfty}及其变体\cite{jin2021heavytruck}、多参数联合\cite{jin2016tripped,jin2019triaxle,imine2015switched}、侧翻时间（Time to Rollover, TTR）\cite{wanying2020antirolover,zeng2017bpnn}、零力矩点（Zero Moment Point, ZMP）\cite{jinliqiang2017yujing}等。而其中SSF一般准确性较差无法反映动态侧翻状态；DSF涉及众多参数计算且随行驶工况变化计算方法和考虑因素差别均较大；LTR可以直观地反映车辆侧翻的状态，但是通常需要利用其他方式如悬架力对其进行等效计算；TTR对于预警类算法有较好的作用，但一般不会用在控制中；ZMP是地面反作用力产生力矩为零的那一点，如果ZMP位于机器人的支撑多边形内，机器人则被认为是稳定的，而ZMP通常用于双足机器人的稳定性控制中。
+
+      \textbf{(b)防侧翻运动规划研究现状} 
+
+      防侧翻轨迹规划方法通常在一般轨迹规划的基础上考虑车辆侧倾动力学特性，而一般轨迹规划方法可以大致划分为基于搜索的方法、基于采样的方法、基于几何的方法、基于优化的方法、基于学习的方法。
+
+      基于搜索的常见算法有广度优先适用于离散程度较低的Dijkstra算法\cite{bacha2008odin}、加入启发信息适合静态路径寻优的A*算法\cite{likhachev2009planning}、Hybrid A*算法\cite{kurzer2016hybrida}和D*算法\cite{stentz1994efficient}以及分阶段进行以空间换时间的DP算法\cite{dong2023ecocruising}、对结构化道路离散搜索的规划器Lattice Planner\cite{werling2010frenet}等。上述基于搜索的算法适用于离散空间中，一般在网格或图结构中进行搜索，算法本身具有完备性，即如果在给定离散条件下存在一组可行的最优解，那么在不考虑计算时间的前提下算法一定会找到该解。但基于搜索的算法由于将状态空间离散，通常难以充分考虑车辆的动力学特性。
+
+      基于采样的方法如解决高维空间静态路径规划的（Probabilistic Roadmap Method, PRM）\cite{kuwata2009realtime}、随机撒点的快速拓展随机树（Rapidly-exploring Random Tree, RRT）\cite{karaman2011sampling}、加入启发因素只在得到一条可行路径后只搜索可能降低代价的邻域的RRT*\cite{klemm2015rrtconnect}、从始末位置同时相向撒点加速搜索的双向RRT*\cite{fan2024birrt}、等。基于采样的算法同样具有完备性，但由于结果中随机因素较多，多次规划结果通常难以统一，一般在非结构化道路运动规划中的应用较多。
+
+      基于几何的方法，在低速对轨迹曲率连续性要求不高的场景如自动泊车中，有曲率突变但灵活性更强的Dubins曲线\cite{siedentop2015dubins}和正弦Sine曲线\cite{huang2022sineresistance}得到了广泛应用；在高速应用中参数化曲线如曲率多项式构建的回旋曲线（如羊角螺旋、欧拉螺线）\cite{brezak2014clothoids}、空间坐标多项式曲线\cite{petrov2014overtaking}，以及各类控制点曲线如贝塞尔曲线\cite{rastelli2014continuouscurvature}、非均匀B样条曲线\cite{phanhuu2021bsplines}，各类插值点曲线如样条曲线Spline\cite{gotte2018splinebased}、PICHIP三阶插值曲线\cite{hegedus2020realtime}等因其曲率连续且控制自由度高而得到应用。
+
+      基于优化的方法一般通过优化控制量或优化曲线的插值点/控制点/多项式参数等生成一条光滑的考虑动力学的曲线，而通过碰撞约束\cite{dong2023ecocruising}、人工势场\cite{liuzhiqiang2017shichang}等方式考虑碰撞代价。例如，Y Rasekhipour等研究者通过叠加障碍物指数函数和道路三角函数，构建了三维虚拟势场，从而生成了最优的避障轨迹，并采用多约束模型预测控制（Model Predictive Control, MPC）来跟踪该轨迹\cite{rasekhipour2017pfmpc}。另外，Zhilin Jin等研究者\cite{jin2021heavytruck}提出了一种基于MPC算法的智能重型卡车防侧翻路径规划与控制策略，该策略假设已获得全局路径规划，并结合V2X和环境感知信息，考虑车辆动力学限制和人工势场法，在确保车辆侧倾稳定性的基础上进行路径规划和轨迹跟踪控制。
+
+      基于学习方法的防侧翻运动规划通常采用强化学习（Reinforcement Learning, RL）\cite{wu2024rlsurvey,zhang2023intersectionrl,irshayyid2024highwayrl}，虽然潜力较高，且在Safe RL的理论上\cite{zhang2024saferl_tits,gu2024saferl_tpami,garcia2015saferl}对于控制的安全性具有保障，但实际模型训练过程中非常依赖数据质量，实际驾驶应用中RL方法常常处于过分安全和不够安全两种比较极端的状态，相关理论和实践仍在蓬勃发展，在未来具有非常高的潜力。
+
+      上述方法各有其优势和局限性，不同场景下应根据具体情况选择合适的方法。但目前为止，尚未有针对液罐车特性的防侧翻运动规划方法得到公开。
+
+
+
+      \textbf{(c)防侧翻控制方法} 
+
+      对于车辆侧倾稳定性的控制方法传统上大致有4种思路，如图~\ref{fig:anti_rollover_methods}所示，包括主动悬架\cite{xiao2020rollsuspension}、主动转向\cite{shao2023vhrobustmpc},差动制动\cite{carlson1981two}，和分布式驱动\cite{zilin2023integrated}，及上述方式的组合，如Xu等\cite{xu2011rollover}结合差动制动与主动转向应用于结合，Liang等\cite{liang2022multiagent}基于多智能体的方式将主动转向与主动悬架结合
+
+      主动悬架通过改变两侧悬架支撑力，抑制车辆质心外移实现防侧翻。但其不仅在当前技术条件下硬件成本和能耗成本非常高，且悬架力在极端工况对于侧翻抑制的能力有限，只有在高端车型上才可能配备，而在商用车上除采埃孚ZF公司的CDC连续减振阻尼控制系统外基本没有应用。
+
+      主动转向通过调整前轮转角实现防侧翻，其实质相当于一种路径重规划，走了更不容易侧翻的路径。也正因如此，其能在最极端工况做到防止车辆侧翻，但对非自动驾驶来说需要车辆具有电子转向助力系统且支持主动转向功能，否则加装硬件成本较高。
+
+      差动制动利用一侧车轮制动的方式对车辆质心施加横摆力矩，从而间接影响侧翻动态，主要用于侧倾-偏航-俯仰集成式控制系统。差动制动最明显的优势在低成本，因其能在已普及的电子稳定系统（Electronic Stability Program, ESP）硬件上方便地实施。但其局限性主要在于横摆力矩对侧倾动态的影响有限，且一般是被动响应。现有应用如美驰威伯科公司的RSC防侧翻稳定性控制系统。
+
+      分布式驱动是差动制动的升级，在制动力基础上继续在其他车轮施加驱动力从而增加能够对质心施加的横摆力矩。但只适用于使用轮毂电机的电动车型，对半挂车来说，分布式驱动方法通常为使用带动力的挂车。但分布式驱动仍然受限于横摆力矩对侧倾动态的限制。
+
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{主动悬架\label{fig:active_suspension}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/active_suspension.png}}
+        \subcaptionbox{主动转向(前轮和/或后轮) \label{fig:active_steering}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/active_steering.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{差动制动 \label{fig:diff_braking}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/diff_braking.png}}
+        \subcaptionbox{分布式驱动 \label{fig:distributed_driving}}  
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/dist_driving.png}}
+        \caption{现有车辆防侧翻控制方法}
+        \label{fig:anti_rollover_methods}
+      \end{figure}
+
+
+      由于现有的液罐车防侧翻控制研究以人工驾驶液罐车为对象构建辅助驾驶算法，故受限于车载硬件条件一般使用差动制动方法，少量将差动制动于主动转向结合。对上述差动制动和差动制动与主动转向结合的方法，通常采用的控制算法有比例积分微分控制（Propotion-integral-differential, PID）或模糊逻辑PID、线性二次型调节器(Linear Quadratic Regulator, LQR)、模型预测控制（MPC），滑模控制（Sliding Mode Control, SMC）、无模型自适应控制（Model-free Adjustive Control, MFAC）\cite{huyun2019mfac,luoyugong2019sbw,tangzeyue2023mpcmfac,fengzengxi2021mfacpso}、$H_\infty$控制\cite{zhao2019hinfty}等。
+
+      如赵伟强，封冉等\cite{zhaoweiqiang2018equivalent}通过建立等效单摆与3自由度液罐车辆的耦合模型，通过PID控制差动制动，实现了简单的液罐车防侧翻控制策略；李杰等\cite{lijie2020carliquid}通过修改CFD软件Fluent中的自定义动量源项实现了Fluent与三自由度模型的车-液耦合仿真，验证了所提出的模糊PID差动制动控制策略；于志新,程新新等\cite{yuzhixin2018mpc}根据势流理论建立了圆形截面液罐的液体晃动模型，并与3自由度车辆模型进行耦合，基于模型预测控制方法进行差动制动与主动转向的同时控制；赵伟强,凌锦鹏等\cite{zhaoweiqiang2019semitrailer}建立了等效单摆与6自由度半挂液罐车的耦合模型，通过LQR控制器进行差动制动控制实现侧倾稳定性控制；于志新等\cite{yuzhixin2019optimalcontrol}将根据势流理论建立的液体晃动模型与6自由度半挂液罐车结合，通过LQR控制器进行差动制动侧倾稳定性控制；Sun等\cite{Reviewer2_SunWencai2022}将单摆结合三自由度车辆应用LQR误差模型进行车辆侧倾稳定性控制；万滢\cite{wanying2020antirolover}利用等效单摆模型与3自由度车辆动力学模型结合，以TTR为指标，通过LQR控制器控制差动制动，建立了不同工况下不同控制目标的横摆-抑晃-防侧翻最优控制系统。魏星\cite{weixing2023_antirollover}提出了半挂式液罐车防侧翻与路径跟踪协调控制策略，将主动防倾杆、差动制动与轨迹跟踪通过状态机方式结合，切换轨迹跟踪与防侧翻控制模态；郑雪莲\cite{zhengxuelian2019mfacpatent}等基于FFDL-MFAC算法对液罐车进行侧翻稳定性控制，无需建立精确的动力学模型，通过附加差动制动控制液罐车横摆角速度，算法适用于不同形状罐体的液罐车无需事先标定。Li等\cite{MFAC_LiXiansheng2021}为差动制动和主动转向设计了无模型自适应控制（MFAC）。他们的研究结果表明，与差动制动相比，主动转向显著减少了稳定时间和超调，分别减少了约\SI{54}{\percent}和\SI{37}{\percent}。这种差异源于这样一个事实：即虽然横摆力矩对侧倾动力学的影响是间接且有限的\cite{liutianfeng2024heterogeneous}，但主动转向涉及路径重新规划，有效地解决了更具挑战性的情况。上述所有方法都提高了油罐车的翻车稳定性。然而，它们主要侧重于人工驾驶时辅助的紧急救车，而非自动驾驶场景下的常态化运行。
+
+      总结而言，上述4种方法及其组合能够在一定限度内有效提升车辆的侧翻稳定性。但通常只作为辅助驾驶方法，存在事后反应、非预防性措施等问题，上述方案若结合防侧翻规划可以预期发挥更好的效果。
+
+      \textbf{(d)半挂车运动规划与轨迹跟踪}
+      本文主要研究半挂式液罐车，半挂车运动规划主要任务是行驶出一条平滑的轨迹，但是挂车存在牵/挂不同轨的内轮差现象，这使得规划在满足动力学约束（如防侧翻、防折叠等失稳约束）以及执行器约束的同时还需要考虑同时保证牵引车挂车避障（考虑静态障碍与动态周车）。
+
+      现有半挂车规划与跟踪控制方案可以分为低速与高速工况。低速工况主要涉及半挂车自动泊车研究，规划层根据半挂车运动学模型考虑牵引车和挂车二者的避障，以基于搜索/采样/优化/强化学习等方法规划牵引车泊车轨迹，控制层只需牵引车或挂车其一跟踪轨迹即可实现牵引车挂车同时避障与相关约束。如王元民等\cite{wangyuanmin2024}提出二次规划（Quadratic Programming, QP）与双向拓展快速拓展随机树（Bidirectional Rapidly-Exploring Random Tree, Bi-RRT）结合求解初始解然后用偏向性采样平滑的方法实现半挂车避障倒车；陈朝\cite{chenchao2023}将铰接角和碰撞约束与B样条曲线优化结合实现垂直泊入；贾生超\cite{jiasenchao2023}推导半挂车前向后向铰接角稳定条件与混合$A^\ast$算法结合实现自动泊车；现有高速工况下的半挂车轨迹规划基本不考内轮差现象，侧重于规划一条轨迹后通过\emph{跟踪控制}使得牵引车和挂车都能尽量跟踪同一条轨迹或控制挂车跟踪目标轨迹，如李斯旭\cite{lisixu2021}等通过结合多点预瞄与状态轨迹线性化加权牵引车挂号侧跟踪误差让牵挂同时跟踪同一条轨迹；曹莉凌等\cite{caoliling2024}利用LQR调节铰接角误差实现挂车同时跟踪，并利用PID进一步补偿误差；张发旺等\cite{zhangfawang2025}开发了双策略跟踪方法，上层利用近似动态规划（Approximated Dynamics Programming, ADP）控制牵引车跟踪，下层利用IPOPT求解器优化上层权重降低挂车跟踪误差，实现牵挂对同一轨迹的跟踪；宋广昊\cite{songguanghao2023}对半挂式液罐车开发羊角螺线（Clothoid）接贝塞尔曲线（Bezier Curve）的两段式换道轨迹规划以降低峰值侧向载荷转移率，并通过挂车轴主动转向实现挂车轨迹跟踪；王洪昌\cite{wanghongchang2023}提出了基于同伦流形的混合A*/DP规划方法，离散化路口后实现左转时的快速半挂车避障规划。但现有上述半挂车低速方案采用运动学模型，在高速不通用且多依赖离线搜索实时性较差；高速方案下牵引车与挂车轨迹跟踪存在冲突且处理复杂。
+
+      \textbf{(e)半侧翻模态及其可控性} 
+
+      此外，如图~\ref{fig:rollover_modes}所示，车辆侧翻有全部车轮着地模态（未侧翻模态）和一侧车轮离地（半侧翻模态，Semi-Rollover）两种状态\cite{wanying2020antirolover}，而半侧翻模态在很多研究中已经被定义为侧翻。但实际车辆行驶过程中由于操作不慎、绊倒性侧翻等原因在达到半侧翻态时仍旧有将车辆救回的余地。
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{fig/chap1/rollover_modes.png}
+        % \caption*{图片注释解释说明}
+        \caption{车辆侧翻的两种模态}
+        \label{fig:rollover_modes}
+      \end{figure} 
+
+      但由于目前研究只关注未侧翻模态，而忽略了半侧翻模态，国内外缺乏对于半侧翻模态可控性、动力学特性与控制方法的探究，故对吉尼斯记录、网络公开可访问的交通录像资料与影视素材进行了搜索，对该模态的说法一般为侧两轮行驶（Driving on Two Wheels），或单边行驶。首先关注半侧翻模态的发生条件。如图~\ref{fig:semi_rollover_condition}所示，半侧翻状态在小型车辆行驶时一般不容易被动发生，通常是驾驶员认为主动在高速情况下通过ABA式（ABA表示向某向打方向，再向反向，再回来的方式）快速打方向或AB式快速打方向产生的，通常属于特技动作，可用于超车或紧急避险。其他主动发生方法包括一侧车轮行驶过带坡度的单边桥等。对于大型车辆，半侧翻模态由于车辆质心更高更易发生，其发生通常是被动的，如中速在大曲率弯道下发生，或高速在小曲率弯道发生等。
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{高速ABA式快速转向主动发生 \label{fig:abs_start}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/aba_start.png}}
+        \subcaptionbox{高速AB式快速转向主动发生 \label{fig:ab_start}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/ab_start.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{中速大曲率弯道被动发生 \label{fig:passive_start}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/passive_start.png}}
+        \subcaptionbox{高速小曲率弯道被动发生 \label{fig:high_start}}  
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/high_start.png}}
+        \caption{半侧翻态发生的情况}
+        \label{fig:semi_rollover_condition}
+      \end{figure}
+
+      其次关注半侧翻模态的可控性，如图~\ref{fig:newb_test}所示，2016年11月3日中国车手韩岳驾驶一台MINI完成侧两轮行驶纽伯格林北环全程\SI{20.83}{km}并打破圈速记录；如图~\ref{fig:auto_test}所示，2022年12月，车手田林文驾驶长安览拓者挑战 “汽车侧两轮往返绕桩用时最短”吉尼斯世界记录成功，绕5桩用时\SI{38.41}{s}；如图~\ref{fig:toy_test}工程师对模型玩具车进行改装，通过小型IMU和主动转向控制实现模型车侧两轮行驶；图~\ref{fig:tank_truck_test}是某影视作品中驾驶员进行液罐车半侧翻态行驶的快照截取。通过上述实例总结来说，半侧翻模态在高速和低速都是可控的，半挂液罐车也可控，且仅通过前轮转向即可控制，且通过控制器也是可控的。
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{纽博格林北环试验场侧两轮行驶 \label{fig:newb_test}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/newb_test.png}}
+        \subcaptionbox{汽车侧两轮往返绕桩挑战现场 \label{fig:auto_test}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/auto_test.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{玩具车靠控制器侧两轮行驶 \label{fig:toy_test}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/toy_test.png}}
+        \subcaptionbox{液罐车半侧翻态行驶 \label{fig:tank_truck_test}}  
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/tank_truck_test.png}}
+        \caption{半侧翻模态可控性调研}
+        \label{fig:semi_rollover_ctrb}
+      \end{figure}
+
+  \subsection{车云协同预测性决策与规划研究现状}
+
+    云端预测性行为决策与运动规划是在单车自动驾驶决策与规划的基础上发展而来的，相对于单车方案，云端预测性的决策和规划更加考虑了云端的全局感知、并行算力与协同优化优势，对单车所触及不到的长时域规律进行解析，并给出更具指导性的建议。但云和车做规划的基本思路是不变的，单车自动驾驶的决策与规划方法对于云端有非常多值得借鉴的思路。
+
+    \subsubsection*{(1)自动驾驶决策与规划研究现状}
+
+      自动驾驶的行为决策自始至终想解决的只有一个核心问题：处理与周围车辆/交通参与者间的交互。自DARPA自动驾驶挑战赛后建立的对于自动驾驶的感知，预测，决策，规划，控制的模块化流程沿用了多年\cite{ferguson2008urban,urmson2008boss,leonard2008perception,kammel2008annieway,vonhundelshausen2008tentacles,montemerlo2008junior,thrun2006stanley}，但此流程中隐藏了一个严重的逻辑谬误。按照流程，预测模块之后接决策模块，利用对周车的预测信息进行决策；而周车行为受自车影响，预测结果实际应随自车决策不同而不同，这就导致了原有方案在多车交互处理上效果欠佳。
+
+      目前自动驾驶分为两大技术路线：模块化自动驾驶方案和端到端自动驾驶方案，两种路线给出了类似的解决上述逻辑谬误的方案，即预测决策一体化。最新的模块化自动驾驶方案通过显式交互、隐式交互及其组合来考虑自车与周车行为间的耦合进行决策。
+
+      显式交互以自车可能的不同行为划分场景，基于自车行为预测周车反应，从而综合评价出最好的场景并以该场景下的自车决策作为决策输出，典型的如多策略决策方法（Multi-Policy Decision Method, MPDM）。Cunningham等\cite{cunningham2015mpdm,galceran2017changepoint}最早提出了MPDM思想，这一思想将多车之间的不确定性交互问题建模为部分可观测马尔科夫决策问题(Partially Observable Markov Decision Problem, POMDP)，并提出利用领域知识来简化决策空间，即用一组闭环的策略/意图来描述周车和自车的决策空间。这样的策略集合在路口可以包括左转、右转、直行，在一般道路可以包括纵向的加速、减速、速度保持，横向的左换道、右换道、车道保持，以及横纵向的组合，由此需要考虑的决策数量大大减少。Ding等提出的EPSILON\cite{ding2022epsilon}继承了MPDM思想并对其进行了改进，提出领域特定闭环策略树（Domain-Specific-Policy Tree, DCP-Tree）和条件集中分支（Conditional Focused Branching, CFB）机制\cite{zhang2020guidedbranching}，通过只考虑自车最多一次换道情况大大减少了自车决策空间，并对只展开意图不确定性高的周车的不同意图，结合无人机领域的时空走廊提出时空语义走廊规划器应用于运动规划\cite{ding2019semanticcorridor}。Bae等\cite{bae2023lanechange}通过结合MPC和生成对抗网络（Generative Adversarial Network, GAN），通过驾驶意图生成平滑的换道轨迹，并采用自适应安全边界和卡尔曼滤波器来提高实际应用中的性能，确保了在密集交通中进行换道的有效性和安全性。
+
+      隐式交互以周车可能的意图进行组合得到一组场景，并分别考虑自车在每种场景下如何应对，典型的如防御性规划（Contingency Planning）思路\cite{salvado2016contingency}和博弈论思路。防御性规划的思路如Huang等\cite{huang2021riskbudget}提出了一种基于风险预算的递归控制算法，通过动态调整风险预算，保证在满足安全约束的同时，减少保守性，提高规划效率。Da等\cite{da2022reactivesafety}提出了综合反应式安全（Comprehensive Reactive Safty, CRS）框架，其不再要求规划一条完全无碰撞的轨迹，而是要求能够据未来环境变化做出反应保证安全，并基于CRS框架提出了反应式迭代线性二次规划（iterative Linear Quadratic Regulator, iLQR）算法。博弈论思路如Le Cleach等\cite{li2018gametheoryacc}提出了一种基于无迹卡尔曼滤波的逆动力学博弈方法，用于在线估计其他智能体的目标函数，并将其整合到滚动时域博弈论规划器中，以实现自适应轨迹预测和规划，并在\cite{li2020gametheorytits}提出了一种基于增广拉格朗日方法的快速求解器ALGAMES，用于解决具有非线性约束的多玩家动态博弈问题，并在自动驾驶场景中实现了实时性能。Li等\cite{lecleach2020lucidgames}基于多并发领导者-跟随者对和滚动时域优化提出了一个博弈论框架，用于模拟无信号交叉口的多车辆交互行为，并通过仿真验证了模型的有效性。并进一步在\cite{lecleach2022algames}提出了一种基于Level-K博弈论的车辆交互模型，用于模拟无信号交叉口内车辆的长时域、多步、交互式决策，并将其应用于自动驾驶汽车控制。
+
+      综合式交互为显式与隐式交互思想的组合，且常与其他各种思想结合。如Tong Li等\cite{li2023marc}提出的风险敏感多策略防御性规划（Multipolicy and Risk-Aware Contingency Planning, MARC）框架通过集成MPDM和风险感知的防御性规划，结合场景级分歧的动态分支点和LP-iLQR双层迭代优化算法，显著提升了车辆在复杂交互环境中的决策效率和驾驶行为的自然性。此外，如Sun等\cite{sun2018courteous}提出了一种基于礼貌的规划方法，通过在目标函数中加入一个衡量自车行为对他车成本影响的指标，使车辆在追求自身安全和效率的同时考虑到对他车带来的不便以做出更加礼貌的驾驶行为；Sheng等\cite{sheng2023cooperationaware}提出一种考虑协同的自动驾驶规划方法，通过时空图卷积网络构建交互式轨迹预测模型，预测周围车辆对自车决策的反应以评估候选决策。
+
+      自2022年大语言模型（Large Language Model, LLM）快速兴起以来\cite{AttnIsAllYouNeed2017}，大规模数据驱动的统一表征与跨模态知识融合显著加速了自动驾驶从“模块化流水线”向“可微统一优化”的范式迁移。端到端（End-to-end, E2E）自动驾驶因此成为热点：其核心目标是缓解模块化方案中感知误差难以被后续模块正确吸收、感知—规控接口造成的信息裁剪与不确定性丢失等问题。围绕可微边界的不同，现有端到端路线通常划分为两段式端到端（以结构化感知结果为输入）与一段式端到端（从原始或近原始感知表征直接到规划/控制输出），并进一步发展到“感知直接到控制”的视觉语言动作模型（Vision Language Action Model, VLA）形态。
+
+      两段式端到端通常以结构化感知结果作为输入，是早期端到端方案的主流工程选择，其方法谱系主要包括模仿学习与强化学习，并常组合使用：通过行为克隆、逆最优控制、知识蒸馏等模仿学习\cite{chen2023endtoend}注入先验以快速初始化，再衔接强化学习提升长时域闭环性能。规划挑战体系中，PlanTF\cite{PlanTF2023}奠定了两段式端到端规划的Transformer化范式；PLUTO\cite{PLUTO2024}作为其后续代表，将自车、周车、静态障碍物、静态地图与动态交通信息分路编码，并设计可微辅助任务与横纵向交叉因式分解注意力解码机制，配合规则后处理在综合指标上显著提升表现，首次击败了规则方案：2023年nuPlan挑战赛冠军PDM-Close。CarPlanner\cite{CarPlanner2025}在此基础上引入动作模式一致性的自回归世界模型以增强长时域一致性。与此同时，“将驾驶行为离散化为token并借鉴语言建模训练范式”的路线也被用于两段式体系增强：Wayformer\cite{Wayformer2022}与Trajeglish\cite{Trajeglish2024}体现将自车动作/轨迹离散成“词”的建模思路，Plan-R1\cite{PlanR12025}进一步将强化学习与PLUTO式框架衔接以提升闭环决策质量。总体而言，两段式端到端的优势是输入结构化、跨平台迁移友好、较少面临原始感知域的Sim2Real适配；但其不可避免受限于感知到规控的信息接口，感知不确定性难以在端到端训练中被充分吸收并转化为更优决策，这构成其相对于一段式路线的主要性能上限来源。
+
+      一段式端到端的关键差异在于：规划/决策损失的梯度可以回传到上游感知表征，从而实现感知—预测—决策—规划的整体协同优化。向Transformer迁移的统计基座表征、多模态融合与BEV化输入是端到端方案发展的重要基石。Transformer\cite{AttnIsAllYouNeed2017}奠定了序列建模与注意力机制的通用范式，并促成视觉领域从CNN主导向Transformer主导的快速迁移：ViT\cite{ViT2021}提供视觉Transformer的基础表征框架，DETR\cite{DETR2020}将检测任务显式序列化并实现端到端集合预测，Deformable DETR\cite{Deformable_DETR2021}进一步通过可变形注意力提升稀疏采样效率与收敛质量；相较之下，Faster R-CNN\cite{Faster_RCNN2016}、Mask R-CNN\cite{MaskRCNN2018}与早期YOLO\cite{YOLOv12016}代表传统两阶段/实例分割/单阶段检测范式，在统一序列接口与全局注意力建模方面存在结构性差异。多模态端到端方面，Transfuser\cite{Transfuser2023}代表性地推进了相机/激光雷达等多源原始数据的融合机制，使“在统一表征上直接学习规划”更具工程可行性。纯视觉端到端则普遍以鸟瞰图（Bird-Eye View, BEV）作为统一几何坐标系：Lift-Splat-Shoot\cite{LSS_Lift_Splat_Shoot_BEV2020}提供从图像到BEV的显式几何投影范式，PanopticSegFormer\cite{PanopticSegFormer2022}推进了BEV语义与全景理解能力，BEVFormer\cite{BevFormer2022}进一步通过时序注意力与多相机对齐强化动态场景表征（BEV发展脉络可由\cite{LSS_Lift_Splat_Shoot_BEV2020,PanopticSegFormer2022,BevFormer2022}串联）。在BEV之上，结构化输出同样快速演进：MapTR\cite{MapTR2023}体现BEV到矢量化地图/车道拓扑要素的生成路径，SurroundOcc\cite{SurrondOcc2023}代表占用/可通行空间的体素化建模方向，CASPFormer\cite{CASPFormer2024}则延续以统一Transformer骨干推动多任务场景级理解的一体化趋势。UniAD\cite{hu2022uniAD}与VAD\cite{jiang2023vad}是早期代表：其将检测、跟踪、建图/占用等感知子任务与规划模块网络化并联合训练，使规划学习能够直接利用可学习的中间表征。UAD\cite{guo2024UAD}进一步强调将多模块融合为更统一的综合式架构，并引入无监督预训练以降低对标注的依赖。SparseDrive\cite{SparseDrive2024}体现以更稀疏/关键要素的表示与更高效的推理路径支撑端到端规划，而VADv2\cite{VADv2_2024}则作为VAD体系的重要迭代，强调在训练机制与闭环表现上的增强。在“开环规划/评测”语境下，BEV-Planner\cite{li2024bev_planner}具有代表性：其系统性分析开环端到端评测中的关键细节，并突出自车状态（ego status）在规划学习中的作用，通过面向自车信息的设计改善收敛与鲁棒性，从而为后续端到端规划的输入建模与指标解读提供了可复用的基线框架。在数据来源与目标形式上，Hydra-MDP\cite{li2024hydramdp}采用多模态、多目标的训练范式，将交互逻辑不仅从人类驾驶数据学习，也通过仿真数据补充多样性与长尾覆盖，从而提升端到端规划在稀有工况下的鲁棒性。强化学习与世界模型亦被用于增强闭环能力，例如SEM2\cite{gao2022sem2_worldmodel}通过语义掩码构建世界模型并配合多源采样提高长尾工况比例，体现“以可控数据分布塑形闭环策略”的路线。
+
+      随着端到端从“输出单一最优轨迹”转向“建模可行多模态轨迹分布”，生成式规划成为重要方向。扩散模型体系由去噪扩散概率模型（Denoising Diffusion Probabilistic Model, DDPM）\cite{DDPM2020}奠基，扩散去噪隐式模型（Denoising Diffusion Implicit Model, DDIM）\cite{DDIM2022}提供更快的隐式采样路径大大加速了采样耗时的DDPM，Score-based扩散\cite{Score_based_Diff2021}进一步提供了基于分数函数的训练视角；在数值加速方面，清华大学提出的DPM-Solver系列\cite{DMP_Solver2022,DPM_Solver_v3_2023, DPM_Solver_pp_2024}对高质量加速提供了更好的方案；在更加高维的向量空间表征上，潜空间扩散模型（Latent Diffusion Model, LDM）\cite{LDM_VQGANandDDPM2022}将向量量化生成对抗式网络（Vector Quantised-GAN, VQ-GAN）\cite{VQ_GAN2021}与DDPM结合从而“在潜空间进行扩散”以显著降低生成成本。面向自动驾驶闭环规划，DiffusionPlanner\cite{DiffusionPlanner2025}代表将扩散用于闭环规划并支持预测—规划联合建模的路线，通过生成多模态行为分布提升交互一致性与轨迹质量（并强调减少规则后处理依赖）。相比于传统扩散方式，Flow Matching\cite{FlowMatching2023original}这一条技术路线则提供另一条直接建模概率扩散的方式，建立线性插值的最短路径：“整合流（Rectified Flow）”用于以更少步数实现高效生成。扩散模型跨模态条件生成的范式如DALLE2中CLIP\cite{CLIP2021}与扩散模型结合\cite{DALLE_2_CLIPandDDPM2022}所体现的“条件对齐表征 + 生成模型”框架，并被更新的自动驾驶规划工作用于将地图/交通体/导航意图等条件注入生成过程。在更近期的结果汇总中，DiffusionDrive-v2\cite{DiffusionDrive_v2_2025}引入强化学习约束的截断扩散生成策略，并在其公开报告中给出了在NAVSIM基准上的更高分数，从而在同类生成式规划对比中形成新的强参考点；该结果在文中被表述为当时的基准最优，并体现出对以GoalFlow\cite{GoalFlow2025}为代表的先前强方法的进一步提升。
+
+      自动驾驶的运动规划模块为车辆规划出一条三维时空轨迹或二维平面路径。对高速运动、安全敏感、存在多实体实时交互的情况（如结构化道路上的自动驾驶任务）一般要求对轨迹进行规划与跟踪。
+
+      轨迹/路径规划的方法是通用的，对于非学习类方法而言主要区别在于求解的维度不同。自动驾驶一般考虑车辆在大地平面内二维运动，故轨迹规划涉及三维时空求解。而针对三维时空中的轨迹规划分为时空解耦规划与时空联合规划两种技术路线。时空解耦思路将三维规划拆解为两个二维规划问题，代表性的案例如百度Apollo的EM-Planner\cite{fan2018apollo}等采用横纵向解耦的思路先规划路径，再通过ST图考虑碰撞检测用动态规划（Dynamic Programming, DP）思想求解离散空间中的最优速度曲线后用二次规划（Quadratic Planning, QP）进行平滑。时空解耦求解效率高但由于忽略了横纵向运动之间内在的耦合而损失了解的最优性。时空联合规划方案运算量大，但不被人为限制解空间，尤其对体积较大导致可行解数量相对更少的商用车，通常能找到更优的解。目前通过在策略参数空间优化\cite{tusimple2023aiday}、对不同自车周车意图组合的场景下进行优化\cite{li2023marc}、考虑同伦轨迹构型\cite{degroot2024topology}等方式进行时空轨迹规划。
+
+      总结而言，用于单车自动驾驶的行为决策方法和运动规划通过各种方式较好地考虑了自车与周车的短期交互，但也往往正因为决策和规划时域较短，考虑因素不够全面，导致决策和规划结果的预见性欠佳。
+
+    \subsubsection*{(2)云控预测性决策与规划研究现状}
+
+      云控系统通常将车端原有的单闭环信息流扩展为“车端闭环 + 云端闭环”的双闭环结构：车辆仍在本地执行实时感知—决策—规划—控制闭环，同时云端/边缘侧基于更广域的全局感知与计算资源并行求解长时域决策规划，向车端下发预测性行驶建议或约束，从而在不替代车端安全闭环的前提下提升整体安全性、通行效率与能耗表现。云控体系的有效性首先依赖车路协同感知能力的提升，即车端与路端同时进行感知并融合信息以获得更准确、更完备的环境理解；该方向已形成较成熟的研究体系，并构成后续车路协同与云控决策规划的基础\cite{Huang2025V2X}。在此基础上，研究重心逐步从“协同感知”推进到“协同行为/协同规划”，即在局部关键场景或冲突区域内利用车端与基础设施侧的信息互补与计算协同，形成可落地的协同决策与轨迹规划框架。典型地，UniV2X\cite{UniV2X2024}以车端规划为核心，将路端感知信息作为增量观测融入车端规划流程；UniMM-V2X\cite{UniMM_V2X2025}进一步将车端与路端在感知与预测环节解耦并并行建模，车端融合路端感知结果，同时在决策阶段对车路两端预测结果进行深度融合，以提升对复杂交互的理解与规划稳定性；V2X-VLM\cite{V2X_VLM2025}则引入大模型语义理解能力，将车路协同从“几何/动力学层面的感知融合”推进到“感知—语义理解—规划”的端到端趋势，使协同信息不仅服务于定位与目标检测，更直接服务于意图推断、交互解释与可执行规划生成。除单车层面的协同规划外，面向多车交互的协同策略学习也逐渐成为车路协同的重要分支：例如以路侧单元（Road-Side Unit, RSU）为中心的匝道汇入多智能体强化学习决策\cite{Gan2024MultiVehicle}利用RSU全局感知支撑多车策略学习，并通过两阶段/混合强化学习机制在效率与安全之间权衡；而V2X辅助运动规划与控制协同设计\cite{Li2024V2X}则强调在车路信息可用的条件下进行规划与控制的一体化协同，使车端执行器能更好地跟随云端/路端建议并保持闭环稳定。
+
+      随着车路协同从局部信息增强走向更系统性的“车路云”一体化协同，研究开始关注决策—规划—控制在不同计算层级上的功能划分与协同机制。一类代表性思路是将多智能体体系按车端、路端与云端进行分层解耦，通过分层强化学习与多智能体强化学习实现跨层级的协同决策与规划控制，例如车路云多智能体HRL-MARL框架\cite{Gao2025V2X}以车端智能体、路端智能体与云端智能体分工协作的方式组织策略学习与执行，体现“局部快速闭环 + 云端长时域全局引导”的体系化设计；在智能路口等冲突密集场景下，多智能体强化学习协同自动驾驶\cite{Yu2025MultiAgent}进一步表明在基础设施参与协调时，多车可通过协同策略显著改善安全性与通行效率。总体而言，车路云协同决策规划的组织方式可归纳为两条互补主线：其一是面向冲突点/关键区域的“集中决策”，即由路侧或边缘云在交叉口、匝道汇入等强耦合区域主导车辆通过次序与速度/轨迹建议；其二是面向更大空间尺度的“云端全局引导”，即由云端在路网层级进行宏观调度（如路径分配、拥堵消散、分区协调），并将约束或目标下发到局部执行层实现闭环落地。
+
+      在“冲突点集中决策”方向，基础设施主导的感知与决策一体化部署是关键趋势之一。AUTODRAITEC\cite{Kherroubi2024AUTODRAITEC}将感知与决策部署在路侧基础设施侧，并结合学习与强化学习为车辆生成速度建议/控制策略，从而在冲突区域形成更集中、更一致的协调控制；边缘计算支持的无信号路口防撞调度\cite{Lu2024EdgeComputing}强调利用边缘算力与低时延通信对路口冲突进行实时调度以降低碰撞风险；在混合交通场景下，边缘云控制路口车队的分层决策与协同控制\cite{Yu2025Hierarchical}进一步突出“边云计算 + 车群协同优化”的分层组织方式，使路口级决策既能处理瞬时冲突，也能兼顾队列组织与整体效率；面向无信号交叉口等典型冲突场景，车路协同多层决策框架\cite{Cui2025VehicleInfrastructure}通过分层协同决策在安全与效率之间实现系统性权衡。对于匝道合流等典型冲突区域，云协同合流控制与通信延迟补偿\cite{Yang2025CloudBased}将通信时延显式纳入规划与控制设计，通过延迟补偿机制提升云控合流策略的可执行性与鲁棒性。进一步扩展到更复杂的合流区域与多车道结构，多车道主线与双车道匝道CAV协同控制\cite{Wang2025Cooperative}面向多区域/多车合流协同控制给出系统性策略设计，以提升效率与安全。
+
+      在“云端全局引导”方向，研究开始将路网级优化与局部冲突协调进行统一：城市网络CAV协同重路由与路口协调\cite{Typaldos2025Cooperative}将上层路网rerouting与下层无信号交叉口轨迹协调耦合，体现“云端路网级优化 + 局部最优控制”的体系化闭环；该类方法通常以云端的全局状态与预测为基础，向局部执行层下发路径/时窗/优先级等约束，使局部协调在更大尺度上具备一致性与可解释性。与此同时，面向车路云协同的系统实现还必须面对通信链路的物理约束：车云之间通信通常通过4G LTE/5G NR实现\cite{xionglu2024_CVIS_survay}，相对车端本地计算通常存在更大时延，对实时控制任务具有天然约束；除时延外，丢包与通信拓扑切换等不可靠因素\cite{xuqing2021unreliable}也会影响云端建议的可用性与稳定性。因此，云端决策规划周期通常需要小于车辆动态行为的最小时间常数以保持“预测性”，同时又需大于绝大部分车云通信时延并考虑通信失效的降级策略\cite{wang2021platoonmpc}。为缓解通信与计算矛盾，分布式计算与分层控制成为常用工程路线：车云协同分布式计算\cite{dai2023cloudadmm}通过分布式优化框架在不同节点间分摊计算负担；更强调精确性的紧耦合路线往往采用“云端复杂模型/算法 + 车端简单模型/算法”的组合实现实时控制\cite{li2023cloudnmpc}；而更强调鲁棒性的松耦合路线则倾向于利用云端执行宏观语义级调度\cite{hailin2022semanticcentered}，将高层目标或策略偏好下发至车端，由车端完成安全约束下的实时闭环执行。
+
+      在应用层面，云控预测性决策规划通常以安全为硬约束，主要聚焦两类典型收益：预测性节能行驶与预测性高效通行。预测性节能行驶通常利用云端可获得的长时域先验信息（如城市道路红绿灯相位\cite{chenqien2023cpccbus}、高速道路坡度信息\cite{li2022pcctrucks}、周车状态与意图等动静态交通信息）进行速度/换道/队列策略的前瞻优化，并由车端控制器执行。Chen等\cite{chenqien2023cpccbus}在城市道路中显式考虑交叉口排队消散时间对车辆驾驶的影响，通过动态规划求解最优速度序列并下发车端执行，使公交车在不损失通行效率的前提下实现多路口连续通过并获得节能效果；Wan等\cite{lishuyan2022pccheavytrucks}在高速公路场景下针对重型卡车联合优化速度与挡位，利用坡度信息给出未来\SI{2}{km}的经济车速与档位，并提出路点分割方法（R哦啊的Points Segmentation Method, RPSM）降低云端动态规划的计算复杂性；Wang等\cite{wangluyao2024cloudpacc}进一步建模前车运动状态并论证前车车速与坡度的负相关关系，在道路坡度与前车状态约束下调和“安全跟车速度”与“经济车速”，并通过车端MPC进行速度跟踪以实现预测性车速规划。除纵向节能外，云控也被用于更长时域的换道决策协同：江宇\cite{jiangyu2023lc}在云控架构下考虑决策时域内自车最多一次换道决策，并在车端完成换道轨迹规划与执行。云控节能同样可扩展到队列控制：王宙等\cite{wangzhou2023hierarchical}提出云支持的分层式队列预测性巡航控制，云端采用滚动时域动态规划（Rolling Horizon Dynamic Programming, RHDP）优化速度规划，车端部署分布式模型预测控制（Distributed Model Predictive Control, DMPC）以兼顾队列稳定性与节能目标；梅润等\cite{meirun2023platoon}在云端先预测周车长时域速度变化（不考虑周车换道），再在自车最多一次换道的假设下联合优化纵向油耗与横向换道安全高效代价，体现“云端粗粒度长时域优化 + 车端可执行轨迹规划”的典型组合。
+
+      预测性高效通行则更直接面向通行效率与路网运行质量，常与特定道路场景绑定，并随智能网联车渗透率而呈现不同技术形态：在低渗透率下，云端需要在多数非受控车辆存在的情况下进行长时域预测并辅助单车决策；在中高渗透率下，多智能网联车辆的协同决策与协同规划成为主导。韩硕\cite{hans2024}针对十字路口场景在云端隐式考虑周车交互，对周车一次换道下的意图概率进行预测并组合成不同概率场景，在概率最高的若干场景下并行进行自车闭环策略树搜索，再利用云端的预测性决策结果与粗规划轨迹加速车端规划器求解，体现“云端并行推演 + 车端实时落地”的思路。面向高速匝道场景下大规模异质车辆组的实时协同控制，Shi等\cite{shijia2024rampcloud,shi2023finalstate,shi2024conflictgraph,shi2023ivscheduling}在异质车辆组集总动力学模型基础上，采用动态冲突图树搜索并配合启发式剪枝对主路与匝道车辆通行次序进行实时协同决策，并结合车云时延特性设计鲁棒无模型车辆控制方法，从而提升匝道云控系统在真实通信与异质性条件下的鲁棒性。
+
+      尽管上述研究在节能与效率优化上展示了云控的潜在收益，但在较长时间尺度内，实际交通仍将处于智能网联车低渗透率与通信受限并存的状态，这对预测性决策规划的可落地性提出了更严苛的要求：一方面，面向非受控周车的长时域行为预测往往仍较为简化，车辆参数与意图不确定性难以被充分建模；另一方面，即便引入不确定性，决策时域也常受限于可计算性与通信约束而偏短（例如仅\SI{8}{s}\cite{hans2024}），从而使云端相对于单车自动驾驶的增益被弱化并难以形成稳定优势。在实车验证层面，受限于周车动态预测精度，实验往往需要在社会车辆较少时进行或弱化对周车动态的考虑，导致算法在复杂开放交通中的可迁移性与产业化落地面临挑战。综合来看，现阶段云控预测性决策规划的关键研究问题正在从“能否在理想假设下获得收益”转向“在通信不可靠、预测不确定、低渗透率的现实条件下如何构建可降级、可验证、可持续演进的协同决策规划体系”。
+
+
+\section{本文研究内容}
+
+  \subsection{研究现状总结及存在的问题}
+
+    通过分析国内外研究现状可知，车云协同下的液罐车防侧翻行驶规划与控制是当前国内外交通与车辆学科的前沿领域，而相关研究方法还相对初步，主要存在以下几方面不足：
+
+    （1）针对车液耦合动力学建模描述问题，现有研究一般采用单摆模型描述液体晃动，但建立在二维平面上的描述虽然能反映液体在车辆侧倾和侧向移动自由度的主要动态，但未考虑不可避免的横纵向耦合流动，尤其是纵向流动对横向动力学的影响。此外，现有研究还忽略了对车辆行驶有重要影响的其他模态，如液体晃动对横摆模态的影响，也尚未考虑不同道路横纵向坡度情况下的稳态液体动力学差异。
+
+    （2）针对车辆防侧翻控制问题，一方面，现有研究在未侧翻模态尚未考虑反应更多关键模态液体晃动模型的加入以及将控制手段结合防侧翻规划，且限于安全问题尚未有进行液罐车防侧翻的实车与模型验证。虽有很多关于流体力学相似性的基础性研究，但同样鲜有关于车辆和液体动力何时同时满足的研究。另一方面，针对危险工况下可能出现的半侧翻模态，目前缺乏对于此状态可控性、动力学特性以及控制方法的研究。
+
+    （3）针对车云协同预测性决策与规划问题，现有研究对于非受控的周车的长时域行为预测过于简单，鲜有考虑这些车辆参数与意图的不确定性，或只考虑了短时域的不确定性进行决策，建模方法只能反映出有限的可能性，得出的结论较为理想，未能充分发挥车云协同的感知与算力优势。且目前尚未有针对液罐车的防侧翻运动规划研究，而现有车端运动规划方法在危险情况下不考虑液体晃动，难以直接应用在液罐车上。
+
+    （4）对于车云协同液罐车防侧翻体系建设而言，目前该体系尚未形成，各类研究重心较为分散，并未有从体系工程角度从车辆控制、规划与车云协同体系的角度共同出发，以整体为优化目标解决问题的尝试。
+
+
+  \subsection{本文研究对象}
+
+    本研究以低渗透率下高等级公路云控系统中使用云控预测性规划服务的自动驾驶液罐车与人工驾驶液罐车及为其提供服务的云平台构成的子系统作为研究对象，研究对象如图~\ref{fig:use_case}所示，包含高速公路全路段下场景以及部分其他高等级公路路口场景（本研究暂不考虑红绿灯相位）。
+
+    其中研究场景选择基于以下考虑：液罐车侧翻事故多发于高等级公路尤其是高速公路\cite{wangyang2023}，其中较为危险的场景有：上下匝道与连续坡道等需要提前减速并精准控制转向的场景、一般路段及路口等特殊路段与周车交互的场景、道路结构改变与静态障碍等需要避障的场景。故本研究选取的研究场景考虑高速公路全路段，如图~\ref{fig:use_case}所示，包括一般路段与特殊路段（上/下匝道、通过路口/匝道口、大曲率弯道、经过施工、车道数改变等）。且由于液罐车侧翻事故多涉及周车影响，故本研究场景中考虑目标液罐车（简称“自车”）与周车的交互。
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.9\linewidth]{fig/chap1/use_case.jpg}
+      % \caption*{图片注释解释说明}
+      \caption{研究对象示意图}
+      \label{fig:use_case}
+    \end{figure} 
+
+    本研究主要针对自动驾驶半挂式液罐车，兼顾可实现主动转向的人工驾驶半挂式液罐车，基于如下考虑：首先，液罐车分为整体式与半挂式，其中半挂式占绝大多数，且载重量大、质心高、控制难度高，相较于整体式更为危险，所以对半挂式液罐车的防侧翻研究将更有实际意义；其次，由于液罐车运输的货物运量大、危险性高、驾驶强度大、对驾驶员技术要求高，本研究认为其未来将被技术成熟、遵守法规、节省驾驶员成本的自动驾驶液罐车取代。故选取自动驾驶半挂式液罐车作为主要研究对象，假设其具有基本的环境感知（对一定范围内的道路结构、周车的感知能力）、决策与规划、闭环控制能力；兼顾转向助力系统支持实现主动转向驾驶辅助功能的人工驾驶半挂液罐车，作为快速推广算法、保障当下危化品液体运输安全的手段。
+
+    本文的研究目标为充分发挥高等级公路云控系统的广域感知和高并行算力优势，将车云协同预测性防侧翻决策与规划与更精确的车端防侧翻控制相结合，在不降低通行效率与经济性的情况下进一步提高液罐车行驶过程的侧翻稳定性并减少陷入危险情况的概率。
+
+  \subsection{总体研究方案}
+
+    为实现上述研究目标，本文将围绕车云协同液罐车防侧翻行驶规划与控制架构、车云协同预测性决策与防侧翻规划、车端态防侧翻控制与缩比液罐车实验验证等方面开展研究，本研究的总体研究方案如图~\ref{fig:thesis_archi}所示
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=1.0\linewidth]{fig/chap1/architecture.jpg}
+      % \caption*{图片注释解释说明}
+      \caption{本文研究框架}
+      \label{fig:thesis_archi}
+    \end{figure} 
+
+    \subsubsection*{(1)车云协同液罐车防侧翻行驶架构}
+
+    首先进行本场景下的场景任务体系架构构建：从信息物理体系的视角对研究对象进行分析，解析体系组成，并结合IVCPS体系架构框架的指导采用So-MBSoSE方法构建本场景下的体系架构，形成体系级防侧翻解决方案。最后，采用架构在环逻辑仿真对所构建的架构进行验证，以在验证完成的架构基础上实现车云协同决策与规划算法及车端控制算法。
+
+    \subsubsection*{(2)车云协同预测性决策与防侧翻规划}
+
+    在上述车云协同架构指导下，为从源头防止液罐车陷入危险工况，需要结合云端的广域感知和强大并行算力与车端对应急事件的实时响应能力进行车云协同预测性决策与防侧翻轨迹规划。首先，在云端进行低频率考虑周车不确定性交互的预测性行为决策：建立包含周车参数和意图不确定性的图扩散预测世界模型，并根据云端的周车历史信息与自车意图在世界模型进行推演实现智能体训练，考虑最小化20s长时域累计风险且保证行驶效率与舒适性的预测性决策。其次，根据行为决策结果进行考虑车辆简化侧翻特性的运动规划。以LTR为侧翻状态指标，找到该行为决策下使得$‖LTR‖_∞$最小化的换道轨迹，将该轨迹下发车端。最后，在车端建立简化侧翻模型考虑周车实时意图与最可能及最危险两种情况下的高频率的防侧翻避障应急轨迹规划。车辆根据感知结果自主判断云端建议是否可执行，若不可执行，则启动车端应急轨迹规划生成一条考虑侧翻特性的紧急避障轨迹用于跟踪。
+
+    \subsubsection*{(3)车端防侧翻轨迹跟踪控制与模型试验}
+
+    在上述车云协同架构指导下，为保证基本稳定能力，研究三聚焦于车液耦合动力学建模与防侧翻控制。首先进行横纵向耦合液体晃动建模：建立标准工况下的3D液体CFD数据集，并分析其黑盒输入输出特性，在此基础上建立非线性精确动力学模型用于云端构建的快速算法仿真验证平台，以及车端进行液体状态的推演。最后，分析车端控制器对于简化模型的需求，线性化对控制效果影响最大的模态，并将其与半挂车动力学模型结合，建立线性化半挂液罐车模型及其随运行工况的重线性化机制。其次，针对未侧翻模态进行轨迹跟踪抑晃防侧翻控制多目标最优控制问题，并在车端求解。此外，还考虑通过控制器嵌套的方式将算法用于辅助人工驾驶。最后，通过通过构建车液耦合仿真平台和缩比液罐车实验平台作为上述方法验证的手段。编写代码以MATLAB/Simulink为桥梁实现流体力学仿真软件StarCCM+和车辆动力学仿真软件TruckSim的联合仿真；其次构建云控缩比液罐车实验平台，包括液罐车改装、通信链路构建等，并进行实验相似性原则分析，以确保车辆侧翻动力学和流体力学同时满足相似性。最后，依据相似性原则进行试验工况设计并开展试验验证工作。
+
+
+
+
