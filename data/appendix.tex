@@ -2,11 +2,11 @@
 
 \chapter{补充内容}
 
-附录是与论文内容密切相关、但编入正文又影响整篇论文编排的条理和逻辑性的资料，例如某些重要的数据表格、计算程序、统计表等，是论文主体的补充内容，可根据需要设置。
+% 附录是与论文内容密切相关、但编入正文又影响整篇论文编排的条理和逻辑性的资料，例如某些重要的数据表格、计算程序、统计表等，是论文主体的补充内容，可根据需要设置。
 
-附录中的图、表、数学表达式、参考文献等另行编序号，与正文分开，一律用阿拉伯数字编码，
-但在数码前冠以附录的序号，例如“图~\ref{fig:appendix-figure}”，
-“表~\ref{tab:appendix-table}”，“式\eqref{eq:appendix-equation}”等。
+% 附录中的图、表、数学表达式、参考文献等另行编序号，与正文分开，一律用阿拉伯数字编码，
+% 但在数码前冠以附录的序号，例如“图~\ref{fig:appendix-figure}”，
+% “表~\ref{tab:appendix-table}”，“式\eqref{eq:appendix-equation}”等。
 \section{理论补充}
 
     \subsection{图扩散流匹配理论证明}
@@ -125,12 +125,12 @@
 
 % 附录中的插图示例（图~\ref{fig:appendix-figure}）。
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
-  \caption{附录中的图片示例}
-  \label{fig:appendix-figure}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
+%   \caption{附录中的图片示例}
+%   \label{fig:appendix-figure}
+% \end{figure}
 
 
 \section{表格}
@@ -528,15 +528,127 @@
 \section{数学表达式}
 
   % 附录中的数学表达式示例（式\eqref{eq:appendix-equation}）。
+  % \begin{equation}
+  %   \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
+  %   \label{eq:appendix-equation}
+  % \end{equation}
+  \setcounter{MaxMatrixCols}{20} % 至少 >= 16
+
   \begin{equation}
-    \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
-    \label{eq:appendix-equation}
+  M = \begin{bmatrix}
+  m_{11} & I_{1zz} & 0 & m_{14} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  m_{21} & -I_{1xz} & 0 & m_{24} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  m_{31} & 0 & 0 & m_{34} & m_{35} & m_{36} & 0 & m_{38} & 0 & m_{310} & 0 & m_{310} & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & m_{45} & m_{46} & 0 & m_{48} & 0 & m_{410} & 0 & m_{412} & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & m_{55} & m_{56} & 0 & m_{58} & 0 & m_{510} & 0 & m_{510} & 0 & 0 & 0 & 0 \\
+  1 & -\frac{c}{v_{1x}} & 0 & -\frac{h_{1c}}{v_{1x}} & -1 & -\frac{e}{v_{2x}} & 0 & \frac{h_{2c}}{v_{2x}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & \frac{v_{2x}}{l_p} & \frac{x_1}{l_p} & 0 & \frac{h_p}{l_p} & -2 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & \frac{v_{2x}}{l_p} & \frac{x_2}{l_p} & 0 & \frac{h_p}{l_p} & -2 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+  0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+  \end{bmatrix}_{16 \times 16}
+  \label{eq:M}
+  \end{equation}
+  其中各个子项为：
+  \begin{equation*}
+  \begin{aligned}
+  m_{11} &= m_1 v_{1x} c, \quad
+  m_{14} = -m_{1s} h_1 c - I_{1xz}, \quad
+  m_{21} = (m_1 h_1 c - m_{1s} h_1) v_{1x}, \\
+  m_{24} &= I_{1xx} + 2 m_{1s} h_1^2 - m_{1s} h_1 h_{1c}, \quad
+  m_{31} = m_1 v_{1x}, \quad
+  m_{34} = -m_{1s} h_1, \\
+  m_{35} &= m_2 v_{2x} + (m_p + m_0) v_{2x}, \quad
+  m_{36} = x_0 (m_p + m_0), \quad
+  m_{38} = -m_{2s} h_2 - (m_0 h_0 + m_p h_p), \\
+  m_{310} &= \frac{1}{2} m_p l_p, \quad
+  m_{45} = e m_{35} - x_0 (m_p + m_0) v_{x2}, \quad
+  m_{46} = -I_{2zz} + e m_{36} - \frac{1}{2} (m_p + m_0) (x_1^2 + x_2^2), \\
+  m_{48} &= I_{2xz} + e m_{38} + x_0 (m_0 h_0 + m_p h_p), \quad
+  m_{410} = e m_{310} - \frac{1}{2} m_p l_p x_1 = \frac{1}{2} (e - x_1) m_p l_p, \\
+  m_{412} &= e m_{310} - \frac{1}{2} m_p l_p x_2 = \frac{1}{2} (e - x_2) m_p l_p, \\
+  m_{55} &= (m_2 h_{2c} - m_{2s} h_2) v_{2x} + h_{2c} (m_p + m_0) v_{2x} - v_{x2} (m_0 h_0 + m_p h_p), \\
+  m_{56} &= -I_{2xz} + h_{2c} m_{36} - x_0 (m_0 h_0 + m_p h_p), \quad
+  m_{58} = I_{2xx} + 2 m_{2s} h_2^2 + h_{2c} m_{38} + (m_0 h_0^2 + m_p h_p^2), \\
+  m_{510} &= h_{2c} m_{310} - \frac{1}{2} m_p h_p l_p = \frac{1}{2} (h_{2c} - h_p) m_p l_p.
+  \end{aligned}
+  \end{equation*}
+
+  \begin{equation}
+  A_0 = \begin{bmatrix}
+  a_{11} & a_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  a_{21} & a_{22} & a_{23} & 0 & 0 & 0 & k_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  a_{31} & a_{32} & 0 & 0 & k_3 & a_{36} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & a_{45} & a_{46} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & a_{55} & a_{56} & a_{57} & -c_2 & a_{59} & 0 & a_{59} & 0 & 0 & 0 & 0 & 0 \\
+  0 & -1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & -\frac{v_{2x}}{l_p} & -\frac{g}{l_p} & 0 & -\frac{g}{l_p} & -c_d & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & -\frac{v_{2x}}{l_p} & 0 & -\frac{g}{l_p} & 0 & -\frac{g}{l_p} & 0 & 0 & -c_d & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\frac{1}{\tau_v} & 0 \\
+  0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+  \end{bmatrix}
+  \label{eq:A_0}
+  \end{equation}
+
+  其中各个子项为：
+
+  \begin{equation*}
+  \begin{aligned}
+  a_{11} &= (a + c)k_1 + (c - b)k_2, \quad
+  a_{12} = \frac{a(a + c)k_1 - b(c - b)k_2}{v_{1x}} - m_1 v_{1x} c, \\
+  a_{21} &= k_1 h_{1c} + k_2 h_{1c}, \quad
+  a_{22} = \frac{(a k_1 - b k_2) h_{1c}}{v_{1x}} + (m_{1s} h_1 - m_1 h_{1c}) v_{1x}, \\
+  a_{23} &= m_{1s} g h_1 - k_{r1} - k_{12}, \quad
+  a_{31} = k_1 + k_2, \quad
+  a_{32} = \frac{a k_1 - b k_2}{v_{1x}} - m_1 v_{1x}, \\
+  a_{36} &= -\frac{d k_3}{v_{2x}} - m_2 v_{2x} - (m_0 + m_p) v_{2x}, \quad
+  a_{45} = (d + e)k_3, \\
+  a_{46} &= -\frac{d(e + d)k_3}{v_{2x}} - m_2 v_{2x} e - e(m_0 + m_p) v_{2x} + x_0 (m_p + m_0) v_{2x}, \quad
+  a_{55} = k_3 h_{2c} e, \\
+  a_{56} &= -\frac{d k_3 h_{2c}}{v_{2x}} + (m_{2s} h_2 - m_2 h_{2c}) v_{2x} + (m_0 h_0 + m_p h_p) v_{2x} - h_{2c} (m_0 + m_p) v_{2x}, \\
+  a_{57} &= m_{2s} g h_2 - k_{r2} - k_{12} + (m_0 h_0 + m_p h_p) g, \quad
+  a_{59} = -\frac{1}{2} m_p l_p g.
+  \end{aligned}
+  \end{equation*}
+
+  \begin{equation}
+  B_0 = \begin{bmatrix}
+  -(c + a)k_1 & \frac{c_{brk}}{\overline{c_M}} & -\frac{c_{brk}}{\overline{c_M}} & 0 & 0 & 0 \\
+  -k_1 h_{1c} & 0 & 0 & 0 & 0 & 0 \\
+  -k_1 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & -\frac{c_{brk}}{\overline{c_M}} & \frac{c_{brk}}{\overline{c_M}} & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 0 & 0 & 0 \\
+  0 & -c_{brk} & -c_{brk} & -c_{brk} & -c_{brk} & \frac{1}{\tau_v} \\
+  0 & 0 & 0 & 0 & 0 & 0
+  \end{bmatrix}_{14 \times 6}
+  \label{eq:B_0}
+  \end{equation}
+
+  \begin{equation}
+  T_c = diag([v_{1x}\ 1\ 1\ 1\ v_{2x}\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1])_{14 \times 14}
+  \label{eq:T_c}
   \end{equation}
 
 
-\section{文献引用}
 
-  附录\cite{dupont1974bone}中的参考文献引用\cite{zhengkaiqing1987}示例
-  \cite{dupont1974bone,zhengkaiqing1987}。
+% \section{文献引用}
+
+%   附录\cite{dupont1974bone}中的参考文献引用\cite{zhengkaiqing1987}示例
+%   \cite{dupont1974bone,zhengkaiqing1987}。
 
 \printbibliography
