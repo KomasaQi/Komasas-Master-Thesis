@@ -984,7 +984,6 @@
             \end{cases}
             \end{equation*}
             代价函数构建完毕，这是一个标准的二次型的形式，可以通过二次规划求解器如osqp, qpoasis, cvxopt等进行快速求解。本研究中选用qpoasis进行二次规划问题的求解。为了保证优化时变量的一致性，对输入量先进行归一化后再进行计算。
-        % TODO: 控制器嵌套理论加入附录
 
 
     \subsection{无模型自适应滑模残差补偿}
@@ -1233,6 +1232,8 @@
             \ENDWHILE
         \end{algorithmic}
         \end{algorithm}
+
+        本章设计的控制算法用于自动驾驶半挂液罐车，但面向辅助驾驶环境仍然可通过控制器嵌套方法与人类驾驶员进行组合，控制器嵌套理论及其稳定性证明见附录\ref{sub:controller_nesting}小节。
 
 \section{仿真与缩比例模型试验设计与验证}
 \label{sec:simulation_and_experiment}
@@ -1532,7 +1533,7 @@
 
         \subsubsection{自动驾驶软件设计}
             \label{subsub:software}
-            车辆通过图~\ref{fig:prog_arch}所示的程序架构实现防侧翻路径跟踪功能。感知层提供液体状态估计与目标级预测信息；决策与规划层基于预定义全局参考路径与路径重规划器进行决策；控制层由实现防侧翻路径跟踪的MPC与实现纵向控制的PID控制器组成。算法在机器人操作系统（Robot Operating System, ROS）Ubuntu 20.04环境下运行，其中MPC算法采用C++实现以保证实时性，其余节点大部分采用Python实现。
+            车辆通过图~\ref{fig:prog_arch}所示的程序架构实现防侧翻路径跟踪功能。感知层提供液体状态估计与目标级预测信息；决策与规划层基于预定义全局参考路径与路径重规划器进行决策；控制层由实现防侧翻路径跟踪的MPC与实现纵向控制的PID控制器组成。算法在机器人操作系统（Robot Operating System, ROS）Ubuntu 20.04环境下运行，其中MPC算法采用C++实现以保证实时性，其余节点大部分采用Python实现。本章全套控制算法与配套编写的定位、规划等自动驾驶代码开源在Github仓库HitchOpen-THICV-Stack中\cite{KomasaQi2025HitchOpen-THICV-Stack_repo}，配套算法经过2025年首届HitchOpen世界AI竞速锦标赛线上与天门山实车赛完善验证，并辅助清华大学取得赛事总冠军。
 
             \begin{figure}
             \centering

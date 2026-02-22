@@ -18,61 +18,107 @@
 
     随着端到端从“输出单一最优轨迹”转向“建模可行多模态轨迹分布”，生成式规划成为重要方向。扩散模型体系由去噪扩散概率模型（Denoising Diffusion Probabilistic Model, DDPM）\cite{DDPM2020}奠基，扩散去噪隐式模型（Denoising Diffusion Implicit Model, DDIM）\cite{DDIM2022}提供更快的隐式采样路径大大加速了采样耗时的DDPM，Score-based扩散\cite{Score_based_Diff2021}进一步提供了基于分数函数的训练视角；在数值加速方面，清华大学提出的DPM-Solver系列\cite{DMP_Solver2022,DPM_Solver_v3_2023, DPM_Solver_pp_2024}对高质量加速提供了更好的方案；在更加高维的向量空间表征上，潜空间扩散模型（Latent Diffusion Model, LDM）\cite{LDM_VQGANandDDPM2022}将向量量化生成对抗式网络（Vector Quantised-GAN, VQ-GAN）\cite{VQ_GAN2021}与DDPM结合从而“在潜空间进行扩散”以显著降低生成成本。面向自动驾驶闭环规划，DiffusionPlanner\cite{DiffusionPlanner2025}代表将扩散用于闭环规划并支持预测—规划联合建模的路线，通过生成多模态行为分布提升交互一致性与轨迹质量（并强调减少规则后处理依赖）。相比于传统扩散方式，Flow Matching\cite{FlowMatching2023original}这一条技术路线则提供另一条直接建模概率扩散的方式，建立线性插值的最短路径：“整合流（Rectified Flow）”用于以更少步数实现高效生成。扩散模型跨模态条件生成的范式如DALLE2中CLIP\cite{CLIP2021}与扩散模型结合\cite{DALLE_2_CLIPandDDPM2022}所体现的“条件对齐表征 + 生成模型”框架，并被更新的自动驾驶规划工作用于将地图/交通体/导航意图等条件注入生成过程。在更近期的结果汇总中，DiffusionDrive-v2\cite{DiffusionDrive_v2_2025}引入强化学习约束的截断扩散生成策略，并在其公开报告中给出了在NAVSIM基准上的更高分数，从而在同类生成式规划对比中形成新的强参考点；该结果在文中被表述为当时的基准最优，并体现出对以GoalFlow\cite{GoalFlow2025}为代表的先前强方法的进一步提升。
 
+  \subsection{半侧翻模态及其可控性} 
+    \label{sub:semirollover}
+    如图~\ref{fig:rollover_modes}所示，车辆侧翻有全部车轮着地模态（未侧翻模态）和一侧车轮离地（半侧翻模态，Semi-Rollover）两种状态\cite{wanying2020antirolover}，而半侧翻模态在很多研究中已经被定义为侧翻。但实际车辆行驶过程中由于操作不慎、绊倒性侧翻等原因在达到半侧翻态时仍旧有将车辆救回的余地。
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.7\linewidth]{fig/chap1/rollover_modes.png}
+      % \caption*{图片注释解释说明}
+      \caption{车辆侧翻的两种模态}
+      \label{fig:rollover_modes}
+    \end{figure} 
+
+    但由于目前研究只关注未侧翻模态，而忽略了半侧翻模态，国内外缺乏对于半侧翻模态可控性、动力学特性与控制方法的探究，故对吉尼斯记录、网络公开可访问的交通录像资料与影视素材进行了搜索，对该模态的说法一般为侧两轮行驶（Driving on Two Wheels），或单边行驶。首先关注半侧翻模态的发生条件。如图~\ref{fig:semi_rollover_condition}所示，半侧翻状态在小型车辆行驶时一般不容易被动发生，通常是驾驶员认为主动在高速情况下通过ABA式（ABA表示向某向打方向，再向反向，再回来的方式）快速打方向或AB式快速打方向产生的，通常属于特技动作，可用于超车或紧急避险。其他主动发生方法包括一侧车轮行驶过带坡度的单边桥等。对于大型车辆，半侧翻模态由于车辆质心更高更易发生，其发生通常是被动的，如中速在大曲率弯道下发生，或高速在小曲率弯道发生等。
+
+    \begin{figure}
+      \centering
+      \subcaptionbox{高速ABA式快速转向主动发生 \label{fig:abs_start}}
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/aba_start.png}}
+      \subcaptionbox{高速AB式快速转向主动发生 \label{fig:ab_start}}
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/ab_start.png}}
+      \vspace{0.2cm}
+      \subcaptionbox{中速大曲率弯道被动发生 \label{fig:passive_start}}
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/passive_start.png}}
+      \subcaptionbox{高速小曲率弯道被动发生 \label{fig:high_start}}  
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/high_start.png}}
+      \caption{半侧翻态发生的情况}
+      \label{fig:semi_rollover_condition}
+    \end{figure}
+
+    其次关注半侧翻模态的可控性，如图~\ref{fig:newb_test}所示，2016年11月3日中国车手韩岳驾驶一台MINI完成侧两轮行驶纽伯格林北环全程\SI{20.83}{km}并打破圈速记录；如图~\ref{fig:auto_test}所示，2022年12月，车手田林文驾驶长安览拓者挑战 “汽车侧两轮往返绕桩用时最短”吉尼斯世界记录成功，绕5桩用时\SI{38.41}{s}；如图~\ref{fig:toy_test}工程师对模型玩具车进行改装，通过小型IMU和主动转向控制实现模型车侧两轮行驶；图~\ref{fig:tank_truck_test}是某影视作品中驾驶员进行液罐车半侧翻态行驶的快照截取。通过上述实例总结来说，半侧翻模态在高速和低速都存在可控的状态子空间，半挂液罐车而言同样存在可控的状态子空间，且存在仅通过前轮转向即可控制的区域。在此区域内，通过控制器可以得到与驾驶员控制相同的可控性结论。
+
+    \begin{figure}
+      \centering
+      \subcaptionbox{纽博格林北环试验场侧两轮行驶 \label{fig:newb_test}}
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/newb_test.png}}
+      \subcaptionbox{汽车侧两轮往返绕桩挑战现场 \label{fig:auto_test}}
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/auto_test.png}}
+      \vspace{0.2cm}
+      \subcaptionbox{玩具车靠控制器侧两轮行驶 \label{fig:toy_test}}
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/toy_test.png}}
+      \subcaptionbox{液罐车半侧翻态行驶 \label{fig:tank_truck_test}}  
+        {\includegraphics[width=0.40\linewidth]{fig/chap1/tank_truck_test.png}}
+      \caption{半侧翻模态可控性调研}
+      \label{fig:semi_rollover_ctrb}
+    \end{figure}
+
 
 \section{理论补充}
 
-    \subsection{图扩散流匹配理论证明}
-    \label{sub:graphflow_proof}
-      我们希望学习得到的是动态特征速度的边缘向量场：$v_t^\bm{\theta}$，其不依赖于未来真值$\mathcal{V}_{k+1}$，那么我们使用条件向量场计算出来的速度向量$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$是否可以拿来当做训练的标签，即是否可以将无条件损失式\eqref{loss_fm}替换为有条件损失式\eqref{loss_cfm}。
+  \subsection{图扩散流匹配理论证明}
+  \label{sub:graphflow_proof}
+    我们希望学习得到的是动态特征速度的边缘向量场：$v_t^\bm{\theta}$，其不依赖于未来真值$\mathcal{V}_{k+1}$，那么我们使用条件向量场计算出来的速度向量$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$是否可以拿来当做训练的标签，即是否可以将无条件损失式\eqref{loss_fm}替换为有条件损失式\eqref{loss_cfm}。
 
-      \begin{equation}\mathcal{L}_{FM}(\bm{\theta}) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t}} \left[\lVert v_t^\bm{\theta}(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}) \rVert^2 \right]\label{loss_fm}\end{equation}
+    \begin{equation}\mathcal{L}_{FM}(\bm{\theta}) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t}} \left[\lVert v_t^\bm{\theta}(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}) \rVert^2 \right]\label{loss_fm}\end{equation}
 
-      \begin{equation}\mathcal{L}_{CFM}(\bm{\theta}) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t(\cdot|z),z\sim p_1}} \left[\lVert v_t^\bm{\theta}(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2 \right]\label{loss_cfm}\end{equation}
+    \begin{equation}\mathcal{L}_{CFM}(\bm{\theta}) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t(\cdot|z),z\sim p_1}} \left[\lVert v_t^\bm{\theta}(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2 \right]\label{loss_cfm}\end{equation}
 
-      其实是可以的，下面来进行证明：
+    其实是可以的，下面来进行证明：
 
-      为了简化证明过程，不妨令真值$z = \mathcal{V}_{k+1}$，动态特征场$x = F_{dyn}^{t}$。我们有了条件向量场，现在需要求出边缘向量场，也就是不依赖于$z$的向量场。边缘概率路径是对条件概率路径乘以条件$z$的概率然后对所有可能的$z$积分，即
-      \begin{equation}p_t(x) = \int_{z} p_t(x|z)p_1(z)\mathrm{d}z\end{equation}
-      本质上应用了全概率公式，按照各种条件对$z$进行汇总，然后对所有可能的$z$积分。那么是否可以通过对所有条件向量场乘以$p(z)$，然后对所有可能的$z$积分，得到边缘向量场？即
-      \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)p_1(z)\mathrm{d}z\end{equation}
+    为了简化证明过程，不妨令真值$z = \mathcal{V}_{k+1}$，动态特征场$x = F_{dyn}^{t}$。我们有了条件向量场，现在需要求出边缘向量场，也就是不依赖于$z$的向量场。边缘概率路径是对条件概率路径乘以条件$z$的概率然后对所有可能的$z$积分，即
+    \begin{equation}p_t(x) = \int_{z} p_t(x|z)p_1(z)\mathrm{d}z\end{equation}
+    本质上应用了全概率公式，按照各种条件对$z$进行汇总，然后对所有可能的$z$积分。那么是否可以通过对所有条件向量场乘以$p(z)$，然后对所有可能的$z$积分，得到边缘向量场？即
+    \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)p_1(z)\mathrm{d}z\end{equation}
 
-      答案是不行的，因为这里的$v_t^{target}$是个向量场，不是概率值，不能应用全概率公式。实际上的公式是这样的
+    答案是不行的，因为这里的$v_t^{target}$是个向量场，不是概率值，不能应用全概率公式。实际上的公式是这样的
 
-      \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)p_t(z|x)\mathrm{d}z\end{equation}
+    \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)p_t(z|x)\mathrm{d}z\end{equation}
 
-      我们可以利用贝叶斯公式$p_t(z|x)=\frac{p_t(x|z)p(z)}{p_t(x)}$转化一下上述边缘向量场公式，得到
-      \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)\frac{p_t(x|z)p_1(z)}{p_t(x)}\mathrm{d}z\end{equation}
-      这个表达式在后面证明时会用到。
+    我们可以利用贝叶斯公式$p_t(z|x)=\frac{p_t(x|z)p(z)}{p_t(x)}$转化一下上述边缘向量场公式，得到
+    \begin{equation}v_t^{target}(x) = \int_{z} v_t^{target}(x|z)\frac{p_t(x|z)p_1(z)}{p_t(x)}\mathrm{d}z\end{equation}
+    这个表达式在后面证明时会用到。
 
-      接下来就来证明为什么边缘向量场的公式是那样的。我们需要验证的是这个边缘向量场公式符合连续性方程：
+    接下来就来证明为什么边缘向量场的公式是那样的。我们需要验证的是这个边缘向量场公式符合连续性方程：
 
-      \begin{equation}\frac{\partial p_t(x)}{\partial t} + \nabla \left(p_t(x) v_t^{target}(x)\right) =0\end{equation}
+    \begin{equation}\frac{\partial p_t(x)}{\partial t} + \nabla \left(p_t(x) v_t^{target}(x)\right) =0\end{equation}
 
-      \begin{proof}
-        \begin{theorem}[连续性方程]
-          设存在流，其质量场为$\rho$，速度场为$\mathbf{v}$，时间变量为$t$，则流场满足：
-          \begin{equation}
-            \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
-          \end{equation}
-        \end{theorem}
-        连续性方程第一项，概率密度对时间求导，代入边缘概率的公式
-        \begin{equation}\frac{\partial p_t(x)}{\partial t} = \frac{\partial}{\partial t}\int_z p_t(x|z)p_1(z)\mathrm{d}z\end{equation}
-        然后将求导符号移入积分符号，其中$p(z)$可以看做常数项
-        \begin{equation}= \int_z \frac{\partial p_t(x|z)}{\partial t}p_1(z)\mathrm{d}z\end{equation}
-        偏导部分满足连续方程，可代入
-        \begin{equation}= \int_z -\nabla \left(p_t(x|z) v_t^{target}(x|z)\right)p_1(z)\mathrm{d}z\end{equation}
-        因为散度计算是对$x$进行的，而这里的积分是对$z$进行的，所以可以将散度符号移到积分号外边
-        \begin{equation}= -\nabla \left(\int_z p_t(x|z) v_t^{target}(x|z)p_1(z)\mathrm{d}z\right)\end{equation}
-        下一步在积分号外乘$p_t(x)$，在积分号内除$p_t(x)$，得到
-        \begin{equation}= -\nabla \left(p_t(x)\int_z  v_t^{target}(x|z)\frac{p_t(x|z)p_1(z)}{p_t(x)}\mathrm{d}z\right)\end{equation}
-        可以发现这里的积分项就是我们之前定义的边缘向量场公式，故上式为
-        \begin{equation} = -\nabla \left(p_t(x) v_t^{target}(x)\right)\end{equation}
-        证明完毕。
-    \end{proof}
-    故上述流匹配过程在未来预测上应满足连续性方程，从而保证了通过条件流匹配学习得到的边缘向量场的正确性。同时，可以保证自车和周车存在概率在宏观扩散过程中保持一致，即使原本集中的概率扩散到更宽阔的道路空间中以更低的概率存在。
+    \begin{proof}
+      \begin{theorem}[连续性方程]
+        设存在流，其质量场为$\rho$，速度场为$\mathbf{v}$，时间变量为$t$，则流场满足：
+        \begin{equation}
+          \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho \mathbf{v}) = 0
+        \end{equation}
+      \end{theorem}
+      连续性方程第一项，概率密度对时间求导，代入边缘概率的公式
+      \begin{equation}\frac{\partial p_t(x)}{\partial t} = \frac{\partial}{\partial t}\int_z p_t(x|z)p_1(z)\mathrm{d}z\end{equation}
+      然后将求导符号移入积分符号，其中$p(z)$可以看做常数项
+      \begin{equation}= \int_z \frac{\partial p_t(x|z)}{\partial t}p_1(z)\mathrm{d}z\end{equation}
+      偏导部分满足连续方程，可代入
+      \begin{equation}= \int_z -\nabla \left(p_t(x|z) v_t^{target}(x|z)\right)p_1(z)\mathrm{d}z\end{equation}
+      因为散度计算是对$x$进行的，而这里的积分是对$z$进行的，所以可以将散度符号移到积分号外边
+      \begin{equation}= -\nabla \left(\int_z p_t(x|z) v_t^{target}(x|z)p_1(z)\mathrm{d}z\right)\end{equation}
+      下一步在积分号外乘$p_t(x)$，在积分号内除$p_t(x)$，得到
+      \begin{equation}= -\nabla \left(p_t(x)\int_z  v_t^{target}(x|z)\frac{p_t(x|z)p_1(z)}{p_t(x)}\mathrm{d}z\right)\end{equation}
+      可以发现这里的积分项就是我们之前定义的边缘向量场公式，故上式为
+      \begin{equation} = -\nabla \left(p_t(x) v_t^{target}(x)\right)\end{equation}
+      证明完毕。
+  \end{proof}
+  故上述流匹配过程在未来预测上应满足连续性方程，从而保证了通过条件流匹配学习得到的边缘向量场的正确性。同时，可以保证自车和周车存在概率在宏观扩散过程中保持一致，即使原本集中的概率扩散到更宽阔的道路空间中以更低的概率存在。
 
-    \subsection{Trailer-MEI指标推导计算}
-    \label{sub:trailer_mei_proof}
+  \subsection{Trailer-MEI指标推导计算}
+  \label{sub:trailer_mei_proof}
     目前一维替代安全指标（Surrogate Safty Index, SSI）如碰撞时间（Time to Collision, TTC）、车头时距（Time Head Way, THW）等仅在跟车情况下有效，不考虑车辆真实宽度与几何形状，对二维空间中的碰撞无法有效监测；而二维碰撞指标如RTTC虽考虑二维几何形状，对斜碰等问题可以探测，但计算过于乐观且不考虑不同撞击重叠面积风险的不同。Cheng等震碎上述问题在2024年提出紧急因子（Emergency Index, EI）\cite{chenghao2025emergency_index}安全评价指标，并在2025年进一步提出修正紧急因子（Modified Emergency Index, MEI）\cite{chenhao2025mei}。
 
     MEI通过计算侵入距离（InDepth）来评估车辆最大的安全损失，计算紧急操作时间（Time for Emergency Maneouvour, TEM）即可用于规避风险的操作时间来衡量风险的紧急程度，其定义为：
@@ -133,169 +179,184 @@
 
     在最坏情况，即需计算SSI的辆车都为半挂车时，Trailer-MEI指标的计算时间仅为MEI的6倍，C++编译后单次计算时间大约在\SIrange{30}{50}{\micro s}，在实现半挂车间计算的同时计算时间依然可以忽略。本文为平衡精度与计算速度，计算Trailer-MEI指标采用的离散步长$\increment t = \SI{0.2}{s}$，预测时域为\SI{5}{s}。
 
-    \subsection{MFAC 基础算法推导与符号说明}
-        \label{sub:mfac_basic}
-        本节介绍MFAC算法的推导过程及相关符号说明，以便读者更好理解正文中MAFSMC算法的推导。MFAC 算法定义了如下目标函数：
-        \begin{equation}
-        J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k + 1) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
-        \label{eq:cost_function}
-        \end{equation}
-        式中$\boldsymbol{y}^*(k + 1)$为$k + 1$时刻的期望输出，$\boldsymbol{y}(k + 1)$为$k + 1$时刻的实际输出，$\lambda > 0$为权重因子。
+  \subsection{MFAC 基础算法推导与符号说明}
+      \label{sub:mfac_basic}
+      本节介绍MFAC算法的推导过程及相关符号说明，以便读者更好理解正文中MAFSMC算法的推导。MFAC 算法定义了如下目标函数：
+      \begin{equation}
+      J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k + 1) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
+      \label{eq:cost_function}
+      \end{equation}
+      式中$\boldsymbol{y}^*(k + 1)$为$k + 1$时刻的期望输出，$\boldsymbol{y}(k + 1)$为$k + 1$时刻的实际输出，$\lambda > 0$为权重因子。
 
-        将全格式的式 \eqref{eq:ffdl} 带入式 \eqref{eq:cost_function} 中
-        \begin{equation}
-        J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
-        \label{eq:cost_function_ffdl}
-        \end{equation}
-        由于
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) &= \left[ \boldsymbol{\phi}_1(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y}(k)\ \ \boldsymbol{\phi}_{L_y+1}(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y+L_u}(k) \right] \begin{bmatrix}
-        \Delta \boldsymbol{y}(k) \\
-        \vdots \\
-        \Delta \boldsymbol{y}(k - L_y + 1) \\
-        \Delta \boldsymbol{u}(k) \\
-        \vdots \\
-        \Delta \boldsymbol{u}(k - L_u + 1)
-        \end{bmatrix} \\
-        &= \boldsymbol{\phi}_1(k) \Delta \boldsymbol{y}(k) + \dots + \boldsymbol{\phi}_{L_y}(k) \Delta \boldsymbol{y}(k - L_y + 1) \\
-        &\quad + \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) + \boldsymbol{\phi}_{L_y+L_u}(k) \Delta \boldsymbol{u}(k - L_u + 1) \\
-        &= \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=1}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1)
-        \end{aligned}
-        \label{eq:phi_expansion}
-        \end{equation}
-        将式 \eqref{eq:cost_function_ffdl} 对$\boldsymbol{u}(k)$求偏导数，并令其等于 0，
-        \begin{equation}
-        \frac{\partial J(\boldsymbol{u}(k))}{\partial \boldsymbol{u}(k)} = 2 \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right) - 2\lambda (\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)) = 0
-        \label{eq:derivative_zero}
-        \end{equation}
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{\phi}_{L_y+1}^T(k) \Bigg( &\boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \Bigg) \\
-        &- \boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) - \lambda \Delta \boldsymbol{u}(k) = 0
-        \end{aligned}
-        \label{eq:derivative_expanded}
-        \end{equation}
-        定义$\boldsymbol{e}(k + 1) = \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k)$，则
-        \begin{equation}
-        \Delta \boldsymbol{u}(k) = \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{e}(k + 1) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
-        \label{eq:control_increment}
-        \end{equation}
-        其中分母之一的$\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \in \mathbb{R}^{N_u \times N_u}$，为了提供更高的设计自由度，引入权重参数$\rho_i \in (0,1], i = 1,\dots,L_y, L_y + 1,\dots,L_y + L_u$，得到最终控制量更新形式（控制律）：
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{u}(k) &= \boldsymbol{u}(k - 1) + \frac{\rho_{L_y+1} \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda} \\
-        &\quad - \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \sum_{i=1}^{L_y} \rho_i \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=2}^{L_u} \rho_{i+L_y} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
-        \end{aligned}
-        \label{eq:control_law}
-        \end{equation}
-        为实现控制算法，需要知道伪梯度的值，我们需要根据系统的输入输出对其进行估计。考虑如下伪梯度估计的准则函数：
-        \begin{equation}
-        \begin{aligned}
-        J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right) &= \left\| \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \\
-        &\quad + \mu \left\| \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right\|^2
-        \end{aligned}
-        \label{eq:phi_estimation_criterion}
-        \end{equation}
-        其中$\mu > 0$是权重因子。对上式关于$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$求导数并令其为零可得到$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$的估计算法为
-
-
-        \begin{equation}
-        \begin{aligned}
-        \frac{\partial J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right)}{\partial \boldsymbol{\Phi}_{f,L_y,L_u}(k)} &= -2 \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
-        &\quad + 2\mu \left( 2 \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right) = 0
-        \end{aligned}
-        \label{eq:phi_derivative}
-        \end{equation}
-
-        \begin{equation}
-        \begin{aligned}
-        \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) &= \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
-        &\quad - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)
-        \end{aligned}
-        \label{eq:phi_derivative_expanded}
-        \end{equation}
-
-        \begin{equation}
-        \left( \mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)
-        \label{eq:phi_linear}
-        \end{equation}
-
-        进一步化简得到
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
-        = \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} - \frac{\left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
-        \approx \left( 1 - \frac{\eta \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \eta \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}
-        \end{aligned}
-        \label{eq:phi_update}
-        \end{equation}
-        加入了步长因子$\eta \in (0,2]$是为了使算法具有更高的灵活性。
-
-        为了使得具有更加优秀的对时变参数的跟踪能力，引入了对$\boldsymbol{\phi}_{L_y+1}$系数的重置。我们通过式 \eqref{eq:phi_i} 的分析可知，$\boldsymbol{\phi}_{L_y+1}$是一个$N_y \times N_u$的伪梯度块矩阵。
-        对于其对角线元素$\varphi_{L_y+1,pp}$（其中$p = 1,\dots,\min(N_y,N_u)$），太小或者过大或变号都需要被重置：
-        \begin{equation}
-        \varphi_{L_y+1,pp}(k) = \varphi_{L_y+1,pp}(0)
-        \end{equation}
-        \begin{equation}
-        \text{if } \left| \varphi_{L_y+1,pp}(k) \right| < \epsilon \text{ or } \left| \varphi_{L_y+1,pp}(k) \right| > b_1 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pp}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pp}(0) \right)
-        \label{eq:phi_diag_reset}
-        \end{equation}
-        对于其非对角线元素$\varphi_{L_y+1,pq}$（其中$p = 1,\dots,N_y, q = 1,\dots,N_u, p \neq q$），过大或变号都需要被重置：
-        \begin{equation}
-        \varphi_{L_y+1,pq}(k) = \varphi_{L_y+1,pq}(0)
-        \end{equation}
-        \begin{equation}
-        \text{if } \left| \varphi_{L_y+1,pq}(k) \right| > b_2 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pq}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pq}(0) \right)
-        \label{eq:phi_offdiag_reset}
-        \end{equation}
+      将全格式的式 \eqref{eq:ffdl} 带入式 \eqref{eq:cost_function} 中
+      \begin{equation}
+      J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
+      \label{eq:cost_function_ffdl}
+      \end{equation}
+      由于
+      \begin{equation}
+      \begin{aligned}
+      \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) &= \left[ \boldsymbol{\phi}_1(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y}(k)\ \ \boldsymbol{\phi}_{L_y+1}(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y+L_u}(k) \right] \begin{bmatrix}
+      \Delta \boldsymbol{y}(k) \\
+      \vdots \\
+      \Delta \boldsymbol{y}(k - L_y + 1) \\
+      \Delta \boldsymbol{u}(k) \\
+      \vdots \\
+      \Delta \boldsymbol{u}(k - L_u + 1)
+      \end{bmatrix} \\
+      &= \boldsymbol{\phi}_1(k) \Delta \boldsymbol{y}(k) + \dots + \boldsymbol{\phi}_{L_y}(k) \Delta \boldsymbol{y}(k - L_y + 1) \\
+      &\quad + \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) + \boldsymbol{\phi}_{L_y+L_u}(k) \Delta \boldsymbol{u}(k - L_u + 1) \\
+      &= \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=1}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1)
+      \end{aligned}
+      \label{eq:phi_expansion}
+      \end{equation}
+      将式 \eqref{eq:cost_function_ffdl} 对$\boldsymbol{u}(k)$求偏导数，并令其等于 0，
+      \begin{equation}
+      \frac{\partial J(\boldsymbol{u}(k))}{\partial \boldsymbol{u}(k)} = 2 \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right) - 2\lambda (\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)) = 0
+      \label{eq:derivative_zero}
+      \end{equation}
+      \begin{equation}
+      \begin{aligned}
+      \boldsymbol{\phi}_{L_y+1}^T(k) \Bigg( &\boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \Bigg) \\
+      &- \boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) - \lambda \Delta \boldsymbol{u}(k) = 0
+      \end{aligned}
+      \label{eq:derivative_expanded}
+      \end{equation}
+      定义$\boldsymbol{e}(k + 1) = \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k)$，则
+      \begin{equation}
+      \Delta \boldsymbol{u}(k) = \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{e}(k + 1) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
+      \label{eq:control_increment}
+      \end{equation}
+      其中分母之一的$\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \in \mathbb{R}^{N_u \times N_u}$，为了提供更高的设计自由度，引入权重参数$\rho_i \in (0,1], i = 1,\dots,L_y, L_y + 1,\dots,L_y + L_u$，得到最终控制量更新形式（控制律）：
+      \begin{equation}
+      \begin{aligned}
+      \boldsymbol{u}(k) &= \boldsymbol{u}(k - 1) + \frac{\rho_{L_y+1} \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda} \\
+      &\quad - \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \sum_{i=1}^{L_y} \rho_i \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=2}^{L_u} \rho_{i+L_y} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
+      \end{aligned}
+      \label{eq:control_law}
+      \end{equation}
+      为实现控制算法，需要知道伪梯度的值，我们需要根据系统的输入输出对其进行估计。考虑如下伪梯度估计的准则函数：
+      \begin{equation}
+      \begin{aligned}
+      J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right) &= \left\| \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \\
+      &\quad + \mu \left\| \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right\|^2
+      \end{aligned}
+      \label{eq:phi_estimation_criterion}
+      \end{equation}
+      其中$\mu > 0$是权重因子。对上式关于$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$求导数并令其为零可得到$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$的估计算法为
 
 
-    \subsection{半侧翻模态及其可控性} 
-      \label{sub:semirollover}
-      如图~\ref{fig:rollover_modes}所示，车辆侧翻有全部车轮着地模态（未侧翻模态）和一侧车轮离地（半侧翻模态，Semi-Rollover）两种状态\cite{wanying2020antirolover}，而半侧翻模态在很多研究中已经被定义为侧翻。但实际车辆行驶过程中由于操作不慎、绊倒性侧翻等原因在达到半侧翻态时仍旧有将车辆救回的余地。
+      \begin{equation}
+      \begin{aligned}
+      \frac{\partial J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right)}{\partial \boldsymbol{\Phi}_{f,L_y,L_u}(k)} &= -2 \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
+      &\quad + 2\mu \left( 2 \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right) = 0
+      \end{aligned}
+      \label{eq:phi_derivative}
+      \end{equation}
 
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.7\linewidth]{fig/chap1/rollover_modes.png}
-        % \caption*{图片注释解释说明}
-        \caption{车辆侧翻的两种模态}
-        \label{fig:rollover_modes}
-      \end{figure} 
+      \begin{equation}
+      \begin{aligned}
+      \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) &= \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
+      &\quad - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)
+      \end{aligned}
+      \label{eq:phi_derivative_expanded}
+      \end{equation}
 
-      但由于目前研究只关注未侧翻模态，而忽略了半侧翻模态，国内外缺乏对于半侧翻模态可控性、动力学特性与控制方法的探究，故对吉尼斯记录、网络公开可访问的交通录像资料与影视素材进行了搜索，对该模态的说法一般为侧两轮行驶（Driving on Two Wheels），或单边行驶。首先关注半侧翻模态的发生条件。如图~\ref{fig:semi_rollover_condition}所示，半侧翻状态在小型车辆行驶时一般不容易被动发生，通常是驾驶员认为主动在高速情况下通过ABA式（ABA表示向某向打方向，再向反向，再回来的方式）快速打方向或AB式快速打方向产生的，通常属于特技动作，可用于超车或紧急避险。其他主动发生方法包括一侧车轮行驶过带坡度的单边桥等。对于大型车辆，半侧翻模态由于车辆质心更高更易发生，其发生通常是被动的，如中速在大曲率弯道下发生，或高速在小曲率弯道发生等。
+      \begin{equation}
+      \left( \mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)
+      \label{eq:phi_linear}
+      \end{equation}
 
-      \begin{figure}
-        \centering
-        \subcaptionbox{高速ABA式快速转向主动发生 \label{fig:abs_start}}
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/aba_start.png}}
-        \subcaptionbox{高速AB式快速转向主动发生 \label{fig:ab_start}}
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/ab_start.png}}
-        \vspace{0.2cm}
-        \subcaptionbox{中速大曲率弯道被动发生 \label{fig:passive_start}}
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/passive_start.png}}
-        \subcaptionbox{高速小曲率弯道被动发生 \label{fig:high_start}}  
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/high_start.png}}
-        \caption{半侧翻态发生的情况}
-        \label{fig:semi_rollover_condition}
-      \end{figure}
+      进一步化简得到
+      \begin{equation}
+      \begin{aligned}
+      \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
+      = \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} - \frac{\left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
+      \approx \left( 1 - \frac{\eta \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \eta \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}
+      \end{aligned}
+      \label{eq:phi_update}
+      \end{equation}
+      加入了步长因子$\eta \in (0,2]$是为了使算法具有更高的灵活性。
 
-      其次关注半侧翻模态的可控性，如图~\ref{fig:newb_test}所示，2016年11月3日中国车手韩岳驾驶一台MINI完成侧两轮行驶纽伯格林北环全程\SI{20.83}{km}并打破圈速记录；如图~\ref{fig:auto_test}所示，2022年12月，车手田林文驾驶长安览拓者挑战 “汽车侧两轮往返绕桩用时最短”吉尼斯世界记录成功，绕5桩用时\SI{38.41}{s}；如图~\ref{fig:toy_test}工程师对模型玩具车进行改装，通过小型IMU和主动转向控制实现模型车侧两轮行驶；图~\ref{fig:tank_truck_test}是某影视作品中驾驶员进行液罐车半侧翻态行驶的快照截取。通过上述实例总结来说，半侧翻模态在高速和低速都存在可控的状态子空间，半挂液罐车而言同样存在可控的状态子空间，且存在仅通过前轮转向即可控制的区域。在此区域内，通过控制器可以得到与驾驶员控制相同的可控性结论。
+      为了使得具有更加优秀的对时变参数的跟踪能力，引入了对$\boldsymbol{\phi}_{L_y+1}$系数的重置。我们通过式 \eqref{eq:phi_i} 的分析可知，$\boldsymbol{\phi}_{L_y+1}$是一个$N_y \times N_u$的伪梯度块矩阵。
+      对于其对角线元素$\varphi_{L_y+1,pp}$（其中$p = 1,\dots,\min(N_y,N_u)$），太小或者过大或变号都需要被重置：
+      \begin{equation}
+      \varphi_{L_y+1,pp}(k) = \varphi_{L_y+1,pp}(0)
+      \end{equation}
+      \begin{equation}
+      \text{if } \left| \varphi_{L_y+1,pp}(k) \right| < \epsilon \text{ or } \left| \varphi_{L_y+1,pp}(k) \right| > b_1 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pp}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pp}(0) \right)
+      \label{eq:phi_diag_reset}
+      \end{equation}
+      对于其非对角线元素$\varphi_{L_y+1,pq}$（其中$p = 1,\dots,N_y, q = 1,\dots,N_u, p \neq q$），过大或变号都需要被重置：
+      \begin{equation}
+      \varphi_{L_y+1,pq}(k) = \varphi_{L_y+1,pq}(0)
+      \end{equation}
+      \begin{equation}
+      \text{if } \left| \varphi_{L_y+1,pq}(k) \right| > b_2 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pq}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pq}(0) \right)
+      \label{eq:phi_offdiag_reset}
+      \end{equation}
 
-      \begin{figure}
-        \centering
-        \subcaptionbox{纽博格林北环试验场侧两轮行驶 \label{fig:newb_test}}
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/newb_test.png}}
-        \subcaptionbox{汽车侧两轮往返绕桩挑战现场 \label{fig:auto_test}}
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/auto_test.png}}
-        \vspace{0.2cm}
-        \subcaptionbox{玩具车靠控制器侧两轮行驶 \label{fig:toy_test}}
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/toy_test.png}}
-        \subcaptionbox{液罐车半侧翻态行驶 \label{fig:tank_truck_test}}  
-          {\includegraphics[width=0.40\linewidth]{fig/chap1/tank_truck_test.png}}
-        \caption{半侧翻模态可控性调研}
-        \label{fig:semi_rollover_ctrb}
-      \end{figure}
+  \subsection{控制器嵌套方法}
+    \label{sub:controller_nesting}
+    本研究提出的控制器嵌套（Controller Nesting, CN）是一种将算法用于辅助驾驶的控制框架，其应用需要满足两个前提条件：
+    1) 存在至少一个控制器$\mathcal{C}_1: \mathcal{X} \to \mathcal{U}$，使得闭环系统$\dot{\bm{x}} = f(\bm{x}, \mathcal{C}_1(\bm{x}))$在状态空间$\mathcal{X} \subseteq \mathbb{R}^n$内满足李雅普诺夫稳定；
+    2) 嵌套控制器$\mathcal{C}_2: \mathcal{X} \to \mathcal{U}$与基础控制器$\mathcal{C}_1$的输出空间$\mathcal{U} \subseteq \mathbb{R}^m$及约束集$\mathcal{U}_{\text{con}} \subseteq \mathcal{U}$完全一致。
+
+    在满足上述前提的基础上，控制器嵌套的核心思想是：对基础控制器$\mathcal{C}_1$的迭代可行域$\mathcal{X}_1 \subseteq \mathcal{X}$，引入稳定性余量$\mathcal{M}_2 \subseteq \mathcal{X} \setminus \mathcal{X}_1$以保障系统全局稳定；剩余状态空间$\mathcal{X}_3 = \mathcal{X} \setminus (\mathcal{X}_1 \cup \mathcal{M}_2)$用于嵌套控制器$\mathcal{C}_2$，此时嵌套控制器的输出为$\mathcal{C}_{\text{CN}}(\bm{x}) = \alpha(\bm{x})\mathcal{C}_1(\bm{x}) + (1-\alpha(\bm{x}))\mathcal{C}_2(\bm{x})$，其中$\alpha: \mathcal{X} \to [0,1]$为状态依赖的加权系数，满足$\alpha(\bm{x}) = 1, \forall \bm{x} \in \mathcal{X}_1 \cup \mathcal{M}_2$，$\alpha(\bm{x}) \in (0,1), \forall \bm{x} \in \mathcal{X}_3$。
+
+    如图~\ref{fig:controller_nesting}所示，状态空间$\mathcal{X}$被划分为三类子区域：
+    - $\mathcal{X}_1$：标称可行且稳定的核心区域；
+    - $\mathcal{X}_2 = \mathcal{X}_1 \cup \mathcal{M}_1 \cup \mathcal{M}_2$：实际可行且稳定的扩展区域，其中$\mathcal{M}_1 \subseteq \mathcal{X}$为模型误差补偿余量；
+    - $\mathcal{X}_3$：$\mathcal{C}_1$与$\mathcal{C}_2$输出线性组合的过渡区域。
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.6\linewidth]{fig/appx/controller_nesting.png}
+      \caption{控制器嵌套方法的状态空间划分}
+      \label{fig:controller_nesting}
+    \end{figure}
+
+    \begin{theorem}[控制器嵌套的稳定性]
+    设车辆闭环系统为$\dot{\bm{x}} = f(\bm{x}, u)$，其中$\bm{x} \in \mathcal{X} \subseteq \mathbb{R}^n$为系统状态，$u \in \mathcal{U} \subseteq \mathbb{R}^m$为控制输入，$f: \mathcal{X} \times \mathcal{U} \to \mathbb{R}^n$满足局部利普希茨连续。若：
+    1) 基础控制器$\mathcal{C}_1$使得闭环系统$\dot{\bm{x}} = f(\bm{x}, \mathcal{C}_1(\bm{x}))$在$\mathcal{X}_2$内李雅普诺夫稳定，即存在李雅普诺夫函数$V: \mathcal{X}_2 \to \mathbb{R}_{\geq 0}$，满足$\dot{V}(\bm{x}) = \nabla V(\bm{x})^T f(\bm{x}, \mathcal{C}_1(\bm{x})) \leq 0, \forall \bm{x} \in \mathcal{X}_2$；
+    2) 加权系数$\alpha(\bm{x})$在$\mathcal{X}$上连续，且$\alpha(\bm{x}) = 1, \forall \bm{x} \in \mathcal{X}_2$；
+    则：
+    a) 嵌套控制器$\mathcal{C}_{\text{CN}}$下的闭环系统$\dot{\bm{x}} = f(\bm{x}, \mathcal{C}_{\text{CN}}(\bm{x}))$在$\mathcal{X}$内李雅普诺夫稳定；
+    b) 当且仅当$\mathcal{C}_2$使得$\dot{V}(\bm{x}) = \nabla V(\bm{x})^T f(\bm{x}, \mathcal{C}_2(\bm{x})) < 0, \forall \bm{x} \in \mathcal{X}_3 \setminus \{\bm{x}^*\}$（$\bm{x}^*$为系统平衡点）时，$\mathcal{C}_{\text{CN}}$下的系统在$\mathcal{X}$内渐进稳定。
+    \end{theorem}
+
+    \begin{proof}
+    \textbf{步骤1：证明李雅普诺夫稳定性（结论a）}
+    由前提条件，$\mathcal{C}_1$对应的闭环系统在$\mathcal{X}_2$内存在李雅普诺夫函数$V(\bm{x})$，满足：
+    $$\dot{V}(\bm{x}) = \nabla V(\bm{x})^T f(\bm{x}, \mathcal{C}_1(\bm{x})) \leq 0, \forall \bm{x} \in \mathcal{X}_2.$$
+    对于$\mathcal{X}_3$区域，嵌套控制器输出为$\mathcal{C}_{\text{CN}}(\bm{x}) = \alpha\mathcal{C}_1 + (1-\alpha)\mathcal{C}_2$，其中$\alpha \in (0,1)$。由于$f(\bm{x}, u)$满足局部利普希茨连续，且$\mathcal{C}_1, \mathcal{C}_2$的输出均属于约束集$\mathcal{U}_{\text{con}}$，则$f(\bm{x}, \mathcal{C}_{\text{CN}}(\bm{x}))$可表示为：
+    $$f(\bm{x}, \mathcal{C}_{\text{CN}}(\bm{x})) = \alpha f(\bm{x}, \mathcal{C}_1) + (1-\alpha) f(\bm{x}, \mathcal{C}_2).$$
+    因此，李雅普诺夫函数的导数为：
+    $$\dot{V}(\bm{x}) = \alpha \nabla V^T f(\bm{x}, \mathcal{C}_1) + (1-\alpha) \nabla V^T f(\bm{x}, \mathcal{C}_2).$$
+    结合$\alpha \in (0,1)$且$\nabla V^T f(\bm{x}, \mathcal{C}_1) \leq 0$，同时$\mathcal{M}_1$补偿了模型误差，使得$\nabla V^T f(\bm{x}, \mathcal{C}_2)$在$\mathcal{X}_3$内有界且非正（$\nabla V^T f(\bm{x}, \mathcal{C}_2) \leq K, K < +\infty$），故$\dot{V}(\bm{x}) \leq 0, \forall \bm{x} \in \mathcal{X}$。
+    根据李雅普诺夫稳定性判定定理，嵌套控制器下的系统在$\mathcal{X}$内李雅普诺夫稳定，且状态$\bm{x}(t)$无法脱离$\mathcal{X}_2$（最坏情况下在$\mathcal{M}_2$内震荡）。
+
+    \textbf{步骤2：证明渐进稳定性的充要条件（结论b）}
+    \textit{必要性}：若$\mathcal{C}_{\text{CN}}$下的系统渐进稳定，则$\dot{V}(\bm{x}) < 0, \forall \bm{x} \in \mathcal{X} \setminus \{\bm{x}^*\}$。
+    对于$\mathcal{X}_2$区域，$\alpha = 1$，故$\dot{V}(\bm{x}) = \nabla V^T f(\bm{x}, \mathcal{C}_1) \leq 0$；
+    对于$\mathcal{X}_3$区域，需满足$\dot{V}(\bm{x}) < 0$，即：
+    $$\alpha \nabla V^T f(\bm{x}, \mathcal{C}_1) + (1-\alpha) \nabla V^T f(\bm{x}, \mathcal{C}_2) < 0.$$
+    由于$\alpha \in (0,1)$且$\nabla V^T f(\bm{x}, \mathcal{C}_1) \leq 0$，则必须有$\nabla V^T f(\bm{x}, \mathcal{C}_2) < 0, \forall \bm{x} \in \mathcal{X}_3 \setminus \{\bm{x}^*\}$。
+
+    \textit{充分性}：若$\nabla V^T f(\bm{x}, \mathcal{C}_2) < 0, \forall \bm{x} \in \mathcal{X}_3 \setminus \{\bm{x}^*\}$，则：
+    $$\dot{V}(\bm{x}) = \alpha \nabla V^T f(\bm{x}, \mathcal{C}_1) + (1-\alpha) \nabla V^T f(\bm{x}, \mathcal{C}_2) < 0, \forall \bm{x} \in \mathcal{X} \setminus \{\bm{x}^*\}.$$
+    根据渐进稳定的李雅普诺夫判定准则，系统在$\mathcal{X}$内渐进稳定。
+
+    综上，定理的两个结论均得证。
+    \end{proof}
+
+    当内部嵌套的控制器$\mathcal{C}_2$为人类驾驶员（记为$\mathcal{C}_{\text{human}}$）时，控制器嵌套方法退化为辅助驾驶的稳域包裹（Stable Domain Wrapper, SD Wrapper）技术，其核心挑战可量化为：
+    1) 状态空间的维度选择：需确定$\mathcal{X} = [x_1, x_2, ..., x_n]^T$中$n$的取值及各状态变量$x_i$的物理意义（如侧倾角、横摆角速度等）；
+    2) 边界的数学表征：需通过优化方法求解$\mathcal{X}_2$的边界函数$\partial \mathcal{X}_2: g(\bm{x}) = 0$，及控制器切换的阈值$\alpha^* = \inf\{\alpha(\bm{x}) | \bm{x} \in \partial \mathcal{X}_3\}$。
+    这两部分内容将作为后续研究推广过程的重点方向之一。
+
+
+
 
 
 \section{插图}
