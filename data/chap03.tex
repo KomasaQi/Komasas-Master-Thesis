@@ -54,13 +54,13 @@
 
       在图像生成中，每个像素点的RGB值代表3维度向量，像素点数为$N_{pix}$，则可以看成在$3 N_{pix}$维向量空间中进行流匹配；在轨迹生成上，如果以\SI{10}{Hz}生成未来\SI{8}{s}的包含$x,y$的轨迹，则相当于在160维向量空间进行流匹配。
 
-      FM用神经网络学习一个任务向量空间上的向量流场：$v_t^\theta$，其损失函数定义为
+      FM用神经网络学习一个任务向量空间上的向量流场：$v_t^\bm{\theta}$，其损失函数定义为
       \begin{equation}
-      \mathcal{L}(\theta) = \mathbb{E_{t,p_t(x)}} \lVert v_t^\theta(x_t) - v_t^{target}(x_t) \rVert^2
+      \mathcal{L}(\bm{\theta}) = \mathbb{E_{t,p_t(x)}} \lVert v_t^\bm{\theta}(x_t) - v_t^{target}(x_t) \rVert^2
       \label{eq:fm_loss_original}
       \end{equation}
 
-      其中$\theta$表示神经网络的参数，$t \in [0,1]$表示时间变量，$x_t$表示在时间$t$时刻的样本，$p_t(x)$表示在时间$t$时刻的样本分布，$v_t^{target}(x_t)$表示在时间$t$时刻的目标速度向量场。
+      其中$\bm{\theta}$表示神经网络的参数，$t \in [0,1]$表示时间变量，$x_t$表示在时间$t$时刻的样本，$p_t(x)$表示在时间$t$时刻的样本分布，$v_t^{target}(x_t)$表示在时间$t$时刻的目标速度向量场。
       
       为获得$v_t^{target}(x_t)$，在生成式FM任务中通常需自行构建一个流。我们首先构造一个从原始分布$p_0(x)$到目标分布$p_1(x)$的平滑过渡连续分布族$p_t(x)$，$t\in [0,1]$，$p_t(x)$平滑地从$p_0(x)$过渡到$p_1(x)$:
 
@@ -155,8 +155,10 @@
 
       在图数据表达上，图中所有节点的静态特征$F_{stat}$与动态特征$F_{dyn}$分别为:
       \begin{equation}
-      F_{stat}= \left[p_x, p_y, c_{lane}, c_{free}, k_{lane}, c_{edge}, v_{lim}, c_{nav}\right]\\
-        F_{dyn}= \left[c_{occ}, c_{veh}, v_{veh}, a_{veh}, h_{veh}, c_{ego}, c_{int}, c_{risk}\right]
+      \begin{aligned}
+      F_{stat}&= \left[p_x, p_y, c_{lane}, c_{free}, k_{lane}, c_{edge}, v_{lim}, c_{nav}\right]\\
+        F_{dyn}&= \left[c_{occ}, c_{veh}, v_{veh}, a_{veh}, h_{veh}, c_{ego}, c_{int}, c_{risk}\right]
+      \end{aligned}
       \end{equation}
       单张图节点特征矩阵由静态和动态特征拼接而成，图$\mathcal{G}$包含节点集$\mathcal{V}$与边集合$\mathcal{E}$：
       \begin{equation}\mathcal{V} = \left[F_{stat} \oplus F_{dyn}\right]\in \mathbb{R}^{n_\mathrm{v} \times d_\mathrm{v}} \quad \mathcal{E} = F_{con} \in \mathbb{R}^{n_\mathrm{e} \times d_\mathrm{e}} \quad \mathcal{G}=(\mathcal{V},\mathcal{E})\end{equation}
@@ -182,7 +184,7 @@
       其中$F_{i,stat}$为静态特征，包含路网静态信息（如车道数、交通流方向等）；$F_{i,vehs}^{-T+k:k}$为历史加当前时刻周车动态特征（如速度、加速度、相对距离等）；$F_{i,ego}^{-T+k:k}$为历史与当前时刻自车占据情况，$\oplus$为向量拼接（Concatenete）操作，$\mathcal{V}^k$表示第$k$时刻的图结构路网节点集合。所有时刻的边特征集$\mathcal{E}$属于静态特征均保持不变。
       
     \subsubsection*{(2)特征提取器设计}
-      图编码器采用多层图神经网络结构，对输入的图结构路网进行特征提取与局部、全局信息聚合，并加入时间编码与动作编码引导生成，通过邻居节点与边的特征传递与更新局部特征，通过全局线性注意力捕捉交通场景中的时空依赖关系与交互作用，生成下一时刻$k+1$的节点动态特征变化速度向量集$v^\theta(F_{dyn}^{k+1})$以实现图扩散（$\theta$为Graphflow模型参数）。
+      图编码器采用多层图神经网络结构，对输入的图结构路网进行特征提取与局部、全局信息聚合，并加入时间编码与动作编码引导生成，通过邻居节点与边的特征传递与更新局部特征，通过全局线性注意力捕捉交通场景中的时空依赖关系与交互作用，生成下一时刻$k+1$的节点动态特征变化速度向量集$v^\bm{\theta}(F_{dyn}^{k+1})$以实现图扩散（$\bm{\theta}$为Graphflow模型参数）。
 
       具体而言，在每次自回归迭代内的特征提取环节，当前时间$t$被通过正弦时间编码器编码：
 
@@ -222,10 +224,10 @@
       完成图注意力层的局部-全局特征聚合基础结构设计后，将时间编码$e_t$与动作编码$e_a$通过线性变换维度对齐与残差相加的方式注入图编码器的特征提取全流程，实现时间演化规律与自车动作意图对路网特征扩散的定向引导。
 
       % 特征提取器输出与FCN的连接设计
-      最后，将特征提取器输出连接到多个全连接网络（Fully Connected Network, FCN）并对需要限制范围的输出如$c_{ego}$,$c_{risk}$等加入$\text{Softmax(\cdot)}$函数进行非线性映射。最终将所有输出拼接起来作为模型的最终输出$v^\theta(F_{dyn}^{k+1})$，即第$k+1$时刻所有节点动态节点特征的速度向量。
+      最后，将特征提取器输出连接到多个全连接网络（Fully Connected Network, FCN）并对需要限制范围的输出如$c_{ego}$,$c_{risk}$等加入$\text{Softmax}(\cdot)$函数进行非线性映射。最终将所有输出拼接起来作为模型的最终输出$v^\bm{\theta}(F_{dyn}^{k+1})$，即第$k+1$时刻所有节点动态节点特征的速度向量。
 
     \subsubsection*{(3)图扩散流匹配训练}
-      流匹配扩散模块基于流匹配理论，学习交通状态的速度向量场。通过最小化条件流匹配（Conditional Flow Matching, CFM）损失函数$\mathcal{L}_{CFM}(\theta)$，训练模型生成符合目标分布的未来交通状态样本。该模块能够有效捕捉交通状态的动态变化，实现对未来交通状态的多模态预测。
+      流匹配扩散模块基于流匹配理论，学习交通状态的速度向量场。通过最小化条件流匹配（Conditional Flow Matching, CFM）损失函数$\mathcal{L}_{CFM}(\bm{\theta})$，训练模型生成符合目标分布的未来交通状态样本。该模块能够有效捕捉交通状态的动态变化，实现对未来交通状态的多模态预测。
 
       在原始生成任务中由于没有真实的流动，所以需要人为构造整合流以从先验分布平滑过渡到目标分布。但本任务中，由于节点特征在未来所有时刻的变化在训练时全部可知，故可以直接获得真实流$\psi^{target}_t(\mathcal{V}_k|\mathcal{V}_{k+1})$，并通过时间差值微分的方式计算出目标速度向量场$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$。积分时利用FM的良好性质可直接采用欧拉法进行一步数值积分，避免了复杂的随机微分方程求解过程，提高了计算效率。
 
@@ -236,7 +238,7 @@
         \epsilon_{SSCL} = \frac{\tau_{SSCL}}{(\tau_{SSCL} + \exp(N_{batch}/\tau_{SSCL}))}
       \end{equation}
       
-      其中$\tau_{SSCL}$为预设的衰减系数，以$\epsilon_{SSCL}$的概率保留数据集中未来时刻的动态特征真值$F_{dyn}^{k+1}$，以$1-\epsilon_{SSCL}$的概率使用模型预测结果$F_{dyn}^{\theta,k+1}$替换对应真值动态特征在下次自回归过程中共同组成时空图输入。随着训练的进行，$\epsilon_{SSCL}$的值逐渐从1降低至0，使模型逐步适应自回归预测环境，实现了自回归训练稳定性的显著增加。
+      其中$\tau_{SSCL}$为预设的衰减系数，以$\epsilon_{SSCL}$的概率保留数据集中未来时刻的动态特征真值$F_{dyn}^{k+1}$，以$1-\epsilon_{SSCL}$的概率使用模型预测结果$F_{dyn}^{\bm{\theta},k+1}$替换对应真值动态特征在下次自回归过程中共同组成时空图输入。随着训练的进行，$\epsilon_{SSCL}$的值逐渐从1降低至0，使模型逐步适应自回归预测环境，实现了自回归训练稳定性的显著增加。
 
       \renewcommand{\algorithmicrequire}{\textbf{输入：}\unskip}
       \renewcommand{\algorithmicensure}{\textbf{输出：}\unskip}
@@ -248,7 +250,7 @@
         \begin{algorithmic}
           \REQUIRE 训练集时空图数据集$\{\mathbf{G}_i, ~i = 1,2,\dots,N_{data}\}$，其中$N_{data}$为数据集包含的时空图总数，$\mathbf{G}_i = \{\mathcal{G}^{-T},\mathcal{G}^{-T+1},\cdots,\mathcal{G}^{-T+k},\cdots,\mathcal{G}^0,\cdots, \mathcal{G}^{T}\}, \mathcal{G}^k=\{\mathcal{V}^k,\mathcal{E}\}$（省略下标$i$）
 
-          \ENSURE 给定时刻$t$下图节点所有动态特征变化速度预测$v_t^{\theta}(F_{dyn}^{t}|\mathcal{V}_{k+1}), t\in [k,k+1]$
+          \ENSURE 给定时刻$t$下图节点所有动态特征变化速度预测$v_t^{\bm{\theta}}(F_{dyn}^{t}|\mathcal{V}_{k+1}), t\in [k,k+1]$
           \STATE $N_{batch} \leftarrow 0$
           \FOR{$epoch = 1,2,\dots,N_{max,epoch}$}
             \FOR {$i = 1,2,\dots,N_{data}$}
@@ -257,13 +259,13 @@
                 \STATE $\mathcal{G}_{st}\leftarrow F_{stat} \oplus F_{dyn}^{-T+k:k} $构造历史时空图
                 \STATE $t \leftarrow \mathcal{U}(k,k+1)$ 随机选取时间
                 \STATE $v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})\leftarrow \text{diff}(F_{dyn}^{k},F_{dyn}^{k+1},t-k)$ 时间微分计算目标速度向量场
-                \STATE $v_t^{\theta}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \leftarrow \text{GraphflowModel}(\mathcal{G}_{st},t)$
-                \STATE $\mathcal{L}_{CFM}(\theta) = \lVert v_t^{\theta}(F_{dyn}^{t}|\mathcal{V}_{k+1}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2$
-                \STATE 更新参数：$\theta \leftarrow \theta - \eta \nabla_{\theta} \mathcal{L}_{CFM}(\theta)$
-                \STATE $F_{dyn}^{\theta,k+1} = F_{dyn}^{k} + \text{Euler}(\text{GraphflowModel}(\mathcal{G}_{st},t))$
+                \STATE $v_t^{\bm{\theta}}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \leftarrow \text{GraphflowModel}(\mathcal{G}_{st},t)$
+                \STATE $\mathcal{L}_{CFM}(\bm{\theta}) = \lVert v_t^{\bm{\theta}}(F_{dyn}^{t}|\mathcal{V}_{k+1}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2$
+                \STATE 更新参数：$\bm{\theta} \leftarrow \bm{\theta} - \eta \nabla_{\bm{\theta}} \mathcal{L}_{CFM}(\bm{\theta})$
+                \STATE $F_{dyn}^{\bm{\theta},k+1} = F_{dyn}^{k} + \text{Euler}(\text{GraphflowModel}(\mathcal{G}_{st},t))$
                 \STATE $\epsilon_{SSCL} = \text{calculateSSCLThred}(N_{batch}) $ 调度采样课程学习
                 \IF {$\text{rand}() \leq \epsilon_{SSCL}$} 
-                  \STATE $F_{dyn}^{k+1} \leftarrow F_{dyn}^{\theta,k+1}$  以$\epsilon_{SSCL}$的概率保留数据集中未来时刻的动态特征真值$F_{dyn}^{k+1}$
+                  \STATE $F_{dyn}^{k+1} \leftarrow F_{dyn}^{\bm{\theta},k+1}$  以$\epsilon_{SSCL}$的概率保留数据集中未来时刻的动态特征真值$F_{dyn}^{k+1}$
                 \ENDIF
                 \STATE $N_{batch} \leftarrow N_{batch} + 1$
               \ENDFOR
@@ -272,7 +274,7 @@
         \end{algorithmic}
       \end{algorithm}
 
-    关于Graphflow方法进行图扩散流匹配理论有效性的证明请参见附录\label{sub:graphflow_proof}节。
+    关于Graphflow方法进行图扩散流匹配理论有效性的证明请参见附录\ref{sub:graphflow_proof}节。
 
 
 \section{强化学习长时域决策模型}
@@ -312,9 +314,9 @@
     f(\Delta a_{R,ego},\Delta a_{R,f}) = \alpha_R(\Delta a_{R,ego} + p\Delta a_{R,f}) + \beta_R
     \end{cases}
     \end{equation}
-    其中$\alpha_L,\beta_L,\alpha_R,\beta_R,p$共5个参数为待识别的模型参数，公用的参数$p$是对应MOBIL模型的礼貌系数，反映这辆车对自车影响其他车的重视程度。
+    其中$\alpha_L,\beta_L,\alpha_R,\beta_R,p$共5个参数为待识别的模型参数，公用的参数$p$是对应MOBIL模型的礼貌系数，反映这辆车对自车影响其他车的重视程度，所有参数为$\theta_{MOBIL}$。
 
-    步骤3：获取这辆车的换道概率，采用$\text{softmax}(\cdot)$函数对评价函数的输出进行归一化即可获得此时刻左右换道与不换道决策的概率。
+    步骤3：获取这辆车的换道概率，采用$\text{Softmax}(\cdot)$函数对评价函数的输出进行归一化即可获得此时刻左右换道与不换道决策的概率。
     \begin{equation}
     \begin{cases}
     P(L) = \frac{e^{f(\Delta a_{L,ego},\Delta a_{L,f})}}{e^{f(\Delta a_{L,ego},\Delta a_{L,f})} + 1 + e^{f(\Delta a_{R,ego},\Delta a_{R,f})}} \\
@@ -327,12 +329,8 @@
 
 
 
-    采用贝叶斯估计中的MCMC（马尔科夫链蒙特卡罗）方法进行采样对驾驶员模型参数、换道模型参数及意图的不确定性进行更新。如图~\ref{fig:mcmc}所示，MCMC方法构建一个马尔科夫链，从后验分布中抽样出一系列的$\theta$构建参数的概率分布。通过采样得到的$\theta_1,\theta_2,\dots,\theta_{M'}$，可对参数的分布进行估计。如果采样得到了$T_{hw}$的样本值$T_{hw}^{(1)},T_{hw}^{(2)},\dots,T_{hw}^{(M)}$，可以用样本均值作为参数的估计值，用样本方差作为该参数的不确定性，余下的问题在于后验概率如何求得。
+    采用贝叶斯估计中的马尔科夫链蒙特卡罗（Markov Chain Monte Carlo, MCMC）方法进行采样对驾驶员模型参数、换道模型参数及意图的不确定性进行更新。如图~\ref{fig:mcmc}所示，MCMC方法构建一个马尔科夫链，从后验分布中抽样出一系列的$\theta_{mdl}=\theta_{IDM}\oplus \theta_{MOBIL}$构建参数的概率分布。通过采样得到的$\theta_{mdl,1},\theta_{mdl,2},\dots,\theta_{mdl,M'}$，可对参数的分布进行估计。如果采样得到了$T_{hw}$的样本值$T_{hw}^{(1)},T_{hw}^{(2)},\dots,T_{hw}^{(M)}$，可以用样本均值作为参数的估计值，用样本方差作为该参数的不确定性，余下的问题在于后验概率如何求得。
 
-    驾驶员模型参数和意图参数识别采用时间触发机制，具体而言采用的意识识别算法为基于规则的可能性识别与贝叶斯推断的结合，通过地图信息与交通规则确定车辆在未来给定的较长一段距离内的意图分叉点（识别出了$K$种可能的意图，比如当前正在高速上行驶，前方500m有匝道口，那么可能的意图包括直行和下匝道，如图~\ref{fig:param_int_uncertain}所示）；并以识别好的驾驶员模型为基础，分别设置车辆为不同的意图进行仿真（每种意图有各自的先验信息，可以通过道路结构、车辆位置进行合理推断给出，比如在匝道口可以根据往常交通流量+当前该车的车道位置+当前该车的加速趋势给出$P(\text{Go Straight})=0.25$，$P(\text{Exit})=0.75)$），利用过去一段时间给定时间窗口内的周车历史数据作为输入进行仿真，获得该车不同意图假设下的行为预测，损失函数采用预测测量与实际观测测量间的L2损失：
-    \begin{equation}
-    \mathcal{L}_{IDM}(\theta_v) = w_1||a_{pred} - a|| + w_2||v_{pred} - v|| + w_3||s_{pred} - s||
-    \end{equation}
 
     \begin{figure}
       \centering
@@ -344,9 +342,16 @@
       \label{fig:param_int_uncertain_mcmc}
     \end{figure}
 
-    某组参数和意图的后验概率$\pi(\theta,I)$:各采样时刻（$N$个）基于$(\theta,I)$预测的状态$X_{pred,i}(\theta,I)$的误差正态分布概率乘积：
+    驾驶员模型参数和意图参数识别采用时间触发机制，具体而言采用的意识识别算法为基于规则的可能性识别与贝叶斯推断的结合，通过地图信息与交通规则确定车辆在未来给定的较长一段距离内的意图分叉点（识别出了$K$种可能的意图，比如当前正在高速上行驶，前方\SI{500}{m}有匝道口，那么可能的意图包括直行和下匝道，如图~\ref{fig:param_int_uncertain}所示）；并以识别好的驾驶员模型为基础，分别设置车辆为不同的意图进行仿真（每种意图有各自的先验信息，可以通过道路结构、车辆位置进行合理推断给出，比如在匝道口可以根据往常交通流量+当前该车的车道位置+当前该车的加速趋势给出$P(\text{Go Straight})=0.25$，$P(\text{Exit})=0.75)$），利用过去一段时间给定时间窗口内的周车历史数据作为输入进行仿真，获得该车不同意图假设下的行为预测，损失函数采用预测测量与实际观测测量间的L2损失：
     \begin{equation}
-    \pi(\theta,I) = \prod_{i=1}^{N}\mathcal{N}\bigl(X_{pred,i}(\theta,I) - X_{obsv,i},\sigma\bigr)
+    \mathcal{L}_{IDM}(\theta_v) = w_1||a_{pred} - a|| + w_2||v_{pred} - v|| + w_3||s_{pred} - s||
+    \end{equation}
+
+
+
+    某组参数和意图的后验概率$\pi(\theta_{mdl},I)$:各采样时刻（$N$个）基于$(\theta_{mdl},I)$预测的状态$X_{pred,i}(\theta_{mdl},I)$的误差正态分布概率乘积：
+    \begin{equation}
+    \pi(\theta_{mdl},I) = \prod_{i=1}^{N}\mathcal{N}\bigl(X_{pred,i}(\theta_{mdl},I) - X_{obsv,i},\sigma\bigr)
     \end{equation}
     其中状态$X$包括纵向/横向位置和速度，$\sigma$为先验值。
 
@@ -371,9 +376,9 @@
     除“期望回报”的标量$Q$，分布式强化学习（Distributional RL）直接建模回报随机变量$Z(s,a)$的分布，并通过分布距离（如Wasserstein/quantile回归）学习更丰富的信息。Bellemare等提出从分布角度刻画强化学习目标，推动了分位数回归DQN等方法的发展~\cite{QR_DQN_2017}。这类思想也可与连续控制的critic建模结合，用于缓解偏差与提升稳定性（如本节的TQC方法）。
 
   \subsubsection*{(2)策略梯度与Actor--Critic架构}
-    当动作空间连续或离散动作规模很大时，直接优化策略$\pi_\theta(a|s)$往往更自然。策略梯度方法通过
+    当动作空间连续或离散动作规模很大时，直接优化策略$\pi_\bm{\theta}(a|s)$往往更自然。策略梯度方法通过
     \begin{equation}
-    \nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(a_t|s_t)\, \hat{A}_t \right]
+    \nabla_\bm{\theta} J(\bm{\theta})=\mathbb{E}_{\pi_\bm{\theta}}\left[\nabla_\bm{\theta} \log \pi_\bm{\theta}(a_t|s_t)\, \hat{A}_t \right]
     \end{equation}
     更新参数，其中$\hat{A}_t$为优势函数估计，用于降低方差。异步方法（Asynchronous Methods，通常被称为A3C/A2C范式）通过多线程/多进程并行采样与更新，提高样本效率与训练吞吐~\cite{A2C_2016}。A2C可视为A3C的同步版本，常与广义优势估计（Generalized Advantage Estimation, GAE）等技巧搭配，在中等规模任务中表现相对稳健。
 
@@ -394,25 +399,25 @@
   \subsubsection*{(5)PPO方法核心思想与目标函数}
     PPO属于\emph{on-policy} Actor--Critic方法，核心目标是在保持实现简单的一阶优化框架下，限制策略更新幅度，避免性能骤降~\cite{PPO_2017}。其关键在于使用重要性采样比率
     \begin{equation}
-    r_t(\theta)=\frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)},
+    r_t(\bm{\theta})=\frac{\pi_\bm{\theta}(a_t|s_t)}{\pi_{\bm{\theta}_{\text{old}}}(a_t|s_t)},
     \end{equation}
     并用优势函数$\hat{A}_t$构建surrogate目标。最常用的PPO-Clip形式为
     \begin{equation}
-    L^{\text{CLIP}}(\theta)=\mathbb{E}_t\left[\min\left(r_t(\theta)\hat{A}_t,\ \text{clip}(r_t(\theta),1-\epsilon,1+\epsilon)\hat{A}_t\right)\right],
+    L^{\text{CLIP}}(\bm{\theta})=\mathbb{E}_t\left[\min\left(r_t(\bm{\theta})\hat{A}_t,\ \text{clip}(r_t(\bm{\theta}),1-\epsilon_{clip},1+\epsilon_{clip})\hat{A}_t\right)\right],
     \label{eq:ppo_clip}
     \end{equation}
-    其中$\epsilon$为裁剪阈值（如0.1或0.2）。直观解释如下：
+    其中$\epsilon_{clip}$为裁剪阈值（如0.1或0.2）。直观解释如下：
     \begin{itemize}
-    \item 当$r_t(\theta)$偏离1（新旧策略差异过大）且会\emph{过度}提高目标时，裁剪项会限制增益，强制更新更保守。
+    \item 当$r_t(\bm{\theta})$偏离1（新旧策略差异过大）且会\emph{过度}提高目标时，裁剪项会限制增益，强制更新更保守。
     \item 通过$\min(\cdot)$结构，PPO在经验上倾向于避免“看似提升但可能导致崩溃”的过大更新。
     \end{itemize}
 
     PPO还通常加入价值函数损失与熵正则项构成整体目标：
     \begin{equation}
-    L(\theta)=L^{\text{CLIP}}(\theta)-c_v\,\mathbb{E}_t\left[(V_\theta(s_t)-\hat{V}_t)^2\right]+c_e\,\mathbb{E}_t\left[\mathcal{H}(\pi_\theta(\cdot|s_t))\right],
+    L(\bm{\theta})=L^{\text{CLIP}}(\bm{\theta})-c_v\,\mathbb{E}_t\left[(V_\bm{\theta}(s_t)-\hat{V}_t)^2\right]+c_e\,\mathbb{E}_t\left[\mathcal{H}(\pi_\bm{\theta}(\cdot|s_t))\right],
     \label{eq:ppo_total}
     \end{equation}
-    其中$V_\theta$为critic，$\hat{V}_t$为回报/TD目标，$\mathcal{H}$为策略熵，$c_v,c_e$为权重。熵项鼓励探索、降低过早收敛风险；价值损失为actor提供低方差优势估计支撑。PPO的工程实现通常采用“采样一批on-policy轨迹 $\rightarrow$ 多个epoch、小批量SGD更新”的训练范式。
+    其中$V_\bm{\theta}$为critic，$\hat{V}_t$为回报/TD目标，$\mathcal{H}$为策略熵，$c_v,c_e$为权重。熵项鼓励探索、降低过早收敛风险；价值损失为actor提供低方差优势估计支撑。PPO的工程实现通常采用“采样一批on-policy轨迹 $\rightarrow$ 多个epoch、小批量SGD更新”的训练范式。
 
   \subsubsection*{(6)优势函数估计与训练流程}
     PPO性能高度依赖优势函数$\hat{A}_t$的估计质量。常见做法是采用GAE思想构造指数加权的TD残差累积（这里给出常用形式，便于在实现中对齐）：
@@ -422,10 +427,10 @@
     \end{align}
     其中$\lambda\in[0,1]$控制偏差--方差权衡。实践中通常对优势做标准化（减均值除标准差），以提升数值稳定性。PPO典型训练步骤可概括为：
     \begin{enumerate}
-    \item 使用当前策略$\pi_{\theta_{\text{old}}}$在环境中采样$N$步或若干条轨迹，得到$\{(s_t,a_t,r_t,s_{t+1})\}$；
+    \item 使用当前策略$\pi_{\bm{\theta}_{\text{old}}}$在环境中采样$N$步或若干条轨迹，得到$\{(s_t,a_t,r_t,s_{t+1})\}$；
     \item 用critic计算$V(s_t)$并构造$\hat{A}_t$与价值目标$\hat{V}_t$；
-    \item 固定旧策略$\pi_{\theta_{\text{old}}}$，以小批量方式对目标$L(\theta)$进行$K$个epoch的梯度更新；
-    \item 更新$\theta_{\text{old}}\leftarrow \theta$，进入下一轮采样。
+    \item 固定旧策略$\pi_{\bm{\theta}_{\text{old}}}$，以小批量方式对目标$L(\bm{\theta})$进行$K$个epoch的梯度更新；
+    \item 更新$\bm{\theta}_{\text{old}}\leftarrow \bm{\theta}$，进入下一轮采样。
     \end{enumerate}
     与off-policy方法（DDPG/TD3/SAC）相比，PPO的采样数据必须较新（on-policy），因此样本效率略逊，但其训练稳定性、对超参数的鲁棒性以及在复杂策略网络（如CNN/Transformer）上的泛化表现，使其在很多工程场景依然是首选基线~\cite{PPO_2017}。
 
@@ -781,11 +786,11 @@
 
       将式\eqref{eq:149}带入\eqref{eq:142}化简，即可得到挂车的航向角运动学方程为：
       \begin{equation}
-      \dot{\psi}_2 = \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma + \sin\gamma \right)
+      \dot{\psi}_2 = \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma_{g} + \sin\gamma_{g} \right)
       \label{eq:150}
       \end{equation}
 
-      其中定义铰接角$\gamma = \psi_1 - \psi_2$。
+      其中定义铰接角$\gamma_{g} = \psi_1 - \psi_2$。
 
       综上所述，得到铰接点位于牵引车等效后轴中点前侧的半挂式车辆运动学模型：
       \begin{equation}
@@ -793,7 +798,7 @@
       \dot{X}_{1r} = v_{1x} \cos\psi_1 \\
       \dot{Y}_{1r} = v_{1x} \sin\psi_1 \\
       \dot{\psi}_1 = \frac{v_{1x}}{L_1}\tan\delta \\
-      \dot{\psi}_2 = \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma + \sin\gamma \right)
+      \dot{\psi}_2 = \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma_{g} + \sin\gamma_{g} \right)
       \end{cases}
       \label{eq:151}
       \end{equation}
@@ -806,7 +811,7 @@
       \dot{X}_{1r} = v_{1x} \cos\psi_1 \\
       \dot{Y}_{1r} = v_{1x} \sin\psi_1 \\
       \dot{\psi}_1 = \frac{v_{1x}}{L_1}\tan\delta \\
-      \dot{\psi}_2 = K_v \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma + \sin\gamma \right), K_v = \left( 1 - \frac{m_2 v_{1x}^2 e}{L_1 L_2 k_3} \right)
+      \dot{\psi}_2 = K_v \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma_{g} + \sin\gamma_{g} \right), K_v = \left( 1 - \frac{m_2 v_{1x}^2 e}{L_1 L_2 k_3} \right)
       \end{cases}
       \label{eq:152}
       \end{equation}
@@ -855,40 +860,40 @@
       其中$k_3$是侧偏刚度，$\alpha_3$为挂车等效后轴侧偏角。由于刚体沿着某一直线的速度一定相同，故将第五轮的已知速度$v_h$沿着挂车纵向与横向分解：
       \begin{equation}
       \begin{cases}
-      v_h^x = v_h \cos(\delta^{\prime} + \gamma) \\
-      v_h^y = v_h \sin(\delta^{\prime} + \gamma)
+      v_h^x = v_h \cos(\delta^{\prime} + \gamma_{g}) \\
+      v_h^y = v_h \sin(\delta^{\prime} + \gamma_{g})
       \end{cases}
       \label{eq:157}
       \end{equation}
       挂车等效后轴的速度沿着挂车纵向的分量也为$v_h^x$。而横向速度可以用该点的牵连速度分量$v_h^y$与相对运动速度分量表示，则可以表示挂车等效后轴的侧偏角为：
       \begin{equation}
-      \alpha_3 \approx \tan\alpha_3 = \frac{v_h \sin(\delta^{\prime} + \gamma) - \dot{\psi}_2 L_2}{v_h \cos(\delta^{\prime} + \gamma)} = \tan(\delta^{\prime} + \gamma) - \frac{\dot{\psi}_2 L_2}{v_h \cos(\delta^{\prime} + \gamma)}
+      \alpha_3 \approx \tan\alpha_3 = \frac{v_h \sin(\delta^{\prime} + \gamma_{g}) - \dot{\psi}_2 L_2}{v_h \cos(\delta^{\prime} + \gamma_{g})} = \tan(\delta^{\prime} + \gamma_{g}) - \frac{\dot{\psi}_2 L_2}{v_h \cos(\delta^{\prime} + \gamma_{g})}
       \label{eq:158}
       \end{equation}
       接下来，对挂车的受力情况进行分析，可知挂车在第五轮受到牵引车的作用力、质心处由于圆周运动受到达朗贝尔力$F_{m2}$、后轴受到侧向力$F_y^3$与纵向力$F_x^3$，这些力合力为零。
       \begin{equation}
-      F_y^3 \cos\theta_1 + F_x^3 \sin\theta_1 \approx k_3 \alpha_3 \cos\theta_1 = \frac{e}{L_2}F_{m2} = \frac{e m_2 v_2^2}{L_2 x} \approx \frac{e m_2 v_1^2}{L_2 L_1} \tan\delta \left( 1 - \frac{e}{L_1} \tan\delta \sin\gamma \right)
+      F_y^3 \cos\theta_1 + F_x^3 \sin\theta_1 \approx k_3 \alpha_3 \cos\theta_1 = \frac{e}{L_2}F_{m2} = \frac{e m_2 v_2^2}{L_2 x} \approx \frac{e m_2 v_1^2}{L_2 L_1} \tan\delta \left( 1 - \frac{e}{L_1} \tan\delta \sin\gamma_{g} \right)
       \label{eq:159}
       \end{equation}
       最后一步的近似是基于：
       \begin{equation}
-      \frac{v_2}{v_{1x}} = \frac{x}{R} \approx \frac{(R - e \sin\gamma)}{R} = \left( 1 - \frac{e}{L_1} \tan\delta \sin\gamma \right)
+      \frac{v_2}{v_{1x}} = \frac{x}{R} \approx \frac{(R - e \sin\gamma_{g})}{R} = \left( 1 - \frac{e}{L_1} \tan\delta \sin\gamma_{g} \right)
       \label{eq:160}
       \end{equation}
       基于式\eqref{eq:159}进一步化简：
       \begin{equation}
       \begin{aligned}
-      &k_3 \tan(\delta^{\prime} + \gamma) - \frac{\dot{\psi}_2 L_2 k_3}{v_1 \cos(\delta^{\prime} + \gamma)} \approx \frac{e m_2 v_1^2}{L_2 L_1} \tan\delta \\
-      \Longleftrightarrow~ &- \tan(\delta^{\prime} + \gamma) + \frac{\dot{\psi}_2 L_2}{v_1 \cos(\delta^{\prime} + \gamma)} = -\frac{e m_2 v_1^2}{L_2 L_1 k_3} \tan\delta \\
-      \Longleftrightarrow~ &\frac{\dot{\psi}_2 L_2}{v_1} = -\frac{e m_2 v_1^2}{L_2 L_1 k_3} \tan\delta \cos(\delta^{\prime} + \gamma) + \sin(\delta^{\prime} + \gamma) \\
-      \Longleftrightarrow~ &\dot{\psi}_2 = \frac{v_1}{L_2} \left( -\frac{e m_2 v_1^2}{L_2 L_1 k_3} \tan\delta \cos(\delta^{\prime} + \gamma) + \sin(\delta^{\prime} + \gamma) \right)
+      &k_3 \tan(\delta^{\prime} + \gamma_{g}) - \frac{\dot{\psi}_2 L_2 k_3}{v_1 \cos(\delta^{\prime} + \gamma_{g})} \approx \frac{e m_2 v_1^2}{L_2 L_1} \tan\delta \\
+      \Longleftrightarrow~ &- \tan(\delta^{\prime} + \gamma_{g}) + \frac{\dot{\psi}_2 L_2}{v_1 \cos(\delta^{\prime} + \gamma_{g})} = -\frac{e m_2 v_1^2}{L_2 L_1 k_3} \tan\delta \\
+      \Longleftrightarrow~ &\frac{\dot{\psi}_2 L_2}{v_1} = -\frac{e m_2 v_1^2}{L_2 L_1 k_3} \tan\delta \cos(\delta^{\prime} + \gamma_{g}) + \sin(\delta^{\prime} + \gamma_{g}) \\
+      \Longleftrightarrow~ &\dot{\psi}_2 = \frac{v_1}{L_2} \left( -\frac{e m_2 v_1^2}{L_2 L_1 k_3} \tan\delta \cos(\delta^{\prime} + \gamma_{g}) + \sin(\delta^{\prime} + \gamma_{g}) \right)
       \end{aligned}
       \label{eq:161}
       \end{equation}
 
-      将其与式\eqref{eq:151}进行比较，$\dot{\psi}_2 = \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma + \sin\gamma \right)$，得到修正后的横摆角速度为：
+      将其与式\eqref{eq:151}进行比较，$\dot{\psi}_2 = \frac{v_{1x}}{L_2}\left( \frac{L_h}{L_1}\tan\delta \cos\gamma_{g} + \sin\gamma_{g} \right)$，得到修正后的横摆角速度为：
       \begin{equation}
-      \dot{\psi}_2 = K_v \frac{v_1}{L_2} \left( \frac{L_h}{L_1}\tan\delta \cos\gamma + \sin\gamma \right), K_v = \left( 1 - \frac{m_2 v_{1x}^2 e}{L_1 L_2 k_3} \right)
+      \dot{\psi}_2 = K_v \frac{v_1}{L_2} \left( \frac{L_h}{L_1}\tan\delta \cos\gamma_{g} + \sin\gamma_{g} \right), K_v = \left( 1 - \frac{m_2 v_{1x}^2 e}{L_1 L_2 k_3} \right)
       \label{eq:162}
       \end{equation}
       其中因为侧偏刚度$k_3$为负值，故$K_v \geq 1$，当$v_1 \to 0, K_v \to 1$，当$v_1 \to \infty, K_v \to \infty$，以此体现随着侧向加速度的增加，滑移率逐渐增加的情况。
@@ -899,15 +904,15 @@
 
       \begin{equation}
       \begin{aligned}
-      a_y &= \frac{v_{1x}^2}{m_1 + m_2} \left( \frac{m_1}{L_1} \tan\delta + \frac{m_2}{L_2} \cos^2 \gamma \sin\gamma \right) \\
-      &= \frac{m_1 v_{1x}}{m_1 + m_2} \dot{\psi}_1 + \frac{m_2 v_{1x}^2}{L_2(m_1 + m_2)} \cos^2 \gamma \sin\gamma
+      a_y &= \frac{v_{1x}^2}{m_1 + m_2} \left( \frac{m_1}{L_1} \tan\delta + \frac{m_2}{L_2} \cos^2 \gamma_{g} \sin\gamma_{g} \right) \\
+      &= \frac{m_1 v_{1x}}{m_1 + m_2} \dot{\psi}_1 + \frac{m_2 v_{1x}^2}{L_2(m_1 + m_2)} \cos^2 \gamma_{g} \sin\gamma_{g}
       \end{aligned}
       \label{eq:163}
       \end{equation}
 
 
       经过处理后的加速度直接经过三阶线性环节即可得到LTR。三阶线性环节设计如下：
-      设状态量$X = [x_1~ x_2~ x_3]^T$，输入量$u = [a_y~ \dot{\gamma}~ \gamma]^T$，输出是$y = \text{LTR}$则：
+      设状态量$X = [x_1~ x_2~ x_3]^T$，输入量$u = [a_y~ \dot{\gamma_{g}}~ \gamma_{g}]^T$，输出是$y = \text{LTR}$则：
       \begin{equation}
       \begin{cases}
       \dot{X} = AX + Bu \\
@@ -936,10 +941,10 @@
       \dot{X}_{1r} = v_{1x} \cos\psi_1 \\
       \dot{Y}_{1r} = v_{1x} \sin\psi_1 \\
       \dot{\psi}_1 = \frac{v_{1x}}{L_1}\tan\delta \\
-      \dot{\gamma} = \dot{\psi}_1 - \frac{K_v}{L_2} \left( L_h \psi_1 \cos\gamma + v_{1x} \sin\gamma \right), K_v = \left( 1 - \frac{m_2 v_{1x}^2 e}{L_1 L_2 k_3} \right) \\
-      \dot{\mathcal{L}} = \mathcal{L}_a + c_{11} v_{1x} \psi_1 + c_{21} v_{1x}^2 \cos^2 \gamma \sin\gamma + b_{31} \gamma, \quad c_{1i} = \frac{b_{1i} m_1}{m_1 + m_2}, c_{2i} = \frac{b_{1i} m_2}{L_2(m_1 + m_2)} \\
-      \dot{\mathcal{L}}_a = \mathcal{L}_b + \left( c_{12} v_{1x} + b_{22} - \frac{b_{22} L_h}{L_2} \cos\gamma \right) \psi_1 + \left( c_{22} v_{1x}^2 \cos^2 \gamma - \frac{b_{22} v_{1x}}{L_2} \right) \sin\gamma + b_{32} \gamma \\
-      \dot{\mathcal{L}}_b = a_1 \mathcal{L} + a_2 \mathcal{L}_a + a_3 \mathcal{L}_b + c_{13} v_{1x} \psi_1 + c_{23} v_{1x}^2 \cos^2 \gamma \sin\gamma
+      \dot{\gamma_{g}} = \dot{\psi}_1 - \frac{K_v}{L_2} \left( L_h \psi_1 \cos\gamma_{g} + v_{1x} \sin\gamma_{g} \right), K_v = \left( 1 - \frac{m_2 v_{1x}^2 e}{L_1 L_2 k_3} \right) \\
+      \dot{\mathcal{L}} = \mathcal{L}_a + c_{11} v_{1x} \psi_1 + c_{21} v_{1x}^2 \cos^2 \gamma_{g} \sin\gamma_{g} + b_{31} \gamma_{g}, \quad c_{1i} = \frac{b_{1i} m_1}{m_1 + m_2}, c_{2i} = \frac{b_{1i} m_2}{L_2(m_1 + m_2)} \\
+      \dot{\mathcal{L}}_a = \mathcal{L}_b + \left( c_{12} v_{1x} + b_{22} - \frac{b_{22} L_h}{L_2} \cos\gamma_{g} \right) \psi_1 + \left( c_{22} v_{1x}^2 \cos^2 \gamma_{g} - \frac{b_{22} v_{1x}}{L_2} \right) \sin\gamma_{g} + b_{32} \gamma_{g} \\
+      \dot{\mathcal{L}}_b = a_1 \mathcal{L} + a_2 \mathcal{L}_a + a_3 \mathcal{L}_b + c_{13} v_{1x} \psi_1 + c_{23} v_{1x}^2 \cos^2 \gamma_{g} \sin\gamma_{g}
       \end{cases}
       \label{eq:166}
       \end{equation}
@@ -964,7 +969,7 @@
     \end{equation}
     其中$q_1$为CBF的缩放因子，$q_2$为CBF的指数因子，$f_k^x(x_k + \increment x_k)$为第$k$步CBF的一阶泰勒展开近似表达式，$\nabla c_k^x(x_k)$为第$k$步CBF的梯度向量，$c_k^x(x_k)$为第$k$步CBF的标量项。通过将$b_k$引入目标函数即可将约束问题转化为无约束ILQR问题（由于将约束替换为CBF惩罚项，实际为软约束，即无法从理论上完全保证求解满足约束，但也可以避免硬约束下的无解情况）。
 
-    利用上述约束，为保证侧翻稳定性，对车辆LTR以及铰接角$\gamma$都进行了CBF约束，其中为补偿线性LTR预测模型可能的误差，将近似LTR状态绝对值的CBF约束上限$\mathcal{L}_{lim}$设置为随时间指数衰减的形式:
+    利用上述约束，为保证侧翻稳定性，对车辆LTR以及铰接角$\gamma_{g}$都进行了CBF约束，其中为补偿线性LTR预测模型可能的误差，将近似LTR状态绝对值的CBF约束上限$\mathcal{L}_{lim}$设置为随时间指数衰减的形式:
     \begin{equation}
       \mathcal{L}_{lim} = \mathcal{L}_{lim}^0\exp(-\frac{t}{\tau_{decay}})
       \label{eq:ltr_cbf}
@@ -1114,7 +1119,6 @@
       上述预测模型与决策模型训练全部在单个RTX 5070 Laptop GPU上进行，各耗时\SI{6.9}{h}与\SI{8.3}{h}。
 
     \subsubsection*{(3)仿真结果与分析}
-      % TODO：Trailer-MEI指标见附录
       在仿真结果评价指标上，采用可单车级计算的指标，分为安全、高效、舒适/经济、规则、导航5个维度进行评价。
 
       其中安全指标包含经典一维替代安全指标（Surrogate Safty Index, SSI）TTC的倒数、二维SSI 2D-TTC(本文用1/RTTC表示)的倒数、Trailer-MEI（为本文提出的二维替代安全指标，使得包含半挂车的二维风险计算成为可能，推导与计算过程详见附录\ref{sub:trailer_mei_proof}节。）、裁剪的车头距离（Head Way, HW）的倒数4个指标。1/TTC能更好反映跟车/被跟车时的安全情况，1/RTTC能反映传统计算方式下考虑二维轮廓的SSI，Trailer-MEI使得SSI计算更为接近现实，而加入1/HW的目的是为了反映车辆并列行驶的行为，液罐车属于高危车辆，不管是有意还是被迫，与他车并列行驶都属于潜在的危险行为，需加速或主动减速拉开车距。
@@ -1210,7 +1214,6 @@
         \caption{场景2仿真案例说明}
         \label{fig:scenario2}
       \end{figure}
-
       
 
     \subsubsection*{(3)场景3：后方驶来快车旁有并行车}

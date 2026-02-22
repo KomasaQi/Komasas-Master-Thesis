@@ -41,7 +41,7 @@
             \end{figure}
 
 
-            建立的STL模型作为非线性高精度机械等效扰动模型可表示为$\{\dot{x}_1, \dot{x}_1, g_1\} = f_1(x_1,u|w_1)$，其中$x_1$为模型状态向量，$u$为模型输入激励向量，$w_1$为模型参数向量，$\dot{x}_1$为模型状态向量对时间的导数，$g_1$为模型输出广义力；
+            建立的STL模型作为非线性高精度机械等效扰动模型可表示为$\{\dot{x}_1, \dot{x}_1, Q_1\} = f_1(x_1,u|w_1)$，其中$x_1$为模型状态向量，$u$为模型输入激励向量，$w_1$为模型参数向量，$\dot{x}_1$为模型状态向量对时间的导数，$Q_1$为模型输出广义力；
 
             STL模型的状态量共12个，自由度：6，分别为两个浴盆各自内部小球的2个移动自由度$x_1,y_1$以及$x_2,y_2$，两个浴盆的共同滑动自由度$x_0$，以及相对对方的滑动自由度$d$，故共11个状态量，如表~\ref{tab:stl_state}所示。所有状态量合称为$X_{STL}$，共个6自由度。STL模型的参数包括18个，如表~\ref{tab:stl_param}所示，所有参数合称为$\boldsymbol{w_1}$。STL模型的输入包含6个维度，分别如表~\ref{tab:stl_input}所示。
 
@@ -70,8 +70,6 @@
             \end{tabular}
             \end{table}
 
-
-            % 表3：充液率50%时STL参数及其识别结果
             \begin{table}[h]
             \centering
             \caption{STL模型参数及其在充液率\SI{50}{\percent}时的识别结果}
@@ -90,7 +88,7 @@
             8 & $b_p$ & 滑动平面曲线短半轴 & 0.61 (m) \\
             9 & $p_r$ & 滑动平面曲线幂次 & 0.53 ($-$) \\
             10 & $m$ & 晃动部分质量 & 14498.66 (kg) \\
-            11 & $c$ & 小球晃动的阻尼系数 & 0.17 (s⁻¹) \\
+            11 & $c_{damp}$ & 小球晃动的阻尼系数 & 0.17 (s⁻¹) \\
             12 & $c_x$ & 浴盆X向移动阻尼系数 & 3.84 (s⁻¹) \\
             13 & $k_{a,dec}$ & 浴盆X向移动加速度换算系数 & 0.56 ($-$) \\
             14 & $s_{dev}$ & 浴盆曲面静态偏置距离 & 3.12 (m) \\
@@ -234,7 +232,7 @@
             % 表1：正交工况表（1~8与9~16并列）
             \begin{table}[h]
             \centering
-            \begin{threeparttable}[c]
+                \begin{threeparttable}[c]
                 \caption{正交工况表}
                 \label{tab:orthogonal_conditions}
                 \begin{tabular}{ccccc|ccccc}
@@ -287,7 +285,7 @@
 
         \subsubsection{线性双摆模型}
             \label{subsub:ldp}
-            LDP模型相比STL将更加简化，为实时计算所关注的自由度将更少。选择最关注的自由度$\mathcal{N}_2 \subseteq \mathcal{N}_1$，并建立线性化等效双摆模型$[\dot{\Theta}, g_2] = f_2(\Theta, u|w_2)$，其中$\Theta$为模型状态向量，$u$为模型输入激励向量，$w_2$为模型参数向量，$\dot{\Theta}$为模型状态向量对时间的导数，$g_2$为模型输出广义力；LDP包含两个既有侧向加速度又有侧倾角加速度输入的单摆模型，沿车辆轴线分布，其中任意一个单摆如图~\ref{fig:sp_illust}所示，涉及的坐标系定义如图~\ref{fig:coord_def}所示。
+            LDP模型相比STL将更加简化，为实时计算所关注的自由度将更少。选择最关注的自由度$\mathcal{N}_2 \subseteq \mathcal{N}_1$，并建立线性化等效双摆模型$[\dot{\Theta}, Q_2] = f_2(\Theta, u|w_2)$，其中$\Theta$为模型状态向量，$u$为模型输入激励向量，$w_2$为模型参数向量，$\dot{\Theta}$为模型状态向量对时间的导数，$Q_2$为模型输出广义力；LDP包含两个既有侧向加速度又有侧倾角加速度输入的单摆模型，沿车辆轴线分布，其中任意一个单摆如图~\ref{fig:sp_illust}所示，涉及的坐标系定义如图~\ref{fig:coord_def}所示。
 
             \begin{figure}
             \centering
@@ -445,13 +443,13 @@
 
             将STL模型给表述成黑盒输入输出的形式：
             \begin{equation}
-            [X(k+1),~g_1(k+1)] = f_1(X(k),u(k)|w_1)
+            [X(k+1),~Q_1(k+1)] = f_1(X(k),u(k)|w_1)
             \end{equation}
             将LDP模型表示为线性状态空间方程的形式：
             \begin{equation}
-            [\Theta(k+1),~ g_2(k)] = f_2(\Theta(k),u(k)|w_2) = \begin{cases}
+            [\Theta(k+1),~ Q_2(k)] = f_2(\Theta(k),u(k)|w_2) = \begin{cases}
             A|_{w_2} \Theta(k) + B|_{w_2} u(k) \\
-            g_2(k) = C|_{w_2} \Theta(k) + D|_{w_2} u(k)
+            Q_2(k) = C|_{w_2} \Theta(k) + D|_{w_2} u(k)
             \end{cases}
             \end{equation}
             使其在每次需要重线性化模型时在基础线性化参数$w_{20}$的基础上输出$\Delta w_2$，最终利用$w_2 = w_{20} + \Delta w_2$作为线性模型的实际参数。目前有两种方案来训练这个神经网络，一种是监督学习，一种是强化学习。监督学习方法需要提前准备好优化结果足够$\Delta w_2$的数据集，而一个状态点的优化可能都需要较大的耗时，很难在可行的时间内生成足够多的$\Delta w_2$数据，而且取决于优化器的结果，很可能相邻状态点的$\Delta w_2$参数各个分量是差异很大的，那么就会很容易导致神经网络拟合过程中的欠拟合。需要让$\Delta w_2$在参数空间中是尽可能连续的，那么就很需要强化学习方案。
@@ -462,7 +460,7 @@
             \end{equation}
             在每一组工况都进行了系数为$w_n$的加权，每个输出分量也进行了系数为$w_j$的加权。在训练时，以一种方式（暂定为均匀采样）遍历可能的状态空间，进行$N_p$步仿真。训练过程中，比如可以采用DDPG算法以适应连续动作空间（$\Delta w_2$为连续向量），本文考虑训练稳定性与最终效果，采用SAC方法\cite{SAC_2018}训练智能体。
 
-            在实际应用过程中，通过向残差模型输入$x_1$即可获得$\Theta$与$\Delta w_2$，并将其用于$f_2$，即$[\Theta,g_2] = f_2(\Theta,u|w_{20} + \Delta w_2)$即可获得与$f_1$在所关注的各自由度、各工况下，在预测时域$N_p$步内线性输出特性$g_2$与$g_1$尽可能接近的模型$f_2$。
+            在实际应用过程中，通过向残差模型输入$x_1$即可获得$\Theta$与$\Delta w_2$，并将其用于$f_2$，即$[\Theta,Q_2] = f_2(\Theta,u|w_{20} + \Delta w_2)$即可获得与$f_1$在所关注的各自由度、各工况下，在预测时域$N_p$步内线性输出特性$Q_2$与$Q_1$尽可能接近的模型$f_2$。
 
 
             \begin{figure}
@@ -526,6 +524,76 @@
 
         关于制动压力与减速度之间的关系进行了如下标定，$a_{deccel} = c_{brk} \sum_{i=1}^N p_{brk}$。
 
+        {% 局部作用域，只改本表行距，不影响全文
+        \small
+        % \setlength{\tabcolsep}{3pt}       % 如需压缩列间距可取消注释
+        \renewcommand{\arraystretch}{1.0} % 核心：恢复正常紧凑行距
+        \linespread{0.7}\selectfont       % 强制行高
+
+        \begin{longtable}{l l}
+            \caption{简化半挂液罐车模型参数与变量说明}
+            \label{tab:tank_truck_parameters} \\
+            \toprule
+            \textbf{参数/变量} & \textbf{说明（i=1,2 分别代表牵引车、挂车）} \\
+            \midrule
+        \endfirsthead
+            \caption*{续表~\thetable\quad 简化半挂液罐车模型参数与变量说明} \\
+            \toprule
+            \textbf{参数/变量} & \textbf{说明（i=1,2 分别代表牵引车、挂车）} \\
+            \midrule
+        \endhead
+            \bottomrule
+        \endfoot
+
+        %-------------------------------------------------------------------------------
+        $m_i$, $m_{si}$ & 车辆总质量、簧载质量 \\
+        $v_{ix}$, $v_{iy}$ & 纵向/侧向速度 \\
+        $\dot{\beta_i}$ & 质心侧偏角变化率 \\
+        $\psi_i$, $\phi_i$ & 横摆角、侧倾角 \\
+        $\dot{\psi}_i$ & 横摆角速度 \\
+        $\dot{\phi}_i$ & 侧倾角速度 \\
+        $h_i$ & 质心到侧倾中心的距离 \\
+        $h_{ic}$ & 牵引销到侧倾轴线的高度 \\
+        $I_{izz}$, $I_{ixx}$, $I_{1xz}$ & 簧载质量在横摆、侧倾、交叉耦合方向的转动惯量 \\
+        $k_{ri}$,$c_i$ & 悬架侧倾刚度/阻尼 \\
+        $F_{y1}$, $F_{y2}$, $F_{y3}$ & 牵引车等效前轴、后轴，以及挂车等效后轴的侧向力 \\
+        $F_z$ & 车轮所受垂向力 \\
+        $F_{y,int}$ & 挂车作用于牵引车的侧向力 \\
+        $F_x$, $F_y$, $M_x$, $M_y$, $M_z$ & 液体晃动纵向力、侧向力、侧倾力矩、俯仰力矩、横摆力矩 \\
+        $a$, $b$, $c$ & 牵引车前轮轴/后轮轴/牵引销铰接点到质心的距离 \\
+        $d$, $e$ & 挂车后轮轴/牵引销铰接点到质心的距离 \\
+        $k_{12}$ & 牵引销连接部位的侧倾刚度 \\
+        $k_1$, $k_2$, $k_3$ & 牵引车等效前轴、后轴，以及挂车后轴的侧向刚度 \\
+        $\theta_1,\theta_2$ & 线性化双摆模型摆角 \\
+        $\dot{\theta}_1,\dot{\theta}_2$ & 线性化双摆模型前/后摆角速度 \\
+        $\delta$, $\delta_d$ & 转向角、期望转向角 \\
+        $a_{deccel}$ & 车辆减速度 \\
+        $c_{M1}$ & 牵引车制动力矩-减速度转换系数 \\
+        $c_{M2}$ & 挂车制动力矩-减速度转换系数 \\
+        $c_{brk}$ & 制动压力-减速度转换系数 \\
+        $\tau_v$ & 车速响应时间常数 \\
+        $v_{des}$ & 期望车速 \\
+        $\Delta v_{thrld}$ & 期望车速与实际车速差值阈值 \\
+        $v_{des}^a$ & 给下层控制器的期望速度指令 \\
+        $v_{dev}$ & 静态偏置加速度 \\
+        $p_{brk}^{L1}$ & 牵引车左侧制动压力 \\
+        $p_{brk}^{R1}$ & 牵引车右侧制动压力 \\
+        $p_{brk}^{L2}$ & 挂车左侧制动压力 \\
+        $p_{brk}^{R2}$ & 挂车右侧制动压力 \\
+        $M_{1z}^+$ & 牵引车左侧附加横摆力矩 \\
+        $M_{1z}^-$ & 牵引车右侧附加横摆力矩 \\
+        $M_{2z}^+$ & 挂车左侧附加横摆力矩 \\
+        $M_{2z}^-$ & 挂车右侧附加横摆力矩 \\
+        $T_{w1}$ & 牵引车轮距 \\
+        $T_{w2}$ & 挂车轮距 \\
+        $Y_1$ & 牵引车在大地坐标系下的Y轴坐标 \\
+        $X_1$ & 牵引车在大地坐标系下的X轴坐标 \\
+
+        \end{longtable}
+        }% 结束局部作用域
+
+
+
         \begin{equation}
         \begin{aligned}
         a_{deccel} &= c_{brk} \sum_{i=1}^N p_{brk} \\
@@ -535,7 +603,7 @@
 
         $M_{1z}^+ \approx \frac{c_{brk}}{c_{M1}} p_{brk}^{L1} = \frac{0.62}{0.2375} p_{brk}^{L1} = 2.61 p_{brk}^{L1}$
 
-        半挂车剩余5个自由度建模如图~\ref{fig:trailer_model_lat}和图~\ref{fig:trailer_model_lon}所示，参考宗长富\cite{zongchangfu2014identification}等的工作，牵引车侧滑、横摆、侧倾运动3个自由度建模为式\eqref{eq:tractor_lat}至式\eqref{eq:tractor_roll}。
+        半挂车剩余5个自由度建模如图~\ref{fig:trailer_model_lat}和图~\ref{fig:trailer_model_lon}所示，参考宗长富\cite{zongchangfu2014identification}等的工作，牵引车侧滑、横摆、侧倾运动3个自由度建模为式\eqref{eq:tractor_lat}至式\eqref{eq:tractor_roll}。模型相关变量如表~\ref{tab:tank_truck_parameters}所示。
 
         \begin{equation}
         m_1 v_{1x}(\dot{\beta}_1 + \dot{\psi}_1) - m_{1s} h_1 \ddot{\phi}_1 = F_{y1} + F_{y2} + F_{y,int}
@@ -922,7 +990,7 @@
     \subsection{无模型自适应滑模残差补偿}
         \label{sub:MFASMC_residual_compensation}
 
-        本小节在上一小节基础上进一步建立基于广义跟踪误差控制车轮转角和/或各车轮驱/制动力的补偿控制器。广义跟踪误差为牵引车实际轨迹与最优控制下的预测轨迹之间的误差；补偿控制器为无模型自适应滑模控制器，以广义跟踪误差为输入量$\boldsymbol{y}$，并采用全格式动态线性化。下面进行详细说明。
+        第\ref{sub:multi_constraint_mpc}小节构建的多约束模型预测控制基础控制器的基本要求在于预测模型的准确性，而这一点在实际行驶过程中由于载荷变化、零部件老化、标定测量误差等原因通常难以绝对保障，对基础模型进行补偿是模型预测方法跨入真正实用的重要部分\cite{tangzeyue2023mpcmfac}。本小节在基础控制器上进一步建立基于广义跟踪误差控制车轮转角和/或各车轮驱/制动力的补偿控制器。广义跟踪误差为牵引车实际轨迹与最优控制下的预测轨迹之间的误差；补偿控制器为无模型自适应滑模控制器，以广义跟踪误差为输入量$\boldsymbol{y}$，并采用全格式动态线性化。下面进行详细说明。
 
         \begin{figure}
         \centering
@@ -957,7 +1025,7 @@
         \|\boldsymbol{y}(k_1 + 1) - \boldsymbol{y}(k_2 + 1)\| \leq b \left\| \boldsymbol{H}_{L_y,L_u}(k_1) - \boldsymbol{H}_{L_y,L_u}(k_2) \right\|
         \label{eq:general_lipschitz}
         \end{equation}
-        其中$b > 0$为常数。（信息向量的有限变化不能引起系统输出的无限增长）。
+        其中$b > 0$为常数。（信息向量的有限变化不能引起系统输出的无限增长）\cite{houzhongsheng2011book_MFAC}。
 
         第一个条件是控制系统设计中对一般非线性控制的典型约束，第二个条件是对系统输出变化率上界的一种限制，上述两个条件一般的非线性系统都可以满足。
 
@@ -1033,121 +1101,7 @@
         \label{eq:phi_j}
         \end{equation}
 
-        MFAC 算法定义了如下目标函数
-        \begin{equation}
-        J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k + 1) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
-        \label{eq:cost_function}
-        \end{equation}
-        式中$\boldsymbol{y}^*(k + 1)$为$k + 1$时刻的期望输出，$\boldsymbol{y}(k + 1)$为$k + 1$时刻的实际输出，$\lambda > 0$为权重因子。
-
-        将全格式的式 \eqref{eq:ffdl} 带入式 \eqref{eq:cost_function} 中
-        \begin{equation}
-        J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
-        \label{eq:cost_function_ffdl}
-        \end{equation}
-        由于
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) &= \left[ \boldsymbol{\phi}_1(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y}(k)\ \ \boldsymbol{\phi}_{L_y+1}(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y+L_u}(k) \right] \begin{bmatrix}
-        \Delta \boldsymbol{y}(k) \\
-        \vdots \\
-        \Delta \boldsymbol{y}(k - L_y + 1) \\
-        \Delta \boldsymbol{u}(k) \\
-        \vdots \\
-        \Delta \boldsymbol{u}(k - L_u + 1)
-        \end{bmatrix} \\
-        &= \boldsymbol{\phi}_1(k) \Delta \boldsymbol{y}(k) + \dots + \boldsymbol{\phi}_{L_y}(k) \Delta \boldsymbol{y}(k - L_y + 1) \\
-        &\quad + \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) + \boldsymbol{\phi}_{L_y+L_u}(k) \Delta \boldsymbol{u}(k - L_u + 1) \\
-        &= \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=1}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1)
-        \end{aligned}
-        \label{eq:phi_expansion}
-        \end{equation}
-        将式 \eqref{eq:cost_function_ffdl} 对$\boldsymbol{u}(k)$求偏导数，并令其等于 0，
-        \begin{equation}
-        \frac{\partial J(\boldsymbol{u}(k))}{\partial \boldsymbol{u}(k)} = 2 \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right) - 2\lambda (\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)) = 0
-        \label{eq:derivative_zero}
-        \end{equation}
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{\phi}_{L_y+1}^T(k) \Bigg( &\boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \Bigg) \\
-        &- \boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) - \lambda \Delta \boldsymbol{u}(k) = 0
-        \end{aligned}
-        \label{eq:derivative_expanded}
-        \end{equation}
-        定义$\boldsymbol{e}(k + 1) = \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k)$，则
-        \begin{equation}
-        \Delta \boldsymbol{u}(k) = \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{e}(k + 1) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
-        \label{eq:control_increment}
-        \end{equation}
-        其中分母之一的$\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \in \mathbb{R}^{N_u \times N_u}$，为了提供更高的设计自由度，引入权重参数$\rho_i \in (0,1], i = 1,\dots,L_y, L_y + 1,\dots,L_y + L_u$，得到最终控制量更新形式（控制律）：
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{u}(k) &= \boldsymbol{u}(k - 1) + \frac{\rho_{L_y+1} \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda} \\
-        &\quad - \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \sum_{i=1}^{L_y} \rho_i \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=2}^{L_u} \rho_{i+L_y} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
-        \end{aligned}
-        \label{eq:control_law}
-        \end{equation}
-        为实现控制算法，需要知道伪梯度的值，我们需要根据系统的输入输出对其进行估计。考虑如下伪梯度估计的准则函数：
-        \begin{equation}
-        \begin{aligned}
-        J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right) &= \left\| \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \\
-        &\quad + \mu \left\| \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right\|^2
-        \end{aligned}
-        \label{eq:phi_estimation_criterion}
-        \end{equation}
-        其中$\mu > 0$是权重因子。对上式关于$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$求导数并令其为零可得到$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$的估计算法为
-
-
-        \begin{equation}
-        \begin{aligned}
-        \frac{\partial J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right)}{\partial \boldsymbol{\Phi}_{f,L_y,L_u}(k)} &= -2 \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
-        &\quad + 2\mu \left( 2 \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right) = 0
-        \end{aligned}
-        \label{eq:phi_derivative}
-        \end{equation}
-
-        \begin{equation}
-        \begin{aligned}
-        \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) &= \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
-        &\quad - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)
-        \end{aligned}
-        \label{eq:phi_derivative_expanded}
-        \end{equation}
-
-        \begin{equation}
-        \left( \mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)
-        \label{eq:phi_linear}
-        \end{equation}
-
-        进一步化简得到
-        \begin{equation}
-        \begin{aligned}
-        \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
-        = \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} - \frac{\left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
-        \approx \left( 1 - \frac{\eta \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \eta \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}
-        \end{aligned}
-        \label{eq:phi_update}
-        \end{equation}
-        加入了步长因子$\eta \in (0,2]$是为了使算法具有更高的灵活性。
-
-        为了使得具有更加优秀的对时变参数的跟踪能力，引入了对$\boldsymbol{\phi}_{L_y+1}$系数的重置。我们通过式 \eqref{eq:phi_i} 的分析可知，$\boldsymbol{\phi}_{L_y+1}$是一个$N_y \times N_u$的伪梯度块矩阵。
-        对于其对角线元素$\varphi_{L_y+1,pp}$（其中$p = 1,\dots,\min(N_y,N_u)$），太小或者过大或变号都需要被重置：
-        \begin{equation}
-        \varphi_{L_y+1,pp}(k) = \varphi_{L_y+1,pp}(0)
-        \end{equation}
-        \begin{equation}
-        \text{if } \left| \varphi_{L_y+1,pp}(k) \right| < \epsilon \text{ or } \left| \varphi_{L_y+1,pp}(k) \right| > b_1 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pp}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pp}(0) \right)
-        \label{eq:phi_diag_reset}
-        \end{equation}
-        对于其非对角线元素$\varphi_{L_y+1,pq}$（其中$p = 1,\dots,N_y, q = 1,\dots,N_u, p \neq q$），过大或变号都需要被重置：
-        \begin{equation}
-        \varphi_{L_y+1,pq}(k) = \varphi_{L_y+1,pq}(0)
-        \end{equation}
-        \begin{equation}
-        \text{if } \left| \varphi_{L_y+1,pq}(k) \right| > b_2 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pq}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pq}(0) \right)
-        \label{eq:phi_offdiag_reset}
-        \end{equation}
-        在此基础上设计MFASMC控制算法，将 MFAC 与滑模控制结合，前者无需第一性原理模型，后者响应速度快、抗扰动性能强。
+        MFAC基础算法与相关符号说明见附录\ref{sub:mfac_basic}小节，本小节在此基础上进一步设计MFASMC控制算法，将 MFAC 与滑模控制结合，前者无需第一性原理模型，后者响应速度快、抗扰动性能强。
 
         定义输出误差：
         \begin{equation}
@@ -1362,7 +1316,8 @@
             \end{figure}
 
             如图\ref{fig:s_corner_track}至图\ref{fig:s_corner_u}所示，所设计的控制器通过模型预测控制预判潜在侧翻风险，采取更平缓的转向动作以避免侧翻，同时通过小幅转向调整抵消液体晃动的影响。在跟踪效果上，如图~\ref{fig:s_corner_track}所示，PT和PT+DB组实现了轨迹近乎完美的跟踪效果，ART组为缓解侧翻压力向外偏移最多，而ART+DB组由于存在误差补偿与差动缓解侧翻趋势，跟踪偏移量比ART更小。车辆状态如图~\ref{fig:s_corner_x}所示，ART组与ART+DB组由于主动进行了轨迹外扩从而避免了侧翻发生，\(\text{LTR}_{eql}\)被成功控制在±0.75的软约束范围内，在允许路径存在可接受范围内小幅偏离的同时，有效防止了侧翻，且ART+DB组由于差动制动的附加力矩辅助\(\text{LTR}_{eql}\)峰值减小。
-            
+
+            相比之下，仅考虑路径跟踪而未顾及车辆动力学与液体影响的PT组在第\SI{6}{s}时发生了侧翻。尽管该路径对常规车辆可能是安全的，但对于液罐车却存在极高的侧翻风险。在加入差动制动后，额外的横摆力矩与车速降低共同作用实现了安全结果，但仍无法避免LTR在至少1秒内达到-1，证明了转向控制在极端工况下的主导作用地位。速度控制上，PT+DB组由于路线问题被迫严重减速，ART略微减速，ART+DB组通过补偿控制且外扩较小实现了更为平滑的车速控制。
             \begin{figure}
             \centering
             \includegraphics[width=0.5\linewidth]{fig/chap4/s_corner_track.png}
@@ -1376,9 +1331,8 @@
             \caption{左转弯工况车辆状态}
             \label{fig:s_corner_x}
             \end{figure}
-
             
-            相比之下，仅考虑路径跟踪而未顾及车辆动力学与液体影响的PT组在第\SI{6}{s}时发生了侧翻。尽管该路径对常规车辆可能是安全的，但对于液罐车却存在极高的侧翻风险。在加入差动制动后，额外的横摆力矩与车速降低共同作用实现了安全结果，但仍无法避免LTR在至少1秒内达到-1，证明了转向控制在极端工况下的主导作用地位。速度控制上，PT+DB组由于路线问题被迫严重减速，ART略微减速，ART+DB组通过补偿控制且外扩较小实现了更为平滑的车速控制。
+            图~\ref{fig:s_corner_u}展示了控制过程中的控制量变化，在转向控制上，ART由于无法通过制动抵消晃动导致只能通过转角抵消晃动，这让转角变化过程不够稳定；在制动控制时，ART+DB倾向于较多使用制动，这也是本方法的一个缺点，即并不够节能。ART+DB组在是使用了如此多制动的情况下速度损失却最少的原因在于，MPC模型内部已经考虑差动制动对纵向速度的影响，且可以通过期望速度调控来增加传动系统输出。此时单侧制动的同时另一侧未受影响的车轮将负责持续输出更大的扭矩，实现了类似分布式驱动的效果，即一侧车轮制动一侧车轮驱动，整体效果为几乎对速度不产生影响的额外横摆力矩。
             
             \begin{figure}
             \centering
@@ -1386,8 +1340,8 @@
             \caption{左转弯工况控制输入}
             \label{fig:s_corner_u}
             \end{figure}
-            
-            图~\ref{fig:s_corner_u}展示了控制过程中的控制量变化，在转向控制上，ART由于无法通过制动抵消晃动导致只能通过转角抵消晃动，这让转角变化过程不够稳定；在制动控制时，ART+DB倾向于较多使用制动，这也是本方法的一个缺点，即并不够节能。ART+DB组在是使用了如此多制动的情况下速度损失却最少的原因在于，MPC模型内部已经考虑差动制动对纵向速度的影响，且可以通过期望速度调控来增加传动系统输出。此时单侧制动的同时另一侧未受影响的车轮将负责持续输出更大的扭矩，实现了类似分布式驱动的效果，即一侧车轮制动一侧车轮驱动，整体效果为几乎对速度不产生影响的额外横摆力矩。根据本场景仿真可得几点结论：
+
+            根据本场景仿真可得几点结论：
             \begin{enumerate}
                 \item 控制器计算得到的\(\text{LTR}_{eql}\)与通过TruckSim轮胎力实际计算得到的LTR高度吻合，表明\(\text{LTR}_{eql}\)能够准确反映车辆的侧翻动力学特性，适用于自动驾驶场景下的防侧翻控制；
                 \item 控制器有效执行了对系统输出\(\text{LTR}_{eql}\)施加\(|\text{LTR}_{eql}| < 0.75\)软约束，规划转向动作，在实现路径跟踪的同时抑制液体晃动并防止侧翻；
@@ -1479,7 +1433,7 @@
         
         \subsubsection{麋鹿工况救车实验}  
         \label{subsub:deer}
-            第\ref{chap:introduction}章\ref{subsub:active_safty}小节描述了半侧翻模态，即一侧车轮离地时的车辆状态，通过现实中的实例可确定，半侧翻模态下存在状态子空间，通过前轮转角完全可控；第\ref{chap:architecture}章\ref{subsubsec:resource_analysis}小节明确了车端需要具备规控降级能力，需确保在一些特殊情况下，如人误操作/绊倒性侧翻等一些特殊情况下车辆不可避免地已经陷入了半侧翻状态时，车辆仍然具备一定的自救能力。
+            半侧翻模态即一侧车轮离地时的车辆状态，通过现实中的实例可确定，半侧翻模态下存在状态子空间，通过前轮转角完全可控，半侧翻态及其可控性详细说明见附录\ref{sub:semirollover}小节；第\ref{chap:architecture}章\ref{subsubsec:resource_analysis}小节明确了车端需要具备规控降级能力，需确保在一些特殊情况下，如人误操作/绊倒性侧翻等一些特殊情况下车辆不可避免地已经陷入了半侧翻状态时，车辆仍然具备一定的自救能力。
 
             本小节描述了麋鹿工况救车实验，实验场景如图\ref{fig:s_deer_illust}所示，模拟的是车上存在安全员的情况下行驶正在以\SI{80}{km/h}的速度行驶。突然从道路左侧出现奔跑穿过道路的麋鹿数只，而安全员面对突发的情况选择向右侧猛打方向并为了避免冲出道路再打回的情况。车辆在第\SI{4.7}{s}左侧车轮完全离地，达到了半侧翻的状态。借此，达到了一个已经无可避免的半侧翻状态事实，并在此刻切换控制器，以检验控制器对于此类非线性极强的半侧翻工况是否能够依然成功应对实现防侧翻救车。
 
@@ -1624,7 +1578,7 @@
             \label{eq:similarity}
             \end{equation}
 
-            对于带自由液面的流体，其流动主要受惯性力主导，因此采用弗劳德数$Fr$作为相似准则，其中$Fr = \frac{v}{\sqrt{gL}}$。式中$v$为流体特征速度，通常取平均流速$\bar{v}$；$g$为重力加速度，在横向激励下附加加速度较小，可认为$G=g$。罐体内部小幅线性晃动时，液体可近似为单摆，其摆长近似取罐体半径$R$。晃动频率$\omega$随$R$增大而降低，满足关系
+            对于带自由液面的流体，其流动主要受惯性力主导，因此采用弗劳德数$Fr$作为相似准则，其中$Fr = \frac{v_f}{\sqrt{gL}}$。式中$v_f$为流体特征速度，通常取平均流速$\bar{v_f}$；$g$为重力加速度，在横向激励下附加加速度较小，可认为$G=g$。罐体内部小幅线性晃动时，液体可近似为单摆，其摆长近似取罐体半径$R$。晃动频率$\omega$随$R$增大而降低，满足关系
 
          
             \begin{equation}
@@ -1708,3 +1662,22 @@
             \caption{续图模型实验数据结果}
             \label{fig:experiment2}
             \end{figure}
+
+\section{本章总结}
+本章围绕“车端稳定性干预”这一关键环节，面向突发工况下液罐车侧翻风险的快速演化特性，构建了从车液耦合建模、在线可解的防侧翻轨迹跟踪控制，到联合仿真与缩比模型试验验证的完整闭环，形成了可支撑工程实时部署的车端防侧翻控制方案。主要工作总结如下：
+
+\begin{itemize}
+  \item 提出横纵向耦合液体晃动的滑动伸缩天平（STL）快速建模方法，并完成参数辨识与多工况对比验证。
+  通过机械等效建模在力/力矩六自由度输出层面逼近高精度流体仿真结果，不仅刻画横纵耦合晃动，还能反映横摆、舱室液体转移引起的稳态变化；同时在计算效率上显著优于高保真仿真，为后续在线控制提供了可用的高精度快速预测模型基础。
+
+  \item 针对STL模型非解析、难以直接进入在线优化的问题，构建“基础解析模型 + 可学习残差”的重线性化框架。
+  以线性双摆模型作为解析基础模型，通过残差强化学习实现模型误差补偿与工况自适应，使得复杂车液耦合动力学能够以在线可求解的形式进入模型预测控制，从而在精度与实时性之间取得平衡。
+
+  \item 建立横纵向耦合半挂液罐车动力学与多约束模型预测控制（MPC）框架，实现抑晃防侧翻轨迹跟踪。
+  将侧翻风险指标（如等效LTR约束）与轨迹跟踪误差、执行器饱和/平滑性、车辆动力学约束等统一纳入最优化问题，形成可在控制周期内实时求解的车端稳定性干预策略；并进一步引入无模型自适应滑模残差补偿与差动制动等手段，提高极限工况下的鲁棒性与稳定裕度。
+
+  \item 搭建车液耦合联合仿真平台并完成多场景验证，同时通过缩比模型试验进行实证检验。
+  在左转弯、高速单移线、短距双移线等典型高风险工况中，所提方法能够有效抑制侧倾与液体剧烈晃动，降低侧翻风险；缩比模型试验进一步表明防侧翻组相较基线策略侧倾角峰值显著降低（最大约\SI{42}{\percent}），并且在线求解时间满足实时性要求（平均约\SI{13.2}{ms}，峰值小于\SI{20}{ms}），验证了方法的工程可行性与落地潜力。
+\end{itemize}
+
+综上，本章从“可高精度快速预测的车液耦合建模”出发，面向在线控制需求提出重线性化与残差补偿机制，并在多源验证体系下证明了车端抑晃防侧翻轨迹跟踪控制的有效性与实时性，为下一步与云端预测性决策的协同闭环集成奠定了车端基础。

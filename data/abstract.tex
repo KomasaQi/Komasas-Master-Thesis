@@ -1,39 +1,52 @@
-% !TeX root = ../thuthesis-example.tex
-
+% !TeX root = ../车云协同液罐车防侧翻行驶规划与控制研究.tex
 % 中英文摘要和关键字
 
 \begin{abstract}
-  论文的摘要是对论文研究内容和成果的高度概括。
-  摘要应对论文所研究的问题及其研究目的进行描述，对研究方法和过程进行简单介绍，对研究成果和所得结论进行概括。
-  摘要应具有独立性和自明性，其内容应包含与论文全文同等量的主要信息。
-  使读者即使不阅读全文，通过摘要就能了解论文的总体内容和主要成果。
+  面向高等级公路典型运行环境下危险品液罐车侧翻风险高、诱因耦合复杂与处置窗口短等挑战，本论文以“云端预测性规避风险、车端实时稳定保障”为目标，研究车云协同条件下液罐车防侧翻行驶规划与控制方法，构建从体系架构推导到算法设计与多源验证的完整技术链路。
 
-  论文摘要的书写应力求精确、简明。
-  切忌写成对论文书写内容进行提要的形式，尤其要避免“第 1 章……；第 2 章……；……”这种或类似的陈述方式。
+  围绕车云协同信息物理融合系统的开放演进与多主体独立运行特征，提出适配车云协同场景的 So-MBSoSE 分场景体系建模流程，形成“战略—运行—服务—资源”四阶段架构推导与闭环验证方法，并完成面向液罐车防侧翻的 CT2ROP 场景任务体系架构设计与指标可满足性验证。在云端侧，利用“广域感知+并行算力”优势，构建交通图特征表示并提出自回归图扩散交互式预测模型 Graphflow，实现周车长时域、非确定性行为预测；在此基础上训练强化学习决策器输出速度/换道的预测性决策，并设计换道平滑轨迹生成方法以提升建议可执行性与侧翻风险可控性。在车端侧，面向高频闭环控制对实时性与安全约束可保证性的需求，建立考虑液体晃动影响的应急轨迹规划模型，将避障与防侧翻等安全约束融入约束迭代 LQR 求解，形成可实时求解的短时域应急轨迹生成方法。
 
-  关键词是为了文献标引工作、用以表示全文主要内容信息的单词或术语。
-  关键词不超过 5 个，每个关键词中间用分号分隔。
+  在稳定性干预与控制层面，提出横纵向耦合液体晃动的滑动伸缩天平快速建模方法，在力/力矩输出层面逼近高保真流体仿真结果，未来 \SI{15}{s} 预测计算约 \SI{5}{ms}，满足超实时推演需求；进一步构建“基础解析模型+可学习残差”的重线性化框架，通过残差强化学习补偿线性化误差并实现工况自适应。基于车液耦合动力学，设计多约束模型预测控制策略，将轨迹跟踪、执行器约束、舒适性约束与侧翻风险指标（等效 LTR 约束）统一纳入最优化，并引入无模型自适应滑模残差补偿与差动制动以提升鲁棒性与稳定裕度。
 
-  % 关键词用“英文逗号”分隔，输出时会自动处理为正确的分隔符
+  为验证方法有效性与工程实时性，搭建 MATLAB/Simulink 桥接的 Star-CCM+ 与 TruckSim 联合仿真平台，并构建云控缩比液罐车模型试验平台开展实证检验。结果表明：在短距双移线等极限工况下，所提策略能够显著抑制侧倾与液体剧烈晃动，侧倾角峰值相对基线策略最大降低约 \SI{42}{\percent}；在线优化平均求解时间约 \SI{13.2}{ms}，峰值小于 \SI{20}{ms}，满足工程实时性要求。综上，本论文为车云协同液罐车安全行驶提供了可追溯的体系架构依据与可验证的防侧翻规划控制方案。
+
   \thusetup{
-    keywords = {关键词 1, 关键词 2, 关键词 3, 关键词 4, 关键词 5},
+    keywords = {车云协同, 液罐车, 防侧翻, 图扩散预测, 模型预测控制},
   }
 \end{abstract}
 
 \begin{abstract*}
-  An abstract of a dissertation is a summary and extraction of research work and contributions.
-  Included in an abstract should be description of research topic and research objective, brief introduction to methodology and research process, and summary of conclusion and contributions of the research.
-  An abstract should be characterized by independence and clarity and carry identical information with the dissertation.
-  It should be such that the general idea and major contributions of the dissertation are conveyed without reading the dissertation.
+  Hazardous-material tanker trucks exhibit high rollover risk on highways due to coupled inducing factors and short reaction windows. This thesis develops a vehicle--cloud collaborative planning and control framework with the objective of \emph{cloud-side predictive risk avoidance} and \emph{vehicle-side real-time stability assurance}, and establishes an end-to-end pipeline from architecture derivation to algorithm design and multi-source validation.
 
-  An abstract should be concise and to the point.
-  It is a misunderstanding to make an abstract an outline of the dissertation and words “the first chapter”, “the second chapter” and the like should be avoided in the abstract.
+  To address the open and evolutionary nature of intelligent vehicle--cloud--road cyber-physical systems with multiple independent agents, a scenario-oriented So-MBSoSE modeling workflow is proposed, enabling closed-loop derivation and verification across four layers (strategy--operation--service--resource). An anti-rollover mission architecture for tanker trucks is then constructed and its key performance constraints are verified for satisfiability. On the cloud side, leveraging wide-area perception and parallel computing, a traffic-graph representation is built and an autoregressive graph-diffusion interactive prediction model Graphflow is proposed to produce long-horizon stochastic predictions of surrounding vehicles. Based on this world model, a reinforcement-learning decision policy is trained to provide predictive speed and lane-change decisions, and a smooth lane-change trajectory generator is designed to improve executability while limiting rollover risk. On the vehicle side, an emergency trajectory planning model that accounts for liquid sloshing is formulated, where obstacle-avoidance and anti-rollover constraints are embedded into a constrained iterative LQR solver to enable real-time short-horizon emergency trajectories.
 
-  Keywords are terms used in a dissertation for indexing, reflecting core information of the dissertation.
-  An abstract may contain a maximum of 5 keywords, with semi-colons used in between to separate one another.
+  For stability intervention and control, a fast longitudinal--lateral coupled liquid-sloshing model based on a sliding telescopic lever is developed, which approximates high-fidelity fluid simulations in the force/moment output space and achieves ultra-real-time prediction (about \SI{5}{ms} for a \SI{15}{s} horizon). A re-linearization scheme with a learnable residual (trained via residual reinforcement learning) is further introduced to compensate linearization errors and adapt to operating conditions. A constrained model predictive control  strategy is then designed to jointly handle trajectory tracking, actuator constraints, comfort constraints, and rollover-risk constraints (e.g., equivalent LTR), with robustness and stability margins enhanced via model-free adaptive sliding-mode residual compensation and differential braking.
 
-  % Use comma as separator when inputting
+  Co-simulation (MATLAB/Simulink bridged with Star-CCM+ and TruckSim) and scaled model experiments demonstrate that, in extreme short-distance double-lane-change maneuvers, the proposed strategy suppresses roll and violent sloshing effectively, reducing peak roll angle by up to \SI{42}{\percent} compared with baseline methods, while meeting real-time computation requirements (\SI{13.2}{ms} on average and <\SI{20}{ms} at peak). Overall, this thesis provides a verifiable and deployable solution for vehicle--cloud collaborative anti-rollover driving of hazardous-material tankers.
+
   \thusetup{
-    keywords* = {keyword 1, keyword 2, keyword 3, keyword 4, keyword 5},
+    keywords* = {vehicle--cloud collaboration, tanker truck, anti-rollover, graph diffusion prediction, model predictive control},
   }
 \end{abstract*}
+
+% \begin{abstract}
+%   论文的摘要是对论文研究内容和成果的高度概括。摘要应对论文所研究的问题及其研究目的进行描述，对研究方法和过程进行简单介绍，对研究成果和所得结论进行概括。摘要应具有独立性和自明性，其内容应包含与论文全文同等量的主要信息。使读者即使不阅读全文，通过摘要就能了解论文的总体内容和主要成果。
+
+%   论文摘要的书写应力求精确、简明。切忌写成对论文书写内容进行提要的形式，尤其要避免“第 1 章……；第 2 章……；……”这种或类似的陈述方式。关键词是为了文献标引工作、用以表示全文主要内容信息的单词或术语。关键词不超过 5 个，每个关键词中间用分号分隔。关键词用“英文逗号”分隔，输出时会自动处理为正确的分隔符
+%   \thusetup{
+%     keywords = {关键词 1, 关键词 2, 关键词 3, 关键词 4, 关键词 5},
+%   }
+% \end{abstract}
+
+% \begin{abstract*}
+%   An abstract of a dissertation is a summary and extraction of research work and contributions.Included in an abstract should be description of research topic and research objective, brief introduction to methodology and research process, and summary of conclusion and contributions of the research.An abstract should be characterized by independence and clarity and carry identical information with the dissertation.It should be such that the general idea and major contributions of the dissertation are conveyed without reading the dissertation.
+
+%   An abstract should be concise and to the point.It is a misunderstanding to make an abstract an outline of the dissertation and words “the first chapter”, “the second chapter” and the like should be avoided in the abstract.
+
+%   Keywords are terms used in a dissertation for indexing, reflecting core information of the dissertation.An abstract may contain a maximum of 5 keywords, with semi-colons used in between to separate one another.
+
+%   % Use comma as separator when inputting
+%   \thusetup{
+%     keywords* = {keyword 1, keyword 2, keyword 3, keyword 4, keyword 5},
+%   }
+% \end{abstract*}

@@ -7,15 +7,27 @@
 % 附录中的图、表、数学表达式、参考文献等另行编序号，与正文分开，一律用阿拉伯数字编码，
 % 但在数码前冠以附录的序号，例如“图~\ref{fig:appendix-figure}”，
 % “表~\ref{tab:appendix-table}”，“式\eqref{eq:appendix-equation}”等。
+\section{综述补充}
+  \subsection{端到端自动驾驶}
+    \label{sub:end2end}
+    自2022年大语言模型（Large Language Model, LLM）快速兴起以来\cite{AttnIsAllYouNeed2017}，大规模数据驱动的统一表征与跨模态知识融合显著加速了自动驾驶从“模块化流水线”向“可微统一优化”的范式迁移。端到端（End-to-end, E2E）自动驾驶因此成为热点：其核心目标是缓解模块化方案中感知误差难以被后续模块正确吸收、感知—规控接口造成的信息裁剪与不确定性丢失等问题。围绕可微边界的不同，现有端到端路线通常划分为两段式端到端（以结构化感知结果为输入）与一段式端到端（从原始或近原始感知表征直接到规划/控制输出），并进一步发展到“感知直接到控制”的视觉语言动作模型（Vision Language Action Model, VLA）形态。
+
+    两段式端到端通常以结构化感知结果作为输入，是早期端到端方案的主流工程选择，其方法谱系主要包括模仿学习与强化学习，并常组合使用：通过行为克隆、逆最优控制、知识蒸馏等模仿学习\cite{chen2023endtoend}注入先验以快速初始化，再衔接强化学习提升长时域闭环性能。规划挑战体系中，PlanTF\cite{PlanTF2023}奠定了两段式端到端规划的Transformer化范式；PLUTO\cite{PLUTO2024}作为其后续代表，将自车、周车、静态障碍物、静态地图与动态交通信息分路编码，并设计可微辅助任务与横纵向交叉因式分解注意力解码机制，配合规则后处理在综合指标上显著提升表现，首次击败了规则方案：2023年nuPlan挑战赛冠军PDM-Close。CarPlanner\cite{CarPlanner2025}在此基础上引入动作模式一致性的自回归世界模型以增强长时域一致性。与此同时，“将驾驶行为离散化为token并借鉴语言建模训练范式”的路线也被用于两段式体系增强：Wayformer\cite{Wayformer2022}与Trajeglish\cite{Trajeglish2024}体现将自车动作/轨迹离散成“词”的建模思路，Plan-R1\cite{PlanR12025}进一步将强化学习与PLUTO式框架衔接以提升闭环决策质量。总体而言，两段式端到端的优势是输入结构化、跨平台迁移友好、较少面临原始感知域的Sim2Real适配；但其不可避免受限于感知到规控的信息接口，感知不确定性难以在端到端训练中被充分吸收并转化为更优决策，这构成其相对于一段式路线的主要性能上限来源。
+
+    一段式端到端的关键差异在于：规划/决策损失的梯度可以回传到上游感知表征，从而实现感知—预测—决策—规划的整体协同优化。向Transformer迁移的统计基座表征、多模态融合与BEV化输入是端到端方案发展的重要基石。Transformer\cite{AttnIsAllYouNeed2017}奠定了序列建模与注意力机制的通用范式，并促成视觉领域从CNN主导向Transformer主导的快速迁移：ViT\cite{ViT2021}提供视觉Transformer的基础表征框架，DETR\cite{DETR2020}将检测任务显式序列化并实现端到端集合预测，Deformable DETR\cite{Deformable_DETR2021}进一步通过可变形注意力提升稀疏采样效率与收敛质量；相较之下，Faster R-CNN\cite{Faster_RCNN2016}、Mask R-CNN\cite{MaskRCNN2018}与早期YOLO\cite{YOLOv12016}代表传统两阶段/实例分割/单阶段检测范式，在统一序列接口与全局注意力建模方面存在结构性差异。多模态端到端方面，Transfuser\cite{Transfuser2023}代表性地推进了相机/激光雷达等多源原始数据的融合机制，使“在统一表征上直接学习规划”更具工程可行性。纯视觉端到端则普遍以鸟瞰图（Bird-Eye View, BEV）作为统一几何坐标系：Lift-Splat-Shoot\cite{LSS_Lift_Splat_Shoot_BEV2020}提供从图像到BEV的显式几何投影范式，PanopticSegFormer\cite{PanopticSegFormer2022}推进了BEV语义与全景理解能力，BEVFormer\cite{BevFormer2022}进一步通过时序注意力与多相机对齐强化动态场景表征（BEV发展脉络可由\cite{LSS_Lift_Splat_Shoot_BEV2020,PanopticSegFormer2022,BevFormer2022}串联）。在BEV之上，结构化输出同样快速演进：MapTR\cite{MapTR2023}体现BEV到矢量化地图/车道拓扑要素的生成路径，SurroundOcc\cite{SurrondOcc2023}代表占用/可通行空间的体素化建模方向，CASPFormer\cite{CASPFormer2024}则延续以统一Transformer骨干推动多任务场景级理解的一体化趋势。UniAD\cite{hu2022uniAD}与VAD\cite{jiang2023vad}是早期代表：其将检测、跟踪、建图/占用等感知子任务与规划模块网络化并联合训练，使规划学习能够直接利用可学习的中间表征。UAD\cite{guo2024UAD}进一步强调将多模块融合为更统一的综合式架构，并引入无监督预训练以降低对标注的依赖。SparseDrive\cite{SparseDrive2024}体现以更稀疏/关键要素的表示与更高效的推理路径支撑端到端规划，而VADv2\cite{VADv2_2024}则作为VAD体系的重要迭代，强调在训练机制与闭环表现上的增强。在“开环规划/评测”语境下，BEV-Planner\cite{li2024bev_planner}具有代表性：其系统性分析开环端到端评测中的关键细节，并突出自车状态（ego status）在规划学习中的作用，通过面向自车信息的设计改善收敛与鲁棒性，从而为后续端到端规划的输入建模与指标解读提供了可复用的基线框架。在数据来源与目标形式上，Hydra-MDP\cite{li2024hydramdp}采用多模态、多目标的训练范式，将交互逻辑不仅从人类驾驶数据学习，也通过仿真数据补充多样性与长尾覆盖，从而提升端到端规划在稀有工况下的鲁棒性。强化学习与世界模型亦被用于增强闭环能力，例如SEM2\cite{gao2022sem2_worldmodel}通过语义掩码构建世界模型并配合多源采样提高长尾工况比例，体现“以可控数据分布塑形闭环策略”的路线。
+
+    随着端到端从“输出单一最优轨迹”转向“建模可行多模态轨迹分布”，生成式规划成为重要方向。扩散模型体系由去噪扩散概率模型（Denoising Diffusion Probabilistic Model, DDPM）\cite{DDPM2020}奠基，扩散去噪隐式模型（Denoising Diffusion Implicit Model, DDIM）\cite{DDIM2022}提供更快的隐式采样路径大大加速了采样耗时的DDPM，Score-based扩散\cite{Score_based_Diff2021}进一步提供了基于分数函数的训练视角；在数值加速方面，清华大学提出的DPM-Solver系列\cite{DMP_Solver2022,DPM_Solver_v3_2023, DPM_Solver_pp_2024}对高质量加速提供了更好的方案；在更加高维的向量空间表征上，潜空间扩散模型（Latent Diffusion Model, LDM）\cite{LDM_VQGANandDDPM2022}将向量量化生成对抗式网络（Vector Quantised-GAN, VQ-GAN）\cite{VQ_GAN2021}与DDPM结合从而“在潜空间进行扩散”以显著降低生成成本。面向自动驾驶闭环规划，DiffusionPlanner\cite{DiffusionPlanner2025}代表将扩散用于闭环规划并支持预测—规划联合建模的路线，通过生成多模态行为分布提升交互一致性与轨迹质量（并强调减少规则后处理依赖）。相比于传统扩散方式，Flow Matching\cite{FlowMatching2023original}这一条技术路线则提供另一条直接建模概率扩散的方式，建立线性插值的最短路径：“整合流（Rectified Flow）”用于以更少步数实现高效生成。扩散模型跨模态条件生成的范式如DALLE2中CLIP\cite{CLIP2021}与扩散模型结合\cite{DALLE_2_CLIPandDDPM2022}所体现的“条件对齐表征 + 生成模型”框架，并被更新的自动驾驶规划工作用于将地图/交通体/导航意图等条件注入生成过程。在更近期的结果汇总中，DiffusionDrive-v2\cite{DiffusionDrive_v2_2025}引入强化学习约束的截断扩散生成策略，并在其公开报告中给出了在NAVSIM基准上的更高分数，从而在同类生成式规划对比中形成新的强参考点；该结果在文中被表述为当时的基准最优，并体现出对以GoalFlow\cite{GoalFlow2025}为代表的先前强方法的进一步提升。
+
+
 \section{理论补充}
 
     \subsection{图扩散流匹配理论证明}
     \label{sub:graphflow_proof}
-      我们希望学习得到的是动态特征速度的边缘向量场：$v_t^\theta$，其不依赖于未来真值$\mathcal{V}_{k+1}$，那么我们使用条件向量场计算出来的速度向量$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$是否可以拿来当做训练的标签，即是否可以将无条件损失式\eqref{loss_fm}替换为有条件损失式\eqref{loss_cfm}。
+      我们希望学习得到的是动态特征速度的边缘向量场：$v_t^\bm{\theta}$，其不依赖于未来真值$\mathcal{V}_{k+1}$，那么我们使用条件向量场计算出来的速度向量$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$是否可以拿来当做训练的标签，即是否可以将无条件损失式\eqref{loss_fm}替换为有条件损失式\eqref{loss_cfm}。
 
-      \begin{equation}\mathcal{L}_{FM}(\theta) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t}} \left[\lVert v_t^\theta(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}) \rVert^2 \right]\label{loss_fm}\end{equation}
+      \begin{equation}\mathcal{L}_{FM}(\bm{\theta}) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t}} \left[\lVert v_t^\bm{\theta}(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}) \rVert^2 \right]\label{loss_fm}\end{equation}
 
-      \begin{equation}\mathcal{L}_{CFM}(\theta) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t(\cdot|z),z\sim p_1}} \left[\lVert v_t^\theta(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2 \right]\label{loss_cfm}\end{equation}
+      \begin{equation}\mathcal{L}_{CFM}(\bm{\theta}) = \mathbb{E_{t\sim\mathcal{U},x\sim p_t(\cdot|z),z\sim p_1}} \left[\lVert v_t^\bm{\theta}(F_{dyn}^{t}) - v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1}) \rVert^2 \right]\label{loss_cfm}\end{equation}
 
       其实是可以的，下面来进行证明：
 
@@ -78,7 +90,7 @@
 
     MEI经过对比测试，相比于现有二维SSI能够有效反映车辆实际风险，且计算速度很快，经过C++编译后单次计算时间大约在\SIrange{6}{10}{\micro s}。但MEI仍存在一些问题，如其匀速直线运动假设过强，且针对如环岛等匀速恒定前轮转角的情况适用性较差，以及针对本文而言，其无法计算辆车中其一或全部为半挂车时的风险，即只能针对两辆单车计算风险。为对包含挂车的车辆对（Vehicle Pair）计算MEI指标，本文提出Trailer-MEI方法。
 
-    假设半挂车的牵引车部分匀速直线运动，挂车后轴轨迹为曳物线（tractix），如图~\ref{fig:drag_line}所示，设铰接角为$\gamma$，牵引车车速为$v_{1x}$，其解析形式可描述为式\eqref{eq:theta}到式\eqref{eq:trailer_traj}。其中铰接角随时间变化为$\theta(t)$如式\eqref{eq:theta}所示，则牵引车轨迹直线为式\eqref{eq:tractor_traj}，挂车曳物线为式\eqref{eq:trailer_traj}。
+    假设半挂车的牵引车部分匀速直线运动，挂车后轴轨迹为曳物线（tractix），如图~\ref{fig:drag_line}所示，设铰接角为$\gamma_{g}$，牵引车车速为$v_{1x}$，其解析形式可描述为式\eqref{eq:theta}到式\eqref{eq:trailer_traj}。其中铰接角随时间变化为$\gamma_{g}(t)$如式\eqref{eq:theta}所示，则牵引车轨迹直线为式\eqref{eq:tractor_traj}，挂车曳物线为式\eqref{eq:trailer_traj}。
 
     \begin{figure}
       \centering
@@ -88,25 +100,25 @@
     \end{figure}
 
     \begin{equation}
-      \theta(t) = \pi - 2 \arctan\left( \tan\frac{\pi - \gamma}{2}  e^{\frac{v_{1x}}{L_g} t} \right)
+      \gamma_{g}(t) = \pi - 2 \arctan\left( \tan\frac{\pi - \gamma_{g}}{2}  e^{\frac{v_{1x}}{L_g} t} \right)
       \label{eq:theta}
     \end{equation}
     \begin{equation}
-      x_{\text{tractor}}(t) = v_{1x}   t + L_g   \cos\gamma,
+      x_{\text{tractor}}(t) = v_{1x}   t + L_g   \cos\gamma_{g},
       \quad
-      y_{\text{tractor}}(t) = L_g   \sin\gamma
+      y_{\text{tractor}}(t) = L_g   \sin\gamma_{g}
       \label{eq:tractor_traj}
     \end{equation}
     \begin{equation}
       \begin{aligned}
-      x_{\text{trailer}}(t) &= - L_g  \left( \ln\left( \tan\frac{\theta(t)}{2} + \cos\theta(t) \right) \right) + L_g  \left( \ln\left( \tan\frac{\gamma}{2} + \cos\gamma \right) \right) 
+      x_{\text{trailer}}(t) &= - L_g  \left( \ln\left( \tan\frac{\gamma_{g}(t)}{2} + \cos\gamma_{g}(t) \right) \right) + L_g  \left( \ln\left( \tan\frac{\gamma_{g}}{2} + \cos\gamma_{g} \right) \right) 
       \\
-      y_{\text{trailer}}(t) &= -L_g   \left( \sin\theta(t) - \sin\gamma \right)
+      y_{\text{trailer}}(t) &= -L_g   \left( \sin\gamma_{g}(t) - \sin\gamma_{g} \right)
       \end{aligned}
       \label{eq:trailer_traj}
     \end{equation}
 
-    由于将曳物线根据相对自车车速投影到坐标系后并没有和直线相交的解析解存在，故需采用数值方法进行近似。为计算在曳物线上距离均匀划分的采样点，如图~\ref{fig:trailer_proj}所示，采用对时间$t$进行均匀划分的方法，得到$N_{pred}$个时间点$t_1, t_2, \dots, t_{N_{pred}}$对应的角度$\theta(t)$，从而可以计算出$N_{pred}$个挂车轮廓位置$B_g^k,k\in\{1,2,\cdots,N_{pred}\}$。可包含半挂车的车辆对共有三种情况：全无挂车、其一有挂车、两者都有挂车。对于第一种情况可以直接采用MEI进行计算；对第二种情形，假设A车为半挂车B车为单车，需要计算A车牵引车与B车的MEI，以及利用离散的时间分别将平移后的A车挂车轮廓$B_g^{k,\prime}$与B车车头轮廓$B_{veh}$进行$N_{pred}$次碰撞检测与InDepth计算，InDepth解析计算方法见\cite{chenhao2025mei}，假设$t_k$时刻挂车发生碰撞，则挂车与自车计算的等效MEI指标为$\tilde{\text{MEI}}=\frac{\text{InDepth}}{t_k}$，最终取$\text{Trailer-MEI} = \max(\tilde{\text{MEI}},\text{MEI})$；对于第三种情况，需要验证A车与B车车头的MEI，以及A车车头与B车挂车、B车车头与A车挂车在第二种情况的$\tilde{\text{MEI}}_1$和$\tilde{\text{MEI}}_2$，并分别对两车挂车在$N_{pred}$个时刻的绝对轮廓进行InDepth计算，计算过程不再赘述，最终取4者中最大者为此情况的Trailer-MEI。
+    由于将曳物线根据相对自车车速投影到坐标系后并没有和直线相交的解析解存在，故需采用数值方法进行近似。为计算在曳物线上距离均匀划分的采样点，如图~\ref{fig:trailer_proj}所示，采用对时间$t$进行均匀划分的方法，得到$N_{pred}$个时间点$t_1, t_2, \dots, t_{N_{pred}}$对应的角度$\gamma_{g}(t)$，从而可以计算出$N_{pred}$个挂车轮廓位置$B_g^k,k\in\{1,2,\cdots,N_{pred}\}$。可包含半挂车的车辆对共有三种情况：全无挂车、其一有挂车、两者都有挂车。对于第一种情况可以直接采用MEI进行计算；对第二种情形，假设A车为半挂车B车为单车，需要计算A车牵引车与B车的MEI，以及利用离散的时间分别将平移后的A车挂车轮廓$B_g^{k,\prime}$与B车车头轮廓$B_{veh}$进行$N_{pred}$次碰撞检测与InDepth计算，InDepth解析计算方法见\cite{chenhao2025mei}，假设$t_k$时刻挂车发生碰撞，则挂车与自车计算的等效MEI指标为$\tilde{\text{MEI}}=\frac{\text{InDepth}}{t_k}$，最终取$\text{Trailer-MEI} = \max(\tilde{\text{MEI}},\text{MEI})$；对于第三种情况，需要验证A车与B车车头的MEI，以及A车车头与B车挂车、B车车头与A车挂车在第二种情况的$\tilde{\text{MEI}}_1$和$\tilde{\text{MEI}}_2$，并分别对两车挂车在$N_{pred}$个时刻的绝对轮廓进行InDepth计算，计算过程不再赘述，最终取4者中最大者为此情况的Trailer-MEI。
 
     \begin{figure}
       \centering
@@ -120,6 +132,171 @@
     \end{figure}
 
     在最坏情况，即需计算SSI的辆车都为半挂车时，Trailer-MEI指标的计算时间仅为MEI的6倍，C++编译后单次计算时间大约在\SIrange{30}{50}{\micro s}，在实现半挂车间计算的同时计算时间依然可以忽略。本文为平衡精度与计算速度，计算Trailer-MEI指标采用的离散步长$\increment t = \SI{0.2}{s}$，预测时域为\SI{5}{s}。
+
+    \subsection{MFAC 基础算法推导与符号说明}
+        \label{sub:mfac_basic}
+        本节介绍MFAC算法的推导过程及相关符号说明，以便读者更好理解正文中MAFSMC算法的推导。MFAC 算法定义了如下目标函数：
+        \begin{equation}
+        J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k + 1) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
+        \label{eq:cost_function}
+        \end{equation}
+        式中$\boldsymbol{y}^*(k + 1)$为$k + 1$时刻的期望输出，$\boldsymbol{y}(k + 1)$为$k + 1$时刻的实际输出，$\lambda > 0$为权重因子。
+
+        将全格式的式 \eqref{eq:ffdl} 带入式 \eqref{eq:cost_function} 中
+        \begin{equation}
+        J(\boldsymbol{u}(k)) = \left\| \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right\|^2 + \lambda \|\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)\|^2
+        \label{eq:cost_function_ffdl}
+        \end{equation}
+        由于
+        \begin{equation}
+        \begin{aligned}
+        \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) &= \left[ \boldsymbol{\phi}_1(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y}(k)\ \ \boldsymbol{\phi}_{L_y+1}(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y+L_u}(k) \right] \begin{bmatrix}
+        \Delta \boldsymbol{y}(k) \\
+        \vdots \\
+        \Delta \boldsymbol{y}(k - L_y + 1) \\
+        \Delta \boldsymbol{u}(k) \\
+        \vdots \\
+        \Delta \boldsymbol{u}(k - L_u + 1)
+        \end{bmatrix} \\
+        &= \boldsymbol{\phi}_1(k) \Delta \boldsymbol{y}(k) + \dots + \boldsymbol{\phi}_{L_y}(k) \Delta \boldsymbol{y}(k - L_y + 1) \\
+        &\quad + \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) + \boldsymbol{\phi}_{L_y+L_u}(k) \Delta \boldsymbol{u}(k - L_u + 1) \\
+        &= \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=1}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1)
+        \end{aligned}
+        \label{eq:phi_expansion}
+        \end{equation}
+        将式 \eqref{eq:cost_function_ffdl} 对$\boldsymbol{u}(k)$求偏导数，并令其等于 0，
+        \begin{equation}
+        \frac{\partial J(\boldsymbol{u}(k))}{\partial \boldsymbol{u}(k)} = 2 \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right) - 2\lambda (\boldsymbol{u}(k) - \boldsymbol{u}(k - 1)) = 0
+        \label{eq:derivative_zero}
+        \end{equation}
+        \begin{equation}
+        \begin{aligned}
+        \boldsymbol{\phi}_{L_y+1}^T(k) \Bigg( &\boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \Bigg) \\
+        &- \boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) - \lambda \Delta \boldsymbol{u}(k) = 0
+        \end{aligned}
+        \label{eq:derivative_expanded}
+        \end{equation}
+        定义$\boldsymbol{e}(k + 1) = \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k)$，则
+        \begin{equation}
+        \Delta \boldsymbol{u}(k) = \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{e}(k + 1) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
+        \label{eq:control_increment}
+        \end{equation}
+        其中分母之一的$\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \in \mathbb{R}^{N_u \times N_u}$，为了提供更高的设计自由度，引入权重参数$\rho_i \in (0,1], i = 1,\dots,L_y, L_y + 1,\dots,L_y + L_u$，得到最终控制量更新形式（控制律）：
+        \begin{equation}
+        \begin{aligned}
+        \boldsymbol{u}(k) &= \boldsymbol{u}(k - 1) + \frac{\rho_{L_y+1} \boldsymbol{\phi}_{L_y+1}^T(k) \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda} \\
+        &\quad - \frac{\boldsymbol{\phi}_{L_y+1}^T(k) \left( \sum_{i=1}^{L_y} \rho_i \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) + \sum_{i=2}^{L_u} \rho_{i+L_y} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right)}{\boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) + \lambda}
+        \end{aligned}
+        \label{eq:control_law}
+        \end{equation}
+        为实现控制算法，需要知道伪梯度的值，我们需要根据系统的输入输出对其进行估计。考虑如下伪梯度估计的准则函数：
+        \begin{equation}
+        \begin{aligned}
+        J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right) &= \left\| \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \\
+        &\quad + \mu \left\| \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right\|^2
+        \end{aligned}
+        \label{eq:phi_estimation_criterion}
+        \end{equation}
+        其中$\mu > 0$是权重因子。对上式关于$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$求导数并令其为零可得到$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$的估计算法为
+
+
+        \begin{equation}
+        \begin{aligned}
+        \frac{\partial J\left( \boldsymbol{\Phi}_{f,L_y,L_u}(k) \right)}{\partial \boldsymbol{\Phi}_{f,L_y,L_u}(k)} &= -2 \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
+        &\quad + 2\mu \left( 2 \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \right) = 0
+        \end{aligned}
+        \label{eq:phi_derivative}
+        \end{equation}
+
+        \begin{equation}
+        \begin{aligned}
+        \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k) - \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) &= \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) \\
+        &\quad - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)
+        \end{aligned}
+        \label{eq:phi_derivative_expanded}
+        \end{equation}
+
+        \begin{equation}
+        \left( \mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)
+        \label{eq:phi_linear}
+        \end{equation}
+
+        进一步化简得到
+        \begin{equation}
+        \begin{aligned}
+        \boldsymbol{\Phi}_{f,L_y,L_u}(k) = \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1) + \mu \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
+        = \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} - \frac{\left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2 \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \\
+        \approx \left( 1 - \frac{\eta \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2} \right) \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) + \eta \frac{\left( \boldsymbol{y}(k) - \boldsymbol{y}(k - 1) \right) \Delta \boldsymbol{H}_{L_y,L_u}^T(k - 1)}{\mu + \left\| \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right\|^2}
+        \end{aligned}
+        \label{eq:phi_update}
+        \end{equation}
+        加入了步长因子$\eta \in (0,2]$是为了使算法具有更高的灵活性。
+
+        为了使得具有更加优秀的对时变参数的跟踪能力，引入了对$\boldsymbol{\phi}_{L_y+1}$系数的重置。我们通过式 \eqref{eq:phi_i} 的分析可知，$\boldsymbol{\phi}_{L_y+1}$是一个$N_y \times N_u$的伪梯度块矩阵。
+        对于其对角线元素$\varphi_{L_y+1,pp}$（其中$p = 1,\dots,\min(N_y,N_u)$），太小或者过大或变号都需要被重置：
+        \begin{equation}
+        \varphi_{L_y+1,pp}(k) = \varphi_{L_y+1,pp}(0)
+        \end{equation}
+        \begin{equation}
+        \text{if } \left| \varphi_{L_y+1,pp}(k) \right| < \epsilon \text{ or } \left| \varphi_{L_y+1,pp}(k) \right| > b_1 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pp}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pp}(0) \right)
+        \label{eq:phi_diag_reset}
+        \end{equation}
+        对于其非对角线元素$\varphi_{L_y+1,pq}$（其中$p = 1,\dots,N_y, q = 1,\dots,N_u, p \neq q$），过大或变号都需要被重置：
+        \begin{equation}
+        \varphi_{L_y+1,pq}(k) = \varphi_{L_y+1,pq}(0)
+        \end{equation}
+        \begin{equation}
+        \text{if } \left| \varphi_{L_y+1,pq}(k) \right| > b_2 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pq}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pq}(0) \right)
+        \label{eq:phi_offdiag_reset}
+        \end{equation}
+
+
+    \subsection{半侧翻模态及其可控性} 
+      \label{sub:semirollover}
+      如图~\ref{fig:rollover_modes}所示，车辆侧翻有全部车轮着地模态（未侧翻模态）和一侧车轮离地（半侧翻模态，Semi-Rollover）两种状态\cite{wanying2020antirolover}，而半侧翻模态在很多研究中已经被定义为侧翻。但实际车辆行驶过程中由于操作不慎、绊倒性侧翻等原因在达到半侧翻态时仍旧有将车辆救回的余地。
+
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{fig/chap1/rollover_modes.png}
+        % \caption*{图片注释解释说明}
+        \caption{车辆侧翻的两种模态}
+        \label{fig:rollover_modes}
+      \end{figure} 
+
+      但由于目前研究只关注未侧翻模态，而忽略了半侧翻模态，国内外缺乏对于半侧翻模态可控性、动力学特性与控制方法的探究，故对吉尼斯记录、网络公开可访问的交通录像资料与影视素材进行了搜索，对该模态的说法一般为侧两轮行驶（Driving on Two Wheels），或单边行驶。首先关注半侧翻模态的发生条件。如图~\ref{fig:semi_rollover_condition}所示，半侧翻状态在小型车辆行驶时一般不容易被动发生，通常是驾驶员认为主动在高速情况下通过ABA式（ABA表示向某向打方向，再向反向，再回来的方式）快速打方向或AB式快速打方向产生的，通常属于特技动作，可用于超车或紧急避险。其他主动发生方法包括一侧车轮行驶过带坡度的单边桥等。对于大型车辆，半侧翻模态由于车辆质心更高更易发生，其发生通常是被动的，如中速在大曲率弯道下发生，或高速在小曲率弯道发生等。
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{高速ABA式快速转向主动发生 \label{fig:abs_start}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/aba_start.png}}
+        \subcaptionbox{高速AB式快速转向主动发生 \label{fig:ab_start}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/ab_start.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{中速大曲率弯道被动发生 \label{fig:passive_start}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/passive_start.png}}
+        \subcaptionbox{高速小曲率弯道被动发生 \label{fig:high_start}}  
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/high_start.png}}
+        \caption{半侧翻态发生的情况}
+        \label{fig:semi_rollover_condition}
+      \end{figure}
+
+      其次关注半侧翻模态的可控性，如图~\ref{fig:newb_test}所示，2016年11月3日中国车手韩岳驾驶一台MINI完成侧两轮行驶纽伯格林北环全程\SI{20.83}{km}并打破圈速记录；如图~\ref{fig:auto_test}所示，2022年12月，车手田林文驾驶长安览拓者挑战 “汽车侧两轮往返绕桩用时最短”吉尼斯世界记录成功，绕5桩用时\SI{38.41}{s}；如图~\ref{fig:toy_test}工程师对模型玩具车进行改装，通过小型IMU和主动转向控制实现模型车侧两轮行驶；图~\ref{fig:tank_truck_test}是某影视作品中驾驶员进行液罐车半侧翻态行驶的快照截取。通过上述实例总结来说，半侧翻模态在高速和低速都存在可控的状态子空间，半挂液罐车而言同样存在可控的状态子空间，且存在仅通过前轮转向即可控制的区域。在此区域内，通过控制器可以得到与驾驶员控制相同的可控性结论。
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{纽博格林北环试验场侧两轮行驶 \label{fig:newb_test}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/newb_test.png}}
+        \subcaptionbox{汽车侧两轮往返绕桩挑战现场 \label{fig:auto_test}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/auto_test.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{玩具车靠控制器侧两轮行驶 \label{fig:toy_test}}
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/toy_test.png}}
+        \subcaptionbox{液罐车半侧翻态行驶 \label{fig:tank_truck_test}}  
+          {\includegraphics[width=0.40\linewidth]{fig/chap1/tank_truck_test.png}}
+        \caption{半侧翻模态可控性调研}
+        \label{fig:semi_rollover_ctrb}
+      \end{figure}
+
 
 \section{插图}
 
@@ -527,11 +704,7 @@
 
 \section{数学表达式}
 
-  % 附录中的数学表达式示例（式\eqref{eq:appendix-equation}）。
-  % \begin{equation}
-  %   \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
-  %   \label{eq:appendix-equation}
-  % \end{equation}
+
   \setcounter{MaxMatrixCols}{20} % 至少 >= 16
 
   \begin{equation}

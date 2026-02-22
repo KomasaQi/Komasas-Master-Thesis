@@ -2,206 +2,71 @@
 
 \chapter{总结与展望}
 
-总结与展望
+
+本论文面向高等级公路典型运行环境下危险品液罐车侧翻风险高、诱因复杂、处置窗口短等问题，围绕“车云协同降低陷入危险工况概率 + 车端控制保障时延内稳定安全”的总体思路，构建了从体系架构、云端预测性决策与规划，到车端车液耦合建模与防侧翻轨迹跟踪控制、再到联合仿真与缩比模型试验验证的完整技术链路。论文的核心贡献在于：以体系工程方法明确车云协同分工与闭环信息流，在云端以交互式世界模型支撑长时域预测性决策，在车端以可实时求解的多约束最优控制实现抑晃防侧翻跟踪，并通过多源验证证明所提方法具备可行性、有效性与工程实时性。
+
+\section{研究工作总结}
+
+\subsection{车云协同场景任务体系架构构建与验证}
+
+针对信息物理融合系统（IVCPS）开放性、演进性与多主体独立运行等特征，论文在第二章提出并实现了适配 IVCPS 的 So-MBSoSE 分场景建模流程，融合自底向上涌现式建模（ABM）与自顶向下指向式建模（EBM）思想，形成“战略--运行--服务--资源”四阶段架构闭环设计方法。在此基础上，完成了面向液罐车防侧翻行驶的 CT2ROP 场景任务体系架构设计：以危化品运输侧翻风险防控为使命牵引，明确智慧危化品运输指挥、路侧智能设施、云控平台、智能网联液罐车四大运行执行者，构建共性服务与场景专有服务体系，并落实关键软件/硬件资源配置。通过架构在环的逻辑仿真与 MC 仿真验证了关键指标（如应急响应时间约束等）的可满足性，进而为后续“云端长时域预测--车端高频响应”的规控分层提供了可追溯的架构依据与需求边界。
+
+\subsection{云端交互式预测世界模型与长时域预测性决策规划}
+
+第三章面向车云协同中“云端广域感知 + 并行算力”的优势，构建了服务于长时域交互推演的交通图特征表示，并提出自回归图扩散交互式预测模型，用于对周车进行长时域、非确定性的行为预测，从而缓解传统方法对周车预测过于简化、难以覆盖多模态交互的不足。基于所构建的朴素世界模型，进一步训练强化学习决策器，实现面向速度/换道等行为的预测性决策，并配套给出换道平滑轨迹生成方法以提升云端建议的可跟踪性与可执行性。该部分形成了“交通图表示--预测模型训练--决策网络设计--轨迹输出”的完整闭环链路，为车云协同从“被动应急处置”转向“提前规避风险”提供了关键支撑。
+
+\subsection{车端车液耦合建模、抑晃防侧翻控制与试验验证}
+
+第四章聚焦车端高频闭环控制对实时性、可解释性与安全约束可保证性的要求，开展了横纵向耦合液体晃动建模、重线性化机制与多约束最优控制设计。
+
+在建模方面，论文提出滑动伸缩天平（STL）模型用于刻画液体晃动的关键动力学特征，相比基于二维假设的传统简化模型，能够捕捉横纵耦合晃动、横摆相关模态以及舱室间液体转移导致的稳态变化等现象；同时在计算效率上显著优于 CFD，高精度预测未来 \SI{15}{s} 仅需约 \SI{5}{ms}，经编译后可小于 \SI{1}{ms}，满足超实时快速仿真与算法迭代验证需求。为兼顾在线优化的可解性与模型精度，论文进一步引入残差强化学习重线性化机制，面向控制关键模态实现对线性化模型误差的补偿与工况自适应。
+
+在控制方面，论文构建了考虑液体晃动影响的横纵向耦合半挂液罐车模型，提出多约束模型预测控制策略，将防侧翻（以 LTR 等稳定性指标表征）与轨迹跟踪、执行器约束、舒适性约束等统一纳入最优化问题，并设计无模型自适应滑模（MFASMC）残差补偿以增强鲁棒性；同时引入差动制动等辅助控制手段，在极限工况下提升稳定裕度。
+
+在验证方面，论文搭建了以 MATLAB/Simulink 为桥梁的 Star-CCM+ 与 TruckSim 联合仿真平台，并进一步构建云控缩比液罐车模型试验平台，结合相似性准则完成试验工况设计。结果表明：在短距双移线等极限工况下，所提方法能够显著抑制侧倾与晃动，侧倾角峰值相对对比方法最大降低约 \SI{42}{\percent}；算法平均求解时间约 \SI{13.2}{ms}，峰值小于 \SI{20}{ms}，满足工程实时性要求。试验曲线与仿真结果在幅值与相位上保持一致性，进一步验证了平台与相似性分析的有效性。
+
+\section{主要创新点与贡献}
+
+综合全文，论文的创新点与贡献可概括为以下四方面：
+
+\begin{itemize}
+  \item 提出适配 IVCPS 的 So-MBSoSE 分场景体系建模方法，并完成 CT2ROP 场景任务体系架构全流程实现与闭环验证。
+  该方法面向开放演进的车云协同系统，形成可复用的“战略--运行--服务--资源”四阶段架构推导路径，为算法与工程实现提供可追溯的需求边界与资源约束。
+
+  \item 构建云端交互式长时域预测世界模型，提出自回归图扩散预测并支撑强化学习预测性决策。
+  通过交通图特征表示与图扩散建模实现对周车多模态不确定性交互的覆盖，并形成从预测到决策再到可执行轨迹输出的技术链路，服务于长时域风险规避。
+
+  \item 提出面向液罐车的横纵耦合晃动快速建模与重线性化机制，兼顾高精度与在线可解性需求。
+  STL 模型在保持对关键晃动模态刻画能力的同时具备超实时预测能力，并通过残差强化学习实现线性化模型误差补偿与工况自适应，为在线优化控制提供可用模型基础。
+
+  \item 形成“云端低频长时域规避风险 + 车端高频短时域稳定保障”的两级闭环安全规控方案，并通过联合仿真与缩比试验验证工程可行性。
+  控制器在极限工况下兼顾跟踪、稳定与实时性，试验结果验证了方法有效性与工程落地潜力。
+\end{itemize}
+
+\section{不足与未来展望}
+
+尽管论文已形成较完整的体系--算法--验证闭环，但面向真实道路规模化应用仍存在进一步研究空间，后续工作可从以下方向展开：
+
+\begin{enumerate}
+  \item 云端世界模型与决策的鲁棒性增强。
+  需进一步将通信时延波动、丢包、异构感知误差与周车策略变化纳入统一的不确定性建模框架，探索风险敏感/分布式鲁棒强化学习、可验证安全约束学习等方法，以提升跨场景泛化能力与安全一致性。
+
+  \item 车云协同闭环的形式化安全保证与一致性验证。
+  当前以指标约束与仿真实证为主，未来可引入可达性分析、控制屏障函数（CBF）或时序逻辑约束（STL/LTL）等手段，在“云端建议--车端执行”链路上建立可证明的安全边界，并开展更系统的架构--算法协同验证。
+
+  \item 车液耦合建模的工况扩展与在线状态估计。
+  液体充液率、温度/黏度变化、多舱结构与复杂路坡耦合会显著影响晃动特性。后续可扩展数据集覆盖更多工况，引入基于多传感器融合的液体状态在线估计与模型参数自适应，实现更强的可迁移性与长期稳定性。
+
+  \item 更高保真与更贴近工程链路的验证体系。
+  建议进一步开展硬件在环（HIL）/驾驶员在环（DIL）试验，完善执行器饱和、轮胎非线性、制动热衰退等工程因素建模，并在封闭试验场开展更接近实车尺度的验证，以推进工程落地。
+
+  \item 面向混合交通与多主体博弈的协同策略演进。
+  真实交通中人类驾驶员行为多变且存在博弈性，未来可结合意图识别与多智能体博弈建模，提升云端预测与决策对人类驾驶不确定性的适配能力，并研究在低渗透率阶段的渐进式部署策略。
+
+  \item 体系工程层面的可扩展部署与安全防护。
+  随着车路云一体化规模扩展，需要进一步研究云控平台弹性算力调度、服务质量（QoS）保障、数据安全与网络安全防护等问题，形成可持续运营的工程化解决方案。
+\end{enumerate}
+
+综上，论文围绕车云协同液罐车防侧翻这一复杂系统问题，从体系架构到算法实现再到实验验证进行了系统研究，验证了“云端预测性规避风险 + 车端实时稳定保障”的技术路线具有可行性与工程潜力。未来在鲁棒性提升、形式化安全保证与更高等级试验验证方面的深入工作，将进一步推动相关技术在危化品道路运输安全领域的规模化应用。
 
 
-
-% 中文论文的数学符号默认遵循 GB/T 3102.11—1993《物理科学和技术中使用的数学符号》\footnote{原 GB 3102.11—1993，自 2017 年 3 月 23 日起，该标准转为推荐性标准。}。该标准参照采纳 ISO 31-11:1992 \footnote{目前已更新为 ISO 80000-2:2019。}，
-% 但是与 \TeX{} 默认的美国数学学会（AMS）的符号习惯有所区别。
-% 具体地来说主要有以下差异：
-% \begin{enumerate}
-%   \item 大写希腊字母默认为斜体，如
-%     \begin{equation*}
-%       \Gamma \Delta \Theta \Lambda \Xi \Pi \Sigma \Upsilon \Phi \Psi \Omega.
-%     \end{equation*}
-%     注意有限增量符号 $\increment$ 固定使用正体，模板提供了 \cs{increment} 命令。测试一下$\increment$命令。虽然需要花费的时间比较长，但是仍然能够在十秒左右完成编译。
-%     接下来我们就测试一下新的命令。
-%   \item 小于等于号和大于等于号使用倾斜的字形 $\le$、$\ge$。
-%   \item 积分号使用正体，比如 $\int$、$\oint$。
-%   \item
-%     偏微分符号 $\partial$ 使用正体。
-%   \item
-%     省略号 \cs{dots} 按照中文的习惯固定居中，比如
-%     \begin{equation*}
-%       1, 2, \dots, n \quad 1 + 2 + \dots + n.
-%     \end{equation*}
-%   \item
-%     实部 $\Re$ 和虚部 $\Im$ 的字体使用罗马体。
-% \end{enumerate}
-
-% 以上数学符号样式的差异可以在模板中统一设置。
-% 另外国标还有一些与 AMS 不同的符号使用习惯，需要用户在写作时进行处理：
-% \begin{enumerate}
-%   \item 数学常数和特殊函数名用正体，如
-%     \begin{equation}
-%       \uppi = 3.14\dots; \quad
-%       \symup{i}^2 = -1; \quad
-%       \symup{e} = \lim_{n \to \infty} \left( 1 + \frac{1}{n} \right)^n.
-%     \end{equation}
-%   \item 微分号使用正体，比如 $\dif y / \dif x$。
-%   \item 向量、矩阵和张量用粗斜体（\cs{symbf}），如 $\symbf{x}$、$\symbf{\Sigma}$、$\symbfsf{T}$。
-%   \item 自然对数用 $\ln x$ 不用 $\log x$。
-% \end{enumerate}
-
-
-% 英文论文的数学符号使用 \TeX{} 默认的样式。
-% 如果有必要，也可以通过设置 \verb|math-style| 选择数学符号样式。
-
-% 关于量和单位推荐使用
-% \href{http://mirrors.ctan.org/macros/latex/contrib/siunitx/siunitx.pdf}{\pkg{siunitx}}
-% 宏包，
-% 可以方便地处理希腊字母以及数字与单位之间的空白，
-% 比如：
-% \SI{6.4e6}{m}，
-% \SI{9}{\micro\meter}，
-% \si{kg.m.s^{-1}}，
-% \SIrange{10}{20}{\degreeCelsius}，
-% \SIrange{10}{20}{\percent}。
-
-
-% \section{数学公式}
-
-% 数学公式可以使用 \env{equation} 和 \env{equation*} 环境。
-% 注意数学公式的引用应前后带括号，通常使用 \cs{eqref} 命令，比如式\eqref{eq:example}。
-% \begin{equation}
-%   \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathcal{R}(f; a_k).
-%   \label{eq:example}
-% \end{equation}
-
-% 多行公式尽可能在“=”处对齐，推荐使用 \env{align} 环境。
-% \begin{align}
-%   a & = b + c + d + e \\
-%     & = f + g
-% \end{align}
-
-
-
-% \section{数学定理}
-
-% 定理环境的格式可以使用 \pkg{amsthm} 或者 \pkg{ntheorem} 宏包配置。
-% 用户在导言区载入这两者之一后，模板会自动配置 \env{theorem}、\env{proof} 等环境。
-
-% \begin{theorem}[Lindeberg--Lévy 中心极限定理]
-%   设随机变量 $X_1, X_2, \dots, X_n$ 独立同分布， 且具有期望 $\mu$ 和有限的方差 $\sigma^2 \ne 0$，
-%   记 $\bar{X}_n = \frac{1}{n} \sum_{i+1}^n X_i$，则
-%   \begin{equation}
-%     \lim_{n \to \infty} P \left(\frac{\sqrt{n} \left( \bar{X}_n - \mu \right)}{\sigma} \le z \right) = \Phi(z),
-%   \end{equation}
-%   其中 $\Phi(z)$ 是标准正态分布的分布函数。
-% \end{theorem}
-% \begin{proof}
-%   Trivial.
-% \end{proof}
-
-% 同时模板还提供了 \env{assumption}、\env{definition}、\env{proposition}、
-% \env{lemma}、\env{theorem}、\env{axiom}、\env{corollary}、\env{exercise}、
-% \env{example}、\env{remar}、\env{problem}、\env{conjecture} 这些相关的环境。
-
-
-
-% \section{表格}
-
-% 表应具有自明性。为使表格简洁易读，尽可能采用三线表，如表~\ref{tab:three-line}。
-% 三条线可以使用 \pkg{booktabs} 宏包提供的命令生成。
-
-% \begin{table}
-%   \centering
-%   \caption{三线表示例}
-%   \begin{tabular}{ll}
-%     \toprule
-%     文件名          & 描述                         \\
-%     \midrule
-%     thuthesis.dtx   & 模板的源文件，包括文档和注释 \\
-%     thuthesis.cls   & 模板文件                     \\
-%     thuthesis-*.bst & BibTeX 参考文献表样式文件    \\
-%     \bottomrule
-%   \end{tabular}
-%   \label{tab:three-line}
-% \end{table}
-
-% 表格如果有附注，尤其是需要在表格中进行标注时，可以使用 \pkg{threeparttable} 宏包。
-% 研究生要求使用英文小写字母 a、b、c……顺序编号，本科生使用圈码 ①、②、③……编号。
-
-% \begin{table}
-%   \centering
-%   \begin{threeparttable}[c]
-%     \caption{带附注的表格示例}
-%     \label{tab:three-part-table}
-%     \begin{tabular}{ll}
-%       \toprule
-%       文件名                 & 描述                         \\
-%       \midrule
-%       thuthesis.dtx\tnote{a} & 模板的源文件，包括文档和注释 \\
-%       thuthesis.cls\tnote{b} & 模板文件                     \\
-%       thuthesis-*.bst        & BibTeX 参考文献表样式文件    \\
-%       \bottomrule
-%     \end{tabular}
-%     \begin{tablenotes}
-%       \item [a] 可以通过 xelatex 编译生成模板的使用说明文档；
-%         使用 xetex 编译 \file{thuthesis.ins} 时则会从 \file{.dtx} 中去除掉文档和注释，得到精简的 \file{.cls} 文件。
-%       \item [b] 更新模板时，一定要记得编译生成 \file{.cls} 文件，否则编译论文时载入的依然是旧版的模板。
-%     \end{tablenotes}
-%   \end{threeparttable}
-% \end{table}
-
-% 如某个表需要转页接排，可以使用 \pkg{longtable} 宏包，需要在随后的各页上重复表的编号。
-% 编号后跟表题（可省略）和“（续）”，置于表上方。续表均应重复表头。
-
-% \begin{longtable}{cccc}
-%     \caption{跨页长表格的表题}
-%     \label{tab:longtable} \\
-%     \toprule
-%     表头 1 & 表头 2 & 表头 3 & 表头 4 \\
-%     \midrule
-%   \endfirsthead
-%     \caption*{续表~\thetable\quad 跨页长表格的表题} \\
-%     \toprule
-%     表头 1 & 表头 2 & 表头 3 & 表头 4 \\
-%     \midrule
-%   \endhead
-%     \bottomrule
-%   \endfoot
-%   Row 1  & & & \\
-%   Row 2  & & & \\
-%   Row 3  & & & \\
-%   Row 4  & & & \\
-%   Row 5  & & & \\
-%   Row 6  & & & \\
-%   Row 7  & & & \\
-%   Row 8  & & & \\
-%   Row 9  & & & \\
-%   Row 10 & & & \\
-% \end{longtable}
-
-
-
-% \section{算法}
-
-% 算法环境可以使用 \pkg{algorithms} 或者 \pkg{algorithm2e} 宏包。
-
-% \renewcommand{\algorithmicrequire}{\textbf{输入：}\unskip}
-% \renewcommand{\algorithmicensure}{\textbf{输出：}\unskip}
-
-% \begin{algorithm}
-%   \caption{Calculate $y = x^n$}
-%   \label{alg1}
-%   \small
-%   \begin{algorithmic}
-%     \REQUIRE $n \geq 0$
-%     \ENSURE $y = x^n$
-
-%     \STATE $y \leftarrow 1$
-%     \STATE $X \leftarrow x$
-%     \STATE $N \leftarrow n$
-
-%     \WHILE{$N \neq 0$}
-%       \IF{$N$ is even}
-%         \STATE $X \leftarrow X \times X$
-%         \STATE $N \leftarrow N / 2$
-%       \ELSE[$N$ is odd]
-%         \STATE $y \leftarrow y \times X$
-%         \STATE $N \leftarrow N - 1$
-%       \ENDIF
-%     \ENDWHILE
-%   \end{algorithmic}
-% \end{algorithm}
