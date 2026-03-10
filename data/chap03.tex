@@ -360,80 +360,6 @@
       \mathcal{L}_{MOBIL}(\theta_m) = P(L)\ln(p_L) + P(R)\ln(p_R) + P(K)\ln(p_K)
     \end{equation}
 
-
-  
-  \subsection{强化学习与近端策略优化}  
-  \label{sec:rl_overview_ppo}
-  强化学习（Reinforcement Learning, RL）研究智能体（agent）在环境（environment）中通过交互学习策略（policy）的过程。典型形式化可用马尔可夫决策过程（Markov Decision Process, MDP）表示：$(\mathcal{S},\mathcal{A},P,r,\gamma)$，其中$\mathcal{S}$为状态空间，$\mathcal{A}$为动作空间，$P(s'|s,a)$为转移概率，$r(s,a)$为即时奖励，$\gamma\in(0,1)$为折扣因子。智能体的目标是最大化期望折扣回报
-  \begin{equation}
-  J(\pi)=\mathbb{E}_{\tau\sim\pi}\left[\sum_{t=0}^{\infty}\gamma^t r(s_t,a_t)\right],
-  \end{equation}
-  其中轨迹$\tau=(s_0,a_0,s_1,a_1,\dots)$由策略$\pi(a|s)$诱导。强化学习算法大体可按\emph{值函数学习}、\emph{策略梯度}、\emph{Actor--Critic}与\emph{分布式/改进型}分类，也可以根据是否只用最新策略采集的数据进行训练分为在轨策略（On-Policy）和离轨策略（Off-Policy），其他还有根据策略的随机性与否进行划分的方法等。下文将简述主要RL方法，并简要介绍本方法用到的近端策略优化（Proximal Policy Optimization, PPO）。
-
-  \subsubsection*{(1)基于价值的深度强化学习}
-    在离散动作空间中，经典路径是学习动作价值函数$Q^\pi(s,a)$，并通过贪婪策略$ a=\arg\max_a Q(s,a)$做决策。深度Q网络（Deep Q-Network, DQN）将$Q(s,a)$用深度网络近似，并引入经验回放与目标网络稳定训练，是深度强化学习的里程碑工作之一~\cite{DQN_2013}。DQN及后续改进使得在高维观测（如Atari像素）上实现端到端学习成为可能。
-
-    除“期望回报”的标量$Q$，分布式强化学习（Distributional RL）直接建模回报随机变量$Z(s,a)$的分布，并通过分布距离（如Wasserstein/quantile回归）学习更丰富的信息。Bellemare等提出从分布角度刻画强化学习目标，推动了分位数回归DQN等方法的发展~\cite{QR_DQN_2017}。这类思想也可与连续控制的critic建模结合，用于缓解偏差与提升稳定性（如本节的TQC方法）。
-
-  \subsubsection*{(2)策略梯度与Actor--Critic架构}
-    当动作空间连续或离散动作规模很大时，直接优化策略$\pi_\bm{\theta}(a|s)$往往更自然。策略梯度方法通过
-    \begin{equation}
-    \nabla_\bm{\theta} J(\bm{\theta})=\mathbb{E}_{\pi_\bm{\theta}}\left[\nabla_\bm{\theta} \log \pi_\bm{\theta}(a_t|s_t)\, \hat{A}_t \right]
-    \end{equation}
-    更新参数，其中$\hat{A}_t$为优势函数估计，用于降低方差。异步方法（Asynchronous Methods，通常被称为A3C/A2C范式）通过多线程/多进程并行采样与更新，提高样本效率与训练吞吐~\cite{A2C_2016}。A2C可视为A3C的同步版本，常与广义优势估计（Generalized Advantage Estimation, GAE）等技巧搭配，在中等规模任务中表现相对稳健。
-
-    然而，朴素策略梯度可能因步长过大导致策略崩溃。TRPO通过\emph{信赖域}约束控制新旧策略分布差异（常用KL散度约束），以保证单步更新的“单调改进”倾向~\cite{TRPO_2017}。TRPO理论上优雅，但实现涉及二阶信息与共轭梯度，工程复杂度较高。PPO则用更易实现的“裁剪目标”在一阶优化框架下近似TRPO的保守更新思想~\cite{PPO_2017}，因其鲁棒性与实现简洁成为当前最常用的on-policy基线之一。下一小节将对PPO展开介绍。
-
-  \subsubsection*{(3)连续控制的Off--Policy Actor--Critic架构}
-    在连续动作控制中，off-policy Actor--Critic通常更具样本效率。DDPG将确定性策略梯度与Q学习结合，以actor输出连续动作、critic评估$Q(s,a)$，并使用经验回放与目标网络稳定训练~\cite{DDPG_2015}。但DDPG易受函数逼近误差与过估计偏差影响。
-
-    TD3针对DDPG常见问题提出三项关键改进：双Q网络取最小值减少过估计、延迟策略更新降低不稳定、目标策略平滑抑制尖峰~\cite{TD3_2018}。SAC则基于最大熵强化学习框架，在优化期望回报的同时最大化策略熵，从而鼓励探索并提升鲁棒性；其随机策略与温度参数机制使得训练更稳定、性能更强劲~\cite{SAC_2018}。在分布式/分位数视角下，TQC通过\emph{截断}多个分位数critic的尾部来控制过估计偏差，是对连续控制分布式critic的一类有效工程化方案~\cite{TQC_2020}。
-
-  \subsubsection*{(4)其他优化与稳定方法}
-    稀疏奖励场景（如机器人到达目标）中，成功轨迹极少导致学习效率低。HER提出“事后经验回放”：将失败轨迹中的达到状态重解释为“目标”，从而为同一条轨迹生成额外的有效监督信号，显著提升样本利用率~\cite{HER_original_2017}。围绕多目标/通用技能学习，Plappert等进一步构建更具挑战的机器人多目标基准与研究议程，推动了多目标强化学习的系统化发展~\cite{plappert2018multigoalreinforcementlearningchallenging}。从工程角度，HER常与DDPG/TD3/SAC等off-policy方法结合，构成解决稀疏奖励连续控制的经典组合。
-
-    除深度Actor--Critic外，参数空间搜索与黑箱优化也能在某些连续控制任务上取得有竞争力的表现。ARS用简单随机方向搜索与归一化技巧，展示了“简单随机搜索”在一些基准上的惊人效果，且实现与调参成本较低~\cite{ARS_2018}。
-
-    近年来，一些工作从\emph{正则化/随机性}或\emph{结构性简化}角度提升样本效率与可扩展性：DroQ通过对Q函数施加dropout并进行多次采样估计，有助于获得更“保守/稳健”的价值估计并提高样本效率~\cite{DroQ_2022}；CrossQ讨论了在深度强化学习中引入（批）归一化以获得更好的样本效率与更简洁的训练配方~\cite{CrossQ_2024}；SimBa则从“simplicity bias”角度讨论参数规模扩展（scaling up）时的训练行为与规律，为大参数RL的可扩展训练提供经验性指引~\cite{SimBa_2025}。这些方向共同反映了一个趋势：在既定算法骨架（如Actor--Critic）上，通过更简单、更稳定的训练配方来获得更强的实际效果。
-
-  \subsubsection*{(5)PPO方法核心思想与目标函数}
-    PPO属于\emph{on-policy} Actor--Critic方法，核心目标是在保持实现简单的一阶优化框架下，限制策略更新幅度，避免性能骤降~\cite{PPO_2017}。其关键在于使用重要性采样比率
-    \begin{equation}
-    r_t(\bm{\theta})=\frac{\pi_\bm{\theta}(a_t|s_t)}{\pi_{\bm{\theta}_{\text{old}}}(a_t|s_t)},
-    \end{equation}
-    并用优势函数$\hat{A}_t$构建surrogate目标。最常用的PPO-Clip形式为
-    \begin{equation}
-    L^{\text{CLIP}}(\bm{\theta})=\mathbb{E}_t\left[\min\left(r_t(\bm{\theta})\hat{A}_t,\ \text{clip}(r_t(\bm{\theta}),1-\epsilon_{clip},1+\epsilon_{clip})\hat{A}_t\right)\right],
-    \label{eq:ppo_clip}
-    \end{equation}
-    其中$\epsilon_{clip}$为裁剪阈值（如0.1或0.2）。直观解释如下：
-    \begin{itemize}
-    \item 当$r_t(\bm{\theta})$偏离1（新旧策略差异过大）且会\emph{过度}提高目标时，裁剪项会限制增益，强制更新更保守。
-    \item 通过$\min(\cdot)$结构，PPO在经验上倾向于避免“看似提升但可能导致崩溃”的过大更新。
-    \end{itemize}
-
-    PPO还通常加入价值函数损失与熵正则项构成整体目标：
-    \begin{equation}
-    L(\bm{\theta})=L^{\text{CLIP}}(\bm{\theta})-c_v\,\mathbb{E}_t\left[(V_\bm{\theta}(s_t)-\hat{V}_t)^2\right]+c_e\,\mathbb{E}_t\left[\mathcal{H}(\pi_\bm{\theta}(\cdot|s_t))\right],
-    \label{eq:ppo_total}
-    \end{equation}
-    其中$V_\bm{\theta}$为critic，$\hat{V}_t$为回报/TD目标，$\mathcal{H}$为策略熵，$c_v,c_e$为权重。熵项鼓励探索、降低过早收敛风险；价值损失为actor提供低方差优势估计支撑。PPO的工程实现通常采用“采样一批on-policy轨迹 $\rightarrow$ 多个epoch、小批量SGD更新”的训练范式。
-
-  \subsubsection*{(6)优势函数估计与训练流程}
-    PPO性能高度依赖优势函数$\hat{A}_t$的估计质量。常见做法是采用GAE思想构造指数加权的TD残差累积（这里给出常用形式，便于在实现中对齐）：
-    \begin{align}
-    \delta_t &= r_t + \gamma V(s_{t+1})-V(s_t),\\
-    \hat{A}_t &= \sum_{l=0}^{T-t-1}(\gamma\lambda)^l \delta_{t+l},
-    \end{align}
-    其中$\lambda\in[0,1]$控制偏差--方差权衡。实践中通常对优势做标准化（减均值除标准差），以提升数值稳定性。PPO典型训练步骤可概括为：
-    \begin{enumerate}
-    \item 使用当前策略$\pi_{\bm{\theta}_{\text{old}}}$在环境中采样$N$步或若干条轨迹，得到$\{(s_t,a_t,r_t,s_{t+1})\}$；
-    \item 用critic计算$V(s_t)$并构造$\hat{A}_t$与价值目标$\hat{V}_t$；
-    \item 固定旧策略$\pi_{\bm{\theta}_{\text{old}}}$，以小批量方式对目标$L(\bm{\theta})$进行$K$个epoch的梯度更新；
-    \item 更新$\bm{\theta}_{\text{old}}\leftarrow \bm{\theta}$，进入下一轮采样。
-    \end{enumerate}
-    与off-policy方法（DDPG/TD3/SAC）相比，PPO的采样数据必须较新（on-policy），因此样本效率略逊，但其训练稳定性、对超参数的鲁棒性以及在复杂策略网络（如CNN/Transformer）上的泛化表现，使其在很多工程场景依然是首选基线~\cite{PPO_2017}。
-
   \subsection{策略网络设计与训练}
   \label{subsection:policy_net_design_and_training}
     本小节介绍了策略网络结构设计与长时域预测性决策智能体强化学习训练方法，如图\ref{fig:feature_extractor}所示。
@@ -1146,7 +1072,7 @@
 
       每个子项的得分分别按任务类型和交通流量统计，如附录表~\ref{tab:reward_task}和附录表~\ref{tab:reward_flow}所示，其中安全总计得分如图~\ref{fig:r_safe}所示，安全指标的子项如图~\ref{fig:safe_index}所示，其他指标如图~\ref{fig:other_metrices}所示。在所有安全得分上，预测性方法几乎都优于单车方法，尤其在Trailer-MEI这一指标上尤其显著。同时在1/HW指标上预测性方法更好，体现了其通过各种方式避免车辆并列情况带来的风险。
 
-
+      % TODO: 字体字号要保证，图要素齐全横纵坐标图例单位等
       \begin{figure}
         \centering
         \subcaptionbox{1/TTC指标得分对比图 \label{fig:r_ttc_inv}}
@@ -1162,7 +1088,7 @@
       \end{figure}
 
       在其他指标上，车辆通行效率如图\ref{fig:r_effi}所示，由于液罐车属于危化品运输车辆，其高速路限速为\SI{80}{km/h}，相对于其他车辆较慢，故基本不太存在大幅领先的情况，与非预测性方法基本维持一直，即预测性方法实现了在不降低运输效率的前提下提升了安全性。需注意的是，不同场景得分总量取决于场景运行时间，巡航场景路程最长耗时最长故累计奖励最多，并不代表该场景相对其他场景在细分指标上更优秀。其他指标上预测性方法与非预测性方法基本维持一直。
-
+      % TODO: ①确保研究内容完整性是最重要的 ②写作方面逻辑性要加强，对核心要点的阐述，阐述不要扩散
 
       \begin{figure}
         \centering
