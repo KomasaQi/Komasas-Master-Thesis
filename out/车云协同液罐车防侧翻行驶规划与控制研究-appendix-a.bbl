@@ -1,0 +1,503 @@
+\begin{thebibliography}{79}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \DeclareUrlCommand\doi{\urlstyle{rm}}
+  \def\eprint#1#2{#2}
+\else
+  \def\doi#1{\href{https://doi.org/#1}{\nolinkurl{#1}}}
+  \let\eprint\href
+\fi
+
+\bibitem[Cunningham et~al.(2015)Cunningham, Galceran, Eustice, et~al.]{cunningham2015mpdm}
+Cunningham A~G, Galceran E, Eustice R~M, et~al.
+\newblock {MPDM}: Multipolicy decision-making in dynamic, uncertain environments for autonomous driving\allowbreak[C/OL]//\allowbreak
+Proceedings of the {IEEE} International Conference on Robotics and Automation.
+\newblock IEEE, 2015: 1670-1677.
+\newblock DOI: \doi{10.1109/ICRA.2015.7139412}.
+
+\bibitem[Galceran et~al.(2017)Galceran, Cunningham, Eustice, et~al.]{galceran2017changepoint}
+Galceran E, Cunningham A~G, Eustice R~M, et~al.
+\newblock Multipolicy decision-making for autonomous driving via changepoint-based behavior prediction: Theory and experiment\allowbreak[J/OL].
+\newblock Autonomous Robots, 2017, 41\allowbreak (6): 1-16.
+\newblock DOI: \doi{10.1007/s10514-017-9619-z}.
+
+\bibitem[Ding et~al.(2022)Ding, Zhang, Chen, et~al.]{ding2022epsilon}
+Ding W, Zhang L, Chen J, et~al.
+\newblock {EPSILON}: An efficient planning system for automated vehicles in highly interactive environments\allowbreak[J].
+\newblock IEEE Transactions on Robotics, 2022\allowbreak (2): 38.
+
+\bibitem[Zhang et~al.(2020)Zhang, Ding, Chen, et~al.]{zhang2020guidedbranching}
+Zhang L, Ding W, Chen J, et~al.
+\newblock Efficient uncertainty-aware decision-making for automated driving using guided branching\allowbreak[C/OL]//\allowbreak
+2020 {IEEE} International Conference on Robotics and Automation ({ICRA}).
+\newblock IEEE, 2020.
+\newblock DOI: \doi{10.1109/ICRA40945.2020.9197302}.
+
+\bibitem[Ding et~al.(2019)Ding, Zhang, Chen, et~al.]{ding2019semanticcorridor}
+Ding W, Zhang L, Chen J, et~al.
+\newblock Safe trajectory generation for complex urban environments using spatio-temporal semantic corridor\allowbreak[J/OL].
+\newblock IEEE Robotics and Automation Letters, 2019, 4\allowbreak (3): 2997-3004.
+\newblock DOI: \doi{10.1109/LRA.2019.2923954}.
+
+\bibitem[Bae et~al.(2023)Bae, Isele, Nakhaei, Xu, Anon, Choi, Fujimura, and Moura]{bae2023lanechange}
+Bae S, Isele D, Nakhaei A, et~al.
+\newblock Lane-change in dense traffic with model predictive control and neural networks\allowbreak[J/OL].
+\newblock IEEE Transactions on Control Systems Technology, 2023, 31\allowbreak (2): 646-659.
+\newblock DOI: \doi{10.1109/TCST.2022.3193923}.
+
+\bibitem[Salvado et~al.(2016)Salvado, Custodio, and He{\ss}]{salvado2016contingency}
+Salvado J, Custodio L~M~M, He{\ss} D.
+\newblock Contingency planning for automated vehicles in urban traffic\allowbreak[C/OL]//\allowbreak
+2016 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS}).
+\newblock IEEE, 2016.
+\newblock DOI: \doi{10.1109/IROS.2016.7759442}.
+
+\bibitem[Huang et~al.(2021)Huang, Huang, et~al.]{huang2021riskbudget}
+Huang H~J, Huang K~C, et~al.
+\newblock Planning on a (risk) budget: Safe non-conservative planning in probabilistic dynamic environments\allowbreak[EB/OL].
+\newblock 2021\allowbreak[2024-10-01].
+\newblock DOI: \doi{10.48550/arXiv.2106.09127}.
+
+\bibitem[Da(2022)]{da2022reactivesafety}
+Da F.
+\newblock Comprehensive reactive safety: no need for a trajectory if you have a strategy\allowbreak[C/OL]//\allowbreak
+2022 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS}).
+\newblock Kyoto, Japan: IEEE, 2022: 2903-2910.
+\newblock DOI: \doi{10.1109/IROS47612.2022.9981757}.
+
+\bibitem[Li et~al.(2018)Li, Kolmanovsky, Girard, et~al.]{li2018gametheoryacc}
+Li N, Kolmanovsky I, Girard A, et~al.
+\newblock Game theoretic modeling of vehicle interactions at unsignalized intersections and application to autonomous vehicle control\allowbreak[C/OL]//\allowbreak
+2018 Annual American Control Conference ({ACC}).
+\newblock IEEE, 2018.
+\newblock DOI: \doi{10.23919/ACC.2018.8430842}.
+
+\bibitem[Li et~al.(2020)Li, Yao, Kolmanovsky, et~al.]{li2020gametheorytits}
+Li N, Yao Y, Kolmanovsky I, et~al.
+\newblock Game-theoretic modeling of multi-vehicle interactions at uncontrolled intersections\allowbreak[J/OL].
+\newblock IEEE Transactions on Intelligent Transportation Systems, 2020.
+\newblock DOI: \doi{10.1109/TITS.2020.3026160}.
+
+\bibitem[Le~Cleac'H et~al.(2020)Le~Cleac'H, Schwager, and Manchester]{lecleach2020lucidgames}
+Le~Cleac'H S, Schwager M, Manchester Z.
+\newblock {LUCIDGames}: Online unscented inverse dynamic games for adaptive trajectory prediction and planning\allowbreak[EB/OL].
+\newblock 2020.
+\newblock DOI: \doi{10.48550/arXiv.2011.08152}.
+
+\bibitem[Le~Cleac'H et~al.(2022)Le~Cleac'H, Schwager, and Manchester]{lecleach2022algames}
+Le~Cleac'H S, Schwager M, Manchester Z.
+\newblock {ALGAMES}: a fast augmented lagrangian solver for constrained dynamic games\allowbreak[J].
+\newblock Autonomous Robots, 2022\allowbreak (1): 46.
+
+\bibitem[Li et~al.(2023)Li, Zhang, Liu, and Shen]{li2023marc}
+Li T, Zhang L, Liu S, et~al.
+\newblock {MARC}: multipolicy and risk-aware contingency planning for autonomous driving\allowbreak[J].
+\newblock IEEE Robotics and Automation Letters, 2023, 8\allowbreak (10): 6587-6594.
+
+\bibitem[Sun et~al.(2018)Sun, Zhan, Tomizuka, et~al.]{sun2018courteous}
+Sun L, Zhan W, Tomizuka M, et~al.
+\newblock Courteous autonomous cars\allowbreak[C/OL]//\allowbreak
+2018 {IEEE}/{RSJ} International Conference on Intelligent Robots and Systems ({IROS}).
+\newblock IEEE, 2018.
+\newblock DOI: \doi{10.1109/IROS.2018.8593969}.
+
+\bibitem[Sheng et~al.(2023)Sheng, Liu, and Li]{sheng2023cooperationaware}
+Sheng Z, Liu L, Li J~D.
+\newblock A cooperation-aware lane change method for automated vehicles\allowbreak[J].
+\newblock IEEE Transactions on Intelligent Transportation Systems, 2023, 24\allowbreak (3): 3236-3251.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, et~al.]{AttnIsAllYouNeed2017}
+Vaswani A, Shazeer N, Parmar N, et~al.
+\newblock Attention is all you need\allowbreak[EB/OL].
+\newblock arXiv, 2017.
+\newblock DOI: \doi{10.48550/arXiv.1706.03762}.
+
+\bibitem[Chen et~al.(2023)Chen, Wu, Chitta, et~al.]{chen2023endtoend}
+Chen L, Wu P, Chitta K, et~al.
+\newblock End-to-end autonomous driving: Challenges and frontiers\allowbreak[J/OL].
+\newblock IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023.
+\newblock DOI: \doi{10.1109/TPAMI.2024.3435937}.
+
+\bibitem[Cheng et~al.(2023)Cheng, Chen, Mei, Yang, Li, and Liu]{PlanTF2023}
+Cheng J, Chen Y, Mei X, et~al.
+\newblock Rethinking imitation-based planner for autonomous driving\allowbreak[EB/OL].
+\newblock arXiv, 2023.
+\newblock \url{https://arxiv.org/abs/2309.10443}.
+
+\bibitem[Cheng et~al.(2024)Cheng, Chen, and Chen]{PLUTO2024}
+Cheng J, Chen Y, Chen Q.
+\newblock {PLUTO}: Pushing the limit of imitation learning-based planning for autonomous driving\allowbreak[EB/OL].
+\newblock arXiv, 2024.
+\newblock \url{https://arxiv.org/abs/2404.14327}.
+
+\bibitem[Zhang et~al.(2025)Zhang, Liang, Guo, et~al.]{CarPlanner2025}
+Zhang D, Liang J, Guo K, et~al.
+\newblock Carplanner: Consistent auto-regressive trajectory planning for large-scale reinforcement learning in autonomous driving\allowbreak[C/OL]//\allowbreak
+2025 {IEEE}/{CVF} Conference on Computer Vision and Pattern Recognition ({CVPR}).
+\newblock IEEE, 2025.
+\newblock DOI: \doi{10.1109/CVPR52734.2025.01607}.
+
+\bibitem[Nayakanti et~al.(2022)Nayakanti, Al-Rfou, Zhou, Goel, Refaat, and Sapp]{Wayformer2022}
+Nayakanti N, Al-Rfou R, Zhou A, et~al.
+\newblock Wayformer: Motion forecasting via simple \& efficient attention networks\allowbreak[EB/OL].
+\newblock arXiv, 2022.
+\newblock \url{https://arxiv.org/abs/2207.05844}.
+
+\bibitem[Philion et~al.(2024)Philion, Peng, and Fidler]{Trajeglish2024}
+Philion J, Peng X~B, Fidler S.
+\newblock Trajeglish: Traffic modeling as next-token prediction\allowbreak[EB/OL].
+\newblock arXiv, 2024.
+\newblock \url{https://arxiv.org/abs/2312.04535}.
+
+\bibitem[Tang et~al.(2025)Tang, Kan, Shan, et~al.]{PlanR12025}
+Tang X, Kan M, Shan S, et~al.
+\newblock Plan-{R1}: Safe and feasible trajectory planning as language modeling\allowbreak[EB/OL].
+\newblock 2025.
+
+\bibitem[Dosovitskiy et~al.(2020)Dosovitskiy, Beyer, Kolesnikov, et~al.]{ViT2021}
+Dosovitskiy A, Beyer L, Kolesnikov A, et~al.
+\newblock An image is worth 16x16 words: Transformers for image recognition at scale\allowbreak[EB/OL].
+\newblock arXiv, 2020.
+\newblock DOI: \doi{10.48550/arXiv.2010.11929}.
+
+\bibitem[Carion et~al.(2020)Carion, Massa, Synnaeve, et~al.]{DETR2020}
+Carion N, Massa F, Synnaeve G, et~al.
+\newblock End-to-end object detection with transformers\allowbreak[C/OL]//\allowbreak
+European Conference on Computer Vision ({ECCV}).
+\newblock 2020.
+\newblock DOI: \doi{10.1007/978-3-030-58452-8_13}.
+
+\bibitem[Zhu et~al.(2020)Zhu, Su, Lu, Li, Wang, and Dai]{Deformable_DETR2021}
+Zhu X, Su W, Lu L, et~al.
+\newblock Deformable {DETR}: Deformable transformers for end-to-end object detection\allowbreak[EB/OL].
+\newblock arXiv, 2020.
+\newblock DOI: \doi{10.48550/arXiv.2010.04159}.
+
+\bibitem[Ren et~al.(2017)Ren, He, Girshick, and Sun]{Faster_RCNN2016}
+Ren S, He K, Girshick R, et~al.
+\newblock Faster {R-CNN}: Towards real-time object detection with region proposal networks\allowbreak[J/OL].
+\newblock IEEE Transactions on Pattern Analysis and Machine Intelligence, 2017, 39\allowbreak (6): 1137-1149.
+\newblock DOI: \doi{10.1109/TPAMI.2016.2577031}.
+
+\bibitem[He et~al.(2018)He, Gkioxari, Doll{\'a}r, and Girshick]{MaskRCNN2018}
+He K, Gkioxari G, Doll{\'a}r P, et~al.
+\newblock Mask {R-CNN}\allowbreak[J/OL].
+\newblock IEEE Transactions on Pattern Analysis and Machine Intelligence, 2018.
+\newblock DOI: \doi{10.1109/TPAMI.2018.2844175}.
+
+\bibitem[Redmon et~al.(2016)Redmon, Divvala, Girshick, and Farhadi]{YOLOv12016}
+Redmon J, Divvala S, Girshick R, et~al.
+\newblock You only look once: Unified, real-time object detection\allowbreak[C/OL]//\allowbreak
+2016 {IEEE} Conference on Computer Vision and Pattern Recognition ({CVPR}).
+\newblock IEEE, 2016.
+\newblock DOI: \doi{10.1109/CVPR.2016.91}.
+
+\bibitem[Chitta et~al.(2022)Chitta, Prakash, Jaeger, Yu, Renz, and Geiger]{Transfuser2023}
+Chitta K, Prakash A, Jaeger B, et~al.
+\newblock Transfuser: Imitation with transformer-based sensor fusion for autonomous driving\allowbreak[EB/OL].
+\newblock arXiv, 2022.
+\newblock \url{https://arxiv.org/abs/2205.15997}.
+
+\bibitem[Philion et~al.(2020)Philion and Fidler]{LSS_Lift_Splat_Shoot_BEV2020}
+Philion J, Fidler S.
+\newblock Lift, splat, shoot: Encoding images from arbitrary camera rigs by implicitly unprojecting to 3d\allowbreak[EB/OL].
+\newblock arXiv, 2020.
+\newblock \url{https://arxiv.org/abs/2008.05711}.
+
+\bibitem[Li et~al.(2022)Li, Wang, Xie, Yu, Anandkumar, Alvarez, Luo, and Lu]{PanopticSegFormer2022}
+Li Z, Wang W, Xie E, et~al.
+\newblock Panoptic segformer: Delving deeper into panoptic segmentation with transformers\allowbreak[EB/OL].
+\newblock arXiv, 2022.
+\newblock \url{https://arxiv.org/abs/2109.03814}.
+
+\bibitem[Li et~al.(2022)Li, Wang, Li, Xie, Sima, Lu, Yu, and Dai]{BevFormer2022}
+Li Z, Wang W, Li H, et~al.
+\newblock {BEVFormer}: Learning bird's-eye-view representation from multi-camera images via spatiotemporal transformers\allowbreak[EB/OL].
+\newblock arXiv, 2022.
+\newblock \url{https://arxiv.org/abs/2203.17270}.
+
+\bibitem[Liao et~al.(2023)Liao, Chen, Wang, Cheng, Zhang, Liu, and Huang]{MapTR2023}
+Liao B, Chen S, Wang X, et~al.
+\newblock {MapTR}: Structured modeling and learning for online vectorized {HD} map construction\allowbreak[EB/OL].
+\newblock arXiv, 2023.
+\newblock \url{https://arxiv.org/abs/2208.14437}.
+
+\bibitem[Wei et~al.(2023)Wei, Zhao, Zheng, Zhu, Zhou, and Lu]{SurrondOcc2023}
+Wei Y, Zhao L, Zheng W, et~al.
+\newblock Surroundocc: Multi-camera 3d occupancy prediction for autonomous driving\allowbreak[EB/OL].
+\newblock arXiv, 2023.
+\newblock \url{https://arxiv.org/abs/2303.09551}.
+
+\bibitem[Yadav et~al.(2024)Yadav, Schaefer, Zhao, et~al.]{CASPFormer2024}
+Yadav H, Schaefer M, Zhao K, et~al.
+\newblock {CASPFormer}: Trajectory prediction from {BEV} images with deformable attention\allowbreak[C/OL]//\allowbreak
+European Conference on Computer Vision ({ECCV}).
+\newblock 2024.
+\newblock DOI: \doi{10.1007/978-3-031-78447-7_28}.
+
+\bibitem[Hu et~al.(2022)Hu, Yang, Chen, Li, Sima, Zhu, Chai, Du, Lin, and Wang]{hu2022uniAD}
+Hu Y, Yang J, Chen L, et~al.
+\newblock Goal-oriented autonomous driving\allowbreak[EB/OL].
+\newblock arXiv\allowbreak(2022-12-20)\allowbreak[2023-05-26].
+
+\bibitem[Jiang et~al.(2023)Jiang, Chen, Xu, Liao, Chen, Zhou, Zhang, Liu, Huang, and Wang]{jiang2023vad}
+Jiang B, Chen S, Xu Q, et~al.
+\newblock {VAD}: Vectorized scene representation for efficient autonomous driving\allowbreak[C/OL]//\allowbreak
+2023 {IEEE}/{CVF} International Conference on Computer Vision ({ICCV}).
+\newblock Paris, France: IEEE, 2023: 8306-8316.
+\newblock DOI: \doi{10.1109/ICCV51070.2023.00766}.
+
+\bibitem[Guo et~al.(2024)Guo, Zhang, He, Wang, and Jing]{guo2024UAD}
+Guo M, Zhang Z, He Y, et~al.
+\newblock End-to-end autonomous driving without costly modularization and 3d manual annotation\allowbreak[EB/OL].
+\newblock 2024\allowbreak[2024-07-12].
+\newblock \url{https://arxiv.org/abs/2212.10156}.
+
+\bibitem[Sun et~al.(2024)Sun, Lin, Shi, Zhang, Wu, and Zheng]{SparseDrive2024}
+Sun W, Lin X, Shi Y, et~al.
+\newblock Sparsedrive: End-to-end autonomous driving via sparse scene representation\allowbreak[EB/OL].
+\newblock arXiv, 2024.
+\newblock \url{https://arxiv.org/abs/2405.19620}.
+
+\bibitem[Chen et~al.(2024)Chen, Jiang, Gao, Liao, Xu, Zhang, Huang, Liu, and Wang]{VADv2_2024}
+Chen S, Jiang B, Gao H, et~al.
+\newblock {VADv2}: End-to-end vectorized autonomous driving via probabilistic planning\allowbreak[EB/OL].
+\newblock arXiv, 2024.
+\newblock \url{https://arxiv.org/abs/2402.13243}.
+
+\bibitem[Li et~al.(2024)Li, Yu, Lan, et~al.]{li2024bev_planner}
+Li Z, Yu Z, Lan S, et~al.
+\newblock Is ego status all you need for open-loop end-to-end autonomous driving?\allowbreak[C/OL]//\allowbreak
+2024 {IEEE}/{CVF} Conference on Computer Vision and Pattern Recognition ({CVPR}).
+\newblock IEEE, 2024.
+\newblock DOI: \doi{10.1109/CVPR52733.2024.01408}.
+
+\bibitem[Li et~al.(2024)Li, Li, Wang, et~al.]{li2024hydramdp}
+Li Z, Li K, Wang S, et~al.
+\newblock {Hydra-MDP}: End-to-end multimodal planning with multi-target hydra-distillation\allowbreak[EB/OL].
+\newblock 2024.
+
+\bibitem[Gao et~al.(2022)Gao, Mu, Chen, et~al.]{gao2022sem2_worldmodel}
+Gao Z, Mu Y, Chen C, et~al.
+\newblock Enhance sample efficiency and robustness of end-to-end urban autonomous driving via semantic masked world model\allowbreak[J/OL].
+\newblock IEEE Transactions on Intelligent Transportation Systems, 2022.
+\newblock DOI: \doi{10.1109/TITS.2024.3400227}.
+
+\bibitem[Ho et~al.(2020)Ho, Jain, and Abbeel]{DDPM2020}
+Ho J, Jain A, Abbeel P.
+\newblock Denoising diffusion probabilistic models\allowbreak[EB/OL].
+\newblock arXiv, 2020.
+\newblock DOI: \doi{10.48550/arXiv.2006.11239}.
+
+\bibitem[Song et~al.(2020)Song, Meng, and Ermon]{DDIM2022}
+Song J, Meng C, Ermon S.
+\newblock Denoising diffusion implicit models\allowbreak[EB/OL].
+\newblock arXiv, 2020.
+\newblock DOI: \doi{10.48550/arXiv.2010.02502}.
+
+\bibitem[Song et~al.(2021)Song, Sohl-Dickstein, Kingma, et~al.]{Score_based_Diff2021}
+Song Y, Sohl-Dickstein J, Kingma D~P, et~al.
+\newblock Score-based generative modeling through stochastic differential equations\allowbreak[C]//\allowbreak
+International Conference on Learning Representations ({ICLR}).
+\newblock 2021.
+
+\bibitem[Lu et~al.(2022)Lu, Zhou, Bao, Chen, Li, and Zhu]{DMP_Solver2022}
+Lu C, Zhou Y, Bao F, et~al.
+\newblock {DPM-Solver}: A fast {ODE} solver for diffusion probabilistic model sampling in around 10 steps\allowbreak[EB/OL].
+\newblock arXiv, 2022.
+\newblock \url{https://arxiv.org/abs/2206.00927}.
+
+\bibitem[Zheng et~al.(2023)Zheng, Lu, Chen, et~al.]{DPM_Solver_v3_2023}
+Zheng K, Lu C, Chen J, et~al.
+\newblock {DPM-Solver-v3}: Improved diffusion {ODE} solver with empirical model statistics\allowbreak[EB/OL].
+\newblock 2023.
+
+\bibitem[Lu et~al.(2025)Lu, Zhou, Bao, Chen, Li, and Zhu]{DPM_Solver_pp_2024}
+Lu C, Zhou Y, Bao F, et~al.
+\newblock {DPM-Solver++}: Fast solver for guided sampling of diffusion probabilistic models\allowbreak[J/OL].
+\newblock Machine Intelligence Research, 2025, 22\allowbreak (4): 730-751.
+\newblock \url{http://dx.doi.org/10.1007/s11633-025-1562-4}.
+
+\bibitem[Rombach et~al.(2021)Rombach, Blattmann, Lorenz, Esser, and Ommer]{LDM_VQGANandDDPM2022}
+Rombach R, Blattmann A, Lorenz D, et~al.
+\newblock High-resolution image synthesis with latent diffusion models\allowbreak[EB/OL].
+\newblock arXiv, 2021.
+\newblock DOI: \doi{10.48550/arXiv.2112.10752}.
+
+\bibitem[Esser et~al.(2020)Esser, Rombach, and Ommer]{VQ_GAN2021}
+Esser P, Rombach R, Ommer B.
+\newblock Taming transformers for high-resolution image synthesis\allowbreak[EB/OL].
+\newblock arXiv, 2020.
+\newblock DOI: \doi{10.48550/arXiv.2012.09841}.
+
+\bibitem[Zheng et~al.(2025)Zheng, Liang, Zheng, Zheng, Mao, Li, Gu, Ai, Li, Zhan, and Liu]{DiffusionPlanner2025}
+Zheng Y, Liang R, Zheng K, et~al.
+\newblock Diffusion-based planning for autonomous driving with flexible guidance\allowbreak[EB/OL].
+\newblock arXiv, 2025.
+\newblock \url{https://arxiv.org/abs/2501.15564}.
+
+\bibitem[Lipman et~al.(2023)Lipman, Chen, Ben-Hamu, Nickel, and Le]{FlowMatching2023original}
+Lipman Y, Chen R~T~Q, Ben-Hamu H, et~al.
+\newblock Flow matching for generative modeling\allowbreak[EB/OL].
+\newblock arXiv, 2023.
+\newblock \url{https://arxiv.org/abs/2210.02747}.
+
+\bibitem[Radford et~al.(2021)Radford, Kim, Hallacy, et~al.]{CLIP2021}
+Radford A, Kim J~W, Hallacy C, et~al.
+\newblock Learning transferable visual models from natural language supervision\allowbreak[EB/OL].
+\newblock arXiv, 2021.
+\newblock DOI: \doi{10.48550/arXiv.2103.00020}.
+
+\bibitem[Ramesh et~al.(2022)Ramesh, Dhariwal, Nichol, et~al.]{DALLE_2_CLIPandDDPM2022}
+Ramesh A, Dhariwal P, Nichol A, et~al.
+\newblock Hierarchical text-conditional image generation with {CLIP} latents\allowbreak[EB/OL].
+\newblock arXiv, 2022.
+\newblock DOI: \doi{10.48550/arXiv.2204.06125}.
+
+\bibitem[Zou et~al.(2025)Zou, Chen, Liao, Zheng, Song, Zhang, Zhang, Liu, and Wang]{DiffusionDrive_v2_2025}
+Zou J, Chen S, Liao B, et~al.
+\newblock Diffusiondrivev2: Reinforcement learning-constrained truncated diffusion modeling in end-to-end autonomous driving\allowbreak[EB/OL].
+\newblock arXiv, 2025.
+\newblock \url{https://arxiv.org/abs/2512.07745}.
+
+\bibitem[Xing et~al.(2025)Xing, Zhang, Hu, Jiang, He, Zhang, Long, and Yin]{GoalFlow2025}
+Xing Z, Zhang X, Hu Y, et~al.
+\newblock Goalflow: Goal-driven flow matching for multimodal trajectories generation in end-to-end autonomous driving\allowbreak[EB/OL].
+\newblock arXiv, 2025.
+\newblock \url{https://arxiv.org/abs/2503.05689}.
+
+\bibitem[万滢(2020)]{wanying2020antirolover}
+万滢.
+\newblock 液罐车辆车—液耦合动力学特性与防侧翻控制方法研究\allowbreak[D].
+\newblock 长春: 吉林大学, 2020.
+
+\bibitem[Mnih et~al.(2013)Mnih, Kavukcuoglu, Silver, Graves, Antonoglou, Wierstra, and Riedmiller]{DQN_2013}
+Mnih V, Kavukcuoglu K, Silver D, et~al.
+\newblock Playing atari with deep reinforcement learning\allowbreak[A/OL].
+\newblock 2013.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1312.5602}{1312.5602}.
+\newblock \url{https://arxiv.org/abs/1312.5602}.
+
+\bibitem[Bellemare et~al.(2017)Bellemare, Dabney, and Munos]{QR_DQN_2017}
+Bellemare M~G, Dabney W, Munos R.
+\newblock A distributional perspective on reinforcement learning\allowbreak[A/OL].
+\newblock 2017.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1707.06887}{1707.06887}.
+\newblock \url{https://arxiv.org/abs/1707.06887}.
+
+\bibitem[Mnih et~al.(2016)Mnih, Badia, Mirza, Graves, Lillicrap, Harley, Silver, and Kavukcuoglu]{A2C_2016}
+Mnih V, Badia A~P, Mirza M, et~al.
+\newblock Asynchronous methods for deep reinforcement learning\allowbreak[A/OL].
+\newblock 2016.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1602.01783}{1602.01783}.
+\newblock \url{https://arxiv.org/abs/1602.01783}.
+
+\bibitem[Schulman et~al.(2017)Schulman, Levine, Moritz, Jordan, and Abbeel]{TRPO_2017}
+Schulman J, Levine S, Moritz P, et~al.
+\newblock Trust region policy optimization\allowbreak[A/OL].
+\newblock 2017.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1502.05477}{1502.05477}.
+\newblock \url{https://arxiv.org/abs/1502.05477}.
+
+\bibitem[Schulman et~al.(2017)Schulman, Wolski, Dhariwal, Radford, and Klimov]{PPO_2017}
+Schulman J, Wolski F, Dhariwal P, et~al.
+\newblock Proximal policy optimization algorithms\allowbreak[A/OL].
+\newblock 2017.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1707.06347}{1707.06347}.
+\newblock \url{https://arxiv.org/abs/1707.06347}.
+
+\bibitem[Lillicrap et~al.(2019)Lillicrap, Hunt, Pritzel, Heess, Erez, Tassa, Silver, and Wierstra]{DDPG_2015}
+Lillicrap T~P, Hunt J~J, Pritzel A, et~al.
+\newblock Continuous control with deep reinforcement learning\allowbreak[A/OL].
+\newblock 2019.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1509.02971}{1509.02971}.
+\newblock \url{https://arxiv.org/abs/1509.02971}.
+
+\bibitem[Fujimoto et~al.(2018)Fujimoto, van Hoof, and Meger]{TD3_2018}
+Fujimoto S, van Hoof H, Meger D.
+\newblock Addressing function approximation error in actor-critic methods\allowbreak[A/OL].
+\newblock 2018.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1802.09477}{1802.09477}.
+\newblock \url{https://arxiv.org/abs/1802.09477}.
+
+\bibitem[Haarnoja et~al.(2018)Haarnoja, Zhou, Abbeel, and Levine]{SAC_2018}
+Haarnoja T, Zhou A, Abbeel P, et~al.
+\newblock Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor\allowbreak[A/OL].
+\newblock 2018.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1801.01290}{1801.01290}.
+\newblock \url{https://arxiv.org/abs/1801.01290}.
+
+\bibitem[Kuznetsov et~al.(2020)Kuznetsov, Shvechikov, Grishin, and Vetrov]{TQC_2020}
+Kuznetsov A, Shvechikov P, Grishin A, et~al.
+\newblock Controlling overestimation bias with truncated mixture of continuous distributional quantile critics\allowbreak[A/OL].
+\newblock 2020.
+\newblock arXiv: \eprint{https://arxiv.org/abs/2005.04269}{2005.04269}.
+\newblock \url{https://arxiv.org/abs/2005.04269}.
+
+\bibitem[Andrychowicz et~al.(2018)Andrychowicz, Wolski, Ray, Schneider, Fong, Welinder, McGrew, Tobin, Abbeel, and Zaremba]{HER_original_2017}
+Andrychowicz M, Wolski F, Ray A, et~al.
+\newblock Hindsight experience replay\allowbreak[A/OL].
+\newblock 2018.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1707.01495}{1707.01495}.
+\newblock \url{https://arxiv.org/abs/1707.01495}.
+
+\bibitem[Plappert et~al.(2018)Plappert, Andrychowicz, Ray, McGrew, Baker, Powell, Schneider, Tobin, Chociej, Welinder, Kumar, and Zaremba]{plappert2018multigoalreinforcementlearningchallenging}
+Plappert M, Andrychowicz M, Ray A, et~al.
+\newblock Multi-goal reinforcement learning: Challenging robotics environments and request for research\allowbreak[A/OL].
+\newblock 2018.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1802.09464}{1802.09464}.
+\newblock \url{https://arxiv.org/abs/1802.09464}.
+
+\bibitem[Mania et~al.(2018)Mania, Guy, and Recht]{ARS_2018}
+Mania H, Guy A, Recht B.
+\newblock Simple random search provides a competitive approach to reinforcement learning\allowbreak[A/OL].
+\newblock 2018.
+\newblock arXiv: \eprint{https://arxiv.org/abs/1803.07055}{1803.07055}.
+\newblock \url{https://arxiv.org/abs/1803.07055}.
+
+\bibitem[Hiraoka et~al.(2022)Hiraoka, Imagawa, Hashimoto, et~al.]{DroQ_2022}
+Hiraoka T, Imagawa T, Hashimoto T, et~al.
+\newblock Dropout q-functions for doubly efficient reinforcement learning\allowbreak[C]//\allowbreak
+ICLR: International Conference on Learning Representations.
+\newblock Virtual Event, 2022.
+
+\bibitem[Bhatt et~al.(2024)Bhatt, Palenicek, et~al.]{CrossQ_2024}
+Bhatt A, Palenicek D, et~al.
+\newblock Batch normalization in deep reinforcement learning for greater sample efficiency and simplicity\allowbreak[C]//\allowbreak
+ICLR: International Conference on Learning Representations.
+\newblock 2024.
+
+\bibitem[Lee et~al.(2025)Lee, Hwang, Kim, et~al.]{SimBa_2025}
+Lee H, Hwang D, Kim D, et~al.
+\newblock Simba: Simplicity bias for scaling up parameters in deep reinforcement learning\allowbreak[C]//\allowbreak
+International Conference on Learning Representations.
+\newblock Virtual Event, 2025.
+
+\bibitem[Cheng et~al.(2025)Cheng, Jiang, Zhang, Chen, Huang, Xu, Wang, and Zheng]{chenghao2025emergency_index}
+Cheng H, Jiang Y, Zhang H, et~al.
+\newblock Emergency index (ei): A two-dimensional surrogate safety measure considering vehicles’ interaction depth\allowbreak[J/OL].
+\newblock Transportation Research Part C: Emerging Technologies, 2025, 174: 104289.
+\newblock DOI: \doi{10.1016/j.trc.2025.104289}.
+
+\bibitem[Chen et~al.(2025)Chen, Cheng, Jiang, Zhang, Huang, Xu, Wang, and Zheng]{chenhao2025mei}
+Chen K, Cheng H, Jiang Y, et~al.
+\newblock {MEI}: A motion-enhanced emergency index for surrogate safety assessment in complex interactions\allowbreak[C]//\allowbreak
+2025 IEEE 28th International Conference on Intelligent Transportation Systems (ITSC).
+\newblock 2025: 1-8.
+
+\bibitem[唐泽月\ 等(2023)唐泽月, 刘海鸥, 薛明轩, et~al.]{tangzeyue2023mpcmfac}
+唐泽月, 刘海鸥, 薛明轩, 等.
+\newblock 基于{MPC-MFAC}的双侧独立电驱动无人履带车辆轨迹跟踪控制\allowbreak[J/OL].
+\newblock 兵工学报, 2023, 44\allowbreak (1): 129-139.
+\newblock DOI: \doi{10.12382/bgxb.2022.0886}.
+
+\bibitem[Hou et~al.(2011)Hou and Jin]{houzhongsheng2011book_MFAC}
+Hou Z, Jin S.
+\newblock Data-driven model-free adaptive control for a class of {MIMO} nonlinear discrete-time systems\allowbreak[J/OL].
+\newblock IEEE Transactions on Neural Networks, 2011, 22\allowbreak (12): 2173-2187.
+\newblock DOI: \doi{10.1109/TNN.2011.2176141}.
+
+\end{thebibliography}
