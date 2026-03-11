@@ -2,12 +2,19 @@
 
 \chapter{补充内容}
 
-% 附录是与论文内容密切相关、但编入正文又影响整篇论文编排的条理和逻辑性的资料，例如某些重要的数据表格、计算程序、统计表等，是论文主体的补充内容，可根据需要设置。
 
-% 附录中的图、表、数学表达式、参考文献等另行编序号，与正文分开，一律用阿拉伯数字编码，
-% 但在数码前冠以附录的序号，例如“图~\ref{fig:appendix-figure}”，
-% “表~\ref{tab:appendix-table}”，“式\eqref{eq:appendix-equation}”等。
 \section{综述补充}
+  \subsection{模块化自动驾驶} 
+  \label{sub:pipeline}
+    近年来模块化路线的一个共同趋势是\emph{预测--决策一体化}：将自车决策作为条件变量，显式或隐式地建模“自车动作$\rightarrow$他车响应”的耦合关系，并在候选决策之间做综合评估。现有研究大体可按交互处理方式划分为显式交互、隐式交互及综合式交互三类。
+
+    \textbf{显式交互}以自车候选策略/意图划分场景，在每个候选行为下预测周车反应，并对不同候选行为的长期收益与风险进行比较，典型代表为多策略决策方法（Multi-Policy Decision Method, MPDM）。Cunningham等\cite{cunningham2015mpdm,galceran2017changepoint}提出MPDM思想，将交互不确定性建模为部分可观测马尔可夫决策过程（Partially Observable Markov Decision Problem, POMDP），并用一组闭环策略/意图近似描述自车与周车的决策空间，从而显著压缩搜索规模。Ding等提出的EPSILON\cite{ding2022epsilon}继承并改进该思想，提出领域特定闭环策略树（Domain-Specific-Policy Tree, DCP-Tree）与条件集中分支（Conditional Focused Branching, CFB）机制\cite{zhang2020guidedbranching}，通过限制自车策略展开深度并聚焦意图不确定性高的周车，提升了在线规划的效率；并进一步结合时空语义走廊规划器\cite{ding2019semanticcorridor}用于运动规划。Bae等\cite{bae2023lanechange}结合MPC与生成对抗网络（Generative Adversarial Network, GAN）生成平滑换道轨迹，并引入自适应安全边界与卡尔曼滤波以提升密集交通中的鲁棒性与可用性。
+
+    \textbf{隐式交互}侧重对周车意图/不确定性构造多个可能情景，并在情景集合上评估自车应对策略，典型代表包括防御性规划（Contingency Planning）\cite{salvado2016contingency}与博弈论方法。Huang等\cite{huang2021riskbudget}提出基于风险预算的递归控制算法，通过动态分配风险预算在满足安全约束的同时减少过度保守。Da等\cite{da2022reactivesafety}提出综合反应式安全（Comprehensive Reactive Safty, CRS）框架，强调规划不必在所有未来情形下“绝对无碰撞”，而应能对环境变化做出反应并保证安全，并在此基础上提出反应式迭代线性二次规划（iterative Linear Quadratic Regulator, iLQR）算法。博弈论思路方面，Le Cleach等\cite{li2018gametheoryacc}提出基于无迹卡尔曼滤波的逆动力学博弈用于在线估计其他智能体目标函数，并将其整合到滚动时域博弈规划器中；进一步在\cite{li2020gametheorytits}提出增广拉格朗日快速求解器ALGAMES以求解含非线性约束的多玩家动态博弈问题。Li等\cite{lecleach2020lucidgames}提出面向无信号交叉口的多车博弈框架，并在\cite{lecleach2022algames}提出基于Level-K博弈论的长时域、多步交互决策模型，体现了“交互可解释、决策可推演”的特点。
+
+    \textbf{综合式交互}将显式交互与隐式交互思想融合，并常与风险度量、礼貌性或协同性等机制结合。Tong Li等\cite{li2023marc}提出风险敏感多策略防御性规划（Multipolicy and Risk-Aware Contingency Planning, MARC）框架，集成MPDM与风险感知的防御性规划，并通过场景级动态分支点与LP-iLQR双层迭代优化显著提升复杂交互环境下的决策效率与自然性。此外，Sun等\cite{sun2018courteous}在目标函数中引入“对他车成本影响”的度量以形成更礼貌的驾驶行为；Sheng等\cite{sheng2023cooperationaware}利用时空图卷积网络构建交互式轨迹预测模型，用于评估他车对自车决策的反应，从而增强协同意识。
+
+
   \subsection{端到端自动驾驶}
     \label{sub:end2end}
     自2022年大语言模型（Large Language Model, LLM）快速兴起以来\cite{AttnIsAllYouNeed2017}，大规模数据驱动的统一表征与跨模态知识融合显著加速了自动驾驶从“模块化流水线”向“可微统一优化”的范式迁移。端到端（End-to-end, E2E）自动驾驶因此成为热点：其核心目标是缓解模块化方案中感知误差难以被后续模块正确吸收、感知—规控接口造成的信息裁剪与不确定性丢失等问题。围绕可微边界的不同，现有端到端路线通常划分为两段式端到端（以结构化感知结果为输入）与一段式端到端（从原始或近原始感知表征直接到规划/控制输出），并进一步发展到“感知直接到控制”的视觉语言动作模型（Vision Language Action Model, VLA）形态。
@@ -250,6 +257,253 @@
 
     在最坏情况，即需计算SSI的辆车都为半挂车时，Trailer-MEI指标的计算时间仅为MEI的6倍，C++编译后单次计算时间大约在\SIrange{30}{50}{\micro s}，在实现半挂车间计算的同时计算时间依然可以忽略。本文为平衡精度与计算速度，计算Trailer-MEI指标采用的离散步长$\increment t = \SI{0.2}{s}$，预测时域为\SI{5}{s}。
 
+  \subsection{无模型自适应滑模残差补偿}
+    \label{sub:MFASMC_residual_compensation}
+
+    第\ref{sub:multi_constraint_mpc}小节构建的多约束模型预测控制基础控制器的基本要求在于预测模型的准确性，而这一点在实际行驶过程中由于载荷变化、零部件老化、标定测量误差等原因通常难以绝对保障，对基础模型进行补偿是模型预测方法跨入真正实用的重要部分\cite{tangzeyue2023mpcmfac}。本小节在基础控制器上进一步建立基于广义跟踪误差控制车轮转角和/或各车轮驱/制动力的补偿控制器。广义跟踪误差为牵引车实际轨迹与最优控制下的预测轨迹之间的误差；补偿控制器为无模型自适应滑模控制器，以广义跟踪误差为输入量$\boldsymbol{y}$，并采用全格式动态线性化。下面进行详细说明。
+
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{fig/chap4/mfasmc_sup.png}
+    \caption{无模型自适应滑模残差补偿控制器结构}
+    \label{fig:mfasmc_sup}
+    \end{figure}
+
+    定义 MIMO 非线性系统如下
+    \begin{equation}
+    \boldsymbol{y}(k + 1) = \boldsymbol{f}\left(\boldsymbol{y}(k), \dots, \boldsymbol{y}(k - n_y), \boldsymbol{u}(k), \dots, \boldsymbol{u}(k - n_u)\right)
+    \label{eq:mimo_nonlinear}
+    \end{equation}
+    式中$\boldsymbol{f}(\cdot)$为未知的非线性函数，$n_y$和$n_u$分别为系统控制和输入的真实阶数，$\boldsymbol{y}(k) \in \mathbb{R}^{N_y}$，$\boldsymbol{u}(k) \in \mathbb{R}^{N_u}$分别为$k$时刻的系统输出和输入，$N_u \geq N_y$。
+    由于系统的实际阶数可能很高，为简化模型设置两个固定的伪阶数$L_y$和$L_u$($1 \leq L_y \leq n_y$, $1 \leq L_u \leq n_u$)来代表实际阶数，维护一个固定窗口内的信息向量：
+    \begin{equation}
+    \boldsymbol{H}_{L_y,L_u}(k) = \begin{bmatrix}
+    \boldsymbol{y}(k) \\
+    \vdots \\
+    \boldsymbol{y}(k - L_y + 1) \\
+    \boldsymbol{u}(k) \\
+    \vdots \\
+    \boldsymbol{u}(k - L_u + 1)
+    \end{bmatrix} \in \mathbb{R}^{N_y L_y + N_u L_u}
+    \label{eq:info_vector}
+    \end{equation}
+
+    对于 MIMO 系统，首先需要定义两个前提条件：
+    ① 除有限时刻点外，$\boldsymbol{f}(\cdot)$对于控制变量的偏导数连续；（一般非线性控制的典型约束条件）
+    ② 广义 Lipschitz 条件：对任意$k_1 \neq k_2$，$k_1,k_2 \geq 0$，以及$\boldsymbol{H}_{L_y,L_u}(k_1) \neq \boldsymbol{H}_{L_y,L_u}(k_2)$，有
+    \begin{equation}
+    \|\boldsymbol{y}(k_1 + 1) - \boldsymbol{y}(k_2 + 1)\| \leq b \left\| \boldsymbol{H}_{L_y,L_u}(k_1) - \boldsymbol{H}_{L_y,L_u}(k_2) \right\|
+    \label{eq:general_lipschitz}
+    \end{equation}
+    其中$b > 0$为常数。（信息向量的有限变化不能引起系统输出的无限增长）\cite{houzhongsheng2011book_MFAC}。
+
+    第一个条件是控制系统设计中对一般非线性控制的典型约束，第二个条件是对系统输出变化率上界的一种限制，上述两个条件一般的非线性系统都可以满足。
+
+    给定正整数伪阶数$L_y$和$L_u$，当$\boldsymbol{H}_{L_y,L_u}(k) \neq 0$时，一定存在一个时变的分块伪 Jacobian 矩阵（PPJM）或者叫作伪梯度$\boldsymbol{\Phi}_{f,L_y,L_u}(k)$，使得被控系统能够转化为如下三种数据模型之一（动态线性化模型，Dynamic Linearization, DL）：
+
+    全格式（Full Form DL, FFDL）：包含所有历史信息和高阶动态，建模精度高但伪梯度维度高导致计算量较大，对实时性要求较高的系统可能存在延迟风险，适用于复杂慢时变系统。
+    \begin{equation}
+    \Delta \boldsymbol{y}(k + 1) = \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k)
+    \label{eq:ffdl}
+    \end{equation}
+
+    偏格式（Partial Form DL, PFDL）：包含部分历史信息和动态，考虑了系统的记忆特性（如惯性和滞后），计算复杂度适中，可以建模适于中等复杂度系统。
+    \begin{equation}
+    \boldsymbol{y}(k + 1) = \boldsymbol{y}(k) + \boldsymbol{\Phi}_{p,L_u}(k) \Delta \boldsymbol{H}_{L_u}(k)
+    \label{eq:pfdl}
+    \end{equation}
+
+    紧格式（Compact Form DL, CFDL）：不包含历史信息，仅将系统输出变化直接与当前输入变化想光临，忽略中间状态变量，形式最为简洁，适用于简单系统。
+    \begin{equation}
+    \Delta \boldsymbol{y}(k + 1) = \boldsymbol{\phi}(k) \Delta \boldsymbol{u}(k)
+    \label{eq:cfdl}
+    \end{equation}
+
+    \begin{table}[htbp]
+    \small
+    \centering
+    \caption{三种动态线性化方法对比}
+    \begin{tabularx}{\linewidth}{cccccX}
+        \toprule
+        形式 & 伪梯度维度 & 历史数据依赖 & 精度 & 复杂度 & 适用场景 \\
+        \midrule
+        紧格式（CF） & 低维向量/标量 & 无/极少 & 低 & 低 & 简单系统实时性要求高 \\
+        偏格式（PF） & 中维向量 & 部分历史数据 & 中 & 中 & 中等动态复杂系统 \\
+        全格式（FF） & 高维向量 & 全部历史数据 & 高 & 高 & 复杂慢时变系统 \\
+        \bottomrule
+    \end{tabularx}
+    \label{tab:dl_methods_compare}
+    \end{table}
+
+    其中
+    \begin{equation}
+    \Delta \boldsymbol{H}_{L_y,L_u}(k) = \boldsymbol{H}_{L_y,L_u}(k) - \boldsymbol{H}_{L_y,L_u}(k - 1) = \begin{bmatrix}
+    \Delta \boldsymbol{y}(k) \\
+    \vdots \\
+    \Delta \boldsymbol{y}(k - L_y + 1) \\
+    \Delta \boldsymbol{u}(k) \\
+    \vdots \\
+    \Delta \boldsymbol{u}(k - L_u + 1)
+    \end{bmatrix}
+    \label{eq:delta_H}
+    \end{equation}
+    \begin{equation}
+    \boldsymbol{\Phi}_{f,L_y,L_u}(k)_{N_y \times (N_y L_y + N_u L_u)} = \left[ \boldsymbol{\phi}_1(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y}(k)\ \ \boldsymbol{\phi}_{L_y+1}(k)\ \ \cdots\ \ \boldsymbol{\phi}_{L_y+L_u}(k) \right]
+    \label{eq:phi_matrix}
+    \end{equation}
+    其中
+    \begin{equation}
+    \boldsymbol{\phi}_i(k) = \begin{bmatrix}
+    \varphi_{i,11}(k) & \varphi_{i,12}(k) & \cdots & \varphi_{i,1N_y}(k) \\
+    \varphi_{i,21}(k) & \varphi_{i,22}(k) & \cdots & \varphi_{i,2N_y}(k) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \varphi_{i,N_y 1}(k) & \varphi_{i,N_y 2}(k) & \cdots & \varphi_{i,N_y N_y}(k)
+    \end{bmatrix} \in \mathbb{R}^{N_y \times N_y},\ i = 1,\dots,L_y
+    \label{eq:phi_i}
+    \end{equation}
+    \begin{equation}
+    \boldsymbol{\phi}_j(k) = \begin{bmatrix}
+    \varphi_{j,11}(k) & \varphi_{j,12}(k) & \cdots & \varphi_{j,1N_u}(k) \\
+    \varphi_{j,21}(k) & \varphi_{j,22}(k) & \cdots & \varphi_{j,2N_u}(k) \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \varphi_{j,N_y 1}(k) & \varphi_{j,N_y 2}(k) & \cdots & \varphi_{j,N_y N_u}(k)
+    \end{bmatrix} \in \mathbb{R}^{N_y \times N_u},\ j = L_y + 1,\dots,L_y + L_u
+    \label{eq:phi_j}
+    \end{equation}
+
+    MFAC基础算法与相关符号说明见附录\ref{sub:mfac_basic}小节，本小节在此基础上进一步设计MFASMC控制算法，将 MFAC 与滑模控制结合，前者无需第一性原理模型，后者响应速度快、抗扰动性能强。
+
+    定义输出误差：
+    \begin{equation}
+    \boldsymbol{e}(k) = \boldsymbol{y}^*(k) - \boldsymbol{y}(k)
+    \label{eq:output_error}
+    \end{equation}
+
+    设计一个线性滑模面：
+    \begin{equation}
+    \boldsymbol{s}(k) = \boldsymbol{\Lambda} \boldsymbol{e}(k)
+    \label{eq:linear_surface}
+    \end{equation}
+    其中$\boldsymbol{\Lambda}$是正定矩阵，一般是正定对角阵用于加权各个滑模面。
+    \begin{equation}
+    \begin{aligned}
+    \boldsymbol{s}(k + 1) = \boldsymbol{\Lambda} \boldsymbol{e}(k + 1) = \boldsymbol{\Lambda} \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right) \\
+    = \boldsymbol{\Lambda} \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right) - \boldsymbol{\Lambda} \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k)
+    \end{aligned}
+    \label{eq:surface_next}
+    \end{equation}
+
+    设计或选择一个趋近律，比如
+    等速趋近律：(其中$\boldsymbol{E} \in \mathbb{S}^{++}$)
+    \begin{equation}
+    \dot{\boldsymbol{s}} = -\boldsymbol{E} \mathrm{sgn}(\boldsymbol{s})
+    \label{eq:reach_law_const}
+    \end{equation}
+    \begin{equation}
+    \boldsymbol{s}(k + 1) = \boldsymbol{s}(k) - T \boldsymbol{E} \mathrm{sgn}(\boldsymbol{s}(k))
+    \label{eq:reach_law_const_discrete}
+    \end{equation}
+    指数趋近律：(其中$\boldsymbol{E} \in \mathbb{S}^{++}, \boldsymbol{K} \in \mathbb{S}^{++}$)
+    \begin{equation}
+    \dot{\boldsymbol{s}} = -\boldsymbol{E} \mathrm{sgn}(\boldsymbol{s}) - \boldsymbol{K} \boldsymbol{s}
+    \label{eq:reach_law_exp}
+    \end{equation}
+    \begin{equation}
+    \boldsymbol{s}(k + 1) = (\boldsymbol{I} - T \boldsymbol{K}) \boldsymbol{s}(k) - T \boldsymbol{E} \mathrm{sgn}(\boldsymbol{s}(k))
+    \label{eq:reach_law_exp_discrete}
+    \end{equation}
+    幂次趋近律：(其中$\boldsymbol{E} \in \mathbb{S}^{++}, \boldsymbol{K} \in \mathbb{S}^{++}, \alpha > 0$)
+    \begin{equation}
+    \dot{\boldsymbol{s}} = -\left( \boldsymbol{E} + \boldsymbol{K} \mathrm{diag}(|\boldsymbol{s}|^\alpha) \right) \mathrm{sgn}(\boldsymbol{s})
+    \label{eq:reach_law_power}
+    \end{equation}
+    \begin{equation}
+    \boldsymbol{s}(k + 1) = \boldsymbol{s}(k) - T \left( \boldsymbol{E} + \boldsymbol{K} \mathrm{diag}(|\boldsymbol{s}(k)|^\alpha) \right) \mathrm{sgn}(\boldsymbol{s}(k))
+    \label{eq:reach_law_power_discrete}
+    \end{equation}
+    这里选取指数趋近律 \eqref{eq:reach_law_exp_discrete} 与 \eqref{eq:surface_next} 联立可以求解出滑模控制意义下的控制量增量
+    \begin{equation}
+    \Delta \boldsymbol{u}(k) = \boldsymbol{\phi}_{L_y+1}^\dagger(k) \left( \begin{aligned}
+    &\boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \\
+    &- \boldsymbol{\Lambda}^{-1} (\boldsymbol{I} - T \boldsymbol{K}) \boldsymbol{s}(k) + T \boldsymbol{\Lambda}^{-1} \boldsymbol{E} \mathrm{sgn}(\boldsymbol{s}(k))
+    \end{aligned} \right)
+    \label{eq:smc_control_increment}
+    \end{equation}
+    其中
+    \begin{equation}
+    \boldsymbol{\phi}_{L_y+1}^\dagger(k) = \left( \boldsymbol{\phi}_{L_y+1}^T(k) \boldsymbol{\phi}_{L_y+1}(k) \right)^{-1} \boldsymbol{\phi}_{L_y+1}^T(k)
+    \label{eq:phi_pinv}
+    \end{equation}
+    设计一个一阶的线性滑模面
+    \begin{equation}
+    \boldsymbol{s}(k) = \boldsymbol{\Lambda} \boldsymbol{e}(k) + \dot{\boldsymbol{e}}(k) = \left( \frac{1}{T} \boldsymbol{I} + \boldsymbol{\Lambda} \right) \boldsymbol{e}(k) - \frac{1}{T} \boldsymbol{e}(k - 1) = \boldsymbol{A} \boldsymbol{e}(k) - \frac{1}{T} \boldsymbol{e}(k - 1)
+    \label{eq:first_order_surface}
+    \end{equation}
+    这里用欧拉前向离散化展开误差随时间的导数。
+    \begin{equation}
+    \begin{aligned}
+    \boldsymbol{s}(k + 1) &= \left( \frac{1}{T} \boldsymbol{I} + \boldsymbol{\Lambda} \right) \boldsymbol{e}(k + 1) - \frac{1}{T} \boldsymbol{e}(k) \\
+    &= \boldsymbol{A} \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \boldsymbol{\Phi}_{f,L_y,L_u}(k) \Delta \boldsymbol{H}_{L_y,L_u}(k) \right) \\
+    &\quad - \frac{1}{T} \left( \boldsymbol{y}^*(k) - \boldsymbol{y}(k - 1) - \boldsymbol{\Phi}_{f,L_y,L_u}(k - 1) \Delta \boldsymbol{H}_{L_y,L_u}(k - 1) \right) \\
+    &= \boldsymbol{A} \left( \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1) \right) \\
+    &\quad - \frac{1}{T} \left( \boldsymbol{y}^*(k) - \boldsymbol{y}(k - 1) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k - 1) \Delta \boldsymbol{y}(k - i) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k - 1) \Delta \boldsymbol{u}(k - i) \right) \\
+    &\quad - \boldsymbol{A} \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) + \frac{1}{T} \boldsymbol{\phi}_{L_y+1}(k - 1) \Delta \boldsymbol{u}(k - 1)
+    \end{aligned}
+    \label{eq:first_order_surface_next}
+    \end{equation}
+    令向量函数
+    \begin{equation}
+    \boldsymbol{f}(k) = \boldsymbol{y}^*(k + 1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1)
+    \label{eq:f_k}
+    \end{equation}
+    \begin{equation}
+    \boldsymbol{h}(k) = \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k)
+    \label{eq:h_k}
+    \end{equation}
+    则式 \eqref{eq:first_order_surface_next} 可以进一步化简并利用动态规划的思想进行计算，利用上一控制周期已经算过并存储的$\boldsymbol{f}(k - 1)$和$\boldsymbol{h}(k - 1)$来加快计算
+    \begin{equation}
+    \boldsymbol{s}(k + 1) = \boldsymbol{A} \boldsymbol{f}(k) - \frac{1}{T} \boldsymbol{f}(k - 1) - \boldsymbol{A} \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k) + \frac{1}{T} \boldsymbol{\phi}_{L_y+1}(k - 1) \Delta \boldsymbol{u}(k - 1)
+    \label{eq:surface_next_simplified}
+    \end{equation}
+    同样选取指数趋近律 \eqref{eq:reach_law_exp_discrete} 与 \eqref{eq:surface_next_simplified} 联立可以求解出滑模控制意义下的控制量增量
+    \begin{equation}
+    \Delta \boldsymbol{u}(k) = \boldsymbol{\phi}_{L_y+1}^\dagger(k) \boldsymbol{A}^{-1} \left( \boldsymbol{A} \boldsymbol{f}(k) - \frac{1}{T} \boldsymbol{f}(k - 1) + \frac{1}{T} \boldsymbol{h}(k - 1) - (\boldsymbol{I} - T \boldsymbol{K}) \boldsymbol{s}(k) + T \boldsymbol{E} \mathrm{sgn}(\boldsymbol{s}(k)) \right)
+    \label{eq:smc_control_increment_final}
+    \end{equation}
+
+
+
+    \renewcommand{\algorithmicrequire}{\textbf{输入：}\unskip}
+    \renewcommand{\algorithmicensure}{\textbf{输出：}\unskip}
+
+    \begin{algorithm}
+    \caption{MFAC-FFDL-SMC 全格式动态线性化无模型自适应滑模控制}
+    \label{mfac_ffdl_smc}
+    \small
+    \begin{algorithmic}
+        \REQUIRE 系统期望输出序列 $\{ \boldsymbol{y}^*(k) \}$，系统实际输出序列 $\{ \boldsymbol{y}(k) \}$，伪阶数 $L_y, L_u$，超参数 $\rho_1, \dots, \rho_{L_y+L_u}, \mu, \lambda, \eta$，正定矩阵 $\boldsymbol{A}, \boldsymbol{E}, \boldsymbol{K}$，采样时间 $T$
+        \ENSURE 系统控制量序列 $\{ \boldsymbol{u}(k) \}$
+
+        \STATE 初始化参数：$\Delta \boldsymbol{H}_{L_y,L_u}(0), \boldsymbol{\Phi}_{f,L_y,L_u}(0), \boldsymbol{f}(0), \boldsymbol{h}(0)$
+        \STATE 初始化超参数：$\rho_1, \dots, \rho_{L_y+L_u}, \mu, \lambda, \eta, \boldsymbol{A}, \boldsymbol{E}, \boldsymbol{K}, T$
+        \WHILE{系统运行}
+            \STATE \textbf{估计伪梯度}
+            \STATE $\Delta \boldsymbol{H}_{L_y,L_u}(k-1) = \boldsymbol{H}_{L_y,L_u}(k-1) - \boldsymbol{H}_{L_y,L_u}(k-2)$
+            \STATE $\boldsymbol{\Phi}_{f,L_y,L_u}(k) = \left(1 - \eta \frac{\|\Delta \boldsymbol{H}_{L_y,L_u}(k-1)\|^2}{\mu + \|\Delta \boldsymbol{H}_{L_y,L_u}(k-1)\|^2}\right) \boldsymbol{\Phi}_{f,L_y,L_u}(k-1) + \eta \frac{(\boldsymbol{y}(k) - \boldsymbol{y}(k-1)) \Delta \boldsymbol{H}_{L_y,L_u}(k-1)^T}{\mu + \|\Delta \boldsymbol{H}_{L_y,L_u}(k-1)\|^2}$
+            \STATE $\boldsymbol{\Phi}_{f,L_y,L_u}(k) = \text{selectiveReset}(\boldsymbol{\Phi}_{f,L_y,L_u}(k))$ \COMMENT{按需重置伪梯度矩阵元素}
+            \STATE \textbf{计算控制量}
+            \STATE $\boldsymbol{e}(k) = \boldsymbol{y}^*(k) - \boldsymbol{y}(k)$ \COMMENT{输出误差}
+            \STATE $\boldsymbol{s}(k) = \boldsymbol{A} \boldsymbol{e}(k) - \frac{1}{T} \boldsymbol{e}(k-1)$ \COMMENT{一阶线性滑模面}
+            \STATE $\boldsymbol{s}(k+1) = (\boldsymbol{I} - T \boldsymbol{K}) \boldsymbol{s}(k) - T \boldsymbol{E} \text{sgn}(\boldsymbol{s}(k))$ \COMMENT{指数趋近律}
+            \STATE $\boldsymbol{f}(k) = \boldsymbol{y}^*(k+1) - \boldsymbol{y}(k) - \sum_{i=1}^{L_y} \boldsymbol{\phi}_i(k) \Delta \boldsymbol{y}(k - i + 1) - \sum_{i=2}^{L_u} \boldsymbol{\phi}_{i+L_y}(k) \Delta \boldsymbol{u}(k - i + 1)$ \COMMENT{预计算向量函数}
+            \STATE $\boldsymbol{\phi}_{L_y+1}^\dagger(k) = \left( \boldsymbol{\phi}_{L_y+1}(k)^T \boldsymbol{\phi}_{L_y+1}(k) \right)^{-1} \boldsymbol{\phi}_{L_y+1}(k)^T$ \COMMENT{伪逆矩阵}
+            \STATE $\Delta \boldsymbol{u}(k) = \boldsymbol{\phi}_{L_y+1}^\dagger(k) \left( \boldsymbol{f}(k) - \boldsymbol{A}^{-1} \left( \frac{1}{T} \boldsymbol{f}(k-1) - \frac{1}{T} \boldsymbol{h}(k-1) + \boldsymbol{s}(k+1) \right) \right)$ \COMMENT{控制增量}
+            \STATE $\boldsymbol{u}(k) = \boldsymbol{u}(k-1) + \Delta \boldsymbol{u}(k)$ \COMMENT{更新控制量}
+            \STATE $\boldsymbol{h}(k) = \boldsymbol{\phi}_{L_y+1}(k) \Delta \boldsymbol{u}(k)$ \COMMENT{存储中间量用于下一周期}
+        \ENDWHILE
+    \end{algorithmic}
+    \end{algorithm}
+
   \subsection{MFAC 基础算法推导与符号说明}
       \label{sub:mfac_basic}
       本节介绍MFAC算法的推导过程及相关符号说明，以便读者更好理解正文中MAFSMC算法的推导。MFAC 算法定义了如下目标函数：
@@ -366,7 +620,7 @@
       \text{if } \left| \varphi_{L_y+1,pq}(k) \right| > b_2 \text{ or } \mathrm{sgn}\left( \varphi_{L_y+1,pq}(k) \right) \neq \mathrm{sgn}\left( \varphi_{L_y+1,pq}(0) \right)
       \label{eq:phi_offdiag_reset}
       \end{equation}
-
+      
   \subsection{控制器嵌套方法}
     \label{sub:controller_nesting}
     本研究提出的控制器嵌套（Controller Nesting, CN）是一种将算法用于辅助驾驶的控制框架，其应用需要满足两个前提条件：
@@ -427,9 +681,6 @@
     这两部分内容将作为后续研究推广过程的重点方向之一。
 
 
-
-
-
 \section{插图}
 
 % 附录中的插图示例（图~\ref{fig:appendix-figure}）。
@@ -445,8 +696,6 @@
 \section{表格}
 
   % 附录中的表格示例（表~\ref{tab:appendix-table}）。
-
-
 
   {% 局部作用域，仅修改本表格式
   \small

@@ -1,0 +1,4503 @@
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2026.3.9)  11 MAR 2026 10:50
+entering extended mode
+ \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**e:/我的文件/大学学习/_硕士学习/毕设硕士/开题答辩-中期检查-毕业答辩/车云协同液罐车防侧翻行驶规划与控制研究/车云协同液罐车防侧翻行驶规划与控制研究.tex
+(e:/我的文件/大学学习/_硕士学习/毕设硕士/开题答辩-中期检查-毕业答辩/车云协同液罐车防侧翻行驶规划与控制研究/车云协同液罐车防侧翻行驶规划与控制研究.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+(./thuthesis.cls
+Document Class: thuthesis 2024/03/29 7.5.0 Tsinghua University Thesis Template
+(d:/texlive/2025/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+) (d:/texlive/2025/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (d:/texlive/2025/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+) (d:/texlive/2025/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+) (d:/texlive/2025/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)) (d:/texlive/2025/texmf-dist/tex/latex/ctex/ctexbook.cls (d:/texlive/2025/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg
+File: ctexbackend.cfg 2022/07/14 v2.5.10 Backend configuration file (CTEX)
+) (d:/texlive/2025/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2025-01-18 L3 programming layer (loader) 
+ (d:/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2024-05-08 L3 backend support: XeTeX
+\g__graphics_track_int=\count192
+\l__pdf_internal_box=\box52
+\g__pdf_backend_annotation_int=\count193
+\g__pdf_backend_link_int=\count194
+))
+Document Class: ctexbook 2022/07/14 v2.5.10 Chinese adapter for class book (CTEX)
+(d:/texlive/2025/texmf-dist/tex/latex/ctex/ctexhook.sty
+Package: ctexhook 2022/07/14 v2.5.10 Document and package hooks (CTEX)
+) (d:/texlive/2025/texmf-dist/tex/latex/ctex/ctexpatch.sty
+Package: ctexpatch 2022/07/14 v2.5.10 Patching commands (CTEX)
+) (d:/texlive/2025/texmf-dist/tex/latex/base/fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+ (d:/texlive/2025/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+\l__ctex_tmp_int=\count195
+\l__ctex_tmp_box=\box53
+\l__ctex_tmp_dim=\dimen141
+\g__ctex_section_depth_int=\count196
+\g__ctex_font_size_int=\count197
+ (d:/texlive/2025/texmf-dist/tex/latex/ctex/config/ctexopts.cfg
+File: ctexopts.cfg 2022/07/14 v2.5.10 Option configuration file (CTEX)
+) (d:/texlive/2025/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2024/06/29 v1.4n Standard LaTeX document class
+(d:/texlive/2025/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count198
+\c@chapter=\count199
+\c@section=\count266
+\c@subsection=\count267
+\c@subsubsection=\count268
+\c@paragraph=\count269
+\c@subparagraph=\count270
+\c@figure=\count271
+\c@table=\count272
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen142
+) (d:/texlive/2025/texmf-dist/tex/latex/ctex/engine/ctex-engine-xetex.def
+File: ctex-engine-xetex.def 2022/07/14 v2.5.10 XeLaTeX adapter (CTEX)
+ (d:/texlive/2025/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+Package: xeCJK 2022/08/05 v3.9.1 Typesetting CJK scripts with XeLaTeX
+ (d:/texlive/2025/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty
+Package: xtemplate 2024-08-16 L3 Experimental prototype document functions
+)
+\l__xeCJK_tmp_int=\count273
+\l__xeCJK_tmp_box=\box54
+\l__xeCJK_tmp_dim=\dimen143
+\l__xeCJK_tmp_skip=\skip51
+\g__xeCJK_space_factor_int=\count274
+\l__xeCJK_begin_int=\count275
+\l__xeCJK_end_int=\count276
+\c__xeCJK_CJK_class_int=\XeTeXcharclass1
+\c__xeCJK_FullLeft_class_int=\XeTeXcharclass2
+\c__xeCJK_FullRight_class_int=\XeTeXcharclass3
+\c__xeCJK_HalfLeft_class_int=\XeTeXcharclass4
+\c__xeCJK_HalfRight_class_int=\XeTeXcharclass5
+\c__xeCJK_NormalSpace_class_int=\XeTeXcharclass6
+\c__xeCJK_CM_class_int=\XeTeXcharclass7
+\c__xeCJK_HangulJamo_class_int=\XeTeXcharclass8
+\l__xeCJK_last_skip=\skip52
+\c__xeCJK_none_node=\count277
+\g__xeCJK_node_int=\count278
+\c__xeCJK_CJK_node_dim=\dimen144
+\c__xeCJK_CJK-space_node_dim=\dimen145
+\c__xeCJK_default_node_dim=\dimen146
+\c__xeCJK_CJK-widow_node_dim=\dimen147
+\c__xeCJK_normalspace_node_dim=\dimen148
+\c__xeCJK_default-space_node_skip=\skip53
+\l__xeCJK_ccglue_skip=\skip54
+\l__xeCJK_ecglue_skip=\skip55
+\l__xeCJK_punct_kern_skip=\skip56
+\l__xeCJK_indent_box=\box55
+\l__xeCJK_last_penalty_int=\count279
+\l__xeCJK_last_bound_dim=\dimen149
+\l__xeCJK_last_kern_dim=\dimen150
+\l__xeCJK_widow_penalty_int=\count280
+
+LaTeX template Info: Declaring template type 'xeCJK/punctuation' taking 0
+(template)           argument(s) on line 2396.
+
+\l__xeCJK_fixed_punct_width_dim=\dimen151
+\l__xeCJK_mixed_punct_width_dim=\dimen152
+\l__xeCJK_middle_punct_width_dim=\dimen153
+\l__xeCJK_fixed_margin_width_dim=\dimen154
+\l__xeCJK_mixed_margin_width_dim=\dimen155
+\l__xeCJK_middle_margin_width_dim=\dimen156
+\l__xeCJK_bound_punct_width_dim=\dimen157
+\l__xeCJK_bound_margin_width_dim=\dimen158
+\l__xeCJK_margin_minimum_dim=\dimen159
+\l__xeCJK_kerning_total_width_dim=\dimen160
+\l__xeCJK_same_align_margin_dim=\dimen161
+\l__xeCJK_different_align_margin_dim=\dimen162
+\l__xeCJK_kerning_margin_width_dim=\dimen163
+\l__xeCJK_kerning_margin_minimum_dim=\dimen164
+\l__xeCJK_bound_dim=\dimen165
+\l__xeCJK_reverse_bound_dim=\dimen166
+\l__xeCJK_margin_dim=\dimen167
+\l__xeCJK_minimum_bound_dim=\dimen168
+\l__xeCJK_kerning_margin_dim=\dimen169
+\g__xeCJK_family_int=\count281
+\l__xeCJK_fam_int=\count282
+\g__xeCJK_fam_allocation_int=\count283
+\l__xeCJK_verb_case_int=\count284
+\l__xeCJK_verb_exspace_skip=\skip57
+ (d:/texlive/2025/texmf-dist/tex/latex/fontspec/fontspec.sty (d:/texlive/2025/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2024-08-16 L3 Experimental document command parser
+)
+Package: fontspec 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTeX
+ (d:/texlive/2025/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTeX
+\l__fontspec_script_int=\count285
+\l__fontspec_language_int=\count286
+\l__fontspec_strnum_int=\count287
+\l__fontspec_tmp_int=\count288
+\l__fontspec_tmpa_int=\count289
+\l__fontspec_tmpb_int=\count290
+\l__fontspec_tmpc_int=\count291
+\l__fontspec_em_int=\count292
+\l__fontspec_emdef_int=\count293
+\l__fontspec_strong_int=\count294
+\l__fontspec_strongdef_int=\count295
+\l__fontspec_tmpa_dim=\dimen170
+\l__fontspec_tmpb_dim=\dimen171
+\l__fontspec_tmpc_dim=\dimen172
+ (d:/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (d:/texlive/2025/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (d:/texlive/2025/texmf-dist/tex/xelatex/xecjk/xeCJK.cfg
+File: xeCJK.cfg 2022/08/05 v3.9.1 Configuration file for xeCJK package
+))
+\ccwd=\dimen173
+\l__ctex_ccglue_skip=\skip58
+)
+\l__ctex_ziju_dim=\dimen174
+ (d:/texlive/2025/texmf-dist/tex/latex/zhnumber/zhnumber.sty
+Package: zhnumber 2022/07/14 v3.0 Typesetting numbers with Chinese glyphs
+\l__zhnum_scale_int=\count296
+\l__zhnum_tmp_int=\count297
+ (d:/texlive/2025/texmf-dist/tex/latex/zhnumber/zhnumber-utf8.cfg
+File: zhnumber-utf8.cfg 2022/07/14 v3.0 Chinese numerals with UTF8 encoding
+))
+\l__ctex_heading_skip=\skip59
+ (d:/texlive/2025/texmf-dist/tex/latex/ctex/scheme/ctex-scheme-plain-book.def
+File: ctex-scheme-plain-book.def 2022/07/14 v2.5.10 Plain scheme for book (CTEX)
+) (d:/texlive/2025/texmf-dist/tex/latex/ctex/ctex-cs4size.clo
+File: ctex-cs4size.clo 2022/07/14 v2.5.10 cs4size option (CTEX)
+)) (d:/texlive/2025/texmf-dist/tex/latex/ctex/config/ctex.cfg
+File: ctex.cfg 2022/07/14 v2.5.10 Configuration file (CTEX)
+) (d:/texlive/2025/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count298
+) (d:/texlive/2025/texmf-dist/tex/latex/filehook/filehook.sty
+Package: filehook 2022/10/25 v0.8b Hooks for input files
+ (d:/texlive/2025/texmf-dist/tex/latex/filehook/filehook-2020.sty
+Package: filehook-2020 2022/10/25 v0.8b Hooks for input files
+)) (d:/texlive/2025/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (d:/texlive/2025/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count299
+\Gm@cntv=\count300
+\c@Gm@tempcnt=\count301
+\Gm@bindingoffset=\dimen175
+\Gm@wd@mp=\dimen176
+\Gm@odd@mp=\dimen177
+\Gm@even@mp=\dimen178
+\Gm@layoutwidth=\dimen179
+\Gm@layoutheight=\dimen180
+\Gm@layouthoffset=\dimen181
+\Gm@layoutvoffset=\dimen182
+\Gm@dimlist=\toks18
+) (d:/texlive/2025/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+\f@nch@headwidth=\skip60
+\f@nch@offset@elh=\skip61
+\f@nch@offset@erh=\skip62
+\f@nch@offset@olh=\skip63
+\f@nch@offset@orh=\skip64
+\f@nch@offset@elf=\skip65
+\f@nch@offset@erf=\skip66
+\f@nch@offset@olf=\skip67
+\f@nch@offset@orf=\skip68
+\f@nch@height=\skip69
+\f@nch@footalignment=\skip70
+\f@nch@widthL=\skip71
+\f@nch@widthC=\skip72
+\f@nch@widthR=\skip73
+\@temptokenb=\toks19
+) (d:/texlive/2025/texmf-dist/tex/latex/titlesec/titletoc.sty
+Package: titletoc 2025/01/04 v2.17 TOC entries
+\ttl@leftsep=\dimen183
+) (d:/texlive/2025/texmf-dist/tex/latex/notoccite/notoccite.sty
+Package: notoccite 2000/07/20
+) (d:/texlive/2025/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2024/11/05 v2.17t AMS math features
+\@mathmargin=\skip74
+
+For additional information on amsmath, use the `?' option.
+(d:/texlive/2025/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+ (d:/texlive/2025/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks20
+\ex@=\dimen184
+)) (d:/texlive/2025/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen185
+) (d:/texlive/2025/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count302
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count303
+\leftroot@=\count304
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count305
+\DOTSCASE@=\count306
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box56
+\strutbox@=\box57
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen186
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count307
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count308
+\dotsspace@=\muskip17
+\c@parentequation=\count309
+\dspbrk@lvl=\count310
+\tag@help=\toks21
+\row@=\count311
+\column@=\count312
+\maxfields@=\count313
+\andhelp@=\toks22
+\eqnshift@=\dimen187
+\alignsep@=\dimen188
+\tagshift@=\dimen189
+\tagwidth@=\dimen190
+\totwidth@=\dimen191
+\lineht@=\dimen192
+\@envbody=\toks23
+\multlinegap=\skip75
+\multlinetaggap=\skip76
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+) (d:/texlive/2025/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (d:/texlive/2025/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 106.
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
+))
+\Gin@req@height=\dimen193
+\Gin@req@width=\dimen194
+) (d:/texlive/2025/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+ (d:/texlive/2025/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (d:/texlive/2025/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen195
+\captionmargin=\dimen196
+\caption@leftmargin=\dimen197
+\caption@rightmargin=\dimen198
+\caption@width=\dimen199
+\caption@indent=\dimen256
+\caption@parindent=\dimen257
+\caption@hangindent=\dimen258
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count314
+\c@continuedfloat=\count315
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count316
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count317
+) (d:/texlive/2025/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2025/01/30 v0.6e Insert pages of external PDF documents (AM)
+ (d:/texlive/2025/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+) (d:/texlive/2025/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count318
+\calc@Bcount=\count319
+\calc@Adimen=\dimen259
+\calc@Bdimen=\dimen260
+\calc@Askip=\skip77
+\calc@Bskip=\skip78
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count320
+\calc@Cskip=\skip79
+) (d:/texlive/2025/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
+\ESO@tempdima=\dimen261
+\ESO@tempdimb=\dimen262
+ (d:/texlive/2025/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: xetex.def on input line 274.
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+))
+\AM@pagewidth=\dimen263
+\AM@pageheight=\dimen264
+\AM@fboxrule=\dimen265
+ (d:/texlive/2025/texmf-dist/tex/latex/pdfpages/ppxetex.def
+File: ppxetex.def 2025/01/30 v0.6e Pdfpages driver for XeTeX (AM)
+)
+\pdfpages@includegraphics@status=\count321
+\AM@pagebox=\box58
+\AM@global@opts=\toks25
+\AM@pagecnt=\count322
+\AM@toc@title=\toks26
+\AM@lof@heading=\toks27
+\c@AM@survey=\count323
+\AM@templatesizebox=\box59
+) (d:/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip80
+\enit@outerparindent=\dimen266
+\enit@toks=\toks28
+\enit@inbox=\box60
+\enit@count@id=\count324
+\enitdp@description=\count325
+) (d:/texlive/2025/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+ (d:/texlive/2025/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)) (d:/texlive/2025/texmf-dist/tex/latex/footmisc/footmisc.sty
+Package: footmisc 2024/12/24 v6.0g a miscellany of footnote facilities
+\FN@temptoken=\toks29
+\footnotemargin=\dimen267
+\@outputbox@depth=\dimen268
+ (d:/texlive/2025/texmf-dist/tex/latex/bigfoot/perpage.sty
+Package: perpage 2014/10/25 2.0 Reset/sort counters per page
+\c@abspage=\count326
+)
+\c@pp@a@footnote=\count327
+Package footmisc Info: Declaring symbol style bringhurst on input line 699.
+Package footmisc Info: Declaring symbol style chicago on input line 707.
+Package footmisc Info: Declaring symbol style wiley on input line 716.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 727.
+Package footmisc Info: Declaring symbol style lamport* on input line 747.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 768.
+) (d:/texlive/2025/texmf-dist/tex/xelatex/xecjk/xeCJKfntef.sty
+Package: xeCJKfntef 2022/08/05 v3.9.1 xeCJK font effect
+ (d:/texlive/2025/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box61
+\UL@hyphenbox=\box62
+\UL@skip=\skip81
+\UL@hook=\toks30
+\UL@height=\dimen269
+\UL@pe=\count328
+\UL@pixel=\dimen270
+\ULC@box=\box63
+Package: ulem 2019/11/18
+\ULdepth=\dimen271
+)
+\l__xeCJK_space_skip=\skip82
+\c__xeCJK_ulem-begin_node_dim=\dimen272
+\l__xeCJK_hidden_box=\box64
+\l__xeCJK_fntef_box=\box65
+\l__xeCJK_under_symbol_box=\box66
+\c__xeCJK_filll_skip=\skip83
+) (d:/texlive/2025/texmf-dist/tex/latex/tools/array.sty
+Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
+\col@sep=\dimen273
+\ar@mcellbox=\box67
+\extrarowheight=\dimen274
+\NC@list=\toks31
+\extratabsurround=\skip84
+\backup@length=\skip85
+\ar@cellbox=\box68
+) (d:/texlive/2025/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen275
+\lightrulewidth=\dimen276
+\cmidrulewidth=\dimen277
+\belowrulesep=\dimen278
+\belowbottomsep=\dimen279
+\aboverulesep=\dimen280
+\abovetopsep=\dimen281
+\cmidrulesep=\dimen282
+\cmidrulekern=\dimen283
+\defaultaddspace=\dimen284
+\@cmidla=\count329
+\@cmidlb=\count330
+\@aboverulesep=\dimen285
+\@belowrulesep=\dimen286
+\@thisruleclass=\count331
+\@lastruleclass=\count332
+\@thisrulewidth=\dimen287
+) (d:/texlive/2025/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip18
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Command `\normalsize' is already robust on input line 634.
+
+Package thuthesis Info: Detected system: windows
+Package thuthesis Info: Detected fontset: windows
+Package thuthesis Info: Detected CJK font: windows
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "KaiTi/B" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "SimSun/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "SimSun/BI" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'SimSun(0)' created for font 'SimSun' with
+(fontspec)             options
+(fontspec)             [Script={CJK},AutoFakeBold={3},ItalicFont={KaiTi}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"SimSun/OT:script=hani;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"SimSun/OT:script=hani;language=dflt;embolden=3;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->"KaiTi/OT:script=hani;language=dflt;"
+
+\thu@stretch@box=\box69
+\thu@pad@box=\box70
+\c@thu@csl@count=\count333
+\enitdp@thu@denotation=\count334
+\c@achievementsi=\count335
+\enitdp@achievements=\count336
+) (./thusetup.tex (d:/texlive/2025/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks32
+\thm@bodyfont=\toks33
+\thm@headfont=\toks34
+\thm@notefont=\toks35
+\thm@headpunct=\toks36
+\thm@preskip=\skip86
+\thm@postskip=\skip87
+\thm@headsep=\skip88
+\dth@everypar=\toks37
+)
+\c@assumption=\count337
+\c@definition=\count338
+\c@proposition=\count339
+\c@lemma=\count340
+\c@theorem=\count341
+\c@axiom=\count342
+\c@corollary=\count343
+\c@exercise=\count344
+\c@example=\count345
+\c@remark=\count346
+\c@problem=\count347
+\c@conjecture=\count348
+
+Package fontspec Info: 
+(fontspec)             Font family 'TimesNewRoman(0)' created for font 'Times
+(fontspec)             New Roman' with options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"Times New
+(fontspec)             Roman/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: <->"Times New
+(fontspec)             Roman/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"Times New
+(fontspec)             Roman/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: <->"Times
+(fontspec)             New
+(fontspec)             Roman/B/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.: <->"Times New
+(fontspec)             Roman/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.:
+(fontspec)             <->"Times New
+(fontspec)             Roman/I/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"Times New
+(fontspec)             Roman/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
+(fontspec)             <->"Times New
+(fontspec)             Roman/BI/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'Arial(0)' created for font 'Arial' with
+(fontspec)             options [Ligatures=TeX].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"Arial/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.:
+(fontspec)             <->"Arial/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"Arial/B/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.:
+(fontspec)             <->"Arial/B/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->"Arial/I/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.:
+(fontspec)             <->"Arial/I/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->"Arial/BI/OT:script=latn;language=dflt;mapping=tex-text;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
+(fontspec)             <->"Arial/BI/OT:script=latn;language=dflt;+smcp;mapping=tex-text;"
+
+
+Package fontspec Info: 
+(fontspec)             Courier New scale = 1.057733558623334.
+
+
+Package fontspec Info: 
+(fontspec)             Courier New scale = 1.057733558623334.
+
+
+Package fontspec Info: 
+(fontspec)             Courier New/B scale = 1.008809074804275.
+
+
+Package fontspec Info: 
+(fontspec)             Courier New/I scale = 1.057733558623334.
+
+
+Package fontspec Info: 
+(fontspec)             Courier New/BI scale = 1.008809074804275.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'CourierNew(0)' created for font 'Courier
+(fontspec)             New' with options
+(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=WordSpace,Scale
+(fontspec)             = MatchLowercase].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1.057733558623334]"Courier
+(fontspec)             New/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->s*[1.008809074804275]"Courier
+(fontspec)             New/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->s*[1.057733558623334]"Courier
+(fontspec)             New/I/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->s*[1.008809074804275]"Courier
+(fontspec)             New/BI/OT:script=latn;language=dflt;"
+
+ (d:/texlive/2025/texmf-dist/tex/latex/unicode-math/unicode-math.sty
+Package: unicode-math 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+ (d:/texlive/2025/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
+Package: unicode-math-xetex 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+ (d:/texlive/2025/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2024-08-16 LaTeX2e option processing using LaTeX3 keys
+)
+\g__um_fam_int=\count349
+\g__um_fonts_used_int=\count350
+\l__um_primecount_int=\count351
+\g__um_primekern_muskip=\muskip19
+ (d:/texlive/2025/texmf-dist/tex/latex/unicode-math/unicode-math-table.tex)))
+LaTeX Info: Redefining \boldsymbol on input line 130.
+LaTeX Info: Redefining \mathellipsis on input line 130.
+
+Package fontspec Info: 
+(fontspec)             Font family 'XITSMath-Regular(0)' created for font
+(fontspec)             'XITSMath-Regular' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,Extension={.otf},StylisticSet={8}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;"
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'XITSMath-Regular(1)' created for font
+(fontspec)             'XITSMath-Regular' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.539375-},{Size=8.130375-10.539375,Font=XITSMath-Regular,Style=MathScript},{Size=-8.130375,Font=XITSMath-Regular,Style=MathScriptScript}},Extension={.otf},StylisticSet={8}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.539375->"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;"<8.130375-10.539375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;+ssty=0;"<-8.130375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;+ssty=1;"
+
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `normal' on input line 130.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> TU/XITSMath-Regular(1)/m/n on input line 130.
+LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
+(Font)              `operators' in the math version `bold' on input line 130.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> TU/XITSMath-Regular(1)/b/n on input line 130.
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 1.0001.
+
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 1.0001.
+
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 1.0001.
+
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 1.0001.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'XITSMath-Regular(2)' created for font
+(fontspec)             'XITSMath-Regular' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.539375-},{Size=8.130375-10.539375,Font=XITSMath-Regular,Style=MathScript},{Size=-8.130375,Font=XITSMath-Regular,Style=MathScriptScript}},Extension={.otf},StylisticSet={8},ScaleAgain=1.0001,FontAdjustment={\fontdimen
+(fontspec)             8\font =6.9861pt\relax \fontdimen 9\font
+(fontspec)             =5.7816pt\relax \fontdimen 10\font =5.7816pt\relax
+(fontspec)             \fontdimen 11\font =8.4315pt\relax \fontdimen 12\font
+(fontspec)             =5.7816pt\relax \fontdimen 13\font =4.818pt\relax
+(fontspec)             \fontdimen 14\font =4.818pt\relax \fontdimen 15\font
+(fontspec)             =3.31238pt\relax \fontdimen 16\font =3.01125pt\relax
+(fontspec)             \fontdimen 17\font =3.01125pt\relax \fontdimen 18\font
+(fontspec)             =4.51688pt\relax \fontdimen 19\font =0.60225pt\relax
+(fontspec)             \fontdimen 22\font =3.01125pt\relax \fontdimen 20\font
+(fontspec)             =0pt\relax \fontdimen 21\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.539375->s*[1.0001]"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;"<8.130375-10.539375>s*[1.0001]"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;+ssty=0;"<-8.130375>s*[1.0001]"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;+ssty=1;"
+
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `normal' on input line 130.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> TU/XITSMath-Regular(2)/m/n on input line 130.
+LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
+(Font)              `symbols' in the math version `bold' on input line 130.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> TU/XITSMath-Regular(2)/b/n on input line 130.
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 0.9999.
+
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 0.9999.
+
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 0.9999.
+
+
+Package fontspec Info: 
+(fontspec)             XITSMath-Regular scale = 0.9999.
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'XITSMath-Regular(3)' created for font
+(fontspec)             'XITSMath-Regular' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.539375-},{Size=8.130375-10.539375,Font=XITSMath-Regular,Style=MathScript},{Size=-8.130375,Font=XITSMath-Regular,Style=MathScriptScript}},Extension={.otf},StylisticSet={8},ScaleAgain=0.9999,FontAdjustment={\fontdimen
+(fontspec)             8\font =0.79497pt\relax \fontdimen 9\font
+(fontspec)             =1.80675pt\relax \fontdimen 10\font =1.80675pt\relax
+(fontspec)             \fontdimen 11\font =3.6135pt\relax \fontdimen 12\font
+(fontspec)             =7.227pt\relax \fontdimen 13\font =0pt\relax }].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.539375->s*[0.9999]"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;"<8.130375-10.539375>s*[0.9999]"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;+ssty=0;"<-8.130375>s*[0.9999]"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;+ssty=1;"
+
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `normal' on input line 130.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> TU/XITSMath-Regular(3)/m/n on input line 130.
+LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
+(Font)              `largesymbols' in the math version `bold' on input line 130.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> TU/XITSMath-Regular(3)/b/n on input line 130.
+
+Package fontspec Info: 
+(fontspec)             Font family 'XITSMath-Regular(4)' created for font
+(fontspec)             'XITSMath-Regular' with options
+(fontspec)             [BoldItalicFont={},ItalicFont={},SmallCapsFont={},Script=Math,SizeFeatures={{Size=10.539375-},{Size=8.130375-10.539375,Font=XITSMath-Regular,Style=MathScript},{Size=-8.130375,Font=XITSMath-Regular,Style=MathScriptScript}},Extension={.otf},StylisticSet={1}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <10.539375->"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;"<8.130375-10.539375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=0;"<-8.130375>"[XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss01;+ssty=1;"
+
+\sym__um_fam1=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
+(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/m/n on input line 130.
+LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
+(Font)                  TU/XITSMath-Regular(4)/m/n --> TU/XITSMath-Regular(4)/b/n on input line 130.
+ (d:/texlive/2025/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box71
+) (d:/texlive/2025/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
+\multirow@colwidth=\skip89
+\multirow@cntb=\count352
+\multirow@dima=\skip90
+\bigstrutjot=\dimen288
+) (d:/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+\TX@col@width=\dimen289
+\TX@old@table=\dimen290
+\TX@old@col=\dimen291
+\TX@target=\dimen292
+\TX@delta=\dimen293
+\TX@cols=\count353
+\TX@ftn=\toks38
+) (d:/texlive/2025/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2024-10-27 v4.22 Multi-page Table package (DPC)
+\LTleft=\skip91
+\LTright=\skip92
+\LTpre=\skip93
+\LTpost=\skip94
+\LTchunksize=\count354
+\LTcapwidth=\dimen294
+\LT@head=\box72
+\LT@firsthead=\box73
+\LT@foot=\box74
+\LT@lastfoot=\box75
+\LT@gbox=\box76
+\LT@cols=\count355
+\LT@rows=\count356
+\c@LT@tables=\count357
+\c@LT@chunks=\count358
+\LT@p@ftn=\toks39
+) (d:/texlive/2025/texmf-dist/tex/latex/algorithms/algorithm.sty
+Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (d:/texlive/2025/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count359
+\float@exts=\toks40
+\float@box=\box77
+\@float@everytoks=\toks41
+\@floatcapt=\box78
+)
+\@float@every@algorithm=\toks42
+\c@algorithm=\count360
+) (d:/texlive/2025/texmf-dist/tex/latex/algorithms/algorithmic.sty
+Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
+Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
+\c@ALC@unique=\count361
+\c@ALC@line=\count362
+\c@ALC@rem=\count363
+\c@ALC@depth=\count364
+\ALC@tlm=\skip95
+\algorithmicindent=\skip96
+) (d:/texlive/2025/texmf-dist/tex/latex/siunitx/siunitx.sty
+Package: siunitx 2025-02-27 v3.4.6 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count365
+\l__siunitx_number_exponent_fixed_int=\count366
+\l__siunitx_number_min_decimal_int=\count367
+\l__siunitx_number_min_integer_int=\count368
+\l__siunitx_number_round_precision_int=\count369
+\l__siunitx_number_lower_threshold_int=\count370
+\l__siunitx_number_upper_threshold_int=\count371
+\l__siunitx_number_group_first_int=\count372
+\l__siunitx_number_group_size_int=\count373
+\l__siunitx_number_group_minimum_int=\count374
+\l__siunitx_angle_tmp_dim=\dimen295
+\l__siunitx_angle_marker_box=\box79
+\l__siunitx_angle_unit_box=\box80
+\l__siunitx_compound_count_int=\count375
+ (d:/texlive/2025/texmf-dist/tex/latex/translations/translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
+ (d:/texlive/2025/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (d:/texlive/2025/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+))
+\l__siunitx_table_tmp_box=\box81
+\l__siunitx_table_tmp_dim=\dimen296
+\l__siunitx_table_column_width_dim=\dimen297
+\l__siunitx_table_integer_box=\box82
+\l__siunitx_table_decimal_box=\box83
+\l__siunitx_table_uncert_box=\box84
+\l__siunitx_table_before_box=\box85
+\l__siunitx_table_after_box=\box86
+\l__siunitx_table_before_dim=\dimen298
+\l__siunitx_table_carry_dim=\dimen299
+\l__siunitx_unit_tmp_int=\count376
+\l__siunitx_unit_position_int=\count377
+\l__siunitx_unit_total_int=\count378
+) (d:/texlive/2025/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip97
+\bibsep=\skip98
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count379
+) (d:/texlive/2025/texmf-dist/tex/latex/bibunits/bibunits.sty
+Package: bibunits 2004/05/12 v2.4 Multiple bibliographies in one document.
+\@bibunitaux=\write3
+\@bibunitauxcnt=\count380
+)) (d:/texlive/2025/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
+ (d:/texlive/2025/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (d:/texlive/2025/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (d:/texlive/2025/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+ (d:/texlive/2025/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (d:/texlive/2025/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count381
+) (d:/texlive/2025/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\@linkdim=\dimen300
+\Hy@linkcounter=\count382
+\Hy@pagecounter=\count383
+ (d:/texlive/2025/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2024-11-05 v7.01l Hyperref: PDFDocEncoding definition (HO)
+) (d:/texlive/2025/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count384
+ (d:/texlive/2025/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2024-11-05 v7.01l Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4040.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4040.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4040.
+Package hyperref Info: Option `unicode' set `true' on input line 4040.
+Package hyperref Info: Option `psdextra' set `true' on input line 4040.
+ (d:/texlive/2025/texmf-dist/tex/latex/hyperref/psdextra.def
+File: psdextra.def 2024-11-05 v7.01l Hyperref: Additions to PDF string support
+)
+Package hyperref Info: Option `breaklinks' set `true' on input line 4040.
+Package hyperref Info: Option `plainpages' set `false' on input line 4040.
+Package hyperref Info: Option `pdfdisplaydoctitle' set `true' on input line 4040.
+Package hyperref Info: Hyper figures OFF on input line 4157.
+Package hyperref Info: Link nesting OFF on input line 4162.
+Package hyperref Info: Hyper index ON on input line 4165.
+Package hyperref Info: Plain pages OFF on input line 4172.
+Package hyperref Info: Backreferencing OFF on input line 4177.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4424.
+\c@Hy@tempcnt=\count385
+LaTeX Info: Redefining \url on input line 4763.
+\XeTeXLinkMargin=\dimen301
+ (d:/texlive/2025/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (d:/texlive/2025/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count386
+\Field@Width=\dimen302
+\Fld@charsize=\dimen303
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring OFF on input line 6062.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
+ (d:/texlive/2025/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count387
+\c@Item=\count388
+\c@Hfootnote=\count389
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+ (d:/texlive/2025/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2024-11-05 v7.01l Hyperref driver for XeTeX
+\pdfm@box=\box87
+\c@Hy@AnnotLevel=\count390
+\HyField@AnnotCount=\count391
+\Fld@listcount=\count392
+\c@bookmark@seq@number=\count393
+ (d:/texlive/2025/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+ (d:/texlive/2025/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+with kernel methods
+) (d:/texlive/2025/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+)
+\Hy@SectionHShift=\skip99
+)
+\c@thu@bookmark=\count394
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 21.
+ (out/车云协同液罐车防侧翻行驶规划与控制研究.aux)
+\openout1 = `车云协同液罐车防侧翻行驶规划与控制研究.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(85.35826pt, 426.79135pt, 85.35826pt)
+* v-part:(T,H,B)=(85.35826pt, 674.33032pt, 85.35826pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=426.79135pt
+* \textheight=674.33032pt
+* \oddsidemargin=13.08827pt
+* \evensidemargin=13.08827pt
+* \topmargin=-72.26997pt
+* \headheight=76.82234pt
+* \headsep=8.5359pt
+* \topskip=12.0pt
+* \footskip=22.76228pt
+* \marginparwidth=56.9055pt
+* \marginparsep=14.22636pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(d:/texlive/2025/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
+)
+Package caption Info: threeparttable package is loaded.
+Package caption Info: End \AtBeginDocument code.
+ (d:/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+ (d:/texlive/2025/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF (HO)
+ (d:/texlive/2025/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+))
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
+(Font)                  TU/XITSMath-Regular(1)/m/n --> TU/TimesNewRoman(0)/m/n on input line 21.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line 21.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 21.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 21.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 21.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/m/n on input line 21.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/b/n on input line 21.
+ (d:/texlive/2025/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
+File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
+)
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 21.
+Package hyperref Info: Link coloring OFF on input line 21.
+\@outlinefile=\write4
+\openout4 = `车云协同液罐车防侧翻行驶规划与控制研究.out'.
+
+
+
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(99.58464pt, 398.3386pt, 99.58464pt)
+* v-part:(T,H,B)=(56.9055pt, 617.42482pt, 170.71652pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=398.3386pt
+* \textheight=617.42482pt
+* \oddsidemargin=27.31465pt
+* \evensidemargin=27.31465pt
+* \topmargin=-100.72273pt
+* \headheight=76.82234pt
+* \headsep=8.5359pt
+* \topskip=12.0pt
+* \footskip=22.76228pt
+* \marginparwidth=56.9055pt
+* \marginparsep=14.22636pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "SimHei/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "SimHei/BI" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "SimHei/I" (it probably doesn't
+(fontspec)             exist).
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'SimHei(0)' created for font 'SimHei' with
+(fontspec)             options [Script={CJK},AutoFakeBold={3}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"SimHei/OT:script=hani;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"SimHei/OT:script=hani;language=dflt;embolden=3;"
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "FangSong/BI" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "FangSong/B" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "FangSong/I" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'FangSong(0)' created for font 'FangSong'
+(fontspec)             with options [Script={CJK}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"FangSong/OT:script=hani;language=dflt;"
+
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 16.0617pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 14.05399pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 10.54048pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 16.05827pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 14.05098pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 10.53824pt on input line 25.
+
+
+[1
+
+
+
+]
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(28.45274pt, 540.60239pt, 28.45274pt)
+* v-part:(T,H,B)=(156.49014pt, 532.06656pt, 156.49014pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=540.60239pt
+* \textheight=532.06656pt
+* \oddsidemargin=-43.81725pt
+* \evensidemargin=-43.81725pt
+* \topmargin=-1.13809pt
+* \headheight=76.82234pt
+* \headsep=8.5359pt
+* \topskip=12.0pt
+* \footskip=22.76228pt
+* \marginparwidth=56.9055pt
+* \marginparsep=14.22636pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "FangSong/BI" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "FangSong/B" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "FangSong/I" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'FangSong(1)' created for font 'FangSong'
+(fontspec)             with options
+(fontspec)             [Script={CJK},Script={CJK},RawFeature={vertical}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"FangSong/OT:script=hani;language=dflt;vertical;"
+
+
+
+[2
+
+
+
+
+]
+*geometry* verbose mode - [ newgeometry ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(96.73918pt, 404.02951pt, 96.73918pt)
+* v-part:(T,H,B)=(156.49014pt, 546.29292pt, 142.26378pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=404.02951pt
+* \textheight=546.29292pt
+* \oddsidemargin=24.4692pt
+* \evensidemargin=24.4692pt
+* \topmargin=-1.13809pt
+* \headheight=76.82234pt
+* \headsep=8.5359pt
+* \topskip=12.0pt
+* \footskip=22.76228pt
+* \marginparwidth=56.9055pt
+* \marginparsep=14.22636pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 15.05785pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 12.04628pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 9.0347pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 15.05463pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 12.0437pt on input line 25.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 9.03276pt on input line 25.
+
+
+[3
+
+
+
+
+] (./data/committee.tex
+
+[4
+
+
+
+
+]
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 9.03471pt on input line 43.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 7.22777pt on input line 43.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 9.03278pt on input line 43.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 7.22623pt on input line 43.
+
+
+[5
+
+
+])
+
+[6
+
+
+]
+
+[7
+
+
+]
+
+[8
+
+] (./data/abstract.tex
+
+[1
+
+
+]
+
+[2
+
+
+])
+
+[3]
+No file 车云协同液罐车防侧翻行驶规划与控制研究.toc.
+\tf@toc=\write5
+\openout5 = `车云协同液罐车防侧翻行驶规划与控制研究.toc'.
+
+
+
+[4
+
+
+]
+No file 车云协同液罐车防侧翻行驶规划与控制研究.lof.
+\tf@lof=\write6
+\openout6 = `车云协同液罐车防侧翻行驶规划与控制研究.lof'.
+
+
+
+[5
+
+
+]
+No file 车云协同液罐车防侧翻行驶规划与控制研究.lot.
+\tf@lot=\write7
+\openout7 = `车云协同液罐车防侧翻行驶规划与控制研究.lot'.
+
+(./data/denotation.tex
+
+[6
+
+
+]
+Underfull \hbox (badness 2753) in paragraph at lines 12--13
+[]\TU/SimSun(0)/m/n/12.045 注 意 力 式 时 空 图 神 经 网 络  |（\TU/TimesNewRoman(0)/m/n/12.045 Attention-based Spatio-Temporal
+ []
+
+
+
+[7
+
+
+]
+
+[8]
+
+[9]
+
+[10]
+
+[11]
+
+[12]
+
+[13]
+
+[14]
+LaTeX Font Info:    Font shape `TU/CourierNew(0)/m/n' will be
+(Font)              scaled to size 12.74046pt on input line 298.
+
+
+[15]
+
+[16])
+
+[17]
+
+[18
+
+] (./data/chap01.tex
+第1章
+
+Package natbib Warning: Citation `qianyuyan2023' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `zhongguowuliulianhehui2022' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `liuhuipling2023' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `chengshuo2023' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `lijian2014' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `chenxiaoyong2023' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `wangyang2023' on page 1 undefined on input line 9.
+
+
+Package natbib Warning: Citation `authority_tank_truck2022' on page 1 undefined on input line 9.
+
+
+LaTeX Warning: Reference `fig:severe_results' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `wenling_accident2022' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `qianyuyan2023' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `liuhuipling2023' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `chengshuo2023' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `lijian2014' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `chenxiaoyong2023' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `wangyang2023' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `authority_tank_truck2022' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `wenling_accident2022' on page 1 undefined on input line 11.
+
+
+Package natbib Warning: Citation `baijinghua2023' on page 1 undefined on input line 11.
+
+File: fig/chap1/severe_results.jpg Graphic file (type bmp)
+<fig/chap1/severe_results.jpg>
+
+
+[1
+
+]
+
+Package natbib Warning: Citation `biaozhun185642006' on page 2 undefined on input line 24.
+
+
+Package natbib Warning: Citation `biaozhunR00052011' on page 2 undefined on input line 24.
+
+
+Package natbib Warning: Citation `authority_tank_truck2022' on page 2 undefined on input line 26.
+
+File: fig/chap1/cloud_platform.jpg Graphic file (type bmp)
+<fig/chap1/cloud_platform.jpg>
+
+Package natbib Warning: Citation `icv2023whiteroadcloud' on page 2 undefined on input line 35.
+
+
+Package natbib Warning: Citation `icv2023whiteroadcloud' on page 2 undefined on input line 35.
+
+
+Package natbib Warning: Citation `kargobot2024' on page 2 undefined on input line 39.
+
+
+Package natbib Warning: Citation `ponyai2024' on page 2 undefined on input line 39.
+
+
+
+[2]
+
+LaTeX Warning: Reference `fig:cloud_platform' on page 3 undefined on input line 43.
+
+
+Package natbib Warning: Citation `cuimingyang2022' on page 3 undefined on input line 43.
+
+
+Package natbib Warning: Citation `likeqiang2020cloudcontrol' on page 3 undefined on input line 43.
+
+
+Package natbib Warning: Citation `gongxinbu2024pilots' on page 3 undefined on input line 43.
+
+
+
+[3]
+
+LaTeX Warning: Reference `fig:vehicle_liquid_couple_mechanism' on page 4 undefined on input line 64.
+
+
+Package natbib Warning: Citation `maohaijian2021fsi' on page 4 undefined on input line 64.
+
+
+Package natbib Warning: Citation `maohaijian2021fsi' on page 4 undefined on input line 66.
+
+
+Package natbib Warning: Citation `wangxiaorun2022lateralacc' on page 4 undefined on input line 66.
+
+
+Package natbib Warning: Citation `yuzhixin2018mpc' on page 4 undefined on input line 66.
+
+
+Package natbib Warning: Citation `xuxiaomei2020lanechange' on page 4 undefined on input line 66.
+
+
+Package natbib Warning: Citation `lijie2020carliquid' on page 4 undefined on input line 66.
+
+
+Package natbib Warning: Citation `chenyibao2016crosssection' on page 4 undefined on input line 68.
+
+
+Package natbib Warning: Citation `wangqiongyao2017sloshing' on page 4 undefined on input line 68.
+
+
+
+[4]
+File: fig/chap1/two_factors.png Graphic file (type bmp)
+<fig/chap1/two_factors.png>
+
+
+Package natbib Warning: Citation `maohaijian2021fsi' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `huangyang2017impact' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `wangqiongyao2017sloshing' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `maohaijian2021fsi' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `huangyang2017impact' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `wangqiongyao2017sloshing' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 5 undefined on input line 73.
+
+
+Package natbib Warning: Citation `jiaxinhong2022review' on page 5 undefined on input line 82.
+
+
+LaTeX Warning: Reference `fig:liquid_modeling_methods' on page 5 undefined on input line 82.
+
+
+
+[5]
+File: fig/chap1/quasi_static.png Graphic file (type bmp)
+<fig/chap1/quasi_static.png>
+
+
+Package natbib Warning: Citation `huangyang2017impact' on page 6 undefined on input line 87.
+
+
+Package natbib Warning: Citation `huangyang2017impact' on page 6 undefined on input line 87.
+
+File: fig/chap1/fluid_dynamic_model.png Graphic file (type bmp)
+<fig/chap1/fluid_dynamic_model.png>
+
+Package natbib Warning: Citation `maohaijian2021fsi' on page 6 undefined on input line 89.
+
+
+Package natbib Warning: Citation `yuzhixin2018mpc' on page 6 undefined on input line 89.
+
+
+Package natbib Warning: Citation `maohaijian2021fsi' on page 6 undefined on input line 89.
+
+
+Package natbib Warning: Citation `yuzhixin2018mpc' on page 6 undefined on input line 89.
+
+File: fig/chap1/experiment_method.png Graphic file (type bmp)
+<fig/chap1/experiment_method.png>
+
+Package natbib Warning: Citation `wangxiaorun2022lateralacc' on page 6 undefined on input line 91.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 6 undefined on input line 91.
+
+
+Package natbib Warning: Citation `wangxiaorun2022lateralacc' on page 6 undefined on input line 91.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 6 undefined on input line 91.
+
+File: fig/chap1/equivalent_model.png Graphic file (type bmp)
+<fig/chap1/equivalent_model.png>
+
+Package natbib Warning: Citation `yuzhixin2019optimalcontrol' on page 6 undefined on input line 93.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2018equivalent' on page 6 undefined on input line 93.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2019semitrailer' on page 6 undefined on input line 93.
+
+
+Package natbib Warning: Citation `yuzhixin2019optimalcontrol' on page 6 undefined on input line 93.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2018equivalent' on page 6 undefined on input line 93.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2019semitrailer' on page 6 undefined on input line 93.
+
+
+Package natbib Warning: Citation `huangyang2017impact' on page 6 undefined on input line 99.
+
+
+Package natbib Warning: Citation `helieyun2020quasistatic' on page 6 undefined on input line 99.
+
+
+LaTeX Warning: Reference `fig:machenical' on page 6 undefined on input line 102.
+
+
+Package natbib Warning: Citation `salem2000rollover' on page 6 undefined on input line 102.
+
+
+Package natbib Warning: Citation `yangxiujian2018multimass' on page 6 undefined on input line 102.
+
+
+Package natbib Warning: Citation `wuxiangji2018sloshingmodel' on page 6 undefined on input line 102.
+
+
+Package natbib Warning: Citation `Komasa2023observing' on page 6 undefined on input line 102.
+
+
+Package natbib Warning: Citation `KomasaQi2025AntiRollover_TITS' on page 6 undefined on input line 102.
+
+
+
+[6]
+File: fig/chap1/machenical.png Graphic file (type bmp)
+<fig/chap1/machenical.png>
+
+
+Package natbib Warning: Citation `wangxiaorun2022lateralacc' on page 7 undefined on input line 115.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 7 undefined on input line 115.
+
+
+
+[7]
+
+Package natbib Warning: Citation `yudi2019rollstability' on page 8 undefined on input line 121.
+
+
+Package natbib Warning: Citation `renyuanyuan2020precisemodel' on page 8 undefined on input line 121.
+
+
+Package natbib Warning: Citation `aquaro1999fem' on page 8 undefined on input line 121.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 8 undefined on input line 121.
+
+
+Package natbib Warning: Citation `heren2016braking' on page 8 undefined on input line 123.
+
+
+Package natbib Warning: Citation `zongchangfu2014identification' on page 8 undefined on input line 123.
+
+
+Package natbib Warning: Citation `niezhigen2015heavyduty' on page 8 undefined on input line 123.
+
+
+Package natbib Warning: Citation `yuzhixin2018mpc' on page 8 undefined on input line 123.
+
+
+Package natbib Warning: Citation `yuzhixin2019optimalcontrol' on page 8 undefined on input line 123.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 8 undefined on input line 125.
+
+
+Package natbib Warning: Citation `yudi2016nonfull' on page 8 undefined on input line 125.
+
+
+Package natbib Warning: Citation `zongchangfu2014identification' on page 8 undefined on input line 125.
+
+
+Package natbib Warning: Citation `niezhigen2015heavyduty' on page 8 undefined on input line 125.
+
+
+
+[8]
+
+LaTeX Warning: Reference `fig:passive_methods' on page 9 undefined on input line 134.
+
+
+Package natbib Warning: Citation `chenyibao2016crosssection' on page 9 undefined on input line 136.
+
+
+Package natbib Warning: Citation `quhuijun2017calculation' on page 9 undefined on input line 136.
+
+
+Package natbib Warning: Citation `gb28373_2012' on page 9 undefined on input line 136.
+
+
+Package natbib Warning: Citation `gb7258_2017' on page 9 undefined on input line 136.
+
+
+Package natbib Warning: Citation `yudi2016nonfull' on page 9 undefined on input line 136.
+
+
+Package natbib Warning: Citation `yudi2019rollstability' on page 9 undefined on input line 136.
+
+Missing character: There is no ～ (U+FF5E) in font [XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;!
+Missing character: There is no ～ (U+FF5E) in font [XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;!
+Missing character: There is no ～ (U+FF5E) in font [XITSMath-Regular.otf]/OT:script=math;language=dflt;+ss08;!
+
+Package natbib Warning: Citation `lixiansheng2015ga' on page 9 undefined on input line 136.
+
+
+Package natbib Warning: Citation `moreno2022davies' on page 9 undefined on input line 138.
+
+
+Package natbib Warning: Citation `liukui2009braking' on page 9 undefined on input line 138.
+
+
+Package natbib Warning: Citation `liukui2009steering' on page 9 undefined on input line 138.
+
+
+Underfull \hbox (badness 3758) in paragraph at lines 138--139
+[]\TU/SimSun(0)/m/n/12.045 通 过 设 置 防 浪 板 抑 制 液 体 横 向 流 动 是 工 程 上 常 见 且 有 效 的 被 动 手 段。|
+ []
+
+
+
+[9]
+
+Package natbib Warning: Citation `wangqiongyao2017sloshing' on page 10 undefined on input line 140.
+
+
+Package natbib Warning: Citation `fangliang2022fe' on page 10 undefined on input line 140.
+
+
+Package natbib Warning: Citation `zhangweihua2019gist' on page 10 undefined on input line 140.
+
+File: fig/chap1/tank_shape.png Graphic file (type bmp)
+<fig/chap1/tank_shape.png>
+
+Package natbib Warning: Citation `chenyibao2016crosssection' on page 10 undefined on input line 145.
+
+
+Package natbib Warning: Citation `chenyibao2016crosssection' on page 10 undefined on input line 145.
+
+File: fig/chap1/wave_proof.png Graphic file (type bmp)
+<fig/chap1/wave_proof.png>
+
+Package natbib Warning: Citation `hanyoubin2019vof' on page 10 undefined on input line 147.
+
+
+Package natbib Warning: Citation `hanyoubin2019vof' on page 10 undefined on input line 147.
+
+File: fig/chap1/elastic_bag.png Graphic file (type bmp)
+<fig/chap1/elastic_bag.png>
+
+Package natbib Warning: Citation `wangqiongyao2017sloshing' on page 10 undefined on input line 149.
+
+
+Package natbib Warning: Citation `wangqiongyao2017sloshing' on page 10 undefined on input line 149.
+
+
+Package natbib Warning: Citation `huston2014ssf' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `jin2007critical' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `heyuancha0_2010factor' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `zhang2016pulsed' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `zhao2019hinfty' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `jin2021heavytruck' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `jin2016tripped' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `jin2019triaxle' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `imine2015switched' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `zeng2017bpnn' on page 10 undefined on input line 163.
+
+
+Package natbib Warning: Citation `jinliqiang2017yujing' on page 10 undefined on input line 163.
+
+
+
+[10]
+
+Package natbib Warning: Citation `bacha2008odin' on page 11 undefined on input line 169.
+
+
+Package natbib Warning: Citation `likhachev2009planning' on page 11 undefined on input line 169.
+
+
+Package natbib Warning: Citation `kurzer2016hybrida' on page 11 undefined on input line 169.
+
+
+Package natbib Warning: Citation `stentz1994efficient' on page 11 undefined on input line 169.
+
+
+Package natbib Warning: Citation `dong2023ecocruising' on page 11 undefined on input line 169.
+
+
+Package natbib Warning: Citation `werling2010frenet' on page 11 undefined on input line 169.
+
+
+Package natbib Warning: Citation `kuwata2009realtime' on page 11 undefined on input line 170.
+
+
+Package natbib Warning: Citation `karaman2011sampling' on page 11 undefined on input line 170.
+
+
+Package natbib Warning: Citation `klemm2015rrtconnect' on page 11 undefined on input line 170.
+
+
+Package natbib Warning: Citation `fan2024birrt' on page 11 undefined on input line 170.
+
+
+Package natbib Warning: Citation `siedentop2015dubins' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `huang2022sineresistance' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `brezak2014clothoids' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `petrov2014overtaking' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `rastelli2014continuouscurvature' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `phanhuu2021bsplines' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `gotte2018splinebased' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `hegedus2020realtime' on page 11 undefined on input line 171.
+
+
+Package natbib Warning: Citation `dong2023ecocruising' on page 11 undefined on input line 172.
+
+
+Package natbib Warning: Citation `liuzhiqiang2017shichang' on page 11 undefined on input line 172.
+
+
+Package natbib Warning: Citation `rasekhipour2017pfmpc' on page 11 undefined on input line 172.
+
+
+Package natbib Warning: Citation `jin2021heavytruck' on page 11 undefined on input line 172.
+
+
+Package natbib Warning: Citation `wu2024rlsurvey' on page 11 undefined on input line 173.
+
+
+Package natbib Warning: Citation `zhang2023intersectionrl' on page 11 undefined on input line 173.
+
+
+Package natbib Warning: Citation `irshayyid2024highwayrl' on page 11 undefined on input line 173.
+
+
+Package natbib Warning: Citation `zhang2024saferl_tits' on page 11 undefined on input line 173.
+
+
+Package natbib Warning: Citation `gu2024saferl_tpami' on page 11 undefined on input line 173.
+
+
+Package natbib Warning: Citation `garcia2015saferl' on page 11 undefined on input line 173.
+
+
+
+[11]
+
+Package natbib Warning: Citation `wangyuanmin2024' on page 12 undefined on input line 180.
+
+
+Package natbib Warning: Citation `chenchao2023' on page 12 undefined on input line 180.
+
+
+Package natbib Warning: Citation `jiasenchao2023' on page 12 undefined on input line 180.
+
+
+Package natbib Warning: Citation `lisixu2021' on page 12 undefined on input line 181.
+
+
+Package natbib Warning: Citation `caoliling2024' on page 12 undefined on input line 181.
+
+
+Package natbib Warning: Citation `zhangfawang2025' on page 12 undefined on input line 181.
+
+
+Package natbib Warning: Citation `songguanghao2023' on page 12 undefined on input line 181.
+
+
+Package natbib Warning: Citation `wanghongchang2023' on page 12 undefined on input line 181.
+
+
+LaTeX Warning: Reference `fig:anti_rollover_methods' on page 12 undefined on input line 184.
+
+
+Package natbib Warning: Citation `xiao2020rollsuspension' on page 12 undefined on input line 184.
+
+
+Package natbib Warning: Citation `shao2023vhrobustmpc' on page 12 undefined on input line 184.
+
+
+Package natbib Warning: Citation `carlson1981two' on page 12 undefined on input line 184.
+
+
+Package natbib Warning: Citation `zilin2023integrated' on page 12 undefined on input line 184.
+
+
+Package natbib Warning: Citation `xu2011rollover' on page 12 undefined on input line 184.
+
+
+Package natbib Warning: Citation `liang2022multiagent' on page 12 undefined on input line 184.
+
+
+
+[12]
+File: fig/chap1/active_suspension.png Graphic file (type bmp)
+<fig/chap1/active_suspension.png>
+File: fig/chap1/active_steering.png Graphic file (type bmp)
+<fig/chap1/active_steering.png>
+File: fig/chap1/diff_braking.png Graphic file (type bmp)
+<fig/chap1/diff_braking.png>
+File: fig/chap1/dist_driving.png Graphic file (type bmp)
+<fig/chap1/dist_driving.png>
+
+
+Package natbib Warning: Citation `huyun2019mfac' on page 13 undefined on input line 206.
+
+
+Package natbib Warning: Citation `luoyugong2019sbw' on page 13 undefined on input line 206.
+
+
+Package natbib Warning: Citation `tangzeyue2023mpcmfac' on page 13 undefined on input line 206.
+
+
+Package natbib Warning: Citation `fengzengxi2021mfacpso' on page 13 undefined on input line 206.
+
+
+Package natbib Warning: Citation `zhao2019hinfty' on page 13 undefined on input line 206.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2018equivalent' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `lijie2020carliquid' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `yuzhixin2018mpc' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2019semitrailer' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `yuzhixin2019optimalcontrol' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `Reviewer2_SunWencai2022' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `weixing2023_antirollover' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `zhengxuelian2019mfacpatent' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `MFAC_LiXiansheng2021' on page 13 undefined on input line 208.
+
+
+Package natbib Warning: Citation `liutianfeng2024heterogeneous' on page 13 undefined on input line 208.
+
+
+
+[13]
+
+LaTeX Warning: Reference `fig:pred_dec_int' on page 14 undefined on input line 220.
+
+
+Package natbib Warning: Citation `ferguson2008urban' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `urmson2008boss' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `leonard2008perception' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `kammel2008annieway' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `vonhundelshausen2008tentacles' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `montemerlo2008junior' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `thrun2006stanley' on page 14 undefined on input line 222.
+
+
+Package natbib Warning: Citation `salvado2016contingency' on page 14 undefined on input line 224.
+
+
+LaTeX Warning: Reference `sub:pipeline' on page 14 undefined on input line 224.
+
+
+
+[14]
+
+LaTeX Warning: Reference `sub:end2end' on page 15 undefined on input line 226.
+
+File: fig/chap1/pred_dec_int.png Graphic file (type bmp)
+<fig/chap1/pred_dec_int.png>
+
+
+[15]
+
+Package natbib Warning: Citation `Huang2025V2X' on page 16 undefined on input line 248.
+
+
+Package natbib Warning: Citation `UniV2X2024' on page 16 undefined on input line 250.
+
+
+Package natbib Warning: Citation `UniMM_V2X2025' on page 16 undefined on input line 250.
+
+
+Package natbib Warning: Citation `V2X_VLM2025' on page 16 undefined on input line 250.
+
+
+Package natbib Warning: Citation `Gan2024MultiVehicle' on page 16 undefined on input line 250.
+
+
+Package natbib Warning: Citation `Li2024V2X' on page 16 undefined on input line 250.
+
+
+
+[16]
+
+Package natbib Warning: Citation `Gao2025V2X' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `hans2024' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `Yu2025MultiAgent' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `chenqien2023cpccbus' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `lishuyan2022pccheavytrucks' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `wangluyao2024cloudpacc' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `wangzhou2023hierarchical' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `meirun2023platoon' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `jiangyu2023lc' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `xionglu2024_CVIS_survay' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `xuqing2021unreliable' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `wang2021platoonmpc' on page 17 undefined on input line 252.
+
+
+Package natbib Warning: Citation `Kherroubi2024AUTODRAITEC' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `Lu2024EdgeComputing' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `Yu2025Hierarchical' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `Cui2025VehicleInfrastructure' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `Typaldos2025Cooperative' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `Yang2025CloudBased' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `Wang2025Cooperative' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `shijia2024rampcloud' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `shi2023finalstate' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `shi2024conflictgraph' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `shi2023ivscheduling' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `dai2023cloudadmm' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `li2023cloudnmpc' on page 17 undefined on input line 254.
+
+
+Package natbib Warning: Citation `hailin2022semanticcentered' on page 17 undefined on input line 254.
+
+
+
+[17]
+
+[18]
+
+Package natbib Warning: Citation `shladover1991path' on page 19 undefined on input line 265.
+
+
+Package natbib Warning: Citation `chu2021cloudcontrolreview' on page 19 undefined on input line 265.
+
+
+Package natbib Warning: Citation `wang2020fogbased' on page 19 undefined on input line 265.
+
+
+Package natbib Warning: Citation `wang2020cloudconnected' on page 19 undefined on input line 265.
+
+
+Package natbib Warning: Citation `likeqiang2020cloudcontrol' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `likeqiang2020principles' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `icv2023whiteroadcloud' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `ran2023vrc' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `guo2023greeniov' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `sasaki2016mec' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `jia2016platoonvcps' on page 19 undefined on input line 267.
+
+
+Package natbib Warning: Citation `hejazi2022iottov2x' on page 19 undefined on input line 269.
+
+
+Package natbib Warning: Citation `usdot2024arcit93' on page 19 undefined on input line 269.
+
+
+Package natbib Warning: Citation `cmobile2024project' on page 19 undefined on input line 269.
+
+
+Package natbib Warning: Citation `lu2018citsdeployment' on page 19 undefined on input line 269.
+
+
+Package natbib Warning: Citation `ferrandez2018cmobilecase' on page 19 undefined on input line 269.
+
+
+
+[19]
+
+Package natbib Warning: Citation `caicv2019cpsarch10' on page 20 undefined on input line 271.
+
+
+Package natbib Warning: Citation `xu2023mbseivcps' on page 20 undefined on input line 271.
+
+
+Package natbib Warning: Citation `dassault2012strategicse' on page 20 undefined on input line 271.
+
+
+Package natbib Warning: Citation `caicv2021cpsarch20' on page 20 undefined on input line 271.
+
+
+Package natbib Warning: Citation `sae2024cloudplatformarch10' on page 20 undefined on input line 271.
+
+
+Package natbib Warning: Citation `chu2021cloudcontrolreview' on page 20 undefined on input line 271.
+
+
+Package natbib Warning: Citation `xu2023mbseivcps' on page 20 undefined on input line 273.
+
+
+Package natbib Warning: Citation `wanghailong2023soseoverall' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `gao2023swarmontology' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `gaoxinghai2017mbdtombe' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `gao2019digitalsystemmodel' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `wangweiping2019mbse' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `fengyimin2024soseframework' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `liminghua2021aerospace' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `zhanglin2022sosembs' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `liuxinghua2011sysmlsimulink' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `liutonglei2015tripleredundant' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `zhangshaojie2018mbsecivilaircraft' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `weicaise2021airsensor' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `guoyuliang2023door' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `qinchangmao2021remoteexpert' on page 20 undefined on input line 277.
+
+
+Package natbib Warning: Citation `liuyang2024soseoutlook' on page 20 undefined on input line 277.
+
+
+
+[20]
+
+Package natbib Warning: Citation `qixiaojing2026mbsose' on page 21 undefined on input line 279.
+
+
+LaTeX Warning: Reference `fig:use_case' on page 21 undefined on input line 286.
+
+
+Package natbib Warning: Citation `wangyang2023' on page 21 undefined on input line 288.
+
+
+LaTeX Warning: Reference `fig:use_case' on page 21 undefined on input line 288.
+
+File: fig/chap1/use_case.jpg Graphic file (type bmp)
+<fig/chap1/use_case.jpg>
+
+
+[21]
+
+[22]
+
+LaTeX Warning: Reference `fig:thesis_archi' on page 23 undefined on input line 316.
+
+File: fig/chap1/architecture.jpg Graphic file (type bmp)
+<fig/chap1/architecture.jpg>
+
+
+[23]
+
+[24]
+
+[25]) (./data/chap02.tex
+
+[26]
+第2章
+
+Package natbib Warning: Citation `fengyimin2024soseframework' on page 27 undefined on input line 16.
+
+
+Package natbib Warning: Citation `maier1996sosprinciples' on page 27 undefined on input line 18.
+
+
+Package natbib Warning: Citation `boardman2006meaningof' on page 27 undefined on input line 18.
+
+File: fig/chap2/sys_consis.jpg Graphic file (type bmp)
+<fig/chap2/sys_consis.jpg>
+
+
+[27
+
+]
+
+Package natbib Warning: Citation `caicv2024guideline' on page 28 undefined on input line 28.
+
+
+Package natbib Warning: Citation `lishuyan2022pccheavytrucks' on page 28 undefined on input line 28.
+
+
+Package natbib Warning: Citation `shijia2023cooperativemerging' on page 28 undefined on input line 28.
+
+
+Package natbib Warning: Citation `chenqien2023cpccbus' on page 28 undefined on input line 28.
+
+
+Package natbib Warning: Citation `hans2024' on page 28 undefined on input line 28.
+
+
+Package natbib Warning: Citation `fengyimin2024soseframework' on page 28 undefined on input line 30.
+
+
+Package natbib Warning: Citation `heqiang2018sosepractice' on page 28 undefined on input line 30.
+
+
+Package natbib Warning: Citation `baldwin2015simulation' on page 28 undefined on input line 32.
+
+
+Package natbib Warning: Citation `hause2020uafple' on page 28 undefined on input line 32.
+
+
+
+[28]
+File: fig/chap2/ivcps_arch_matrix.jpg Graphic file (type bmp)
+<fig/chap2/ivcps_arch_matrix.jpg>
+
+
+[29]
+
+Package natbib Warning: Citation `hause2020uafple' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `hause2021securityviews' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `hause2021serviceviews' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `abhaya2021ubm' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `qianqunyou2024uafurbancombat' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `lvweimin2021dodaf' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `cuiruijing2025uafindicator' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `lidelin2024uafcooperation' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `liminghua2021aerospace' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `huangran2024lunarserviceuaf' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `lisong2022uafairtransportation' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `wanglinyao2024missionengineeringreview' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `shiyujing2024missiontaskeval' on page 30 undefined on input line 51.
+
+
+Package natbib Warning: Citation `qixiaojing2026mbsose' on page 30 undefined on input line 51.
+
+
+LaTeX Warning: Reference `fig:ivcps_arch_matrix' on page 30 undefined on input line 53.
+
+
+
+[30]
+File: fig/chap2/time_series.jpg Graphic file (type bmp)
+<fig/chap2/time_series.jpg>
+File: fig/chap2/specific_flowchart.jpg Graphic file (type bmp)
+<fig/chap2/specific_flowchart.jpg>
+
+
+LaTeX Warning: Reference `fig:ivcps_time_series' on page 31 undefined on input line 76.
+
+
+Package natbib Warning: Citation `hause2021serviceviews' on page 31 undefined on input line 77.
+
+
+
+[31]
+
+Package natbib Warning: Citation `qinchangmao2021remoteexpert' on page 32 undefined on input line 80.
+
+
+Package natbib Warning: Citation `dassault2012strategicse' on page 32 undefined on input line 81.
+
+
+LaTeX Warning: Reference `fig:ivcps_specific_flowchart' on page 32 undefined on input line 82.
+
+
+
+[32]
+
+LaTeX Warning: Reference `fig:ivcps_specific_flowchart' on page 33 undefined on input line 88.
+
+File: fig/chap2/ct2rop_concept.png Graphic file (type bmp)
+<fig/chap2/ct2rop_concept.png>
+
+
+[33]
+
+LaTeX Warning: Reference `fig:ivcps_specific_flowchart' on page 34 undefined on input line 103.
+
+
+LaTeX Warning: Reference `fig:arch_process' on page 34 undefined on input line 103.
+
+File: fig/chap2/arch_process.jpg Graphic file (type bmp)
+<fig/chap2/arch_process.jpg>
+
+LaTeX Warning: Reference `fig:motivation' on page 34 undefined on input line 120.
+
+
+LaTeX Warning: Reference `fig:stage' on page 34 undefined on input line 120.
+
+
+LaTeX Warning: Reference `fig:resource_model' on page 34 undefined on input line 120.
+
+
+LaTeX Warning: Reference `fig:safe_capability' on page 34 undefined on input line 120.
+
+
+LaTeX Warning: Reference `fig:motivation' on page 34 undefined on input line 122.
+
+
+
+[34]
+File: fig/chap2/motivation.png Graphic file (type bmp)
+<fig/chap2/motivation.png>
+
+
+LaTeX Warning: Reference `fig:stage' on page 35 undefined on input line 132.
+
+
+LaTeX Warning: Reference `fig:resource_model' on page 35 undefined on input line 134.
+
+File: fig/chap2/stage.png Graphic file (type bmp)
+<fig/chap2/stage.png>
+
+
+[35]
+File: fig/chap2/resource_model.png Graphic file (type bmp)
+<fig/chap2/resource_model.png>
+
+
+[36]
+
+[37]
+File: fig/chap2/safe_capability.png Graphic file (type bmp)
+<fig/chap2/safe_capability.png>
+
+
+LaTeX Warning: Reference `fig:safe_capability' on page 38 undefined on input line 166.
+
+
+LaTeX Warning: Reference `fig:safe_capability' on page 38 undefined on input line 168.
+
+
+
+[38]
+
+[39]
+
+LaTeX Warning: Reference `fig:operation_model' on page 40 undefined on input line 174.
+
+File: fig/chap2/operation_model.png Graphic file (type bmp)
+<fig/chap2/operation_model.png>
+File: fig/chap2/operation_sim.png Graphic file (type bmp)
+<fig/chap2/operation_sim.png>
+
+LaTeX Warning: Reference `fig:operation_model' on page 40 undefined on input line 195.
+
+
+LaTeX Warning: Reference `fig:operation_sim' on page 40 undefined on input line 195.
+
+
+
+[40]
+
+[41]
+
+[42]
+
+LaTeX Warning: Reference `fig:service_model' on page 43 undefined on input line 204.
+
+File: fig/chap2/service_model.png Graphic file (type bmp)
+<fig/chap2/service_model.png>
+
+LaTeX Warning: Reference `fig:service_sim' on page 43 undefined on input line 215.
+
+File: fig/chap2/service_sim.png Graphic file (type bmp)
+<fig/chap2/service_sim.png>
+
+LaTeX Warning: Reference `fig:service_time_sim' on page 43 undefined on input line 225.
+
+
+Package natbib Warning: Citation `qixiaojing2026mbsose' on page 43 undefined on input line 225.
+
+
+LaTeX Warning: Reference `fig:service_time_sim' on page 43 undefined on input line 227.
+
+
+Package natbib Warning: Citation `KomasaQi2025CT2ROP_repo' on page 43 undefined on input line 227.
+
+
+
+[43]
+
+[44]
+
+[45]
+File: fig/chap2/servie_time_sim.png Graphic file (type bmp)
+<fig/chap2/servie_time_sim.png>
+
+
+LaTeX Warning: Reference `fig:safety_model' on page 46 undefined on input line 241.
+
+
+
+[46]
+File: fig/chap2/safe_resource.png Graphic file (type bmp)
+<fig/chap2/safe_resource.png>
+File: fig/chap2/resource_sim.png Graphic file (type bmp)
+<fig/chap2/resource_sim.png>
+
+
+LaTeX Warning: Reference `fig:resource_sim' on page 47 undefined on input line 262.
+
+
+LaTeX Warning: Reference `sub:cloud_decision_sim' on page 47 undefined on input line 262.
+
+
+
+[47]
+
+[48]
+
+[49]) (./data/chap03.tex
+
+[50]
+第3章
+
+LaTeX Warning: Reference `chap:architecture' on page 51 undefined on input line 5.
+
+
+LaTeX Warning: Reference `fig:graph_structure' on page 51 undefined on input line 17.
+
+
+
+[51
+
+]
+File: fig/chap3/knowledge_graph.png Graphic file (type bmp)
+<fig/chap3/knowledge_graph.png>
+File: fig/chap3/moleculer.png Graphic file (type bmp)
+<fig/chap3/moleculer.png>
+File: fig/chap3/complex_system.png Graphic file (type bmp)
+<fig/chap3/complex_system.png>
+File: fig/chap3/social_network.png Graphic file (type bmp)
+<fig/chap3/social_network.png>
+File: fig/chap3/traffic_net.png Graphic file (type bmp)
+<fig/chap3/traffic_net.png>
+File: fig/chap3/biological_network.png Graphic file (type bmp)
+<fig/chap3/biological_network.png>
+
+
+Package natbib Warning: Citation `STGCN2018' on page 52 undefined on input line 41.
+
+
+Package natbib Warning: Citation `Wayformer2022' on page 52 undefined on input line 41.
+
+
+Package natbib Warning: Citation `VisionGNN2022' on page 52 undefined on input line 41.
+
+
+
+[52]
+
+Package natbib Warning: Citation `GCN2017original' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `GraphSAGE2017' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `GAT2018original' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `GATv2_2022' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `HAN2019' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `Cluster_GCN' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `SAGPooling2019' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `U_net2015original' on page 53 undefined on input line 44.
+
+
+Package natbib Warning: Citation `Graphormer2021' on page 53 undefined on input line 46.
+
+
+Package natbib Warning: Citation `Performer2022' on page 53 undefined on input line 46.
+
+
+Package natbib Warning: Citation `BLIP_2_Q_Former2023' on page 53 undefined on input line 46.
+
+
+Package natbib Warning: Citation `Polynomer2024' on page 53 undefined on input line 46.
+
+
+
+[53]
+
+Package natbib Warning: Citation `STGCN2018' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `DCRNN2018' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `GraphWaveNet2019' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `U_net_TrafficPred2022' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `ASTGCN2019' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `GMAN2019' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `STTN2021' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `ST_Mamba2024' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `SpoT_Mamba2024' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `Mamba2_2024' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `BigST2024' on page 54 undefined on input line 48.
+
+
+Package natbib Warning: Citation `li2024bev_planner' on page 54 undefined on input line 50.
+
+
+Package natbib Warning: Citation `FlowMatching2023original' on page 54 undefined on input line 53.
+
+
+Package natbib Warning: Citation `GoalFlow2025' on page 54 undefined on input line 53.
+
+
+
+[54]
+
+LaTeX Warning: Reference `fig:bev_problem_and_solution' on page 55 undefined on input line 87.
+
+
+
+[55]
+File: fig/chap3/bev_problem.png Graphic file (type bmp)
+<fig/chap3/bev_problem.png>
+File: fig/chap3/graph_solution.png Graphic file (type bmp)
+<fig/chap3/graph_solution.png>
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 6.00064pt on input line 100.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 5.00053pt on input line 100.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 5.99936pt on input line 100.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 4.99947pt on input line 100.
+
+
+LaTeX Warning: Reference `fig:road_dict_illust' on page 56 undefined on input line 100.
+
+File: fig/chap3/road_struct.png Graphic file (type bmp)
+<fig/chap3/road_struct.png>
+File: fig/chap3/road_dict.png Graphic file (type bmp)
+<fig/chap3/road_dict.png>
+
+LaTeX Warning: Reference `fig:case1_edge' on page 56 undefined on input line 110.
+
+
+
+[56]
+File: fig/chap3/case1_edge.png Graphic file (type bmp)
+<fig/chap3/case1_edge.png>
+File: fig/chap3/case2_reduce.png Graphic file (type bmp)
+<fig/chap3/case2_reduce.png>
+File: fig/chap3/case3_same.png Graphic file (type bmp)
+<fig/chap3/case3_same.png>
+File: fig/chap3/example_net.png Graphic file (type bmp)
+<fig/chap3/example_net.png>
+
+
+LaTeX Warning: Reference `fig:case2_reduce' on page 57 undefined on input line 128.
+
+
+LaTeX Warning: Reference `fig:case3_same' on page 57 undefined on input line 128.
+
+
+
+[57]
+File: fig/chap3/feature_example.png Graphic file (type bmp)
+<fig/chap3/feature_example.png>
+
+
+[58]
+
+LaTeX Warning: Reference `fig:graphflow_training' on page 59 undefined on input line 169.
+
+File: fig/chap3/graphflow_training.png Graphic file (type bmp)
+<fig/chap3/graphflow_training.png>
+
+
+[59]
+
+[60]
+
+Package natbib Warning: Citation `Polynomer2024' on page 61 undefined on input line 197.
+
+
+
+[61]
+
+Package natbib Warning: Citation `DCRNN2018' on page 62 undefined on input line 235.
+
+
+
+[62]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 247.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(2)/m/n' will be
+(Font)              scaled to size 7.00075pt on input line 251.
+LaTeX Font Info:    Font shape `TU/XITSMath-Regular(3)/m/n' will be
+(Font)              scaled to size 6.99925pt on input line 251.
+
+
+LaTeX Warning: Reference `sub:graphflow_proof' on page 63 undefined on input line 277.
+
+
+
+[63]
+
+LaTeX Warning: Reference `fig:road_dict' on page 64 undefined on input line 295.
+
+
+Package natbib Warning: Citation `IDM_2020' on page 64 undefined on input line 297.
+
+
+
+[64]
+
+Package natbib Warning: Citation `MOBIL_1999' on page 65 undefined on input line 306.
+
+
+LaTeX Warning: Reference `fig:mcmc' on page 65 undefined on input line 332.
+
+
+Underfull \hbox (badness 1824) in paragraph at lines 332--333
+[]\TU/SimSun(0)/m/n/12.045 采 用 贝 叶 斯 估 计 中 的 马 尔 科 夫 链 蒙 特 卡 罗  |（\TU/TimesNewRoman(0)/m/n/12.045 Markov Chain Monte Carlo,
+ []
+
+File: fig/chap3/param_int_uncertain.png Graphic file (type bmp)
+<fig/chap3/param_int_uncertain.png>
+File: fig/chap3/mcmc.png Graphic file (type bmp)
+<fig/chap3/mcmc.png>
+
+LaTeX Warning: Reference `fig:param_int_uncertain' on page 65 undefined on input line 345.
+
+
+
+[65]
+
+[66]
+
+LaTeX Warning: Reference `fig:feature_extractor' on page 67 undefined on input line 365.
+
+File: fig/chap3/feature_extractor.png Graphic file (type bmp)
+<fig/chap3/feature_extractor.png>
+
+LaTeX Warning: Reference `sec:traffic_graph_representation' on page 67 undefined on input line 373.
+
+
+LaTeX Warning: Reference `tab:vehicle_feature' on page 67 undefined on input line 373.
+
+
+Package natbib Warning: Citation `PLUTO2024' on page 67 undefined on input line 401.
+
+
+
+[67]
+
+[68]
+
+LaTeX Warning: Reference `sec:graphflow' on page 69 undefined on input line 408.
+
+
+
+[69]
+
+LaTeX Warning: Reference `fig:ltr_feature' on page 70 undefined on input line 461.
+
+File: fig/chap3/ltr_feature.png Graphic file (type bmp)
+<fig/chap3/ltr_feature.png>
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 70 undefined on input line 468.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 70 undefined on input line 468.
+
+File: fig/chap3/6_order_approx.png Graphic file (type bmp)
+<fig/chap3/6_order_approx.png>
+
+LaTeX Warning: Reference `eq:128' on page 70 undefined on input line 475.
+
+
+
+[70]
+
+[71]
+
+LaTeX Warning: Reference `kinodynamic_model' on page 72 undefined on input line 571.
+
+
+LaTeX Warning: Reference `eq:138' on page 72 undefined on input line 579.
+
+
+
+[72]
+
+LaTeX Warning: Reference `eq:138' on page 73 undefined on input line 600.
+
+
+LaTeX Warning: Reference `eq:137' on page 73 undefined on input line 601.
+
+
+LaTeX Warning: Reference `eq:140' on page 73 undefined on input line 602.
+
+File: fig/chap3/solid_traj.png Graphic file (type bmp)
+<fig/chap3/solid_traj.png>
+File: fig/chap3/liquid_traj.png Graphic file (type bmp)
+<fig/chap3/liquid_traj.png>
+
+LaTeX Warning: Reference `fig:solid_traj' on page 73 undefined on input line 617.
+
+
+LaTeX Warning: Reference `fig:liquid_traj' on page 73 undefined on input line 617.
+
+
+
+[73]
+
+LaTeX Warning: Reference `chap04_antirollover_control' on page 74 undefined on input line 623.
+
+
+LaTeX Warning: Reference `chap04_antirollover_control' on page 74 undefined on input line 623.
+
+
+LaTeX Warning: Reference `fig:kinematic' on page 74 undefined on input line 631.
+
+File: fig/chap3/kinematic.png Graphic file (type bmp)
+<fig/chap3/kinematic.png>
+
+
+[74]
+
+[75]
+
+LaTeX Warning: Reference `eq:146' on page 76 undefined on input line 698.
+
+
+LaTeX Warning: Reference `eq:142' on page 76 undefined on input line 698.
+
+
+LaTeX Warning: Reference `eq:149' on page 76 undefined on input line 713.
+
+
+LaTeX Warning: Reference `eq:142' on page 76 undefined on input line 713.
+
+
+
+[76]
+File: fig/chap3/kinodynamic.png Graphic file (type bmp)
+<fig/chap3/kinodynamic.png>
+File: fig/chap3/order1_4.png Graphic file (type bmp)
+<fig/chap3/order1_4.png>
+File: fig/chap3/kinodynamic_results.png Graphic file (type bmp)
+<fig/chap3/kinodynamic_results.png>
+
+
+LaTeX Warning: Reference `fig:kinodynamic' on page 77 undefined on input line 765.
+
+
+
+[77]
+
+[78]
+Overfull \hbox (16.73404pt too wide) detected at line 803
+[][][][][] [] [][] [] [][] [] [][] [] [][][][] [] [][] [] [][][] [] [] [] [] [] [] []
+ []
+
+
+LaTeX Warning: Reference `eq:159' on page 79 undefined on input line 809.
+
+
+
+[79]
+
+LaTeX Warning: Reference `eq:151' on page 80 undefined on input line 820.
+
+
+
+[80]
+
+LaTeX Warning: Reference `fig:order1_4' on page 81 undefined on input line 862.
+
+
+LaTeX Warning: Reference `chap04_antirollover_control' on page 81 undefined on input line 862.
+
+
+Overfull \hbox (10.19382pt too wide) detected at line 876
+[][][][]
+ []
+
+
+LaTeX Warning: Reference `chap04_antirollover_control' on page 81 undefined on input line 878.
+
+
+LaTeX Warning: Reference `fig:kinodynamic_results' on page 81 undefined on input line 878.
+
+
+Package natbib Warning: Citation `gill1981practical' on page 81 undefined on input line 880.
+
+
+
+[81]
+Overfull \hbox (29.23238pt too wide) detected at line 889
+[][][][][]
+ []
+
+
+Package natbib Warning: Citation `chen2017CILQR_1' on page 82 undefined on input line 892.
+
+
+Package natbib Warning: Citation `chen2019CILQR_2' on page 82 undefined on input line 892.
+
+
+LaTeX Warning: Reference `subsection:antirollover_traj_gen_cloud' on page 82 undefined on input line 909.
+
+
+
+[82]
+
+LaTeX Warning: Reference `subsection:param_and_int_recog' on page 83 undefined on input line 917.
+
+
+Package natbib Warning: Citation `hans2024' on page 83 undefined on input line 917.
+
+File: fig/chap3/scenario_selection.png Graphic file (type bmp)
+<fig/chap3/scenario_selection.png>
+
+LaTeX Warning: Reference `fig:scenario_selection' on page 83 undefined on input line 929.
+
+
+
+[83]
+File: fig/chap3/illust_scenario.png Graphic file (type bmp)
+<fig/chap3/illust_scenario.png>
+
+
+[84]
+
+LaTeX Warning: Reference `fig:scenario_illust' on page 85 undefined on input line 956.
+
+
+LaTeX Warning: Reference `contingency_dual_scenario_cilqr' on page 85 undefined on input line 992.
+
+
+LaTeX Warning: Reference `eq:ltr_cbf' on page 85 undefined on input line 992.
+
+
+
+[85]
+
+LaTeX Warning: Reference `chap:architecture' on page 86 undefined on input line 1002.
+
+
+LaTeX Warning: Reference `sub:ct2rop_arch_detail' on page 86 undefined on input line 1002.
+
+
+LaTeX Warning: Reference `fig:sim_place' on page 86 undefined on input line 1002.
+
+File: fig/chap3/sim_place.png Graphic file (type bmp)
+<fig/chap3/sim_place.png>
+
+Package natbib Warning: Citation `rioh_2023_traffic_volume' on page 86 undefined on input line 1011.
+
+
+Package natbib Warning: Citation `mot_2024_traffic' on page 86 undefined on input line 1011.
+
+
+LaTeX Warning: Reference `tab:condition_table_all' on page 86 undefined on input line 1013.
+
+
+
+[86]
+
+LaTeX Warning: Reference `fig:train_graphflow' on page 87 undefined on input line 1016.
+
+
+Package natbib Warning: Citation `pred_neq_drive_tran2023what' on page 87 undefined on input line 1016.
+
+
+
+[87]
+File: fig/chap3/train_loss_graphflow.png Graphic file (type bmp)
+<fig/chap3/train_loss_graphflow.png>
+
+
+LaTeX Warning: Reference `fig:risk_pred' on page 88 undefined on input line 1025.
+
+
+LaTeX Warning: Reference `fig:risk_pred1' on page 88 undefined on input line 1025.
+
+
+LaTeX Warning: Reference `fig:risk_pred2' on page 88 undefined on input line 1025.
+
+File: fig/chap3/risk_pred1.png Graphic file (type bmp)
+<fig/chap3/risk_pred1.png>
+File: fig/chap3/risk_pred2.png Graphic file (type bmp)
+<fig/chap3/risk_pred2.png>
+
+LaTeX Warning: Reference `fig:train_ppo' on page 88 undefined on input line 1037.
+
+File: fig/chap3/train_ppo.png Graphic file (type bmp)
+<fig/chap3/train_ppo.png>
+
+
+[88]
+
+[89]
+
+LaTeX Warning: Reference `sub:trailer_mei_proof' on page 90 undefined on input line 1050.
+
+
+LaTeX Warning: Reference `eq:effi_reward' on page 90 undefined on input line 1052.
+
+
+LaTeX Warning: Reference `eq:conf_reward' on page 90 undefined on input line 1052.
+
+
+LaTeX Warning: Reference `eq:conf_reward' on page 90 undefined on input line 1052.
+
+
+LaTeX Warning: Reference `eq:nav_reward' on page 90 undefined on input line 1052.
+
+
+Package natbib Warning: Citation `PLUTO2024' on page 90 undefined on input line 1054.
+
+
+
+[90]
+
+LaTeX Warning: Reference `fig:r_safe' on page 91 undefined on input line 1056.
+
+File: fig/chap3/total_score.png Graphic file (type bmp)
+<fig/chap3/total_score.png>
+File: fig/chap3/r_safe.png Graphic file (type bmp)
+<fig/chap3/r_safe.png>
+
+LaTeX Warning: Reference `tab:reward_task' on page 91 undefined on input line 1073.
+
+
+LaTeX Warning: Reference `tab:reward_flow' on page 91 undefined on input line 1073.
+
+
+LaTeX Warning: Reference `fig:r_safe' on page 91 undefined on input line 1073.
+
+
+LaTeX Warning: Reference `fig:safe_index' on page 91 undefined on input line 1073.
+
+
+LaTeX Warning: Reference `fig:other_metrices' on page 91 undefined on input line 1073.
+
+
+
+[91]
+File: fig/chap3/r_ttc_inv.png Graphic file (type bmp)
+<fig/chap3/r_ttc_inv.png>
+File: fig/chap3/r_rttc_inv.png Graphic file (type bmp)
+<fig/chap3/r_rttc_inv.png>
+File: fig/chap3/r_mei.png Graphic file (type bmp)
+<fig/chap3/r_mei.png>
+File: fig/chap3/r_hw_inv.png Graphic file (type bmp)
+<fig/chap3/r_hw_inv.png>
+
+
+LaTeX Warning: Reference `fig:r_effi' on page 92 undefined on input line 1090.
+
+File: fig/chap3/r_effi.png Graphic file (type bmp)
+<fig/chap3/r_effi.png>
+File: fig/chap3/r_navi.png Graphic file (type bmp)
+<fig/chap3/r_navi.png>
+File: fig/chap3/r_right.png Graphic file (type bmp)
+<fig/chap3/r_right.png>
+File: fig/chap3/r_acc.png Graphic file (type bmp)
+<fig/chap3/r_acc.png>
+
+LaTeX Warning: Float too large for page by 6.21075pt on input line 1106.
+
+File: fig/chap3/example_illust.png Graphic file (type bmp)
+<fig/chap3/example_illust.png>
+
+LaTeX Warning: Reference `fig:example_illust' on page 92 undefined on input line 1119.
+
+
+
+[92]
+
+[93]
+
+[94]
+
+[95]
+
+LaTeX Warning: Reference `fig:scenario1' on page 96 undefined on input line 1124.
+
+File: fig/chap3/scenario1.png Graphic file (type bmp)
+<fig/chap3/scenario1.png>
+
+Underfull \hbox (badness 3895) in paragraph at lines 1124--1131
+[]\TU/SimSun(0)/m/n/12.045 本 场 景 中 自 车 以$[][]$$[][][]$ 的 初 速 度 正 在 加 速 欲 超 过 行 驶 在 前 方 存 在 一
+ []
+
+
+LaTeX Warning: Reference `fig:scenario2' on page 96 undefined on input line 1135.
+
+
+
+[96]
+File: fig/chap3/scenario2.png Graphic file (type bmp)
+<fig/chap3/scenario2.png>
+
+
+LaTeX Warning: Reference `fig:scenario3' on page 97 undefined on input line 1146.
+
+File: fig/chap3/scenario3.png Graphic file (type bmp)
+<fig/chap3/scenario3.png>
+
+
+[97]
+
+LaTeX Warning: Reference `fig:scenario4' on page 98 undefined on input line 1159.
+
+File: fig/chap3/scenario4.png Graphic file (type bmp)
+<fig/chap3/scenario4.png>
+
+
+[98]
+
+Package natbib Warning: Citation `KomasaQi2025COMPASS-Predictive-Driving_repo' on page 99 undefined on input line 1172.
+
+
+
+[99]) (./data/chap04.tex
+
+[100]
+第4章
+
+LaTeX Warning: Reference `chap03_vehicle_cloud_collaborate' on page 101 undefined on input line 5.
+
+
+LaTeX Warning: Reference `fig:sloshing_modeling' on page 101 undefined on input line 12.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2018equivalent' on page 101 undefined on input line 12.
+
+
+Package natbib Warning: Citation `salem2000rollover' on page 101 undefined on input line 12.
+
+
+Package natbib Warning: Citation `yangxiujian2018multimass' on page 101 undefined on input line 12.
+
+File: fig/chap4/sloshing_modeling.png Graphic file (type bmp)
+<fig/chap4/sloshing_modeling.png>
+
+Package natbib Warning: Citation `Komasa2023observing' on page 101 undefined on input line 20.
+
+
+LaTeX Warning: Reference `subsubsec:resource_analysis' on page 101 undefined on input line 20.
+
+
+
+[101
+
+]
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 102 undefined on input line 25.
+
+
+LaTeX Warning: Reference `fig:mass_surface' on page 102 undefined on input line 25.
+
+File: fig/chap4/mass_surface.png Graphic file (type bmp)
+<fig/chap4/mass_surface.png>
+
+
+[102]
+
+LaTeX Warning: Reference `fig:stl_model' on page 103 undefined on input line 36.
+
+File: fig/chap4/stl_model.png Graphic file (type bmp)
+<fig/chap4/stl_model.png>
+
+
+[103]
+
+LaTeX Warning: Reference `tab:stl_state' on page 104 undefined on input line 48.
+
+
+LaTeX Warning: Reference `tab:stl_param' on page 104 undefined on input line 48.
+
+
+LaTeX Warning: Reference `tab:stl_input' on page 104 undefined on input line 48.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: fig/chap4/sliding_lumped_mass.png Graphic file (type bmp)
+<fig/chap4/sliding_lumped_mass.png>
+
+LaTeX Warning: Reference `fig:sliding_lumped_mass' on page 104 undefined on input line 146.
+
+
+
+[104]
+
+[105]
+
+[106]
+
+[107]
+
+LaTeX Warning: Reference `tab:orthogonal_conditions' on page 108 undefined on input line 232.
+
+
+LaTeX Warning: Reference `fig:cfd_illust' on page 108 undefined on input line 261.
+
+
+LaTeX Warning: Reference `sub:cosim_platform' on page 108 undefined on input line 261.
+
+File: fig/chap4/compare_all_cases.png Graphic file (type bmp)
+<fig/chap4/compare_all_cases.png>
+File: fig/chap4/cfd_illust.png Graphic file (type bmp)
+<fig/chap4/cfd_illust.png>
+
+
+[108]
+
+[109]
+
+LaTeX Warning: Reference `tab:stl_param' on page 110 undefined on input line 282.
+
+
+LaTeX Warning: Reference `fig:compare_all_cases' on page 110 undefined on input line 282.
+
+
+LaTeX Warning: Reference `fig:sp_illust' on page 110 undefined on input line 290.
+
+
+LaTeX Warning: Reference `fig:coord_def' on page 110 undefined on input line 290.
+
+
+
+[110]
+File: fig/chap4/sp_illust.png Graphic file (type bmp)
+<fig/chap4/sp_illust.png>
+
+
+[111]
+
+LaTeX Warning: Reference `fig:coord_def' on page 112 undefined on input line 337.
+
+
+Overfull \hbox (14.081pt too wide) detected at line 358
+[][][][][] [] [][] [] [] [][] []
+ []
+
+
+LaTeX Warning: Reference `eq:single_pendulum_ddtheta' on page 112 undefined on input line 372.
+
+
+
+[112]
+
+LaTeX Warning: Reference `eq:d_dev' on page 113 undefined on input line 377.
+
+
+
+[113]
+
+LaTeX Warning: Reference `fig:linearize_illust' on page 114 undefined on input line 425.
+
+File: fig/chap4/linearize_illust.png Graphic file (type bmp)
+<fig/chap4/linearize_illust.png>
+
+LaTeX Warning: Reference `fig:linearize_illust' on page 114 undefined on input line 434.
+
+File: fig/chap4/residual_learning.png Graphic file (type bmp)
+<fig/chap4/residual_learning.png>
+
+
+[114]
+
+Package natbib Warning: Citation `SAC_2018' on page 115 undefined on input line 463.
+
+
+
+[115]
+File: fig/chap4/random_condition.png Graphic file (type bmp)
+<fig/chap4/random_condition.png>
+
+
+LaTeX Warning: Reference `fig:random_condition' on page 116 undefined on input line 475.
+
+
+LaTeX Warning: Reference `fig:ablation_test' on page 116 undefined on input line 475.
+
+File: fig/chap4/ga_raw.png Graphic file (type bmp)
+<fig/chap4/ga_raw.png>
+File: fig/chap4/add_param.png Graphic file (type bmp)
+<fig/chap4/add_param.png>
+File: fig/chap4/add_all.png Graphic file (type bmp)
+<fig/chap4/add_all.png>
+File: fig/chap4/neural_out.png Graphic file (type bmp)
+<fig/chap4/neural_out.png>
+
+LaTeX Warning: Reference `subsub:ldp' on page 116 undefined on input line 497.
+
+
+
+[116]
+File: fig/chap4/coord_def.png Graphic file (type bmp)
+<fig/chap4/coord_def.png>
+File: fig/chap4/trailer_model_lat.png Graphic file (type bmp)
+<fig/chap4/trailer_model_lat.png>
+File: fig/chap4/trailer_model_lon.png Graphic file (type bmp)
+<fig/chap4/trailer_model_lon.png>
+
+
+[117]
+
+[118]
+
+LaTeX Warning: Reference `fig:trailer_model_lat' on page 119 undefined on input line 542.
+
+
+LaTeX Warning: Reference `fig:trailer_model_lon' on page 119 undefined on input line 542.
+
+
+Package natbib Warning: Citation `zongchangfu2014identification' on page 119 undefined on input line 542.
+
+
+LaTeX Warning: Reference `eq:tractor_lat' on page 119 undefined on input line 542.
+
+
+LaTeX Warning: Reference `eq:tractor_roll' on page 119 undefined on input line 542.
+
+
+LaTeX Warning: Reference `tab:tank_truck_parameters' on page 119 undefined on input line 542.
+
+
+LaTeX Warning: Reference `eq:trailer_lon' on page 119 undefined on input line 566.
+
+
+LaTeX Warning: Reference `eq:trailer_roll' on page 119 undefined on input line 566.
+
+
+LaTeX Warning: Reference `eq:trailer_constraint' on page 119 undefined on input line 590.
+
+
+
+[119]
+File: fig/chap4/control_scheme.png Graphic file (type bmp)
+<fig/chap4/control_scheme.png>
+
+
+LaTeX Warning: Reference `fig:control_scheme' on page 120 undefined on input line 625.
+
+
+
+[120]
+
+LaTeX Warning: Reference `eq:M' on page 121 undefined on input line 645.
+
+
+LaTeX Warning: Reference `eq:A_0' on page 121 undefined on input line 645.
+
+
+LaTeX Warning: Reference `eq:B_0' on page 121 undefined on input line 645.
+
+
+LaTeX Warning: Reference `eq:T_c' on page 121 undefined on input line 645.
+
+
+LaTeX Warning: Reference `eq:discrete_state_space' on page 121 undefined on input line 664.
+
+
+LaTeX Warning: Reference `subsub:model_identification' on page 121 undefined on input line 668.
+
+
+LaTeX Warning: Reference `fig:state_fit' on page 121 undefined on input line 668.
+
+File: fig/chap4/state_fit.png Graphic file (type bmp)
+<fig/chap4/state_fit.png>
+
+
+[121]
+
+LaTeX Warning: Reference `fig:mpc_illust' on page 122 undefined on input line 687.
+
+File: fig/chap4/mpc_illust.png Graphic file (type bmp)
+<fig/chap4/mpc_illust.png>
+
+Package natbib Warning: Citation `Reviewer1_FuzzySteering' on page 122 undefined on input line 696.
+
+
+LaTeX Warning: Reference `fig:linear_tracker' on page 122 undefined on input line 696.
+
+
+Package natbib Warning: Citation `ShengboEbenLi2024reinforcement' on page 122 undefined on input line 696.
+
+
+Package natbib Warning: Citation `Komasa2023observing' on page 122 undefined on input line 696.
+
+File: fig/chap4/linear_tracker.jpg Graphic file (type bmp)
+<fig/chap4/linear_tracker.jpg>
+File: fig/chap4/absolute_tracker.jpg Graphic file (type bmp)
+<fig/chap4/absolute_tracker.jpg>
+
+
+[122]
+
+[123]
+
+Package natbib Warning: Citation `gongjianwei2020mpcbook' on page 124 undefined on input line 754.
+
+
+
+[124]
+
+Package natbib Warning: Citation `shengbo2015fastmpc' on page 125 undefined on input line 812.
+
+
+
+[125]
+
+[126]
+
+[127]
+
+LaTeX Warning: Reference `sub:MFASMC_residual_compensation' on page 128 undefined on input line 922.
+
+
+LaTeX Warning: Reference `sub:controller_nesting' on page 128 undefined on input line 924.
+
+
+LaTeX Warning: Reference `sub:cosim_platform' on page 128 undefined on input line 928.
+
+
+LaTeX Warning: Reference `sub:simulation_verification' on page 128 undefined on input line 928.
+
+
+LaTeX Warning: Reference `sub:multi_constraint_mpc' on page 128 undefined on input line 928.
+
+
+LaTeX Warning: Reference `sub:model_truck_platform' on page 128 undefined on input line 928.
+
+
+LaTeX Warning: Reference `sub:model_experiment' on page 128 undefined on input line 928.
+
+
+LaTeX Warning: Reference `sub:multi_constraint_mpc' on page 128 undefined on input line 928.
+
+
+LaTeX Warning: Reference `fig:cosim_arch' on page 128 undefined on input line 932.
+
+
+LaTeX Warning: Reference `fig:cosim_arch' on page 128 undefined on input line 932.
+
+
+LaTeX Warning: Reference `tab:co_sim_settings' on page 128 undefined on input line 932.
+
+
+LaTeX Warning: Reference `fig:simulink_model' on page 128 undefined on input line 932.
+
+
+Package natbib Warning: Citation `Komasa2023observing' on page 128 undefined on input line 932.
+
+
+
+[128]
+File: fig/chap4/cosim_arch.png Graphic file (type bmp)
+<fig/chap4/cosim_arch.png>
+
+
+LaTeX Warning: Reference `fig:grid_sensitivity' on page 129 undefined on input line 943.
+
+
+LaTeX Warning: Reference `fig:grid_sensitivity_set' on page 129 undefined on input line 943.
+
+
+LaTeX Warning: Reference `fig:grid_sensitivity_res' on page 129 undefined on input line 943.
+
+
+LaTeX Warning: Reference `fig:grid_sensitivity_set' on page 129 undefined on input line 943.
+
+
+LaTeX Warning: Reference `fig:grid_sensitivity_set' on page 129 undefined on input line 943.
+
+
+LaTeX Warning: Reference `tab:co_sim_settings' on page 129 undefined on input line 943.
+
+File: fig/chap4/simulink_model.png Graphic file (type bmp)
+<fig/chap4/simulink_model.png>
+File: fig/chap4/grid_sensitivity_set.png Graphic file (type bmp)
+<fig/chap4/grid_sensitivity_set.png>
+File: fig/chap4/grid_sensitivity_res.png Graphic file (type bmp)
+<fig/chap4/grid_sensitivity_res.png>
+
+Package natbib Warning: Citation `Reviewer2_SunWencai2022' on page 129 undefined on input line 994.
+
+
+Package natbib Warning: Citation `zhaoweiqiang2019semitrailer' on page 129 undefined on input line 994.
+
+
+Package natbib Warning: Citation `KomasaQi2025AntiRollover_TITS' on page 129 undefined on input line 994.
+
+
+LaTeX Warning: Reference `sub:multi_constraint_mpc' on page 129 undefined on input line 994.
+
+
+
+[129]
+
+[130]
+
+[131]
+
+Package natbib Warning: Citation `WJG203-2006' on page 132 undefined on input line 998.
+
+
+Package natbib Warning: Citation `UrbanCrossDesign' on page 132 undefined on input line 998.
+
+
+Package natbib Warning: Citation `CrossCornerRadius' on page 132 undefined on input line 998.
+
+
+LaTeX Warning: Reference `fig:s_corner_illust' on page 132 undefined on input line 998.
+
+File: fig/chap4/s_corner_illust.png Graphic file (type bmp)
+<fig/chap4/s_corner_illust.png>
+
+LaTeX Warning: Reference `fig:s_corner_track' on page 132 undefined on input line 1007.
+
+
+LaTeX Warning: Reference `fig:s_corner_u' on page 132 undefined on input line 1007.
+
+
+LaTeX Warning: Reference `fig:s_corner_track' on page 132 undefined on input line 1007.
+
+
+LaTeX Warning: Reference `fig:s_corner_x' on page 132 undefined on input line 1007.
+
+File: fig/chap4/s_corner_track.png Graphic file (type bmp)
+<fig/chap4/s_corner_track.png>
+
+
+[132]
+File: fig/chap4/s_corner_x.png Graphic file (type bmp)
+<fig/chap4/s_corner_x.png>
+
+
+LaTeX Warning: Reference `fig:s_corner_u' on page 133 undefined on input line 1024.
+
+
+
+[133]
+File: fig/chap4/s_corner_u.png Graphic file (type bmp)
+<fig/chap4/s_corner_u.png>
+
+
+LaTeX Warning: Reference `fig:s_slc_illust' on page 134 undefined on input line 1046.
+
+File: fig/chap4/s_slc_illust.png Graphic file (type bmp)
+<fig/chap4/s_slc_illust.png>
+File: fig/chap4/s_slc_track.png Graphic file (type bmp)
+<fig/chap4/s_slc_track.png>
+
+LaTeX Warning: Reference `fig:s_slc_track' on page 134 undefined on input line 1063.
+
+
+
+[134]
+
+LaTeX Warning: Reference `fig:s_slc_x' on page 135 undefined on input line 1065.
+
+
+LaTeX Warning: Reference `fig:s_slc_u' on page 135 undefined on input line 1067.
+
+File: fig/chap4/s_slc_x.png Graphic file (type bmp)
+<fig/chap4/s_slc_x.png>
+File: fig/chap4/s_slc_u.png Graphic file (type bmp)
+<fig/chap4/s_slc_u.png>
+
+LaTeX Warning: Reference `fig:s_dlc_illust' on page 135 undefined on input line 1087.
+
+
+
+[135]
+
+[136]
+File: fig/chap4/s_dlc_illust.png Graphic file (type bmp)
+<fig/chap4/s_dlc_illust.png>
+
+
+LaTeX Warning: Reference `fig:s_dlc_track' on page 137 undefined on input line 1096.
+
+
+Underfull \hbox (badness 1048) in paragraph at lines 1096--1097
+[]\TU/SimSun(0)/m/n/12.045 根 据 仿 真 试 验，| \TU/TimesNewRoman(0)/m/n/12.045 PT \TU/SimSun(0)/m/n/12.045 组 在$[][]$$[][][]$ 的 速 度 下 即 发 生 侧 翻，|  表 明 本 研 究 设 定
+ []
+
+File: fig/chap4/s_dlc_track.png Graphic file (type bmp)
+<fig/chap4/s_dlc_track.png>
+File: fig/chap4/s_dlc_x.png Graphic file (type bmp)
+<fig/chap4/s_dlc_x.png>
+
+LaTeX Warning: Reference `fig:s_dlc_x' on page 137 undefined on input line 1112.
+
+
+LaTeX Warning: Reference `fig:s_dlc_u' on page 137 undefined on input line 1114.
+
+
+
+[137]
+File: fig/chap4/s_dlc_u.png Graphic file (type bmp)
+<fig/chap4/s_dlc_u.png>
+
+
+LaTeX Warning: Reference `sub:semirollover' on page 138 undefined on input line 1125.
+
+
+LaTeX Warning: Reference `chap:architecture' on page 138 undefined on input line 1125.
+
+
+LaTeX Warning: Reference `subsubsec:resource_analysis' on page 138 undefined on input line 1125.
+
+
+
+[138]
+
+LaTeX Warning: Reference `fig:s_deer_illust' on page 139 undefined on input line 1127.
+
+File: fig/chap4/s_deer_illust.png Graphic file (type bmp)
+<fig/chap4/s_deer_illust.png>
+File: fig/chap4/s_deer_track.png Graphic file (type bmp)
+<fig/chap4/s_deer_track.png>
+
+LaTeX Warning: Reference `fig:s_deer_track' on page 139 undefined on input line 1141.
+
+File: fig/chap4/s_deer_x.png Graphic file (type bmp)
+<fig/chap4/s_deer_x.png>
+File: fig/chap4/s_deer_u.png Graphic file (type bmp)
+<fig/chap4/s_deer_u.png>
+
+LaTeX Warning: Reference `fig:s_deer_x' on page 139 undefined on input line 1154.
+
+
+LaTeX Warning: Reference `fig:s_deer_u' on page 139 undefined on input line 1154.
+
+
+
+[139]
+
+[140]
+
+[141]
+
+LaTeX Warning: Reference `fig:hardware' on page 142 undefined on input line 1189.
+
+
+LaTeX Warning: Reference `tab:state_measurement' on page 142 undefined on input line 1191.
+
+File: fig/chap4/hardware.png Graphic file (type bmp)
+<fig/chap4/hardware.png>
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 142 undefined on input line 1201.
+
+
+Package natbib Warning: Citation `FengRan2018' on page 142 undefined on input line 1211.
+
+
+LaTeX Warning: Reference `fig:prog_arch' on page 142 undefined on input line 1224.
+
+
+Package natbib Warning: Citation `KomasaQi2025HitchOpen-THICV-Stack_repo' on page 142 undefined on input line 1224.
+
+
+
+[142]
+
+[143]
+File: fig/chap4/prog_arch.png Graphic file (type bmp)
+<fig/chap4/prog_arch.png>
+
+
+Package natbib Warning: Citation `BookFluidMechanics' on page 144 undefined on input line 1239.
+
+File: fig/chap4/mod_similarity2.png Graphic file (type bmp)
+<fig/chap4/mod_similarity2.png>
+
+LaTeX Warning: Reference `fig:mod_similarity' on page 144 undefined on input line 1248.
+
+
+
+[144]
+
+LaTeX Warning: Reference `eq:similarity' on page 145 undefined on input line 1262.
+
+
+
+[145]
+
+LaTeX Warning: Reference `eq:similarity' on page 146 undefined on input line 1293.
+
+
+LaTeX Warning: Reference `eq:time_constraint' on page 146 undefined on input line 1293.
+
+
+LaTeX Warning: Reference `fig:mod_path' on page 146 undefined on input line 1297.
+
+
+LaTeX Warning: Reference `eq:lane_change_char' on page 146 undefined on input line 1297.
+
+
+LaTeX Warning: Reference `fig:mod_lane_change_char' on page 146 undefined on input line 1297.
+
+File: fig/chap4/lane_change_char.png Graphic file (type bmp)
+<fig/chap4/lane_change_char.png>
+File: fig/chap4/mod_path.png Graphic file (type bmp)
+<fig/chap4/mod_path.png>
+
+LaTeX Warning: Reference `fig:experiment' on page 146 undefined on input line 1316.
+
+
+LaTeX Warning: Reference `fig:exp_vel' on page 146 undefined on input line 1316.
+
+
+LaTeX Warning: Reference `fig:exp_tracking' on page 146 undefined on input line 1316.
+
+
+LaTeX Warning: Reference `fig:exp_photos' on page 146 undefined on input line 1316.
+
+
+
+[146]
+
+LaTeX Warning: Reference `fig:exp_sloshing' on page 147 undefined on input line 1318.
+
+
+LaTeX Warning: Reference `fig:exp_sloshing' on page 147 undefined on input line 1320.
+
+
+LaTeX Warning: Reference `fig:exp_iterTime' on page 147 undefined on input line 1322.
+
+File: fig/chap4/exp_tracking.png Graphic file (type bmp)
+<fig/chap4/exp_tracking.png>
+File: fig/chap4/exp_roll.png Graphic file (type bmp)
+<fig/chap4/exp_roll.png>
+File: fig/chap4/exp_LTR.png Graphic file (type bmp)
+<fig/chap4/exp_LTR.png>
+File: fig/chap4/exp_vel.png Graphic file (type bmp)
+<fig/chap4/exp_vel.png>
+
+
+[147]
+File: fig/chap4/exp_photos.png Graphic file (type bmp)
+<fig/chap4/exp_photos.png>
+File: fig/chap4/exp_sl.png Graphic file (type bmp)
+<fig/chap4/exp_sl.png>
+File: fig/chap4/exp_slackVar.png Graphic file (type bmp)
+<fig/chap4/exp_slackVar.png>
+File: fig/chap4/exp_iterTime.png Graphic file (type bmp)
+<fig/chap4/exp_iterTime.png>
+) (./data/chap05.tex
+
+[148]
+
+[149]
+
+[150]
+第5章
+
+
+[151
+
+])
+
+[152]
+\openout3 = `bu.aux'.
+
+
+No file 车云协同液罐车防侧翻行驶规划与控制研究.bbl.
+(./data/appendix.tex (out/bu.aux)
+附录 A
+No file 车云协同液罐车防侧翻行驶规划与控制研究-appendix-a.aux.
+\openout3 = `车云协同液罐车防侧翻行驶规划与控制研究-appendix-a.aux'.
+
+
+Package natbib Warning: Citation `cunningham2015mpdm' on page 153 undefined on input line 11.
+
+
+Package natbib Warning: Citation `galceran2017changepoint' on page 153 undefined on input line 11.
+
+
+Package natbib Warning: Citation `ding2022epsilon' on page 153 undefined on input line 11.
+
+
+Package natbib Warning: Citation `zhang2020guidedbranching' on page 153 undefined on input line 11.
+
+
+Package natbib Warning: Citation `ding2019semanticcorridor' on page 153 undefined on input line 11.
+
+
+Package natbib Warning: Citation `bae2023lanechange' on page 153 undefined on input line 11.
+
+
+Package natbib Warning: Citation `salvado2016contingency' on page 153 undefined on input line 13.
+
+
+Package natbib Warning: Citation `huang2021riskbudget' on page 153 undefined on input line 13.
+
+
+Package natbib Warning: Citation `da2022reactivesafety' on page 153 undefined on input line 13.
+
+
+Package natbib Warning: Citation `li2018gametheoryacc' on page 153 undefined on input line 13.
+
+
+Package natbib Warning: Citation `li2020gametheorytits' on page 153 undefined on input line 13.
+
+
+Package natbib Warning: Citation `lecleach2020lucidgames' on page 153 undefined on input line 13.
+
+
+Package natbib Warning: Citation `lecleach2022algames' on page 153 undefined on input line 13.
+
+
+
+[153
+
+
+]
+
+Package natbib Warning: Citation `li2023marc' on page 154 undefined on input line 15.
+
+
+Package natbib Warning: Citation `sun2018courteous' on page 154 undefined on input line 15.
+
+
+Package natbib Warning: Citation `sheng2023cooperationaware' on page 154 undefined on input line 15.
+
+
+Package natbib Warning: Citation `AttnIsAllYouNeed2017' on page 154 undefined on input line 20.
+
+
+Package natbib Warning: Citation `chen2023endtoend' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `PlanTF2023' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `PLUTO2024' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `CarPlanner2025' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `Wayformer2022' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `Trajeglish2024' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `PlanR12025' on page 154 undefined on input line 22.
+
+
+Package natbib Warning: Citation `AttnIsAllYouNeed2017' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `ViT2021' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `DETR2020' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `Deformable_DETR2021' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `Faster_RCNN2016' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `MaskRCNN2018' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `YOLOv12016' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `Transfuser2023' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `LSS_Lift_Splat_Shoot_BEV2020' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `PanopticSegFormer2022' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `BevFormer2022' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `LSS_Lift_Splat_Shoot_BEV2020' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `PanopticSegFormer2022' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `BevFormer2022' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `MapTR2023' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `SurrondOcc2023' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `CASPFormer2024' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `hu2022uniAD' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `jiang2023vad' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `guo2024UAD' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `SparseDrive2024' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `VADv2_2024' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `li2024bev_planner' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `li2024hydramdp' on page 154 undefined on input line 24.
+
+
+Package natbib Warning: Citation `gao2022sem2_worldmodel' on page 154 undefined on input line 24.
+
+
+
+[154]
+
+Package natbib Warning: Citation `DDPM2020' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DDIM2022' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `Score_based_Diff2021' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DMP_Solver2022' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DPM_Solver_v3_2023' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DPM_Solver_pp_2024' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `LDM_VQGANandDDPM2022' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `VQ_GAN2021' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DiffusionPlanner2025' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `FlowMatching2023original' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `CLIP2021' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DALLE_2_CLIPandDDPM2022' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `DiffusionDrive_v2_2025' on page 155 undefined on input line 26.
+
+
+Package natbib Warning: Citation `GoalFlow2025' on page 155 undefined on input line 26.
+
+
+
+[155]
+
+LaTeX Warning: Reference `fig:rollover_modes' on page 156 undefined on input line 30.
+
+
+Package natbib Warning: Citation `wanying2020antirolover' on page 156 undefined on input line 30.
+
+File: fig/chap1/rollover_modes.png Graphic file (type bmp)
+<fig/chap1/rollover_modes.png>
+
+LaTeX Warning: Reference `fig:semi_rollover_condition' on page 156 undefined on input line 40.
+
+
+
+[156]
+File: fig/chap1/aba_start.png Graphic file (type bmp)
+<fig/chap1/aba_start.png>
+File: fig/chap1/ab_start.png Graphic file (type bmp)
+<fig/chap1/ab_start.png>
+File: fig/chap1/passive_start.png Graphic file (type bmp)
+<fig/chap1/passive_start.png>
+File: fig/chap1/high_start.png Graphic file (type bmp)
+<fig/chap1/high_start.png>
+
+
+LaTeX Warning: Reference `fig:newb_test' on page 157 undefined on input line 57.
+
+
+LaTeX Warning: Reference `fig:auto_test' on page 157 undefined on input line 57.
+
+
+LaTeX Warning: Reference `fig:toy_test' on page 157 undefined on input line 57.
+
+
+LaTeX Warning: Reference `fig:tank_truck_test' on page 157 undefined on input line 57.
+
+File: fig/chap1/newb_test.png Graphic file (type bmp)
+<fig/chap1/newb_test.png>
+File: fig/chap1/auto_test.png Graphic file (type bmp)
+<fig/chap1/auto_test.png>
+File: fig/chap1/toy_test.png Graphic file (type bmp)
+<fig/chap1/toy_test.png>
+File: fig/chap1/tank_truck_test.png Graphic file (type bmp)
+<fig/chap1/tank_truck_test.png>
+
+
+[157]
+
+LaTeX Warning: Reference `chap03_vehicle_cloud_collaborate' on page 158 undefined on input line 80.
+
+
+Package natbib Warning: Citation `DQN_2013' on page 158 undefined on input line 83.
+
+
+
+[158]
+
+Package natbib Warning: Citation `QR_DQN_2017' on page 159 undefined on input line 85.
+
+
+Package natbib Warning: Citation `A2C_2016' on page 159 undefined on input line 92.
+
+
+Package natbib Warning: Citation `TRPO_2017' on page 159 undefined on input line 94.
+
+
+Package natbib Warning: Citation `PPO_2017' on page 159 undefined on input line 94.
+
+
+Package natbib Warning: Citation `DDPG_2015' on page 159 undefined on input line 97.
+
+
+Package natbib Warning: Citation `TD3_2018' on page 159 undefined on input line 99.
+
+
+Package natbib Warning: Citation `SAC_2018' on page 159 undefined on input line 99.
+
+
+Package natbib Warning: Citation `TQC_2020' on page 159 undefined on input line 99.
+
+
+
+[159]
+
+Package natbib Warning: Citation `HER_original_2017' on page 160 undefined on input line 102.
+
+
+Package natbib Warning: Citation `plappert2018multigoalreinforcementlearningchallenging' on page 160 undefined on input line 102.
+
+
+Package natbib Warning: Citation `ARS_2018' on page 160 undefined on input line 104.
+
+
+Package natbib Warning: Citation `DroQ_2022' on page 160 undefined on input line 106.
+
+
+Package natbib Warning: Citation `CrossQ_2024' on page 160 undefined on input line 106.
+
+
+Package natbib Warning: Citation `SimBa_2025' on page 160 undefined on input line 106.
+
+
+Package natbib Warning: Citation `PPO_2017' on page 160 undefined on input line 109.
+
+
+
+[160]
+
+Package natbib Warning: Citation `PPO_2017' on page 161 undefined on input line 144.
+
+
+LaTeX Warning: Reference `loss_fm' on page 161 undefined on input line 150.
+
+
+LaTeX Warning: Reference `loss_cfm' on page 161 undefined on input line 150.
+
+
+
+[161]
+
+[162]
+
+Package natbib Warning: Citation `chenghao2025emergency_index' on page 163 undefined on input line 200.
+
+
+Package natbib Warning: Citation `chenhao2025mei' on page 163 undefined on input line 200.
+
+
+
+[163]
+
+LaTeX Warning: Reference `fig:indepth' on page 164 undefined on input line 206.
+
+File: fig/appx/indepth_illust.png Graphic file (type bmp)
+<fig/appx/indepth_illust.png>
+
+LaTeX Warning: Reference `fig:drag_line' on page 164 undefined on input line 217.
+
+
+LaTeX Warning: Reference `eq:theta' on page 164 undefined on input line 217.
+
+
+LaTeX Warning: Reference `eq:trailer_traj' on page 164 undefined on input line 217.
+
+
+LaTeX Warning: Reference `eq:theta' on page 164 undefined on input line 217.
+
+
+LaTeX Warning: Reference `eq:tractor_traj' on page 164 undefined on input line 217.
+
+
+LaTeX Warning: Reference `eq:trailer_traj' on page 164 undefined on input line 217.
+
+File: fig/appx/drag_line.png Graphic file (type bmp)
+<fig/appx/drag_line.png>
+
+LaTeX Warning: Reference `fig:trailer_proj' on page 164 undefined on input line 245.
+
+
+Package natbib Warning: Citation `chenhao2025mei' on page 164 undefined on input line 245.
+
+
+
+[164]
+File: fig/appx/trailer_proj.png Graphic file (type bmp)
+<fig/appx/trailer_proj.png>
+File: fig/appx/trailer_calc.png Graphic file (type bmp)
+<fig/appx/trailer_calc.png>
+
+
+[165]
+
+LaTeX Warning: Reference `sub:multi_constraint_mpc' on page 166 undefined on input line 263.
+
+
+Package natbib Warning: Citation `tangzeyue2023mpcmfac' on page 166 undefined on input line 263.
+
+File: fig/chap4/mfasmc_sup.png Graphic file (type bmp)
+<fig/chap4/mfasmc_sup.png>
+
+
+[166]
+
+Package natbib Warning: Citation `houzhongsheng2011book_MFAC' on page 167 undefined on input line 298.
+
+
+
+[167]
+
+LaTeX Warning: Reference `sub:mfac_basic' on page 168 undefined on input line 374.
+
+
+Overfull \hbox (43.53923pt too wide) detected at line 394
+[][][][][]
+ []
+
+
+
+[168]
+
+LaTeX Warning: Reference `eq:reach_law_exp_discrete' on page 169 undefined on input line 424.
+
+
+LaTeX Warning: Reference `eq:surface_next' on page 169 undefined on input line 424.
+
+
+Overfull \hbox (14.9964pt too wide) detected at line 431
+[][][][][][][][] [] [][][][][] []
+ []
+
+
+Overfull \hbox (3.90594pt too wide) detected at line 453
+[][][][][]
+ []
+
+
+
+[169]
+
+LaTeX Warning: Reference `eq:first_order_surface_next' on page 170 undefined on input line 463.
+
+
+LaTeX Warning: Reference `eq:reach_law_exp_discrete' on page 170 undefined on input line 468.
+
+
+LaTeX Warning: Reference `eq:surface_next_simplified' on page 170 undefined on input line 468.
+
+
+Overfull \hbox (20.88557pt too wide) detected at line 472
+[][][][][][][][] [] [][][][][][][] []
+ []
+
+
+Underfull \hbox (badness 2762) in paragraph at lines 484--485
+[] []\TU/SimSun(0)/m/n/10.53937 系 统 期 望 输 出 序 列 $[][][][][][][]$，|  系 统 实 际 输 出 序 列 $[][][][][][]$，|  伪 阶 数 $[][][] [][]$，|  超 参 数
+ []
+
+
+LaTeX Warning: Reference `eq:ffdl' on page 170 undefined on input line 516.
+
+
+LaTeX Warning: Reference `eq:cost_function' on page 170 undefined on input line 516.
+
+
+Overfull \hbox (15.96028pt too wide) detected at line 537
+[][][][][]
+ []
+
+
+
+[170]
+
+LaTeX Warning: Reference `eq:cost_function_ffdl' on page 171 undefined on input line 538.
+
+
+Overfull \hbox (20.0491pt too wide) detected at line 542
+[][][][] [] [][][][][][] [] [] [][][][][][][] [] [][][] [] [][][] [] []
+ []
+
+
+
+[171]
+Overfull \hbox (5.4435pt too wide) detected at line 580
+[][][][][]
+ []
+
+
+Overfull \hbox (20.30804pt too wide) detected at line 593
+[][][][] [][][][][] [] [] [][][][][] [] [][] [] [][][][][] [] [][]
+ []
+
+
+
+[172]
+Overfull \hbox (24.7124pt too wide) detected at line 603
+[][][][][]
+ []
+
+
+LaTeX Warning: Reference `eq:phi_i' on page 173 undefined on input line 606.
+
+
+
+[173]
+
+LaTeX Warning: Reference `fig:controller_nesting' on page 174 undefined on input line 632.
+
+File: fig/appx/controller_nesting.png Graphic file (type bmp)
+<fig/appx/controller_nesting.png>
+
+
+[174]
+Overfull \hbox (22.86719pt too wide) in alignment at lines 719--855
+ [] [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table A.2 on input line 855.
+
+[175] [176]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table A.3 on input line 944.
+
+[177]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table A.4 on input line 1081.
+
+[178] [179]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table A.5 on input line 1150.
+
+[180]
+Overfull \hbox (17.59743pt too wide) detected at line 1177
+[][][][] [] [][]
+ []
+
+
+
+[181]
+Overfull \hbox (41.92247pt too wide) detected at line 1201
+[][]
+ []
+
+
+
+[182]
+
+[183]
+No file 车云协同液罐车防侧翻行驶规划与控制研究-appendix-a.bbl.
+) (./data/acknowledgements.tex (out/bu.aux)
+
+[184]) (out/bu.aux)
+
+[185
+
+
+] (./data/resume.tex (out/bu.aux)
+
+[186
+
+
+]
+Underfull \hbox (badness 1924) in paragraph at lines 31--32
+[]\TU/SimSun(0)/m/n/12.045 高 博 麟\TU/TimesNewRoman(0)/m/n/12.045 , \TU/SimSun(0)/b/n/12.045 戚 笑 景\TU/TimesNewRoman(0)/m/n/12.045 . \TU/SimSun(0)/m/n/12.045 一 种 计 算 液 罐 车 车 液 耦 合 动 力 学 的 联 合 仿 真 方 法：|  中
+ []
+
+
+Underfull \hbox (badness 2662) in paragraph at lines 33--34
+[]\TU/SimSun(0)/m/n/12.045 高 博 麟\TU/TimesNewRoman(0)/m/n/12.045 , \TU/SimSun(0)/b/n/12.045 戚 笑 景\TU/TimesNewRoman(0)/m/n/12.045 . \TU/SimSun(0)/m/n/12.045 用 于 复 杂 信 息 物 理 系 统 设 计 的 \TU/TimesNewRoman(0)/m/n/12.045 RFL (C&P) \TU/SimSun(0)/m/n/12.045 方 法：|  中
+ []
+
+
+
+[187
+
+
+]) (./data/comments.tex (out/bu.aux)
+
+[188]
+
+[189
+
+]) (./data/resolution.tex (out/bu.aux)
+
+[190
+
+
+])
+
+Package natbib Warning: There were undefined citations.
+
+(out/bu.aux)
+
+Package longtable Warning: Table widths have changed. Rerun LaTeX.
+
+(out/车云协同液罐车防侧翻行驶规划与控制研究.aux (out/bu.aux))
+ ***********
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2022/08/05>
+ ***********
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `车云协同液罐车防侧翻行驶规划与控制研究.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `车云协同液罐车防侧翻行驶规划与控制研究.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  DF54309CF1226432B7B187450A236F26;18608.
+ ) 
+Here is how much of TeX's memory you used:
+ 33920 strings out of 475796
+ 769800 string characters out of 5774034
+ 1276109 words of memory out of 5000000
+ 56131 multiletter control sequences out of 15000+600000
+ 569420 words of font info for 215 fonts, out of 8000000 for 9000
+ 37 hyphenation exceptions out of 8191
+ 106i,17n,123p,1899b,2894s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+Output written on out/车云协同液罐车防侧翻行驶规划与控制研究.xdv (216 pages, 2860344 bytes).
