@@ -8,11 +8,11 @@
   \label{sub:pipeline}
     近年来模块化路线的一个共同趋势是\emph{预测--决策一体化}：将自车决策作为条件变量，显式或隐式地建模“自车动作$\rightarrow$他车响应”的耦合关系，并在候选决策之间做综合评估。现有研究大体可按交互处理方式划分为显式交互、隐式交互及综合式交互三类。
 
-    \textbf{显式交互}以自车候选策略/意图划分场景，在每个候选行为下预测周车反应，并对不同候选行为的长期收益与风险进行比较，典型代表为多策略决策方法（Multi-Policy Decision Method, MPDM）。Cunningham等\cite{cunningham2015mpdm,galceran2017changepoint}提出MPDM思想，将交互不确定性建模为部分可观测马尔可夫决策过程（Partially Observable Markov Decision Problem, POMDP），并用一组闭环策略/意图近似描述自车与周车的决策空间，从而显著压缩搜索规模。Ding等提出的EPSILON\cite{ding2022epsilon}继承并改进该思想，提出领域特定闭环策略树（Domain-Specific-Policy Tree, DCP-Tree）与条件集中分支（Conditional Focused Branching, CFB）机制\cite{zhang2020guidedbranching}，通过限制自车策略展开深度并聚焦意图不确定性高的周车，提升了在线规划的效率；并进一步结合时空语义走廊规划器\cite{ding2019semanticcorridor}用于运动规划。Bae等\cite{bae2023lanechange}结合MPC与生成对抗网络（Generative Adversarial Network, GAN）生成平滑换道轨迹，并引入自适应安全边界与卡尔曼滤波以提升密集交通中的鲁棒性与可用性。
+    \emph{显式交互}以自车候选策略/意图划分场景，在每个候选行为下预测周车反应，并对不同候选行为的长期收益与风险进行比较，典型代表为多策略决策方法（Multi-Policy Decision Method, MPDM）。Cunningham等\cite{cunningham2015mpdm,galceran2017changepoint}提出MPDM思想，将交互不确定性建模为部分可观测马尔可夫决策过程（Partially Observable Markov Decision Problem, POMDP），并用一组闭环策略/意图近似描述自车与周车的决策空间，从而显著压缩搜索规模。Ding等提出的EPSILON\cite{ding2022epsilon}继承并改进该思想，提出领域特定闭环策略树（Domain-Specific-Policy Tree, DCP-Tree）与条件集中分支（Conditional Focused Branching, CFB）机制\cite{zhang2020guidedbranching}，通过限制自车策略展开深度并聚焦意图不确定性高的周车，提升了在线规划的效率；并进一步结合时空语义走廊规划器\cite{ding2019semanticcorridor}用于运动规划。Bae等\cite{bae2023lanechange}结合MPC与生成对抗网络（Generative Adversarial Network, GAN）生成平滑换道轨迹，并引入自适应安全边界与卡尔曼滤波以提升密集交通中的鲁棒性与可用性。
 
-    \textbf{隐式交互}侧重对周车意图/不确定性构造多个可能情景，并在情景集合上评估自车应对策略，典型代表包括防御性规划（Contingency Planning）\cite{salvado2016contingency}与博弈论方法。Huang等\cite{huang2021riskbudget}提出基于风险预算的递归控制算法，通过动态分配风险预算在满足安全约束的同时减少过度保守。Da等\cite{da2022reactivesafety}提出综合反应式安全（Comprehensive Reactive Safty, CRS）框架，强调规划不必在所有未来情形下“绝对无碰撞”，而应能对环境变化做出反应并保证安全，并在此基础上提出反应式迭代线性二次规划（iterative Linear Quadratic Regulator, iLQR）算法。博弈论思路方面，Le Cleach等\cite{li2018gametheoryacc}提出基于无迹卡尔曼滤波的逆动力学博弈用于在线估计其他智能体目标函数，并将其整合到滚动时域博弈规划器中；进一步在\cite{li2020gametheorytits}提出增广拉格朗日快速求解器ALGAMES以求解含非线性约束的多玩家动态博弈问题。Li等\cite{lecleach2020lucidgames}提出面向无信号交叉口的多车博弈框架，并在\cite{lecleach2022algames}提出基于Level-K博弈论的长时域、多步交互决策模型，体现了“交互可解释、决策可推演”的特点。
+    \emph{隐式交互}侧重对周车意图/不确定性构造多个可能情景，并在情景集合上评估自车应对策略，典型代表包括防御性规划（Contingency Planning）\cite{salvado2016contingency}与博弈论方法。Huang等\cite{huang2021riskbudget}提出基于风险预算的递归控制算法，通过动态分配风险预算在满足安全约束的同时减少过度保守。Da等\cite{da2022reactivesafety}提出综合反应式安全（Comprehensive Reactive Safty, CRS）框架，强调规划不必在所有未来情形下“绝对无碰撞”，而应能对环境变化做出反应并保证安全，并在此基础上提出反应式迭代线性二次规划（iterative Linear Quadratic Regulator, iLQR）算法。博弈论思路方面，Le Cleach等\cite{li2018gametheoryacc}提出基于无迹卡尔曼滤波的逆动力学博弈用于在线估计其他智能体目标函数，并将其整合到滚动时域博弈规划器中；进一步在\cite{li2020gametheorytits}提出增广拉格朗日快速求解器ALGAMES以求解含非线性约束的多玩家动态博弈问题。Li等\cite{lecleach2020lucidgames}提出面向无信号交叉口的多车博弈框架，并在\cite{lecleach2022algames}提出基于Level-K博弈论的长时域、多步交互决策模型，体现了“交互可解释、决策可推演”的特点。
 
-    \textbf{综合式交互}将显式交互与隐式交互思想融合，并常与风险度量、礼貌性或协同性等机制结合。Tong Li等\cite{li2023marc}提出风险敏感多策略防御性规划（Multipolicy and Risk-Aware Contingency Planning, MARC）框架，集成MPDM与风险感知的防御性规划，并通过场景级动态分支点与LP-iLQR双层迭代优化显著提升复杂交互环境下的决策效率与自然性。此外，Sun等\cite{sun2018courteous}在目标函数中引入“对他车成本影响”的度量以形成更礼貌的驾驶行为；Sheng等\cite{sheng2023cooperationaware}利用时空图卷积网络构建交互式轨迹预测模型，用于评估他车对自车决策的反应，从而增强协同意识。
+    \emph{综合式交互}将显式交互与隐式交互思想融合，并常与风险度量、礼貌性或协同性等机制结合。Tong Li等\cite{li2023marc}提出风险敏感多策略防御性规划（Multipolicy and Risk-Aware Contingency Planning, MARC）框架，集成MPDM与风险感知的防御性规划，并通过场景级动态分支点与LP-iLQR双层迭代优化显著提升复杂交互环境下的决策效率与自然性。此外，Sun等\cite{sun2018courteous}在目标函数中引入“对他车成本影响”的度量以形成更礼貌的驾驶行为；Sheng等\cite{sheng2023cooperationaware}利用时空图卷积网络构建交互式轨迹预测模型，用于评估他车对自车决策的反应，从而增强协同意识。
 
 
   \subsection{端到端自动驾驶}
@@ -685,12 +685,61 @@
 
 % 附录中的插图示例（图~\ref{fig:appendix-figure}）。
 
-% \begin{figure}
-%   \centering
-%   \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
-%   \caption{附录中的图片示例}
-%   \label{fig:appendix-figure}
-% \end{figure}
+
+  \begin{figure}
+    \centering  
+    \makebox[\linewidth]{\includegraphics[width=0.8\linewidth]{fig/chap2/arch_process.jpg}}
+    % \caption*{图片注释解释说明}
+    \caption{车云协同危化品运输场景下IVCPS架构设计流程}
+    \label{fig:arch_process}
+  \end{figure} 
+
+  \begin{figure}
+    \centering 
+    \makebox[\linewidth]{\includegraphics[width=1.0\linewidth]{fig/chap2/operation_sim.png}}
+    % \caption*{图片注释解释说明}
+    \caption{CT2ROP运行功能与逻辑行为及其仿真}
+    \label{fig:operation_sim}
+  \end{figure} 
+
+  \begin{figure}
+    \centering
+    \makebox[\linewidth]{\includegraphics[width=1.0\linewidth]{fig/chap2/service_model.png}}
+    \caption*{(a)服务约束视图下定义的CT2ROP专有服务及IVCPS通用服务 (b)所有服务与运行活动间的追溯关系}
+    \caption{CT2ROP服务定义及其与运行活动追溯}
+    \label{fig:service_model}
+  \end{figure}
+
+  \begin{figure}
+    \centering 
+    \makebox[\linewidth]{\includegraphics[width=1.0\linewidth]{fig/chap2/service_sim.png}}
+    % \caption*{图片注释解释说明}
+    \caption{CT2ROP服务功能与逻辑及其仿真}
+    \label{fig:service_sim}
+  \end{figure} 
+
+  \begin{figure}
+    \centering 
+    \makebox[\linewidth]{\includegraphics[width=1.0\linewidth]{fig/chap2/resource_sim.png}}
+    % \caption*{图片注释解释说明}
+    \caption{CT2ROP场景资源仿真分析}
+    \label{fig:resource_sim}
+  \end{figure} 
+
+  \begin{figure}
+  \centering
+  \includegraphics[width=1.0\linewidth]{fig/chap4/simulink_model.png}
+  \caption{协同仿真平台Simulink模型}
+  \label{fig:simulink_model}
+  \end{figure}
+
+
+  % \begin{figure}
+  % \centering
+  % \includegraphics[width=0.8\linewidth]{fig/chap4/prog_arch.png}
+  % \caption{自动驾驶软件架构}
+  % \label{fig:prog_arch}
+  % \end{figure}
 
 
 \section{表格}
