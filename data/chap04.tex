@@ -146,25 +146,17 @@
             假定两个浴盆的质心不受曲线约束，而是可以在二维平面上自由移动，那么利用运动学公式可以简单计算出自由运动时两盆质心的位置$\vec{\tilde{r}}_{k+1}$，以及此时相对于上一时刻真实位置的增量$\Delta \vec{r}_k$。具体计算过程示意图如图~\ref{fig:sliding_lumped_mass}所示。
 
             \begin{equation}
-            \begin{aligned}
-            \vec{\tilde{r}}_{k+1} &= \vec{r}_k + \vec{v}_k' \Delta t + \frac{1}{2} \vec{a}_k' (\Delta t)^2 \\
-            \Delta \vec{r}_k &= \vec{\tilde{r}}_{k+1} - \vec{r}_k
-            \end{aligned}
+            \vec{\tilde{r}}_{k+1} = \vec{r}_k + \vec{v}_k' \Delta t + \frac{1}{2} \vec{a}_k' (\Delta t)^2, ~\Delta \vec{r}_k = \vec{\tilde{r}}_{k+1} - \vec{r}_k
             \end{equation}
 
             \begin{equation}
-            \begin{aligned}
-            \theta_k &= \tan^{-1} \frac{\mathrm{d}C(x)}{\mathrm{d}x}\bigg|_{x_{0,k}} \\
-            \Delta \theta_k &= \mathrm{sign}(\dot{\vec{n}}_k \cdot \Delta \vec{r}_k) \cos^{-1} \frac{\vec{t}_k \cdot \Delta \vec{r}_k}{\|\vec{t}_k\| \|\Delta \vec{r}_k\|}
-            \end{aligned}
+            \theta_k = \tan^{-1} \frac{\mathrm{d}C(x)}{\mathrm{d}x}\bigg|_{x_{0,k}}, ~
+            \Delta \theta_k = \mathrm{sign}(\dot{\vec{n}}_k \cdot \Delta \vec{r}_k) \cos^{-1} \frac{\vec{t}_k \cdot \Delta \vec{r}_k}{\|\vec{t}_k\| \|\Delta \vec{r}_k\|}
             \end{equation}
 
             \begin{equation}
-            \begin{aligned}
-            x_{0,k+1} &= \vec{r}_{1,k} - \|\Delta \vec{r}_k\| \sin \Delta \theta_k \sin \theta_k \\
-            z_{0,k+1} &= C(x_{0,k+1}) \\
-            \vec{r}_{k+1} &= \begin{bmatrix} x_{0,k+1} \\ z_{0,k+1} \end{bmatrix}
-            \end{aligned}
+            x_{0,k+1} = \vec{r}_{1,k} - \|\Delta \vec{r}_k\| \sin \Delta \theta_k \sin \theta_k,~
+            z_{0,k+1} = C(x_{0,k+1}) ,~ \vec{r}_{k+1} = \begin{bmatrix} x_{0,k+1} \\ z_{0,k+1} \end{bmatrix}
             \end{equation}
 
             \begin{equation}
@@ -194,10 +186,7 @@
             \end{equation}
 
             \begin{equation}
-            \begin{aligned}
-            \vec{\tilde{r}}_{k+1} &= \vec{r}_k + \vec{v}_k \Delta t + \frac{1}{2} \vec{a}_k (\Delta t)^2 \\
-            \Delta \vec{r}_k &= \vec{\tilde{r}}_{k+1} - \vec{r}_k
-            \end{aligned}
+            \vec{\tilde{r}}_{k+1} = \vec{r}_k + \vec{v}_k \Delta t + \frac{1}{2} \vec{a}_k (\Delta t)^2, ~\Delta \vec{r}_k = \vec{\tilde{r}}_{k+1} - \vec{r}_k
             \end{equation}
 
             \begin{equation}
@@ -261,6 +250,12 @@
 
             为进行CFD仿真获取高精度模型力特性值，建立罐体的精细计算流体动力学模型，符号表示为$g_0(t) = f_0(u(t))$，其中$u(t)$为模型输入激励向量时间序列，$g_0(t)$为模型输出广义力时间序列。本文中选择CFD仿真软件StarCCM+作为计算流体动力学建模的平台，其中一组工况的仿真过程如图~\ref{fig:cfd_illust}所示。液体晃动CFD仿真模型与车液耦合联合仿真平台搭建在\ref{sub:cosim_platform}节将详细展开。
 
+            \begin{figure}
+            \centering
+            \includegraphics[width=1.0\linewidth]{fig/chap4/cfd_illust.png}
+            \caption{CFD仿真过程示意}
+            \label{fig:cfd_illust}
+            \end{figure}
 
             利用正交工况表$L_{N^T}(m_1^{n_1}m_2^{n_2}\dots m_p^{n_p})$为精细计算流体力学模型$f_0$设置阶跃输入$U(t)$，建立CFD仿真数据库$D_{CFD}$，通过遗传算法进行参数辨识，最小化仿真时域内STL模型预测结果与CFD仿真结果的累计均方误差，代价函数为加权的16工况下CFD仿真输出力/力矩序列和模型输出力/力矩序列距离的二范数：
             \begin{equation}
@@ -274,18 +269,15 @@
             \label{fig:compare_all_cases}
             \end{figure}
 
-
-            \begin{figure}
-            \centering
-            \includegraphics[width=1.0\linewidth]{fig/chap4/cfd_illust.png}
-            \caption{CFD仿真过程示意}
-            \label{fig:cfd_illust}
-            \end{figure}
-
-
-
-
             对\SI{50}{\percent}充液率罐体的滑动伸缩天平模型参数进行识别得到，如表~\ref{tab:stl_param}所示。所有16组仿真工况结果如图~\ref{fig:compare_all_cases}所示，其中粗线表示CFD数据，细线为STL模型在相同输入激励下的预测结果。可以看出在空间内所有6个自由度的力/力矩输出上STL模型都与CFD仿真保持了相同的趋势和相似的细节，相比于二维模型，不仅首次捕捉到包含纵向的横纵耦合晃动，还捕捉到了横摆晃动及俯仰力矩$M_y$随时间舱室间液体转移的稳态变化。此外，与CFD仿真单个工况动辄数小时的计算时间相比，STL模型在MATLAB中对未来\SI{15}{s}的预测仅需\SI{5}{ms}，而经过C++编译过后可以达到小于\SI{1}{ms}的速度，可以超实时快速高精度仿真。
+
+
+
+
+
+
+            
+   
 
 
 
@@ -427,11 +419,6 @@
             利用CFD数据$D_{CFD}$采用启发式算法按STL模型相同步骤标定线性化等效双摆模型$f_2$的参数的初值$w_{20}$；上述线性化等效摆模型为$N \geq 1$个单摆的线性组合（$N \geq 1$）。所采用的LDP而言$N=2$，也可以加入纵向的线性化摆进行组合，如三摆模型（双摆模型+纵向一个线性化摆）及其他选择。
 
 
-        \subsubsection{残差重线性化模型训练}    
-            \label{subsub:putty_model}
-
-            将模型重线性化的示意图如图~\ref{fig:linearize_illust}所示，通过根据STL模型的状态量来得出合适的LDP模型的参数变化率和状态值。但由于LDP模型与STL模型结构完全不同，传统线性化方法如Jacobian线性化等，在LDP模型中无法直接应用，故需要采用一些特殊的方法来实现模型重线性化。
-            
             \begin{figure}
             \centering
             \includegraphics[width=0.9\linewidth]{fig/chap4/linearize_illust.png}
@@ -439,9 +426,18 @@
             \label{fig:linearize_illust}
             \end{figure}
 
+        \subsubsection{残差重线性化模型训练}    
+            \label{subsub:putty_model}
+
+            将模型重线性化的示意图如图~\ref{fig:linearize_illust}所示，通过根据STL模型的状态量来得出合适的LDP模型的参数变化率和状态值。但由于LDP模型与STL模型结构完全不同，传统线性化方法如Jacobian线性化等，在LDP模型中无法直接应用，故需要采用一些特殊的方法来实现模型重线性化。
+            
+
             而具体而言是采用\emph{模型补土}（putty model）或\emph{残差模型}（residual model）的思想得出合适的参数变化量，以实现更加精确地线性化STL模型的目的，训练神经网络$[\Theta,\Delta w_2] = n(x_1)$，其中第二个输出为LDP参数$w_2$的变化量$\increment w_2$，将线性模型难以反映的动态在所关注的几秒钟内体现在参数中。训练方案如图~\ref{fig:linearize_illust}所示。
             
             采用STL模型而非直接用CFD计算结果作为真值的原因在于两点：首先，CFD计算的速度太慢，用于模型训练成本太大；其次，CFD很难采集到数量足够少的状态量，难以简洁地描述当前状态，故需要一个具有有限个（且不太多）状态的比较精确且可以快速计算的模型来表征当前液体状态。这就是STL模型存在的意义。且STL模型还需用作控制算法联合快速验证仿真中，作为初步验证。验证通过后的再进行CFD联合仿真通过更精确的模型进一步验证。
+
+
+
 
 
             \begin{figure}
@@ -615,17 +611,12 @@
         $T_{w2}$ & 挂车轮距 \\
         $Y_1$ & 牵引车在大地坐标系下的Y轴坐标 \\
         $X_1$ & 牵引车在大地坐标系下的X轴坐标 \\
-
         \end{longtable}
         }% 结束局部作用域
-
-
-
         \begin{equation}
         m_1 v_{1x}(\dot{\beta}_1 + \dot{\psi}_1) - m_{1s} h_1 \ddot{\phi}_1 = F_{y1} + F_{y2} + F_{y,int}
         \label{eq:tractor_lat}
         \end{equation}
-
         \begin{equation}
         \begin{aligned}
         I_{1zz} \ddot{\psi}_1 - I_{1xz} \ddot{\phi}_1 &= F_{y1} a \cos \delta - F_{y2} b - F_{y,int} c + 10^4 \times (M_{1z}^+ - M_{1z}^-) \\
@@ -633,23 +624,18 @@
         \end{aligned}
         \label{eq:tractor_yaw}
         \end{equation}
-
         \begin{equation}
         \begin{aligned}
-        &[I_{1xx} + m_{1s} h_1^2] \ddot{\phi}_1 - I_{1xz} \ddot{\psi}_1 = \\
-        &m_{1s} g h_1 \sin \phi_1 + m_{1s} h_1 \left[ v_{1x}(\dot{\beta}_1 + \dot{\psi}_1) - h_1 \ddot{\phi}_1 \right] \\
+        &[I_{1xx} + m_{1s} h_1^2] \ddot{\phi}_1 - I_{1xz} \ddot{\psi}_1 = m_{1s} g h_1 \sin \phi_1 + m_{1s} h_1 \left[ v_{1x}(\dot{\beta}_1 + \dot{\psi}_1) - h_1 \ddot{\phi}_1 \right] \\
         &- k_{r1} \phi_1 - c_1 \dot{\phi}_1 + k_{12}(\phi_2 - \phi_1) - F_{y,int} h_{1c}
         \end{aligned}
         \label{eq:tractor_roll}
         \end{equation}
-
         半挂车侧滑、横摆、侧倾运动包含的2个自由度，分别为式\eqref{eq:trailer_lon}至式\eqref{eq:trailer_roll}。
-
         \begin{equation}
         m_2 v_{2x}(\dot{\beta}_2 + \dot{\psi}_2) - m_{2s} h_2 \ddot{\phi}_2 = F_{y3} - F_{y,int} \cos(\psi_1 - \psi_2) + F_{y,p1} + F_{y,p2}
         \label{eq:trailer_lon}
         \end{equation}
-
         \begin{equation}
         \begin{aligned}
         I_{2zz} \ddot{\psi}_2 - I_{2xz} \ddot{\phi}_2 &= -F_{y3} d - F_{y,int} e \cos(\psi_1 - \psi_2) + 10^4 \times (M_{2z}^+ - M_{2z}^-) + M_{2z,p} \\
@@ -657,25 +643,19 @@
         \end{aligned}
         \label{eq:trailer_yaw}
         \end{equation}
-
         \begin{equation}
         \begin{aligned}
-        &[I_{2xx} + m_{2s} h_2^2] \ddot{\phi}_2 - I_{2xz} \ddot{\psi}_2 = \\
-        &m_{2s} g h_2 \sin \phi_2 + m_{2s} h_2 \left[ v_{2x}(\dot{\beta}_2 + \dot{\psi}_2) - h_2 \ddot{\phi}_2 \right] \\
+        &[I_{2xx} + m_{2s} h_2^2] \ddot{\phi}_2 - I_{2xz} \ddot{\psi}_2 = m_{2s} g h_2 \sin \phi_2 + m_{2s} h_2 \left[ v_{2x}(\dot{\beta}_2 + \dot{\psi}_2) - h_2 \ddot{\phi}_2 \right] \\
         &- k_{r2} \phi_2 - c_2 \dot{\phi}_2 - k_{12}(\phi_2 - \phi_1) + F_{y,int} h_{2c} + M_{x,p}
         \end{aligned}
         \label{eq:trailer_roll}
         \end{equation}
-
         牵引车和挂车的运动学约束方程如式\eqref{eq:trailer_constraint}描述。
-
         \begin{equation}
         \dot{\beta}_1 - \dot{\beta}_2 - \frac{h_{1c}}{v_{1x}} \ddot{\phi}_1 + \frac{h_{2c}}{v_{2x}} \ddot{\phi}_2 - \frac{c}{v_{1x}} \ddot{\psi}_1 - \frac{e}{v_{2x}} \ddot{\psi}_2 + \dot{\psi}_1 - \dot{\psi}_2 = 0
         \label{eq:trailer_constraint}
         \end{equation}
-
         由于采用线性轮胎模型，则各等效轴的侧向力可以近似为
-
         \begin{equation}
         \begin{cases}
         F_{y1} = k_1 \left( \beta_1 + \frac{a \dot{\psi}_1}{v_{1x}} - \delta \right) \\
@@ -683,27 +663,18 @@
         F_{y3} = k_3 \left( \beta_2 - \frac{d \dot{\psi}_1}{v_{2x}} \right)
         \end{cases}
         \end{equation}
-
         为实现对车辆动力学、摆模型计算，以及满足轨迹跟踪对车辆位姿状态量预测的需求，选取如下16个状态量构建状态空间方程，状态量分别为为
-
         \begin{equation}
         X = \left[ v_{1y}\ \dot{\psi}_1\ \phi_1\ \dot{\phi}_1\ v_{2y}\ \dot{\psi}_2\ \phi_2\ \dot{\phi}_2\ \theta_1\ \dot{\theta}_1\ \theta_2\ \dot{\theta}_2\ v_{1x}\ \psi_1\ Y_1\ X_1 \right]^T
         \end{equation}
-
-        其中$v_{1y}$为牵引车侧向速度、$\dot{\psi}_1$为牵引车航向角速度、$\phi_1$为牵引车侧倾角、$\dot{\phi}_1$为牵引车侧倾角速度、$v_{2y}$挂车侧向速度、$\dot{\psi}_2$挂车航向角速度、$\phi_2$为挂车侧倾角、$\dot{\phi}_2$为挂车侧倾角速度、$\theta_1$为双摆前摆角度、$\dot{\theta}_1$为双摆前摆角速度、$\theta_2$为双摆后摆角度、$\dot{\theta}_2$为双摆后摆角速度、$v_{1x}$为牵引车随车体坐标系下的纵向速度、$Y_1$为牵引车在大地坐标系下的Y轴坐标、$X_1$为牵引车在大地坐标系下的X轴坐标。
-
-        由于纵向晃动对于加速的影响可以忽略，故不采用三摆模型，而是双摆模型。
-
-
+        其中$v_{1y}$为牵引车侧向速度、$\dot{\psi}_1$为牵引车航向角速度、$\phi_1$为牵引车侧倾角、$\dot{\phi}_1$为牵引车侧倾角速度、$v_{2y}$挂车侧向速度、$\dot{\psi}_2$挂车航向角速度、$\phi_2$为挂车侧倾角、$\dot{\phi}_2$为挂车侧倾角速度、$\theta_1$为双摆前摆角度、$\dot{\theta}_1$为双摆前摆角速度、$\theta_2$为双摆后摆角度、$\dot{\theta}_2$为双摆后摆角速度、$v_{1x}$为牵引车随车体坐标系下的纵向速度、$Y_1$为牵引车在大地坐标系下的Y轴坐标、$X_1$为牵引车在大地坐标系下的X轴坐标。由于纵向晃动对于加速的影响可以忽略，故不采用三摆模型，而是双摆模型。
         \begin{figure}
         \centering
         \includegraphics[width=0.6\linewidth]{fig/chap4/control_scheme.png}
         \caption{轨迹跟踪抑晃防侧翻控制方案}
         \label{fig:control_scheme}
         \end{figure}
-
         控制方案如图~\ref{fig:control_scheme}所示，第一轴完全负责转向控制，牵引车剩余轴、挂车所有轴负责差动制动控制。通过制动分组的方式将负责差动制动的车轮分为L1/L2/R1/R2共4组，组内制动行为完全相同。控制量为6部分：前轮转角、牵引车的附横摆力矩、挂车的附加横摆力矩，以及牵引车的期望加速度。
-
         \begin{equation}
         u = \begin{bmatrix}
         \delta &
@@ -716,12 +687,10 @@
         \end{equation}
 
         线性化后的车辆状态空间方程建立如下：
-
         \begin{equation}
         \dot{X} = A_c X + B_c u, \quad
         A_c = T_c M^{-1} A_0 T_c^{-1} X,\quad B_c = T_c M^{-1} B_0
         \end{equation}
-
         其中$M$、$A_0$、$B_0$、$T_c$的详细展开见式\ref{eq:M}、式\ref{eq:A_0}、式\ref{eq:B_0}、式\ref{eq:T_c}。
         
         \setcounter{MaxMatrixCols}{20} % 至少 >= 16
@@ -769,7 +738,6 @@
         m_{510} &= h_{2c} m_{310} - \frac{1}{2} m_p h_p l_p = \frac{1}{2} (h_{2c} - h_p) m_p l_p.
         \end{aligned}
         \end{equation*}
-
         \begin{equation}
         A_0 = \begin{bmatrix}
         a_{11} & a_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -789,9 +757,7 @@
         \end{bmatrix}
         \label{eq:A_0}
         \end{equation}
-
         其中各个子项为：
-
         \begin{equation*}
         \begin{aligned}
         a_{11} &= (a + c)k_1 + (c - b)k_2, \quad
@@ -810,7 +776,10 @@
         a_{59} = -\frac{1}{2} m_p l_p g.
         \end{aligned}
         \end{equation*}
-
+        \begin{equation}
+        T_c = diag([v_{1x}\ 1\ 1\ 1\ v_{2x}\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1])_{14 \times 14}
+        \label{eq:T_c}
+        \end{equation}
         \begin{equation}
         B_0 = \begin{bmatrix}
         -(c + a)k_1 & \frac{c_{brk}}{\overline{c_M}} & -\frac{c_{brk}}{\overline{c_M}} & 0 & 0 & 0 \\
@@ -831,10 +800,7 @@
         \label{eq:B_0}
         \end{equation}
 
-        \begin{equation}
-        T_c = diag([v_{1x}\ 1\ 1\ 1\ v_{2x}\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1])_{14 \times 14}
-        \label{eq:T_c}
-        \end{equation}
+
 
         
         
@@ -880,14 +846,16 @@
             \label{subsub:anti_rollover_mechanism}
             采用多约束模型预测控制（multi-constraint model predictive control, MPC）方法，防侧翻路径跟踪能够显式考虑输入与输出约束。这保证了在模型精度合理的前提下，只要存在可行的控制解，车辆既不会发生侧翻，也不会违反其他可行性约束。当不存在满足所有约束的可行解时，求解器会在松弛因子的辅助下，优先违反最不关键的软约束，直至找到惩罚程度最低的可行解。
 
-            如图~\ref{fig:mpc_illust}所示，假设全局参考路径已通过基于云的预测性变道或其他路径规划应用获取，路径跟踪控制器将求解一个二次规划MPC问题，以得到能最小化软约束违反程度的可行控制序列，并从该序列中选取首个控制输入作为实际控制输入。
-
             \begin{figure}
             \centering
             \includegraphics[width=0.7\linewidth]{fig/chap4/mpc_illust.png}
             \caption{防侧翻轨迹跟踪MPC控制示意图}
             \label{fig:mpc_illust}
             \end{figure}
+
+            如图~\ref{fig:mpc_illust}所示，假设全局参考路径已通过基于云的预测性变道或其他路径规划应用获取，路径跟踪控制器将求解一个二次规划MPC问题，以得到能最小化软约束违反程度的可行控制序列，并选取首个控制输入作为实际控制输入。
+
+
 
             尽管横向误差是跟踪控制中广泛使用的状态变量\cite{Reviewer1_FuzzySteering}，可实现如图\ref{fig:linear_tracker}所示的线性跟踪，但本研究采用绝对位置 \(Y_1, X_1\) 作为状态变量，以构建绝对跟踪器\cite{ShengboEbenLi2024reinforcement}，从而更精确地预测跟踪过程中的高阶动力学。同时，通过将预测时域延长至1.5~3 s（覆盖约1 s的液体晃动周期\cite{Komasa2023observing}），可捕捉LTR动力学中的潜在间隙，提升MPC的有效性，相比简化动力学的线性跟踪器，能更好地保证车辆稳定性与安全性。
 
@@ -902,7 +870,6 @@
             \end{figure}
 
             最优控制问题的构建过程包括观测量设计、代价函数构造、以及约束设计。观测量的设计如下：
-
             \begin{equation}
             y = [Y_1\ X_1\ \psi_1\ \dot{\theta}_1\ \dot{\theta}_2\ \mathrm{LTR}_{eql}\ v_{x1}]
             \end{equation}
@@ -953,13 +920,8 @@
             \end{equation}
             那么新的状态空间表达式为
             \begin{equation}
-            \begin{aligned}
-            \xi_{k+1} &= \begin{bmatrix} x_{k+1} \\ u_k \end{bmatrix} = \begin{bmatrix} A_d x_k + B_d u_k \\ u_k \end{bmatrix} \\
-            &= \begin{bmatrix} A_d x_k + B_d u_{k-1} + B_d u_k - B_d u_{k-1} \\ u_{k-1} + u_k - u_{k-1} \end{bmatrix} \\
-            &= \begin{bmatrix} A_d x_k + B_d u_{k-1} \\ u_{k-1} \end{bmatrix} + \begin{bmatrix} B_d u_k - B_d u_{k-1} \\ u_k - u_{k-1} \end{bmatrix} \\
-            &= \begin{bmatrix} A_d & B_d \\ 0 & I_{N_u} \end{bmatrix} \begin{bmatrix} x_k \\ u_{k-1} \end{bmatrix} + \begin{bmatrix} B_d \\ I_{N_u} \end{bmatrix} \Delta u_k \\
-            &= A \xi_k + B \Delta u_k
-            \end{aligned}
+            \xi_{k+1} = \begin{bmatrix} x_{k+1} \\ u_k \end{bmatrix} = \begin{bmatrix} A_d & B_d \\ 0 & I_{N_u} \end{bmatrix} \begin{bmatrix} x_k \\ u_{k-1} \end{bmatrix} + \begin{bmatrix} B_d \\ I_{N_u} \end{bmatrix} \Delta u_k \\
+            = A \xi_k + B \Delta u_k
             \end{equation}
             其中$N_y$为输出量个数，输出方程为
             \begin{equation}
@@ -1042,45 +1004,26 @@
 
             则对于控制量$U$的约束问题可以转化对控制增量$\Delta U$的线性不等式约束
             \begin{equation}
-            \begin{aligned}
-            U_{min} &= \begin{bmatrix}
+            U_{min} = \begin{bmatrix}
             u_{min} \\ u_{min} \\ u_{min} \\ \vdots \\ u_{min}
             \end{bmatrix} \leq \begin{bmatrix}
             u_k \\ u_{k+1} \\ u_{k+2} \\ \vdots \\ u_{k+N_c - 1}
             \end{bmatrix} \leq \begin{bmatrix}
             u_{max} \\ u_{max} \\ u_{max} \\ \vdots \\ u_{max}
             \end{bmatrix} = U_{max} \\
-            &\Leftrightarrow U_{min} \leq U_t + A_t \Delta U \leq U_{max} \\
-            &\Leftrightarrow \begin{cases}
+            \Leftrightarrow \begin{cases}
             A_t \Delta U \leq U_{max} - U_t \\
             -A_t \Delta U \leq U_{min} + U_t
             \end{cases}
-            \end{aligned}
             \end{equation}
             同时，可以对待优化的控制增量$\Delta U$可以直接施加范围约束
             \begin{equation}
-            \begin{aligned}
-            \Delta U_{min} &= \begin{bmatrix}
-            \Delta u_{min} \\ \Delta u_{min} \\ \Delta u_{min} \\ \vdots \\ \Delta u_{min}
-            \end{bmatrix} \leq \begin{bmatrix}
-            \Delta u_k \\ \Delta u_{k+1} \\ \Delta u_{k+2} \\ \vdots \\ \Delta u_{k+N_c - 1}
-            \end{bmatrix} \leq \begin{bmatrix}
-            \Delta u_{max} \\ \Delta u_{max} \\ \Delta u_{max} \\ \vdots \\ \Delta u_{max}
-            \end{bmatrix} = \Delta U_{max} \\
-            &\Leftrightarrow \Delta U_{min} \leq \Delta U \leq \Delta U_{max}
-            \end{aligned}
+            \Delta U_{min} \leq \Delta U \leq \Delta U_{max}
             \end{equation}
             对输出量的约束同样需要转化为对控制增量的约束。
 
             \begin{equation}
-            \begin{aligned}
-            Y_{min} &= \begin{bmatrix}
-            \eta_{min} \\ \eta_{min} \\ \eta_{min} \\ \vdots \\ \eta_{min}
-            \end{bmatrix} \leq (Y = E + \Theta \Delta U) \leq \begin{bmatrix}
-            \eta_{max} \\ \eta_{max} \\ \eta_{max} \\ \vdots \\ \eta_{max}
-            \end{bmatrix} = Y_{max} \\
-            &\Leftrightarrow Y_{min} - E \leq \Theta \Delta U \leq Y_{max} - E
-            \end{aligned}
+            Y_{min} - E \leq \Theta \Delta U \leq Y_{max} - E
             \end{equation}
             为对输出量施加软约束，避免同时对输入和输出施加硬约束导致约束相互冲突从而无解的情况出现，需要在代价函数$J$中引入松弛项$\rho \epsilon^2$，其中$\epsilon$为松弛因子，$\rho$为松弛系数。约束转变为
             \begin{equation}
@@ -1136,7 +1079,7 @@
 
 
 
-        在有限元流体力学仿真中网格尺寸越小仿真结果往往越精确（但由于计算机数值精度，并不是无限小会最好，但通常在可接受范围内减小网格划分的最大尺寸有利于提升仿真精度），但过小的网格尺寸会带来急剧增长的网格数量，使得计算时间变得难以接受。为确保仿真准确性的同时保证高效性，开展了如图~\ref{fig:grid_sensitivity}所示的网格敏感性分析。为保证在特定设置下，将单元加速度与角加速度施加于液体，能达到的最高精度网格划分方式进行的仿真结果作为参考（图~\ref{fig:grid_sensitivity_set}，左侧）。对比了六种替代设置，其仿真力/力矩相对误差结果如图~\ref{fig:grid_sensitivity_res}所示，图~\ref{fig:grid_sensitivity_set}展示了协同仿真中真实值对应的网格设置与所采用模型的网格设置；同时列出了网格敏感性验证中X/Y/Z方向的力（$F_x, F_y, F_z$）与X/Y/Z方向的力矩（$M_x, M_y, M_z$）的误差及时间平均误差。其中，$\text{rf}$ 为网格细化等级（refinement level），$b$ 为网格基础尺寸（base size of mesh），$\text{tw}$ 为过渡宽度（transition width），$\text{vi}$ 为体积增长速率（volume growth rate）；$\text{s}$ 和 $\text{f}$ 分别为“慢（slow）”和“快（fast）”的缩写。所选设置（图~\ref{fig:grid_sensitivity_set}，右侧，蓝色曲线）实现了平均相对误差小于\SI{1}{\percent}、峰值误差低于\SI{4}{\percent}的效果。更多设置细节详见表~\ref{tab:co_sim_settings}。
+        在有限元流体力学仿真中网格尺寸越小仿真结果往往越精确（但由于计算机数值精度，并不是无限小会最好，但通常在可接受范围内减小网格划分的最大尺寸有利于提升仿真精度），但过小的网格尺寸会带来急剧增长的网格数量，使得计算时间变得难以接受。为确保仿真准确性的同时保证高效性，开展了如图~\ref{fig:grid_sensitivity}所示的网格敏感性分析。为保证在特定设置下，将单元加速度与角加速度施加于液体，能达到的最高精度网格划分方式进行的仿真结果作为参考（图~\ref{fig:grid_sensitivity_set}，左侧）。对比了六种替代设置，其仿真力/力矩相对误差结果如图~\ref{fig:grid_sensitivity_res}所示，图~\ref{fig:grid_sensitivity_set}展示了协同仿真中真实值对应的网格设置与所采用模型的网格设置；同时列出了网格敏感性验证中X/Y/Z方向的力（$F_x, F_y, F_z$）与X/Y/Z方向的力矩（$M_x, M_y, M_z$）的误差及时间平均误差。其中，$\text{rf}$ 为网格细化等级（refinement level），$b$ 为网格基础尺寸（base size of mesh），$\text{tw}$ 为过渡宽度（transition width），$\text{vi}$ 为体积增长速率（volume growth rate）；$\text{s}$ 和 $\text{f}$ 分别为“慢（slow）”和“快（fast）”的缩写。所选设置（图~\ref{fig:grid_sensitivity_set}，右侧，蓝色曲线）实现了平均相对误差小于\SI{1}{\percent}、峰值误差低于\SI{4}{\percent}的效果。更多设置细节详见表~\ref{tab:co_sim_settings}。协同仿真所使用的计算机为13代Intel® Core™ i9-13900HX 2.20GHz处理器，配备32GB内存。
 
 
 
@@ -1178,7 +1121,7 @@
         \end{tabularx}
         \end{table}
 
-        协同仿真所使用的计算机为13代Intel® Core™ i9-13900HX 2.20GHz处理器，配备32GB内存。
+
         
     \subsection{仿真验证与分析}
         \label{sub:simulation_verification}
@@ -1188,128 +1131,94 @@
         \label{subsub:corner}
             根据规范\cite{WJG203-2006}，左转与右转均需满足最小转弯半径要求。对于右转工况，当设计车速超过\SI{20}{km/h}时，需采用\SIrange{10}{20}{m}的路缘半径\cite{UrbanCrossDesign}。受半挂车运动学约束影响，其转弯半径需求更大\cite{CrossCornerRadius}。为保证液罐半挂车平稳转弯，本研究选取\SI{15}{m}的右转半径。当从最内侧车道左转至另一最内侧车道时，左转半径为\SI{28.125}{m}，相当于在基础右转半径上增加3.5个车道宽度，如图\ref{fig:s_corner_illust}所示。仿真中，车辆初始速度设置为\SI{35}{km/h}，对应左转前绿灯放行时的行驶速度。
 
-            \begin{figure}
-            \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_corner_illust.png}
-            \caption{左转弯工况场景设置}
-            \label{fig:s_corner_illust}
-            \end{figure}
-
-            如图\ref{fig:s_corner_track}至图\ref{fig:s_corner_u}所示，所设计的控制器通过模型预测控制预判潜在侧翻风险，采取更平缓的转向动作以避免侧翻，同时通过小幅转向调整抵消液体晃动的影响。在跟踪效果上，如图~\ref{fig:s_corner_track}所示，PT和PT+DB组实现了轨迹近乎完美的跟踪效果，ART组为缓解侧翻压力向外偏移最多，而ART+DB组由于存在误差补偿与差动缓解侧翻趋势，跟踪偏移量比ART更小。车辆状态如图~\ref{fig:s_corner_x}所示，ART组与ART+DB组由于主动进行了轨迹外扩从而避免了侧翻发生，\(\text{LTR}_{eql}\)被成功控制在±0.75的软约束范围内，在允许路径存在可接受范围内小幅偏离的同时，有效防止了侧翻，且ART+DB组由于差动制动的附加力矩辅助\(\text{LTR}_{eql}\)峰值减小。
+   
+            如图\ref{fig:s_corner_track}至图\ref{fig:s_corner_xu}所示，控制器通过模型预测控制预判潜在侧翻风险，采取更平缓的转向动作以避免侧翻，同时通过小幅转向调整抵消液体晃动的影响。在跟踪效果上，如图~\ref{fig:s_corner_track}所示，PT和PT+DB组实现了轨迹近乎完美的跟踪效果，ART组为缓解侧翻压力向外偏移最多，而ART+DB组由于存在误差补偿与差动缓解侧翻趋势，跟踪偏移量比ART更小。车辆状态及控制量变化如图~\ref{fig:s_corner_xu}所示，ART组与ART+DB组由于主动进行了轨迹外扩从而避免了侧翻发生，\(\text{LTR}_{eql}\)被成功控制在±0.75的软约束范围内，在允许路径存在可接受范围内小幅偏离的同时，有效防止了侧翻，且ART+DB组由于差动制动附加力矩辅助\(\text{LTR}_{eql}\)峰值减小。
 
             相比之下，仅考虑路径跟踪而未顾及车辆动力学与液体影响的PT组在第\SI{6}{s}时发生了侧翻。尽管该路径对常规车辆可能是安全的，但对于液罐车却存在极高的侧翻风险。在加入差动制动后，额外的横摆力矩与车速降低共同作用实现了安全结果，但仍无法避免LTR在至少1秒内达到-1，证明了转向控制在极端工况下的主导作用地位。速度控制上，PT+DB组由于路线问题被迫严重减速，ART略微减速，ART+DB组通过补偿控制且外扩较小实现了更为平滑的车速控制。
-            \begin{figure}
-            \centering
-            \includegraphics[width=0.5\linewidth]{fig/chap4/s_corner_track.png}
-            \caption{左转弯工况跟踪情况分析}
-            \label{fig:s_corner_track}
-            \end{figure}
 
             \begin{figure}
             \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_corner_x.png}
-            \caption{左转弯工况车辆状态}
-            \label{fig:s_corner_x}
+            \subcaptionbox{左转弯工况场景设置 \label{fig:s_corner_illust}}
+                {\includegraphics[width=0.54\linewidth]{fig/chap4/s_corner_illust.png}}
+            \subcaptionbox{左转弯工况跟踪情况分析 \label{fig:s_corner_track}}
+                {\includegraphics[width=0.45\linewidth]{fig/chap4/s_corner_traj.jpg}}
+            \caption{左转弯工况场景设置与轨迹跟踪结果}
+            \label{fig:s_corner_illust_and_track}
+            \end{figure}
+            \begin{figure}
+            \centering
+            \includegraphics[width=1.0\linewidth]{fig/chap4/s_corner_xu.jpg}
+            \caption{左转弯工况车辆状态与控制量变化趋势}
+            \label{fig:s_corner_xu}
             \end{figure}
             
-            图~\ref{fig:s_corner_u}展示了控制过程中的控制量变化，在转向控制上，ART由于无法通过制动抵消晃动导致只能通过转角抵消晃动，这让转角变化过程不够稳定；在制动控制时，ART+DB倾向于较多使用制动，这也是本方法的一个缺点，即并不够节能。ART+DB组在是使用了如此多制动的情况下速度损失却最少的原因在于，MPC模型内部已经考虑差动制动对纵向速度的影响，且可以通过期望速度调控来增加传动系统输出。此时单侧制动的同时另一侧未受影响的车轮将负责持续输出更大的扭矩，实现了类似分布式驱动的效果，即一侧车轮制动一侧车轮驱动，整体效果为几乎对速度不产生影响的额外横摆力矩。
+
             
-            \begin{figure}
-            \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_corner_u.png}
-            \caption{左转弯工况控制输入}
-            \label{fig:s_corner_u}
-            \end{figure}
-
-            % 根据本场景仿真可得几点结论：
-            % \begin{enumerate}
-            %     \item 控制器计算得到的\(\text{LTR}_{eql}\)与通过TruckSim轮胎力实际计算得到的LTR高度吻合，表明\(\text{LTR}_{eql}\)能够准确反映车辆的侧翻动力学特性，适用于自动驾驶场景下的防侧翻控制；
-            %     \item 控制器有效执行了对系统输出\(\text{LTR}_{eql}\)施加\(|\text{LTR}_{eql}| < 0.75\)软约束，规划转向动作，在实现路径跟踪的同时抑制液体晃动并防止侧翻；
-            %     \item 差动制动与轨迹补偿可以提高车辆侧翻稳定性边界，从而在保证防侧翻的同时进一步优化路径跟踪效果。
-            %     \item 横纵向耦合控制器纳入纵向动力学，可以通过调整期望速度来抵消差动制动对车速的影响，从而在更平稳速度控制的情况下实现对\(\text{LTR}_{eql}\)的有效抑制。
-            % \end{enumerate}
-
-
+            在转向控制上，ART由于无法通过制动抵消晃动导致只能通过转角抵消晃动，这让转角变化过程不够稳定；在制动控制时，ART+DB倾向于较多使用制动，这也是本方法的一个缺点，即并不够节能。ART+DB组在是使用了如此多制动的情况下速度损失却最少的原因在于，MPC模型内部已经考虑差动制动对纵向速度的影响，且可以通过期望速度调控来增加传动系统输出。此时单侧制动的同时另一侧未受影响的车轮将负责持续输出更大的扭矩，实现了类似分布式驱动的效果，即一侧车轮制动一侧车轮驱动，整体效果为几乎对速度不产生影响的额外横摆力矩。
+            
 
 
         \subsubsection{高速单移线工况}
         \label{subsub:slc}
             高速单车道变道（Single Lane Change, SLC）场景依据SAE-J2179标准设置，如图\ref{fig:s_slc_illust}所示。初始车速设定为\SI{88}{km/h}，要求在\SI{61}{m}范围内完成向左侧宽度为\SI{4.392}{m}车道的变道操作。采用三阶Hermite插值法对关键点进行插值处理，确保参考路径曲率平滑变化。
-
             \begin{figure}
             \centering
             \includegraphics[width=0.8\linewidth]{fig/chap4/s_slc_illust.png}
             \caption{单移线工况场景设置}
             \label{fig:s_slc_illust}
             \end{figure}
-
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_slc_track.png}
+            \includegraphics[width=0.8\linewidth]{fig/chap4/s_slc_traj.jpg}
             \caption{单移线工况跟踪情况分析}
             \label{fig:s_slc_track}
             \end{figure}
-
-
             图\ref{fig:s_slc_track}结果表明，ART+DB组跟踪效果良好；为防止侧翻，ART组在\SI{50}{m} 处（变道动作发生前）即开始进行小幅转向调整但受极端工况及MPC控制器施加的软约束（$|\text{LTR}_{eql}| < 0.75$）影响，控制器以牺牲部分跟踪性能为代价保障防侧翻安全；PT和PT+DB组在发生侧翻前跟踪效果良好。
             
-            车辆状态变化如图~\ref{fig:s_slc_x}所示，PT与PT+DB在变道完成后的第\SI{6}{s}均发生侧翻。防侧翻控制组虽牺牲了部分跟踪性能，但跟踪误差仍处于可接受范围，且始终将LTR维持在安全区间内。在速度控制上，ART只进行转向控制故几乎并未损失速度；而ART+DB由于控制考虑横纵向耦合，通过试加差动制动时增加对应期望速度从而同样几乎为损失速度；PT并没有制动控制，故在侧翻前同样未损失速度；PT+DB即便启用差速制动后，车速被降至\SI{50}{km/h}左右，仍无法避免侧翻事故的发生，这是由于差动制动直到接近侧翻状态才介入，已无法扭转即将侧翻的现状。
-            
-            在控制量变化上，如图~\ref{fig:s_slc_u}所示，ART需通过转向控制来抵消晃动，故出现了转向指令频繁波动的情况；ART+DB在前段通过左右不断变化的差动制动来抵消晃动，转向角则保持平稳，加之MFASMC的跟踪误差补偿，使得跟踪更加精确；在轨迹跟踪结束后，ART+DB组通过持续差动的方式来抑制换道过程中产生的晃动，辅助车辆更快恢复稳定状态。对于PT+DB组，其制动在换道开始时才介入，已经为时已晚。
+            车辆状态变化如图~\ref{fig:s_slc_xu}所示，PT与PT+DB在变道完成后的第\SI{6}{s}均发生侧翻。防侧翻控制组虽牺牲了部分跟踪性能，但跟踪误差仍处于可接受范围，且始终将LTR维持在安全区间内。在速度控制上，ART只进行转向控制故几乎并未损失速度；而ART+DB由于控制考虑横纵向耦合，通过试加差动制动时增加对应期望速度从而同样几乎为损失速度；PT并没有制动控制，故在侧翻前同样未损失速度；PT+DB即便启用差速制动后，车速被降至\SI{50}{km/h}左右，仍无法避免侧翻事故的发生，这是由于差动制动直到接近侧翻状态才介入，已无法扭转即将侧翻的现状。
             \begin{figure}
             \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_slc_x.png}
-            \caption{单移线工况车辆状态}
-            \label{fig:s_slc_x}
+            \includegraphics[width=1.0\linewidth]{fig/chap4/s_slc_xu.jpg}
+            \caption{单移线工况车辆状态与控制量变化趋势}
+            \label{fig:s_slc_xu}
             \end{figure}
+            在控制量变化上，ART需通过转向控制来抵消晃动，故出现了转向指令频繁波动的情况；ART+DB在前段通过左右不断变化的差动制动来抵消晃动，转向角则保持平稳，加之MFASMC的跟踪误差补偿，使得跟踪更加精确；在轨迹跟踪结束后，ART+DB组通过持续差动的方式来抑制换道过程中产生的晃动，辅助车辆更快恢复稳定状态。对于PT+DB组，其制动在换道开始时才介入，已经为时已晚。
+
 
             根据本场景仿真可进一步发现，差动制动的引入可以在进入危险工况时可以提高车辆侧翻稳定性边界保持车辆稳定，在从危险工况恢复后可以起到抑制晃动快速恢复平稳状态的效果。
 
-            \begin{figure}
-            \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_slc_u.png}
-            \caption{单移线工况控制输入}
-            \label{fig:s_slc_u}
-            \end{figure}
 
 
         \subsubsection{短距双移线工况}
         \label{subsub:dlc}
             短距双车道变换（Double Lane Change, DLC）工况如图\ref{fig:s_dlc_illust}所示，该工况下要求车辆以\SI{70}{km/h}的速度，在\SI{30}{m}距离内完成\SI{3.5}{m}的侧向变道，随后直线行驶\SI{30}{m}，再在\SI{30}{m}内驶回原车道。
             
-            \begin{figure}
-            \centering
-            \includegraphics[width=1.0\linewidth]{fig/chap4/s_dlc_illust.png}
-            \caption{双移线工况场景设置}
-            \label{fig:s_dlc_illust}
-            \end{figure}
 
             根据仿真试验，PT组在\SI{62}{km/h}的速度下即发生侧翻，表明本研究设定的\SI{70}{km/h}试验速度具有较高风险。轨迹跟踪情况如图~\ref{fig:s_dlc_track}所示，PT组在\SI{70}{km/h}的初速度下，在约第\SI{6}{s}发生侧翻，其他所有组均未发生侧翻；PT+DB组维持相同轨迹，跟踪情况较好；ART组在\SI{60}{m}处提前开始转向，减小了变道幅度，并提前缓慢换回，整体牺牲了很多跟踪精度；ART+DB组轨迹基本与PT+DB组相同，跟踪效果较好。
 
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_dlc_track.png}
+            \includegraphics[width=0.85\linewidth]{fig/chap4/s_dlc_illust.png}
+            \caption{双移线工况场景设置}
+            \label{fig:s_dlc_illust}
+            \end{figure}
+            \begin{figure}
+            \centering
+            \includegraphics[width=0.8\linewidth]{fig/chap4/s_dlc_traj.jpg}
             \caption{双移线工况跟踪情况分析}
             \label{fig:s_dlc_track}
             \end{figure}
-
             \begin{figure}
             \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_dlc_x.png}
-            \caption{双移线工况车辆状态}
-            \label{fig:s_dlc_x}
+            \includegraphics[width=1.0\linewidth]{fig/chap4/s_dlc_xu.jpg}
+            \caption{双移线工况车辆状态与控制量变化趋势}
+            \label{fig:s_dlc_xu}
             \end{figure}
 
            双移线工况下车辆的状态变化如图~\ref{fig:s_dlc_x}所示。在防侧翻效果上，如从LTR的变化可看出，PT+DB组在约第\SI{6}{s}几乎接近侧翻，且这一状态维持了约\SI{2.5}{s}，仍然相当危险，单独采用差速制动的方案，虽能避免侧翻，但LTR会在至少\SI{2.5}{s}内达到饱和，且车速大幅降低引发纵向液体晃动，进而产生新的问题；ART组将\(\text{LTR}_{eql}\)控制在软约束范围内，从而在极限工况下避免了侧翻；ART+DB方法同样将将\(\text{LTR}_{eql}\)控制在软约束范围内，虽然跟踪精度相较于ART高了很多，且并没有牺牲对LTR状态的控制。
            
-           控制过程中的控制量变化如图~\ref{fig:s_dlc_u}所示，ART组由于只能通过减小转角来尽量满足不侧翻的约束下尽可能跟踪，故整体转向角度变化最小；PT+DB组在开始换道时采用差动制动介入，但次介入时机较晚，无法组织LTR的快速增加；ART+DB组则在换道前，从第\SI{2}{s}开始就进行了差动控制，此时前轮转角仍然接近0，其作用在于根据期望轨迹提前让液体向能抵消换道时产生晃动的方向晃动，从而显著减小了LTR的第一个峰值，进而使得第二个峰值可控；同时ART+DB组利用差动制动与纵向期望速度控制结合，在几乎不降低车速的情况下维持了高精度的轨迹跟踪，在双移线结束后通过连续差动制动对罐内液体晃动进行主动抑制。
+           控制量变化上，ART组由于只能通过减小转角来尽量满足不侧翻的约束下尽可能跟踪，故整体转向角度变化最小；PT+DB组在开始换道时采用差动制动介入，但次介入时机较晚，无法组织LTR的快速增加；ART+DB组则在换道前，从第\SI{2}{s}开始就进行了差动控制，此时前轮转角仍然接近0，其作用在于根据期望轨迹提前让液体向能抵消换道时产生晃动的方向晃动，从而显著减小了LTR的第一个峰值，进而使得第二个峰值可控；同时ART+DB组利用差动制动与纵向期望速度控制结合，在几乎不降低车速的情况下维持了高精度的轨迹跟踪，在双移线结束后通过连续差动制动对罐内液体晃动进行主动抑制。
 
-            \begin{figure}
-            \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_dlc_u.png}
-            \caption{双移线工况控制输入}
-            \label{fig:s_dlc_u}
-            \end{figure}
         
         \subsubsection{麋鹿工况救车实验}  
         \label{subsub:deer}
@@ -1323,26 +1232,23 @@
             \caption{麋鹿工况场景设置}
             \label{fig:s_deer_illust}
             \end{figure}
+
+            轨迹跟踪情况如图~\ref{fig:s_deer_track}所示，PT组和PT+DB组由于没有考虑防侧翻的转向控制，在打回方向时仍然向着目标轨迹靠近，故直接发生了侧翻；ART组在切换控制器后果断选择了反打方向朝着远离目标轨迹的方向，但由于没有车速控制，此时车辆的状态已经超过了单纯依靠前轮转角可控的边界，故继续向前行驶并仍然发生了侧翻；ART+DB组在ART组基础上加入了差动制动，此时车辆不仅迅速反打方向逆操舵，而且猛烈制动。此时并没有对向车轮，全部轮胎纵向力用来给车辆减速并提供横摆力矩，车辆减慢速度的同时继续远离期望轨迹，并在摆脱半侧翻状态后迅速靠近期望轨迹，恢复了正常跟踪。
+
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_deer_track.png}
+            \includegraphics[width=0.85\linewidth]{fig/chap4/s_deer_traj.jpg}
             \caption{麋鹿工况跟踪情况分析}
             \label{fig:s_deer_track}
             \end{figure}
-            轨迹跟踪情况如图~\ref{fig:s_deer_track}所示，PT组和PT+DB组由于没有考虑防侧翻的转向控制，在打回方向时仍然向着目标轨迹靠近，故直接发生了侧翻；ART组在切换控制器后果断选择了反打方向朝着远离目标轨迹的方向，但由于没有车速控制，此时车辆的状态已经超过了单纯依靠前轮转角可控的边界，故继续向前行驶并仍然发生了侧翻；ART+DB组在ART组基础上加入了差动制动，此时车辆不仅迅速反打方向逆操舵，而且猛烈制动。此时并没有对向车轮，全部轮胎纵向力用来给车辆减速并提供横摆力矩，车辆减慢速度的同时继续远离期望轨迹，并在摆脱半侧翻状态后迅速靠近期望轨迹，恢复了正常跟踪。
             \begin{figure}
             \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_deer_x.png}
-            \caption{麋鹿工况车辆状态}
-            \label{fig:s_deer_x}
+            \includegraphics[width=1.0\linewidth]{fig/chap4/s_deer_xu.jpg}
+            \caption{麋鹿工况车辆状态与控制量变化趋势}
+            \label{fig:s_deer_xu}
             \end{figure}
-            \begin{figure}
-            \centering
-            \includegraphics[width=0.7\linewidth]{fig/chap4/s_deer_u.png}
-            \caption{麋鹿工况控制输入}
-            \label{fig:s_deer_u}
-            \end{figure}
-            车辆状态如图~\ref{fig:s_deer_x}所示，ART组由于反打方向，侧翻时间相较于PT和PT+DB组更加延后，但没有减速所以ART组的车速基本维持在了初始速度\SI{80}{km/h}左右，这是其最终未能摆脱侧翻结果的决定性因素。控制输入如图~\ref{fig:s_deer_u}所示，可以看出，PT+DB组与ART+DB组进行了相同的全力减速，但由于并没有进行逆操舵，故虽然速度降低了，但仍然走向了侧翻的结果。
+
+            车辆状态及控制量变化如图~\ref{fig:s_deer_xu}所示，ART组由于反打方向，侧翻时间相较于PT和PT+DB组更加延后，但没有减速所以ART组的车速基本维持在了初始速度\SI{80}{km/h}左右，这是其最终未能摆脱侧翻结果的决定性因素。控制输入上，PT+DB组与ART+DB组进行了相同的全力减速，但由于并没有进行逆操舵，故虽然速度降低了，但仍然走向了侧翻的结果。
 
 
     \subsubsection{仿真结果分析}        

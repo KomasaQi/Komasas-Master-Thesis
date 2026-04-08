@@ -844,14 +844,17 @@
     要求1、可以基于历史数据预测指定的任意多辆车的轨迹；
     要求2、预测轨迹应为多模态轨迹，即时空中共享始端，但后续存在有限长度互不重叠的部分的轨迹。
     要求3、所预测的多模态轨迹包含每条轨迹的概率。
-    本研究中车端多模态轨迹预测部分并非重点，为了简化问题采用如\ref{subsection:param_and_int_recog}节所述的基于改进MOBIL模型的换道概率预测方法，该方法原始版本及有效性验证请参见韩硕\cite{hans2024}的工作。
+    本研究中车端多模态轨迹预测部分并非重点，为了简化问题采用如\ref{subsection:param_and_int_recog}节所述的基于改进MOBIL模型的换道概率预测方法，该方法原始版本及有效性请参见韩硕\cite{hans2024}的工作。
 
-    \begin{figure}
-      \centering
-      \includegraphics[width=1.0\linewidth]{fig/chap3/scenario_selection.png}
-      \caption{关键场景构建与筛选方法}
-      \label{fig:scenario_selection}
-    \end{figure}
+      \begin{figure}
+        \centering
+        \subcaptionbox{关键周车确定 \label{fig:scenario_selection1}}
+          {\includegraphics[width=0.27\linewidth]{fig/chap3/scenario_selection1.png}}
+        \subcaptionbox{关键场景构建方法 \label{fig:scenario_selection2}}
+          {\includegraphics[width=0.71\linewidth]{fig/chap3/scenario_selection2.png}}
+        \caption{关键场景构建与筛选方法}
+        \label{fig:scenario_selection}
+      \end{figure}
 
     关键周车查找方法$\text{findKeyVeh}(\tau_{cloud},\mathcal{T})$包含以下步骤：
     假设所有车辆可以严格跟踪轨迹，将所有指定轨迹基于车辆运动学进行时空体积膨胀，得到每条指定轨迹的时空占用区域$\sigma_{traj\_name}$，下标$traj\_name$应替换为特定轨迹的名称，表示所述指定轨迹包括所述的预测性轨迹规划结果$\tau_{cloud}$、预设范围内每辆周车的多模态预测轨迹$\tau_i = \{\tau_i^1,\tau_i^2,\dots,\tau_i^{m_i}\}, i=1,2,\dots,N_{veh}$；
