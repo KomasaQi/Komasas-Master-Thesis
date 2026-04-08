@@ -145,6 +145,78 @@
 
 \section{理论补充}
 
+
+  \subsection{图结构与图神经网络}
+
+    \subsubsection*{(1)图数据结构}
+      语音、图像、文本等常见结构化数据一般表示为顺序结构，如序列或矩阵，但对更为一般的非结构化数据如知识图谱、社交网络、分子结构等难形成以有效表征。图是一种更为通用的数据结构，能够有效表示实体及其关系。在图中，实体通常表示为节点，而实体之间的关系表示为边，图可以是有向或无向的，节点和边都可以具有一系列如强度、重要性和其他更多维度的特征。图数据结构广泛应用于各种领域，如社交网络分析、推荐系统、生物信息学等，如图~\ref{fig:graph_structure}所示。
+
+      \begin{figure}
+        \centering
+        \subcaptionbox{知识图谱 \label{fig:knowledge_graph}}
+          {\includegraphics[width=0.3\linewidth]{fig/chap3/knowledge_graph.png}}
+        \subcaptionbox{分子结构 \label{fig:moleculer}}
+          {\includegraphics[width=0.3\linewidth]{fig/chap3/moleculer.png}}
+        \subcaptionbox{复杂系统 \label{fig:complex_system}}
+          {\includegraphics[width=0.26\linewidth]{fig/chap3/complex_system.png}}
+        \vspace{0.2cm}
+        \subcaptionbox{社交网络 \label{fig:social_network}}
+          {\includegraphics[width=0.3\linewidth]{fig/chap3/social_network.png}}
+        \subcaptionbox{交通网络 \label{fig:traffic_net}}  
+          {\includegraphics[width=0.25\linewidth]{fig/chap3/traffic_net.png}}
+        \subcaptionbox{生物网络 \label{fig:biological_network}}  
+          {\includegraphics[width=0.27\linewidth]{fig/chap3/biological_network.png}}
+
+        \caption{图结构示例}
+        \label{fig:graph_structure}
+      \end{figure}
+
+      图结构数据通常具有无序性、异质性、稀疏性等特征。和点云类似，对于图而言节点和边都没有固定的顺序，这种特性称为无序性；图的节点与边的特征通常以向量密集表示为节点特征矩阵$\mathcal{V} \in \mathbb{R}^{n_\mathrm{v} \times d_\mathrm{v}}$和边特征矩阵$\mathcal{E} \in \mathbb{R}^{n_\mathrm{e} \times d_\mathrm{e}}$，其中$n_\mathrm{v}$表示图中节点的数量，$n_\mathrm{e}$表示图中边的数量，$d_\mathrm{v}$表示图中节点的特征维度，$d_\mathrm{e}$表示图中边的特征维度。若一张图中同时存在多种不同维度特征的节点或边，则称该图是异质的。在表达形式上，图$\mathcal{G}$的连接关系通常可以由邻接矩阵$\mathcal{A} \in \mathbb{R}^{n_\mathrm{v} \times n_\mathrm{v}}$表示，元素$a_{ij} \in \left(0, 1\right)$表示节点$\mathrm{v}_i$与节点$\mathrm{v}_j$之间的单向连接关系，故对于无向图而言，邻接矩阵是对称的，而由于连接数通常与节点数量量级类似，故这种连接通常是稀疏的，邻接矩阵$\mathcal{A}$几乎总是可以表征为稀疏形式存储。
+
+      在交通场景中，图可以用于表示道路网络，其中节点表示交叉口或路段甚至道路上的传感器，边表示道路或传感器的连接关系甚至只表示相对位置来体现权重\cite{STGCN2018}。此外，在单车视角的交通预测中，图还可以用于表示交通参与者之间的交互关系，如车辆之间的距离、速度差异等\cite{Wayformer2022}。本质上如文本和图像等顺序结构其实也可以表示为图的特例\cite{VisionGNN2022}。和顺序结构相比，图在提高表达能力的同时也带来了更高的计算复杂度和挑战性，如图的无序性、异构性、稀疏性等问题需要特殊的处理方法。
+
+    \subsubsection*{(2)图神经网络与交通预测}
+      图神经网络（Graph Neural Network, GNN）是专为图结构数据而设计的深度学习模型，与全连接网络相比增加了对于邻接矩阵$\mathcal{A}$甚至边特征矩阵$\mathcal{E}$的处理以够有效捕捉带有拓扑结构的图中节点之间、节点与边、边与边的关系。最早的图神经网络是由Kipf和Welling在2016年\cite{GCN2017original}将卷积的概念引入图结构，提出图卷积网络（Graph Convolution Network, GCN）用于图结构数据的局部特征聚合。此后，GNN的研究不断发展，在基础结构上涌现出了许多不同的模型，如在特征聚合上GraphSAGE\cite{GraphSAGE2017}通过采样的方式选取邻居解决大图计算复杂度问题；GAT\cite{GAT2018original}及其改进版GATv2\cite{GATv2_2022}将注意力机制第一次引入邻居聚合中，而HAN\cite{HAN2019}则将局部图注意力进一步推广到了异质图。图结构处理上Cluster-GCN\cite{Cluster_GCN}通过拆分子图实现大图分批计算；SAGPooling\cite{SAGPooling2019}则通过原位降/上采样的方式实现了图池化（Graph Pooling, GPool）的操作，使得多尺度的图操作成为可能，如实现U-Net\cite{U_net2015original}等包含GPool的操作。
+      
+      上述GNN也称为消息传递网络（Message Passing Network, MPN），实现了沿（有向）边的邻居节点特征聚合。但MPN存在过平滑的问题，表达能力受1-WL测试上限，网络深度普遍无法超过3层，这意味着每个节点最多只能聚合其3阶邻居的特征，无法有效捕捉长距离依赖。基于谱图卷积理论的Chebyshev多项式近似图卷积（ChebConv）被提出以同时聚合$k$阶邻居特征，但仍存在过平滑问题。为进一步提高模型表达能力，让每个节点对全局所有而非仅其邻居节点进行注意力运算特征聚合，图Transformer（Graph Transformer, GT）类模型被提出，如Graphormer\cite{Graphormer2021}引入节点间最短距离矩阵和节点中心性特征等方法编码图结构，并采用标准Transformer进行计算实现了全局图聚合，但未能避免稠密注意力计算量随节点数二次方增长的性能瓶颈；GraphGPS采用位置（Positional Embedding, PE）/结构编码（Structual Embedding, SE）的方式编码局部、全局、相对三类图关系，并利用MPN实现局部消息传递，再利用Performer\cite{Performer2022}或Q-Former\cite{BLIP_2_Q_Former2023}的线性全局注意力全局聚合进一步降低计算复杂度；但PE或SE的计算通常需要较高花费，如随机游走预训练等方式，且对跨图泛化不友好。为进一步提高GT表达能力和更强的跨图泛化性能，Polynomer\cite{Polynomer2024}通过级联全局线性多项式注意力与MPN实现强表达性的同时则省去了PE或SE，直接利用无编码全局注意力运算的置换不变性解决图的无序性问题，将跨图泛化能力推向极致；针对数百万节点级别的超大图，SGFormer则采用单层全局图注意力搭配MPN，虽牺牲了跨图泛化能力，但在大图任务上的效果得到维持。
+
+      GNN在交通预测领域被广泛使用。路网交通预测最早通过图像处理的思路解决，但路网的稀疏性使得视野中绝大部分的非路面区域对预测效果形成严重干扰并提高了计算量。从STGCN\cite{STGCN2018}开始首次将GNN用于交通预测，其将时序卷积网络（Temporal Convolution Network, TCN）与ChebConv结合实现了对交通流量的时空预测；DCRNN\cite{DCRNN2018}则通过引入扩散卷积（Diffusion Convolution, DC）实现了对交通网络中节点间非对称关系的建模，并结合循环神经网络（Recurrent Neural Network, RNN）实现了对交通状态的时序预测；Graph WaveNet\cite{GraphWaveNet2019}通过引入自适应邻接矩阵学习交通网络中节点间动态关系，并结合堆叠扩张因果时序卷积实现了对交通状态的长时域预测；Graph-UNet\cite{U_net_TrafficPred2022}将。近年来，随着GT的发展，基于其的交通预测模型也逐渐兴起。如ASTGNN\cite{ASTGCN2019}通过引入空间和时间注意力机制实现了对交通状态的时空建模；GMAN\cite{GMAN2019}则通过引入门控机制和多头注意力机制提升了交通预测性能；STTN\cite{STTN2021}通过堆叠时空Transformer实现了对交通状态的长时域预测；ST-Mamba\cite{ST_Mamba2024}和SpoT-Mamba\cite{SpoT_Mamba2024}则将基于状态空间模型的Mamba-2\cite{Mamba2_2024}架构引入替代Transformer实现了中小图上更好的效果；BigST\cite{BigST2024}则进一步提高了。这些基于GNN的交通预测模型在处理复杂的交通网络结构和捕捉时空依赖关系方面表现出色，显著提升了交通预测的准确性和鲁棒性。
+      
+      在云端进行的长时域规划需要面对信息往返传输时延的挑战，且在云控基础平台已经可以直接拿到结构化感知数据，故从计算效率与可实现性角度看，直接以结构化感知数据为输入的决策规划方法更适合在云端进行运行与部署。相比于如基于BEV等感知结构输入的方式\cite{li2024bev_planner}，以图结构进行交通场景感知结果的输入方法为云端长时域非确定性交通预测提供了有效的技术手段。
+
+  \subsection{流匹配扩散方法}
+      流匹配（Flow Matching, FM）是一种基于向量流场理论的生成模型，用于学习数据分布的速度向量场。其核心思想是通过最小化数据样本与模型生成样本之间的流匹配损失，来训练一个能够生成目标分布样本的模型\cite{FlowMatching2023original}。相比于DDPM等基于扩散模型的生成方法，FM无需显式定义扩散过程，直接学习数据分布的速度向量场，在样本生成上有显著效率，甚至可以一步生成高质量样本\cite{GoalFlow2025}。
+
+      在图像生成中，每个像素点的RGB值代表3维度向量，像素点数为$N_{pix}$，则可以看成在$3 N_{pix}$维向量空间中进行流匹配；在轨迹生成上，如果以\SI{10}{Hz}生成未来\SI{8}{s}的包含$x,y$的轨迹，则相当于在160维向量空间进行流匹配。
+
+      FM用神经网络学习一个任务向量空间上的向量流场：$v_t^\bm{\theta}$，其损失函数定义为
+      \begin{equation}
+      \mathcal{L}(\bm{\theta}) = \mathbb{E_{t,p_t(x)}} \lVert v_t^\bm{\theta}(x_t) - v_t^{target}(x_t) \rVert^2
+      \label{eq:fm_loss_original}
+      \end{equation}
+
+      其中$\bm{\theta}$表示神经网络的参数，$t \in [0,1]$表示时间变量，$x_t$表示在时间$t$时刻的样本，$p_t(x)$表示在时间$t$时刻的样本分布，$v_t^{target}(x_t)$表示在时间$t$时刻的目标速度向量场。
+      
+      为获得$v_t^{target}(x_t)$，在生成式FM任务中通常需自行构建一个流。我们首先构造一个从原始分布$p_0(x)$到目标分布$p_1(x)$的平滑过渡连续分布族$p_t(x)$，$t\in [0,1]$，$p_t(x)$平滑地从$p_0(x)$过渡到$p_1(x)$:
+
+      \begin{equation}\psi_t^{target}(x_0|z)=\alpha_t z+ \beta_t x_0 
+      \end{equation}
+
+      其中$x_0 \sim p_0(x)$是采样自已知初始分布的样本，$z \sim p_1(x)$是采样自真实分布的样本。最常用的是衍生自最优传输理论且最简单直观的整合流（Rectified Flow）,即对原始分布和目标分布进行线性插值，定义如下：
+
+      \begin{equation} \psi_t^{target}(x_0|z) = x_t = t z + (1-t)x_0 
+      \end{equation}
+
+      除了线性插值，也可用指数插值$x_t = e^{-t}x_0 + (1-e^{-t})z$，核心是保证$p_t(x)$的连续性。则速度向量场的目标为：
+
+      \begin{equation} v_t^{target}(x_t|z) = v_t^{target}(\psi_t^{target}(x_0|z)|z) \\
+      = \frac{\mathrm{d}\psi_t^{target}(x_0|z)}{\mathrm{d}t} = \frac{\mathrm{d}\alpha_t}{\mathrm{d}t} z + \frac{\mathrm{d}\beta_t}{\mathrm{d}t} x_0
+      \end{equation}
+
+      其中$\alpha_t$和$\beta_t$分别表示时刻$t$对目标样本和已知初始样本的线性插值系数。对整合流而言，条件目标速度向量场为：
+
+      \begin{equation} v_t^{target}(x_t|z) = z - x_0 \end{equation}
+
   \subsection{图扩散流匹配理论证明}
   \label{sub:graphflow_proof}
     我们希望学习得到的是动态特征速度的边缘向量场：$v_t^\bm{\theta}$，其不依赖于未来真值$\mathcal{V}_{k+1}$，那么我们使用条件向量场计算出来的速度向量$v_t^{target}(F_{dyn}^{t}|\mathcal{V}_{k+1})$是否可以拿来当做训练的标签，即是否可以将无条件损失式\eqref{loss_fm}替换为有条件损失式\eqref{loss_cfm}。
@@ -256,6 +328,8 @@
     \end{figure}
 
     在最坏情况，即需计算SSI的辆车都为半挂车时，Trailer-MEI指标的计算时间仅为MEI的6倍，C++编译后单次计算时间大约在\SIrange{30}{50}{\micro s}，在实现半挂车间计算的同时计算时间依然可以忽略。本文为平衡精度与计算速度，计算Trailer-MEI指标采用的离散步长$\increment t = \SI{0.2}{s}$，预测时域为\SI{5}{s}。
+
+
 
   \subsection{无模型自适应滑模残差补偿}
     \label{sub:MFASMC_residual_compensation}
@@ -1131,189 +1205,8 @@
   }% 结束局部作用域
 
 
-  {% 局部作用域，只改本表行距，不影响全文
-  \small
-  % \setlength{\tabcolsep}{3pt}       % 如需压缩列间距可取消注释
-  \renewcommand{\arraystretch}{1.0} % 核心：恢复正常紧凑行距
-  \linespread{0.7}\selectfont       % 强制行高
 
-  \begin{longtable}{l l}
-      \caption{简化半挂液罐车模型参数与变量说明}
-      \label{tab:tank_truck_parameters} \\
-      \toprule
-      \textbf{参数/变量} & \textbf{说明（i=1,2 分别代表牵引车、挂车）} \\
-      \midrule
-  \endfirsthead
-      \caption*{续表~\thetable\quad 简化半挂液罐车模型参数与变量说明} \\
-      \toprule
-      \textbf{参数/变量} & \textbf{说明（i=1,2 分别代表牵引车、挂车）} \\
-      \midrule
-  \endhead
-      \bottomrule
-  \endfoot
-
-  %-------------------------------------------------------------------------------
-  $m_i$, $m_{si}$ & 车辆总质量、簧载质量 \\
-  $v_{ix}$, $v_{iy}$ & 纵向/侧向速度 \\
-  $\dot{\beta_i}$ & 质心侧偏角变化率 \\
-  $\psi_i$, $\phi_i$ & 横摆角、侧倾角 \\
-  $\dot{\psi}_i$ & 横摆角速度 \\
-  $\dot{\phi}_i$ & 侧倾角速度 \\
-  $h_i$ & 质心到侧倾中心的距离 \\
-  $h_{ic}$ & 牵引销到侧倾轴线的高度 \\
-  $I_{izz}$, $I_{ixx}$, $I_{1xz}$ & 簧载质量在横摆、侧倾、交叉耦合方向的转动惯量 \\
-  $k_{ri}$,$c_i$ & 悬架侧倾刚度/阻尼 \\
-  $F_{y1}$, $F_{y2}$, $F_{y3}$ & 牵引车等效前轴、后轴，以及挂车等效后轴的侧向力 \\
-  $F_z$ & 车轮所受垂向力 \\
-  $F_{y,int}$ & 挂车作用于牵引车的侧向力 \\
-  $F_x$, $F_y$, $M_x$, $M_y$, $M_z$ & 液体晃动纵向力、侧向力、侧倾力矩、俯仰力矩、横摆力矩 \\
-  $a$, $b$, $c$ & 牵引车前轮轴/后轮轴/牵引销铰接点到质心的距离 \\
-  $d$, $e$ & 挂车后轮轴/牵引销铰接点到质心的距离 \\
-  $k_{12}$ & 牵引销连接部位的侧倾刚度 \\
-  $k_1$, $k_2$, $k_3$ & 牵引车等效前轴、后轴，以及挂车后轴的侧向刚度 \\
-  $\theta_1,\theta_2$ & 线性化双摆模型摆角 \\
-  $\dot{\theta}_1,\dot{\theta}_2$ & 线性化双摆模型前/后摆角速度 \\
-  $\delta$, $\delta_d$ & 转向角、期望转向角 \\
-  $a_{deccel}$ & 车辆减速度 \\
-  $c_{M1}$ & 牵引车制动力矩-减速度转换系数 \\
-  $c_{M2}$ & 挂车制动力矩-减速度转换系数 \\
-  $c_{brk}$ & 制动压力-减速度转换系数 \\
-  $\tau_v$ & 车速响应时间常数 \\
-  $v_{des}$ & 期望车速 \\
-  $\Delta v_{thrld}$ & 期望车速与实际车速差值阈值 \\
-  $v_{des}^a$ & 给下层控制器的期望速度指令 \\
-  $v_{dev}$ & 静态偏置加速度 \\
-  $p_{brk}^{L1}$ & 牵引车左侧制动压力 \\
-  $p_{brk}^{R1}$ & 牵引车右侧制动压力 \\
-  $p_{brk}^{L2}$ & 挂车左侧制动压力 \\
-  $p_{brk}^{R2}$ & 挂车右侧制动压力 \\
-  $M_{1z}^+$ & 牵引车左侧附加横摆力矩 \\
-  $M_{1z}^-$ & 牵引车右侧附加横摆力矩 \\
-  $M_{2z}^+$ & 挂车左侧附加横摆力矩 \\
-  $M_{2z}^-$ & 挂车右侧附加横摆力矩 \\
-  $T_{w1}$ & 牵引车轮距 \\
-  $T_{w2}$ & 挂车轮距 \\
-  $Y_1$ & 牵引车在大地坐标系下的Y轴坐标 \\
-  $X_1$ & 牵引车在大地坐标系下的X轴坐标 \\
-
-  \end{longtable}
-  }% 结束局部作用域
-
-
-\section{数学表达式}
-
-
-  \setcounter{MaxMatrixCols}{20} % 至少 >= 16
-
-  \begin{equation}
-  M = \begin{bmatrix}
-  m_{11} & I_{1zz} & 0 & m_{14} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  m_{21} & -I_{1xz} & 0 & m_{24} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  m_{31} & 0 & 0 & m_{34} & m_{35} & m_{36} & 0 & m_{38} & 0 & m_{310} & 0 & m_{310} & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & m_{45} & m_{46} & 0 & m_{48} & 0 & m_{410} & 0 & m_{412} & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & m_{55} & m_{56} & 0 & m_{58} & 0 & m_{510} & 0 & m_{510} & 0 & 0 & 0 & 0 \\
-  1 & -\frac{c}{v_{1x}} & 0 & -\frac{h_{1c}}{v_{1x}} & -1 & -\frac{e}{v_{2x}} & 0 & \frac{h_{2c}}{v_{2x}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & \frac{v_{2x}}{l_p} & \frac{x_1}{l_p} & 0 & \frac{h_p}{l_p} & -2 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & \frac{v_{2x}}{l_p} & \frac{x_2}{l_p} & 0 & \frac{h_p}{l_p} & -2 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
-  0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
-  \end{bmatrix}_{16 \times 16}
-  \label{eq:M}
-  \end{equation}
-  其中各个子项为：
-  \begin{equation*}
-  \begin{aligned}
-  m_{11} &= m_1 v_{1x} c, \quad
-  m_{14} = -m_{1s} h_1 c - I_{1xz}, \quad
-  m_{21} = (m_1 h_1 c - m_{1s} h_1) v_{1x}, \\
-  m_{24} &= I_{1xx} + 2 m_{1s} h_1^2 - m_{1s} h_1 h_{1c}, \quad
-  m_{31} = m_1 v_{1x}, \quad
-  m_{34} = -m_{1s} h_1, \\
-  m_{35} &= m_2 v_{2x} + (m_p + m_0) v_{2x}, \quad
-  m_{36} = x_0 (m_p + m_0), \quad
-  m_{38} = -m_{2s} h_2 - (m_0 h_0 + m_p h_p), \\
-  m_{310} &= \frac{1}{2} m_p l_p, \quad
-  m_{45} = e m_{35} - x_0 (m_p + m_0) v_{x2}, \quad
-  m_{46} = -I_{2zz} + e m_{36} - \frac{1}{2} (m_p + m_0) (x_1^2 + x_2^2), \\
-  m_{48} &= I_{2xz} + e m_{38} + x_0 (m_0 h_0 + m_p h_p), \quad
-  m_{410} = e m_{310} - \frac{1}{2} m_p l_p x_1 = \frac{1}{2} (e - x_1) m_p l_p, \\
-  m_{412} &= e m_{310} - \frac{1}{2} m_p l_p x_2 = \frac{1}{2} (e - x_2) m_p l_p, \\
-  m_{55} &= (m_2 h_{2c} - m_{2s} h_2) v_{2x} + h_{2c} (m_p + m_0) v_{2x} - v_{x2} (m_0 h_0 + m_p h_p), \\
-  m_{56} &= -I_{2xz} + h_{2c} m_{36} - x_0 (m_0 h_0 + m_p h_p), \quad
-  m_{58} = I_{2xx} + 2 m_{2s} h_2^2 + h_{2c} m_{38} + (m_0 h_0^2 + m_p h_p^2), \\
-  m_{510} &= h_{2c} m_{310} - \frac{1}{2} m_p h_p l_p = \frac{1}{2} (h_{2c} - h_p) m_p l_p.
-  \end{aligned}
-  \end{equation*}
-
-  \begin{equation}
-  A_0 = \begin{bmatrix}
-  a_{11} & a_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  a_{21} & a_{22} & a_{23} & 0 & 0 & 0 & k_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  a_{31} & a_{32} & 0 & 0 & k_3 & a_{36} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & a_{45} & a_{46} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & a_{55} & a_{56} & a_{57} & -c_2 & a_{59} & 0 & a_{59} & 0 & 0 & 0 & 0 & 0 \\
-  0 & -1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & -\frac{v_{2x}}{l_p} & -\frac{g}{l_p} & 0 & -\frac{g}{l_p} & -c_d & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & -\frac{v_{2x}}{l_p} & 0 & -\frac{g}{l_p} & 0 & -\frac{g}{l_p} & 0 & 0 & -c_d & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\frac{1}{\tau_v} & 0 \\
-  0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
-  \end{bmatrix}
-  \label{eq:A_0}
-  \end{equation}
-
-  其中各个子项为：
-
-  \begin{equation*}
-  \begin{aligned}
-  a_{11} &= (a + c)k_1 + (c - b)k_2, \quad
-  a_{12} = \frac{a(a + c)k_1 - b(c - b)k_2}{v_{1x}} - m_1 v_{1x} c, \\
-  a_{21} &= k_1 h_{1c} + k_2 h_{1c}, \quad
-  a_{22} = \frac{(a k_1 - b k_2) h_{1c}}{v_{1x}} + (m_{1s} h_1 - m_1 h_{1c}) v_{1x}, \\
-  a_{23} &= m_{1s} g h_1 - k_{r1} - k_{12}, \quad
-  a_{31} = k_1 + k_2, \quad
-  a_{32} = \frac{a k_1 - b k_2}{v_{1x}} - m_1 v_{1x}, \\
-  a_{36} &= -\frac{d k_3}{v_{2x}} - m_2 v_{2x} - (m_0 + m_p) v_{2x}, \quad
-  a_{45} = (d + e)k_3, \\
-  a_{46} &= -\frac{d(e + d)k_3}{v_{2x}} - m_2 v_{2x} e - e(m_0 + m_p) v_{2x} + x_0 (m_p + m_0) v_{2x}, \quad
-  a_{55} = k_3 h_{2c} e, \\
-  a_{56} &= -\frac{d k_3 h_{2c}}{v_{2x}} + (m_{2s} h_2 - m_2 h_{2c}) v_{2x} + (m_0 h_0 + m_p h_p) v_{2x} - h_{2c} (m_0 + m_p) v_{2x}, \\
-  a_{57} &= m_{2s} g h_2 - k_{r2} - k_{12} + (m_0 h_0 + m_p h_p) g, \quad
-  a_{59} = -\frac{1}{2} m_p l_p g.
-  \end{aligned}
-  \end{equation*}
-
-  \begin{equation}
-  B_0 = \begin{bmatrix}
-  -(c + a)k_1 & \frac{c_{brk}}{\overline{c_M}} & -\frac{c_{brk}}{\overline{c_M}} & 0 & 0 & 0 \\
-  -k_1 h_{1c} & 0 & 0 & 0 & 0 & 0 \\
-  -k_1 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & -\frac{c_{brk}}{\overline{c_M}} & \frac{c_{brk}}{\overline{c_M}} & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & 0 & 0 & 0 & 0 & 0 \\
-  0 & -c_{brk} & -c_{brk} & -c_{brk} & -c_{brk} & \frac{1}{\tau_v} \\
-  0 & 0 & 0 & 0 & 0 & 0
-  \end{bmatrix}_{14 \times 6}
-  \label{eq:B_0}
-  \end{equation}
-
-  \begin{equation}
-  T_c = diag([v_{1x}\ 1\ 1\ 1\ v_{2x}\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1])_{14 \times 14}
-  \label{eq:T_c}
-  \end{equation}
+% \section{数学表达式}
 
 
 

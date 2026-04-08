@@ -11,77 +11,7 @@
 
 本节介绍了一种基于图结构的流匹配扩散方法用于对周车进行长时域非确定预测，本节首先从图结构与图神经网络的介绍开始，随后展开了交通图特征表示方法及自回归图扩散交互式预测模型的构建方法。
 
-  \subsection{图结构与图神经网络}
-
-    \subsubsection*{(1)图数据结构}
-      语音、图像、文本等常见结构化数据一般表示为顺序结构，如序列或矩阵，但对更为一般的非结构化数据如知识图谱、社交网络、分子结构等难形成以有效表征。图是一种更为通用的数据结构，能够有效表示实体及其关系。在图中，实体通常表示为节点，而实体之间的关系表示为边，图可以是有向或无向的，节点和边都可以具有一系列如强度、重要性和其他更多维度的特征。图数据结构广泛应用于各种领域，如社交网络分析、推荐系统、生物信息学等，如图~\ref{fig:graph_structure}所示。
-
-      \begin{figure}
-        \centering
-        \subcaptionbox{知识图谱 \label{fig:knowledge_graph}}
-          {\includegraphics[width=0.3\linewidth]{fig/chap3/knowledge_graph.png}}
-        \subcaptionbox{分子结构 \label{fig:moleculer}}
-          {\includegraphics[width=0.3\linewidth]{fig/chap3/moleculer.png}}
-        \subcaptionbox{复杂系统 \label{fig:complex_system}}
-          {\includegraphics[width=0.26\linewidth]{fig/chap3/complex_system.png}}
-        \vspace{0.2cm}
-        \subcaptionbox{社交网络 \label{fig:social_network}}
-          {\includegraphics[width=0.3\linewidth]{fig/chap3/social_network.png}}
-        \subcaptionbox{交通网络 \label{fig:traffic_net}}  
-          {\includegraphics[width=0.25\linewidth]{fig/chap3/traffic_net.png}}
-        \subcaptionbox{生物网络 \label{fig:biological_network}}  
-          {\includegraphics[width=0.27\linewidth]{fig/chap3/biological_network.png}}
-
-        \caption{图结构示例}
-        \label{fig:graph_structure}
-      \end{figure}
-
-      图结构数据通常具有无序性、异质性、稀疏性等特征。和点云类似，对于图而言节点和边都没有固定的顺序，这种特性称为无序性；图的节点与边的特征通常以向量密集表示为节点特征矩阵$\mathcal{V} \in \mathbb{R}^{n_\mathrm{v} \times d_\mathrm{v}}$和边特征矩阵$\mathcal{E} \in \mathbb{R}^{n_\mathrm{e} \times d_\mathrm{e}}$，其中$n_\mathrm{v}$表示图中节点的数量，$n_\mathrm{e}$表示图中边的数量，$d_\mathrm{v}$表示图中节点的特征维度，$d_\mathrm{e}$表示图中边的特征维度。若一张图中同时存在多种不同维度特征的节点或边，则称该图是异质的。在表达形式上，图$\mathcal{G}$的连接关系通常可以由邻接矩阵$\mathcal{A} \in \mathbb{R}^{n_\mathrm{v} \times n_\mathrm{v}}$表示，元素$a_{ij} \in \left(0, 1\right)$表示节点$\mathrm{v}_i$与节点$\mathrm{v}_j$之间的单向连接关系，故对于无向图而言，邻接矩阵是对称的，而由于连接数通常与节点数量量级类似，故这种连接通常是稀疏的，邻接矩阵$\mathcal{A}$几乎总是可以表征为稀疏形式存储。
-
-      在交通场景中，图可以用于表示道路网络，其中节点表示交叉口或路段甚至道路上的传感器，边表示道路或传感器的连接关系甚至只表示相对位置来体现权重\cite{STGCN2018}。此外，在单车视角的交通预测中，图还可以用于表示交通参与者之间的交互关系，如车辆之间的距离、速度差异等\cite{Wayformer2022}。本质上如文本和图像等顺序结构其实也可以表示为图的特例\cite{VisionGNN2022}。和顺序结构相比，图在提高表达能力的同时也带来了更高的计算复杂度和挑战性，如图的无序性、异构性、稀疏性等问题需要特殊的处理方法。
-
-    \subsubsection*{(2)图神经网络与交通预测}
-      图神经网络（Graph Neural Network, GNN）是专为图结构数据而设计的深度学习模型，与全连接网络相比增加了对于邻接矩阵$\mathcal{A}$甚至边特征矩阵$\mathcal{E}$的处理以够有效捕捉带有拓扑结构的图中节点之间、节点与边、边与边的关系。最早的图神经网络是由Kipf和Welling在2016年\cite{GCN2017original}将卷积的概念引入图结构，提出图卷积网络（Graph Convolution Network, GCN）用于图结构数据的局部特征聚合。此后，GNN的研究不断发展，在基础结构上涌现出了许多不同的模型，如在特征聚合上GraphSAGE\cite{GraphSAGE2017}通过采样的方式选取邻居解决大图计算复杂度问题；GAT\cite{GAT2018original}及其改进版GATv2\cite{GATv2_2022}将注意力机制第一次引入邻居聚合中，而HAN\cite{HAN2019}则将局部图注意力进一步推广到了异质图。图结构处理上Cluster-GCN\cite{Cluster_GCN}通过拆分子图实现大图分批计算；SAGPooling\cite{SAGPooling2019}则通过原位降/上采样的方式实现了图池化（Graph Pooling, GPool）的操作，使得多尺度的图操作成为可能，如实现U-Net\cite{U_net2015original}等包含GPool的操作。
       
-      上述GNN也称为消息传递网络（Message Passing Network, MPN），实现了沿（有向）边的邻居节点特征聚合。但MPN存在过平滑的问题，表达能力受1-WL测试上限，网络深度普遍无法超过3层，这意味着每个节点最多只能聚合其3阶邻居的特征，无法有效捕捉长距离依赖。基于谱图卷积理论的Chebyshev多项式近似图卷积（ChebConv）被提出以同时聚合$k$阶邻居特征，但仍存在过平滑问题。为进一步提高模型表达能力，让每个节点对全局所有而非仅其邻居节点进行注意力运算特征聚合，图Transformer（Graph Transformer, GT）类模型被提出，如Graphormer\cite{Graphormer2021}引入节点间最短距离矩阵和节点中心性特征等方法编码图结构，并采用标准Transformer进行计算实现了全局图聚合，但未能避免稠密注意力计算量随节点数二次方增长的性能瓶颈；GraphGPS采用位置（Positional Embedding, PE）/结构编码（Structual Embedding, SE）的方式编码局部、全局、相对三类图关系，并利用MPN实现局部消息传递，再利用Performer\cite{Performer2022}或Q-Former\cite{BLIP_2_Q_Former2023}的线性全局注意力全局聚合进一步降低计算复杂度；但PE或SE的计算通常需要较高花费，如随机游走预训练等方式，且对跨图泛化不友好。为进一步提高GT表达能力和更强的跨图泛化性能，Polynomer\cite{Polynomer2024}通过级联全局线性多项式注意力与MPN实现强表达性的同时则省去了PE或SE，直接利用无编码全局注意力运算的置换不变性解决图的无序性问题，将跨图泛化能力推向极致；针对数百万节点级别的超大图，SGFormer则采用单层全局图注意力搭配MPN，虽牺牲了跨图泛化能力，但在大图任务上的效果得到维持。
-
-      GNN在交通预测领域被广泛使用。路网交通预测最早通过图像处理的思路解决，但路网的稀疏性使得视野中绝大部分的非路面区域对预测效果形成严重干扰并提高了计算量。从STGCN\cite{STGCN2018}开始首次将GNN用于交通预测，其将时序卷积网络（Temporal Convolution Network, TCN）与ChebConv结合实现了对交通流量的时空预测；DCRNN\cite{DCRNN2018}则通过引入扩散卷积（Diffusion Convolution, DC）实现了对交通网络中节点间非对称关系的建模，并结合循环神经网络（Recurrent Neural Network, RNN）实现了对交通状态的时序预测；Graph WaveNet\cite{GraphWaveNet2019}通过引入自适应邻接矩阵学习交通网络中节点间动态关系，并结合堆叠扩张因果时序卷积实现了对交通状态的长时域预测；Graph-UNet\cite{U_net_TrafficPred2022}将。近年来，随着GT的发展，基于其的交通预测模型也逐渐兴起。如ASTGNN\cite{ASTGCN2019}通过引入空间和时间注意力机制实现了对交通状态的时空建模；GMAN\cite{GMAN2019}则通过引入门控机制和多头注意力机制提升了交通预测性能；STTN\cite{STTN2021}通过堆叠时空Transformer实现了对交通状态的长时域预测；ST-Mamba\cite{ST_Mamba2024}和SpoT-Mamba\cite{SpoT_Mamba2024}则将基于状态空间模型的Mamba-2\cite{Mamba2_2024}架构引入替代Transformer实现了中小图上更好的效果；BigST\cite{BigST2024}则进一步提高了。这些基于GNN的交通预测模型在处理复杂的交通网络结构和捕捉时空依赖关系方面表现出色，显著提升了交通预测的准确性和鲁棒性。
-      
-      在云端进行的长时域规划需要面对信息往返传输时延的挑战，且在云控基础平台已经可以直接拿到结构化感知数据，故从计算效率与可实现性角度看，直接以结构化感知数据为输入的决策规划方法更适合在云端进行运行与部署。相比于如基于BEV等感知结构输入的方式\cite{li2024bev_planner}，以图结构进行交通场景感知结果的输入方法为云端长时域非确定性交通预测提供了有效的技术手段。
-
-  \subsection{流匹配扩散方法}
-      流匹配（Flow Matching, FM）是一种基于向量流场理论的生成模型，用于学习数据分布的速度向量场。其核心思想是通过最小化数据样本与模型生成样本之间的流匹配损失，来训练一个能够生成目标分布样本的模型\cite{FlowMatching2023original}。相比于DDPM等基于扩散模型的生成方法，FM无需显式定义扩散过程，直接学习数据分布的速度向量场，在样本生成上有显著效率，甚至可以一步生成高质量样本\cite{GoalFlow2025}。
-
-      在图像生成中，每个像素点的RGB值代表3维度向量，像素点数为$N_{pix}$，则可以看成在$3 N_{pix}$维向量空间中进行流匹配；在轨迹生成上，如果以\SI{10}{Hz}生成未来\SI{8}{s}的包含$x,y$的轨迹，则相当于在160维向量空间进行流匹配。
-
-      FM用神经网络学习一个任务向量空间上的向量流场：$v_t^\bm{\theta}$，其损失函数定义为
-      \begin{equation}
-      \mathcal{L}(\bm{\theta}) = \mathbb{E_{t,p_t(x)}} \lVert v_t^\bm{\theta}(x_t) - v_t^{target}(x_t) \rVert^2
-      \label{eq:fm_loss_original}
-      \end{equation}
-
-      其中$\bm{\theta}$表示神经网络的参数，$t \in [0,1]$表示时间变量，$x_t$表示在时间$t$时刻的样本，$p_t(x)$表示在时间$t$时刻的样本分布，$v_t^{target}(x_t)$表示在时间$t$时刻的目标速度向量场。
-      
-      为获得$v_t^{target}(x_t)$，在生成式FM任务中通常需自行构建一个流。我们首先构造一个从原始分布$p_0(x)$到目标分布$p_1(x)$的平滑过渡连续分布族$p_t(x)$，$t\in [0,1]$，$p_t(x)$平滑地从$p_0(x)$过渡到$p_1(x)$:
-
-      \begin{equation}\psi_t^{target}(x_0|z)=\alpha_t z+ \beta_t x_0 
-      \end{equation}
-
-      其中$x_0 \sim p_0(x)$是采样自已知初始分布的样本，$z \sim p_1(x)$是采样自真实分布的样本。最常用的是衍生自最优传输理论且最简单直观的整合流（Rectified Flow）,即对原始分布和目标分布进行线性插值，定义如下：
-
-      \begin{equation} \psi_t^{target}(x_0|z) = x_t = t z + (1-t)x_0 
-      \end{equation}
-
-      除了线性插值，也可用指数插值$x_t = e^{-t}x_0 + (1-e^{-t})z$，核心是保证$p_t(x)$的连续性。则速度向量场的目标为：
-
-      \begin{equation} v_t^{target}(x_t|z) = v_t^{target}(\psi_t^{target}(x_0|z)|z) \\
-      = \frac{\mathrm{d}\psi_t^{target}(x_0|z)}{\mathrm{d}t} = \frac{\mathrm{d}\alpha_t}{\mathrm{d}t} z + \frac{\mathrm{d}\beta_t}{\mathrm{d}t} x_0
-      \end{equation}
-
-      其中$\alpha_t$和$\beta_t$分别表示时刻$t$对目标样本和已知初始样本的线性插值系数。对整合流而言，条件目标速度向量场为：
-
-      \begin{equation} v_t^{target}(x_t|z) = z - x_0 \end{equation}
-
   \subsection{交通图特征表示}
     \label{sec:traffic_graph_representation}
     基于图像的交通表征方法存在数据稀疏、路网重叠两大致命缺陷。数据稀疏性上，BEV视图包含大量非道路空间的，这在超大空间尺度的高速路上尤为明显，但非道路空间对决策规划无益；此外，对于广泛存在于高速路用于汇入汇出的高架桥而言，其在高度方向重叠，而拍扁在二维平面后存在道路几何上的重叠，将造成不必要的混淆。故为在云端构建交互式长时域非确定性周车预测模型以满足\SI{20}{s}时域下的交互式预测需求，本研究采用有向图结构表示交通场景，如图~\ref{fig:bev_problem_and_solution}所示，以避免将算力浪费非道路区域，集中所有资源详细描述路上情况，且在拓扑上避免重叠。
@@ -274,7 +204,7 @@
         \end{algorithmic}
       \end{algorithm}
 
-    关于Graphflow方法进行图扩散流匹配理论有效性的证明请参见附录\ref{sub:graphflow_proof}节。
+    关于Graphflow方法进行图扩散流匹配理论有效性的证明请参见附录中补充理论部分\cite{KomasaQi2026MasterThesis_repo}。
 
 
 \section{强化学习长时域决策模型}
@@ -1010,7 +940,7 @@
 
       仿真用交通流包含车辆类型（Vehicle Type, vType）14类（车辆类型不单单包括车辆种类，还包括对应的驾驶员类型），其中包含4种车辆类别（Vehicle Class, vClass），分别是私家车（private）类别中的跑车\SI{7}{\percent}、SUV\SI{17.5}{\percent}、MPV\SI{10.5}{\percent}、普通轿车\SI{21}{\percent}、经济型轿车\SI{10.5}{\percent}，公交车（bus）类别的旅游客车\SI{3.5}{\percent}，卡车类别（truck）中的轻卡\SI{8}{\percent}、中卡\SI{7}{\percent}、重卡\SI{4}{\percent}、施工车辆\SI{1}{\percent}，以及半挂车类别（trailer）的标准挂\SI{5}{\percent}、加长挂\SI{3}{\percent}、超长挂\SI{1}{\percent}和半挂式液罐车\SI{1}{\percent}\cite{rioh_2023_traffic_volume,mot_2024_traffic}。每一类车辆的驾驶员模型和换道模型参数均设置为一定范围内的裁剪正态分布（Trimmed Normal Distribution）以保证交通流足够的异质性。
 
-      任务设计上，分为4类：Pass（通过高速立交并保持主路行驶）、Merge（通过匝道汇入高速主路）、Exit（从高速主路汇出至指定匝道）、Cruise（在无道路拓扑结构变化的主路上行驶），上述任务涵盖进入高速后最可能的所有主要任务，也囊括了液罐车高速事故的主要场景。对共计15个路口分别设置上述任务，并将交通流量按梯度依次排开设置为以\SI{500}{veh/h}为间隔的从\SIrange{1000}{4500}{veh/h}的8组，以路口No.8至No.15共8个路口的32个场景为训练集采集场景，以No.1至No.7的28个场景为验证场景，每个场景中先运行一段时间在路网积累足够多车辆后，自车在$t_{depr}$时刻发车并开始记录历史数据，在$t_{start}$时刻开始云端介入决策，正式开始仿真，每个场景都有一个任务结束的地点，行驶至阈值许可范围内即认为结束任务。详细不同意图的交通流量设置、终止地点等信息见附录表\ref{tab:condition_table_all}。
+      任务设计上，分为4类：Pass（通过高速立交并保持主路行驶）、Merge（通过匝道汇入高速主路）、Exit（从高速主路汇出至指定匝道）、Cruise（在无道路拓扑结构变化的主路上行驶），上述任务涵盖进入高速后最可能的所有主要任务，也囊括了液罐车高速事故的主要场景。对共计15个路口分别设置上述任务，并将交通流量按梯度依次排开设置为以\SI{500}{veh/h}为间隔的从\SIrange{1000}{4500}{veh/h}的8组，以路口No.8至No.15共8个路口的32个场景为训练集采集场景，以No.1至No.7的28个场景为验证场景，每个场景中先运行一段时间在路网积累足够多车辆后，自车在$t_{depr}$时刻发车并开始记录历史数据，在$t_{start}$时刻开始云端介入决策，正式开始仿真，每个场景都有一个任务结束的地点，行驶至阈值许可范围内即认为结束任务。详细不同意图的交通流量设置、终止地点等信息见补充表格\cite{KomasaQi2026MasterThesis_repo}。
 
     \subsubsection*{(2)交互模型与决策模型训练}
       Graphflow交互式预测模型的训练损失情况如图~\ref{fig:train_graphflow}所示。训练过程中曲线的浅色背景记录了不断对$T = $\SI{20}{s}的预测时域内从第1步到第20步预测结果对应特征的均方差（Mean Squared Error, MSE）。预测采用调度采用课程学习机制相比不采用的情况，初始损失会快速降低至可接受的低值，并在逐步调高自回归样本加入历史样本比例的情况下先经历上升的适应过程再缓慢下降并保持基本稳定，由于有自车动作输入的先验存在，其自车占据特征$c_{ego}$的MSE损失整体稳定在\SI{1}{\percent}的较极低水平附近；风险场特征$c_{risk}$相对连续，对于车辆绝对位置预测精度的敏感性相对低一些，其MSE损失整体稳定在\SIrange{2}{3}{\percent}附近；而周车占据特征$c_{occ}$需在车辆边缘精准截断，预测难度较高，整体稳定在\SI{3}{\percent}附近。由于各种不确定性的存在，预测\SI{20}{s}的超长时域问题本质是几乎不可能精确实现的，故预测时域内误差随扩散进程不断增大，是可预想的正常问题，在相对靠后的预测中，只需要Graphflow提供危险扩散的趋势即可帮助决策模型更好地识别风险的存在。周车预测并不是越精准一定能产生更好的效果\cite{pred_neq_drive_tran2023what}，关键在于其是否能指导自车做出有效交互。
@@ -1047,7 +977,7 @@
     \subsubsection*{(3)仿真结果与分析}
       在仿真结果评价指标上，采用可单车级计算的指标，分为安全、高效、舒适/经济、规则、导航5个维度进行评价。
 
-      其中安全指标包含经典一维替代安全指标（Surrogate Safty Index, SSI）TTC的倒数、二维SSI 2D-TTC(本文用1/RTTC表示)的倒数、Trailer-MEI（为本文提出的二维替代安全指标，使得包含半挂车的二维风险计算成为可能，推导与计算过程详见附录\ref{sub:trailer_mei_proof}节。）、裁剪的车头距离（Head Way, HW）的倒数4个指标。1/TTC能更好反映跟车/被跟车时的安全情况，1/RTTC能反映传统计算方式下考虑二维轮廓的SSI，Trailer-MEI使得SSI计算更为接近现实，而加入1/HW的目的是为了反映车辆并列行驶的行为，液罐车属于高危车辆，不管是有意还是被迫，与他车并列行驶都属于潜在的危险行为，需加速或主动减速拉开车距。
+      其中安全指标包含经典一维替代安全指标（Surrogate Safty Index, SSI）TTC的倒数、二维SSI 2D-TTC(本文用1/RTTC表示)的倒数、Trailer-MEI（为本文提出的二维替代安全指标。其通过改进MEI指标，通过离散化时间分别计算安全预测时域内\emph{所有关键时刻}下可能包含挂车的两车牵引车与挂车\emph{两两排列组合MEI指标}并取最大值，使得包含半挂车的二维风险计算成为可能\cite{KomasaQi2026MasterThesis_repo}。）、裁剪的车头距离（Head Way, HW）的倒数4个指标。1/TTC能更好反映跟车/被跟车时的安全情况，1/RTTC能反映传统计算方式下考虑二维轮廓的SSI，Trailer-MEI使得SSI计算更为接近现实，而加入1/HW的目的是为了反映车辆并列行驶的行为，液罐车属于高危车辆，不管是有意还是被迫，与他车并列行驶都属于潜在的危险行为，需加速或主动减速拉开车距。
       
       高效指标包含通行效率指标，计算逻辑与式\eqref{eq:effi_reward}基本相同，但从图平均计算转换为对明确的单车进行计算。舒适/经济指标为加速度二范数指标，计算方法与式\eqref{eq:conf_reward}完全相同。规则指标包含靠右行驶敬礼与超速惩罚，计算方法与式\eqref{eq:conf_reward}完全相同；导航指标也与式\eqref{eq:nav_reward}逻辑相同。
 
@@ -1057,20 +987,20 @@
 
       \begin{figure}
         \centering
-        \includegraphics[width=1.0\linewidth]{fig/chap3/total_score.png}
+        \includegraphics[width=0.87\linewidth]{fig/chap3/total_score.png}
         \caption{交通流验证集仿真总得分情况对比}
         \label{fig:total_score}
       \end{figure}
 
       \begin{figure}
         \centering
-        \includegraphics[width=1.0\linewidth]{fig/chap3/r_safe.png}
+        \includegraphics[width=0.87\linewidth]{fig/chap3/r_safe.png}
         \caption{总体安全指标得分对比图}
         \label{fig:r_safe}
       \end{figure}
  
 
-      每个子项的得分分别按任务类型和交通流量统计，如附录表~\ref{tab:reward_task}和附录表~\ref{tab:reward_flow}所示，其中安全总计得分如图~\ref{fig:r_safe}所示，安全指标的子项如图~\ref{fig:safe_index}所示，其他指标如图~\ref{fig:other_metrices}所示。在所有安全得分上，预测性方法几乎都优于单车方法，尤其在Trailer-MEI这一指标上尤其显著。同时在1/HW指标上预测性方法更好，体现了其通过各种方式避免车辆并列情况带来的风险。
+      每个子项的得分分别按任务类型和交通流量统计得到详细表格~\cite{KomasaQi2026MasterThesis_repo}，其中安全总计得分如图~\ref{fig:r_safe}所示，安全指标的子项如图~\ref{fig:safe_index}所示，其他指标如图~\ref{fig:other_metrices}所示。在所有安全得分上，预测性方法几乎都优于单车方法，尤其在Trailer-MEI这一指标上尤其显著。同时在1/HW指标上预测性方法更好，体现了其通过各种方式避免车辆并列情况带来的风险。
 
       % TODO: 字体字号要保证，图要素齐全横纵坐标图例单位等
       \begin{figure}

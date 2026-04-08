@@ -549,6 +549,78 @@
 
         半挂车剩余5个自由度建模如图~\ref{fig:trailer_model_lat}和图~\ref{fig:trailer_model_lon}所示，参考宗长富\cite{zongchangfu2014identification}等的工作，牵引车侧滑、横摆、侧倾运动3个自由度建模为式\eqref{eq:tractor_lat}至式\eqref{eq:tractor_roll}。模型相关变量如表~\ref{tab:tank_truck_parameters}所示。
 
+
+
+        {% 局部作用域，只改本表行距，不影响全文
+        \small
+        % \setlength{\tabcolsep}{3pt}       % 如需压缩列间距可取消注释
+        \renewcommand{\arraystretch}{1.0} % 核心：恢复正常紧凑行距
+        \linespread{0.7}\selectfont       % 强制行高
+
+        \begin{longtable}{l l}
+            \caption{简化半挂液罐车模型参数与变量说明}
+            \label{tab:tank_truck_parameters} \\
+            \toprule
+            \textbf{参数/变量} & \textbf{说明（i=1,2 分别代表牵引车、挂车）} \\
+            \midrule
+        \endfirsthead
+            \caption*{续表~\thetable\quad 简化半挂液罐车模型参数与变量说明} \\
+            \toprule
+            \textbf{参数/变量} & \textbf{说明（i=1,2 分别代表牵引车、挂车）} \\
+            \midrule
+        \endhead
+            \bottomrule
+        \endfoot
+
+        %-------------------------------------------------------------------------------
+        $m_i$, $m_{si}$ & 车辆总质量、簧载质量 \\
+        $v_{ix}$, $v_{iy}$ & 纵向/侧向速度 \\
+        $\dot{\beta_i}$ & 质心侧偏角变化率 \\
+        $\psi_i$, $\phi_i$ & 横摆角、侧倾角 \\
+        $\dot{\psi}_i$ & 横摆角速度 \\
+        $\dot{\phi}_i$ & 侧倾角速度 \\
+        $h_i$ & 质心到侧倾中心的距离 \\
+        $h_{ic}$ & 牵引销到侧倾轴线的高度 \\
+        $I_{izz}$, $I_{ixx}$, $I_{1xz}$ & 簧载质量在横摆、侧倾、交叉耦合方向的转动惯量 \\
+        $k_{ri}$,$c_i$ & 悬架侧倾刚度/阻尼 \\
+        $F_{y1}$, $F_{y2}$, $F_{y3}$ & 牵引车等效前轴、后轴，以及挂车等效后轴的侧向力 \\
+        $F_z$ & 车轮所受垂向力 \\
+        $F_{y,int}$ & 挂车作用于牵引车的侧向力 \\
+        $F_x$, $F_y$, $M_x$, $M_y$, $M_z$ & 液体晃动纵向力、侧向力、侧倾力矩、俯仰力矩、横摆力矩 \\
+        $a$, $b$, $c$ & 牵引车前轮轴/后轮轴/牵引销铰接点到质心的距离 \\
+        $d$, $e$ & 挂车后轮轴/牵引销铰接点到质心的距离 \\
+        $k_{12}$ & 牵引销连接部位的侧倾刚度 \\
+        $k_1$, $k_2$, $k_3$ & 牵引车等效前轴、后轴，以及挂车后轴的侧向刚度 \\
+        $\theta_1,\theta_2$ & 线性化双摆模型摆角 \\
+        $\dot{\theta}_1,\dot{\theta}_2$ & 线性化双摆模型前/后摆角速度 \\
+        $\delta$, $\delta_d$ & 转向角、期望转向角 \\
+        $a_{deccel}$ & 车辆减速度 \\
+        $c_{M1}$ & 牵引车制动力矩-减速度转换系数 \\
+        $c_{M2}$ & 挂车制动力矩-减速度转换系数 \\
+        $c_{brk}$ & 制动压力-减速度转换系数 \\
+        $\tau_v$ & 车速响应时间常数 \\
+        $v_{des}$ & 期望车速 \\
+        $\Delta v_{thrld}$ & 期望车速与实际车速差值阈值 \\
+        $v_{des}^a$ & 给下层控制器的期望速度指令 \\
+        $v_{dev}$ & 静态偏置加速度 \\
+        $p_{brk}^{L1}$ & 牵引车左侧制动压力 \\
+        $p_{brk}^{R1}$ & 牵引车右侧制动压力 \\
+        $p_{brk}^{L2}$ & 挂车左侧制动压力 \\
+        $p_{brk}^{R2}$ & 挂车右侧制动压力 \\
+        $M_{1z}^+$ & 牵引车左侧附加横摆力矩 \\
+        $M_{1z}^-$ & 牵引车右侧附加横摆力矩 \\
+        $M_{2z}^+$ & 挂车左侧附加横摆力矩 \\
+        $M_{2z}^-$ & 挂车右侧附加横摆力矩 \\
+        $T_{w1}$ & 牵引车轮距 \\
+        $T_{w2}$ & 挂车轮距 \\
+        $Y_1$ & 牵引车在大地坐标系下的Y轴坐标 \\
+        $X_1$ & 牵引车在大地坐标系下的X轴坐标 \\
+
+        \end{longtable}
+        }% 结束局部作用域
+
+
+
         \begin{equation}
         m_1 v_{1x}(\dot{\beta}_1 + \dot{\psi}_1) - m_{1s} h_1 \ddot{\phi}_1 = F_{y1} + F_{y2} + F_{y,int}
         \label{eq:tractor_lat}
@@ -650,7 +722,123 @@
         A_c = T_c M^{-1} A_0 T_c^{-1} X,\quad B_c = T_c M^{-1} B_0
         \end{equation}
 
-        其中$M$、$A_0$、$B_0$、$T_c$的详细展开见附录式\ref{eq:M}、式\ref{eq:A_0}、式\ref{eq:B_0}、式\ref{eq:T_c}。求解时对状态空间方程进行零阶保持离散化（Zero Order Hold, ZOH），即
+        其中$M$、$A_0$、$B_0$、$T_c$的详细展开见式\ref{eq:M}、式\ref{eq:A_0}、式\ref{eq:B_0}、式\ref{eq:T_c}。
+        
+        \setcounter{MaxMatrixCols}{20} % 至少 >= 16
+
+        \begin{equation}
+        M = \begin{bmatrix}
+        m_{11} & I_{1zz} & 0 & m_{14} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        m_{21} & -I_{1xz} & 0 & m_{24} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        m_{31} & 0 & 0 & m_{34} & m_{35} & m_{36} & 0 & m_{38} & 0 & m_{310} & 0 & m_{310} & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & m_{45} & m_{46} & 0 & m_{48} & 0 & m_{410} & 0 & m_{412} & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & m_{55} & m_{56} & 0 & m_{58} & 0 & m_{510} & 0 & m_{510} & 0 & 0 & 0 & 0 \\
+        1 & -\frac{c}{v_{1x}} & 0 & -\frac{h_{1c}}{v_{1x}} & -1 & -\frac{e}{v_{2x}} & 0 & \frac{h_{2c}}{v_{2x}} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \frac{v_{2x}}{l_p} & \frac{x_1}{l_p} & 0 & \frac{h_p}{l_p} & -2 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & \frac{v_{2x}}{l_p} & \frac{x_2}{l_p} & 0 & \frac{h_p}{l_p} & -2 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+        \end{bmatrix}_{16 \times 16}
+        \label{eq:M}
+        \end{equation}
+        其中各个子项为：
+        \begin{equation*}
+        \begin{aligned}
+        m_{11} &= m_1 v_{1x} c, \quad
+        m_{14} = -m_{1s} h_1 c - I_{1xz}, \quad
+        m_{21} = (m_1 h_1 c - m_{1s} h_1) v_{1x}, \\
+        m_{24} &= I_{1xx} + 2 m_{1s} h_1^2 - m_{1s} h_1 h_{1c}, \quad
+        m_{31} = m_1 v_{1x}, \quad
+        m_{34} = -m_{1s} h_1, \\
+        m_{35} &= m_2 v_{2x} + (m_p + m_0) v_{2x}, \quad
+        m_{36} = x_0 (m_p + m_0), \quad
+        m_{38} = -m_{2s} h_2 - (m_0 h_0 + m_p h_p), \\
+        m_{310} &= \frac{1}{2} m_p l_p, \quad
+        m_{45} = e m_{35} - x_0 (m_p + m_0) v_{x2}, \quad
+        m_{46} = -I_{2zz} + e m_{36} - \frac{1}{2} (m_p + m_0) (x_1^2 + x_2^2), \\
+        m_{48} &= I_{2xz} + e m_{38} + x_0 (m_0 h_0 + m_p h_p), \quad
+        m_{410} = e m_{310} - \frac{1}{2} m_p l_p x_1 = \frac{1}{2} (e - x_1) m_p l_p, \\
+        m_{412} &= e m_{310} - \frac{1}{2} m_p l_p x_2 = \frac{1}{2} (e - x_2) m_p l_p, \\
+        m_{55} &= (m_2 h_{2c} - m_{2s} h_2) v_{2x} + h_{2c} (m_p + m_0) v_{2x} - v_{x2} (m_0 h_0 + m_p h_p), \\
+        m_{56} &= -I_{2xz} + h_{2c} m_{36} - x_0 (m_0 h_0 + m_p h_p), \quad
+        m_{58} = I_{2xx} + 2 m_{2s} h_2^2 + h_{2c} m_{38} + (m_0 h_0^2 + m_p h_p^2), \\
+        m_{510} &= h_{2c} m_{310} - \frac{1}{2} m_p h_p l_p = \frac{1}{2} (h_{2c} - h_p) m_p l_p.
+        \end{aligned}
+        \end{equation*}
+
+        \begin{equation}
+        A_0 = \begin{bmatrix}
+        a_{11} & a_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        a_{21} & a_{22} & a_{23} & 0 & 0 & 0 & k_{12} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        a_{31} & a_{32} & 0 & 0 & k_3 & a_{36} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & a_{45} & a_{46} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & a_{55} & a_{56} & a_{57} & -c_2 & a_{59} & 0 & a_{59} & 0 & 0 & 0 & 0 & 0 \\
+        0 & -1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & -\frac{v_{2x}}{l_p} & -\frac{g}{l_p} & 0 & -\frac{g}{l_p} & -c_d & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & -\frac{v_{2x}}{l_p} & 0 & -\frac{g}{l_p} & 0 & -\frac{g}{l_p} & 0 & 0 & -c_d & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\frac{1}{\tau_v} & 0 \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+        \end{bmatrix}
+        \label{eq:A_0}
+        \end{equation}
+
+        其中各个子项为：
+
+        \begin{equation*}
+        \begin{aligned}
+        a_{11} &= (a + c)k_1 + (c - b)k_2, \quad
+        a_{12} = \frac{a(a + c)k_1 - b(c - b)k_2}{v_{1x}} - m_1 v_{1x} c, \\
+        a_{21} &= k_1 h_{1c} + k_2 h_{1c}, \quad
+        a_{22} = \frac{(a k_1 - b k_2) h_{1c}}{v_{1x}} + (m_{1s} h_1 - m_1 h_{1c}) v_{1x}, \\
+        a_{23} &= m_{1s} g h_1 - k_{r1} - k_{12}, \quad
+        a_{31} = k_1 + k_2, \quad
+        a_{32} = \frac{a k_1 - b k_2}{v_{1x}} - m_1 v_{1x}, \\
+        a_{36} &= -\frac{d k_3}{v_{2x}} - m_2 v_{2x} - (m_0 + m_p) v_{2x}, \quad
+        a_{45} = (d + e)k_3, \\
+        a_{46} &= -\frac{d(e + d)k_3}{v_{2x}} - m_2 v_{2x} e - e(m_0 + m_p) v_{2x} + x_0 (m_p + m_0) v_{2x}, \quad
+        a_{55} = k_3 h_{2c} e, \\
+        a_{56} &= -\frac{d k_3 h_{2c}}{v_{2x}} + (m_{2s} h_2 - m_2 h_{2c}) v_{2x} + (m_0 h_0 + m_p h_p) v_{2x} - h_{2c} (m_0 + m_p) v_{2x}, \\
+        a_{57} &= m_{2s} g h_2 - k_{r2} - k_{12} + (m_0 h_0 + m_p h_p) g, \quad
+        a_{59} = -\frac{1}{2} m_p l_p g.
+        \end{aligned}
+        \end{equation*}
+
+        \begin{equation}
+        B_0 = \begin{bmatrix}
+        -(c + a)k_1 & \frac{c_{brk}}{\overline{c_M}} & -\frac{c_{brk}}{\overline{c_M}} & 0 & 0 & 0 \\
+        -k_1 h_{1c} & 0 & 0 & 0 & 0 & 0 \\
+        -k_1 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & -\frac{c_{brk}}{\overline{c_M}} & \frac{c_{brk}}{\overline{c_M}} & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 \\
+        0 & -c_{brk} & -c_{brk} & -c_{brk} & -c_{brk} & \frac{1}{\tau_v} \\
+        0 & 0 & 0 & 0 & 0 & 0
+        \end{bmatrix}_{14 \times 6}
+        \label{eq:B_0}
+        \end{equation}
+
+        \begin{equation}
+        T_c = diag([v_{1x}\ 1\ 1\ 1\ v_{2x}\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1\ 1])_{14 \times 14}
+        \label{eq:T_c}
+        \end{equation}
+
+        
+        
+        求解时对状态空间方程进行零阶保持离散化（Zero Order Hold, ZOH），即
 
         \begin{equation}
         X(k) = A_d X(k - 1) + B_d \delta(k)
@@ -927,9 +1115,9 @@
             \epsilon_{min} \leq \epsilon \leq \epsilon_{max}
             \end{cases}
             \end{equation*}
-            代价函数构建完毕，这是一个标准的二次型的形式，可以通过二次规划求解器如osqp, qpoasis, cvxopt等进行快速求解。本研究中选用qpoasis进行二次规划问题的求解。为了保证优化时变量的一致性，对输入量先进行归一化后再进行计算。为对行驶中可能的模型误差进行补偿，本节方法在实际部署中进行了无模型自适应滑模残差补偿，补偿细节见附录\ref{sub:MFASMC_residual_compensation}小节。
+            代价函数构建完毕，这是一个标准的二次型的形式，可以通过二次规划求解器如osqp, qpoasis, cvxopt等进行快速求解。本研究中选用qpoasis进行二次规划问题的求解。为了保证优化时变量的一致性，对输入量先进行归一化后再进行计算。为对行驶中可能的模型误差进行补偿，本节方法在实际部署中进行了无模型自适应滑模残差补偿\cite{KomasaQi2026MasterThesis_repo}。
 
-            本章设计的控制算法用于自动驾驶半挂液罐车，但面向辅助驾驶环境仍然可通过控制器嵌套方法与人类驾驶员进行组合，控制器嵌套理论及其稳定性证明见附录\ref{sub:controller_nesting}小节。
+            本章设计的控制算法用于自动驾驶半挂液罐车，但面向辅助驾驶环境仍然可通过控制器嵌套方法与人类驾驶员进行组合\cite{KomasaQi2026MasterThesis_repo}。
 
 \section{仿真与缩比例模型试验设计与验证}
 \label{sec:simulation_and_experiment}
@@ -937,7 +1125,7 @@
 
     \subsection{车液耦合联合仿真平台建立}
         \label{sub:cosim_platform}
-        为了更好地验证所提出的防侧翻路径跟踪控制方法的有效性，本研究构建了如图~\ref{fig:cosim_arch}所示的车辆-流体耦合协同仿真平台。采用有限体积法（Finite Volume Method, FVM）对流体进行精确建模，基于CFD方法。设计了MATLAB函数与Java宏，以实现Simulink与StarCCM+之间的数据交互。创建了两个标志文件和两个数据交换文件，用于参数级交互，如图~\ref{fig:cosim_arch}所示。在每个时间步长内，TruckSim在StarCCM+中提供半挂车的加速度与角速度，通过改变重力模型分量与用户自定义体积力（详见表~\ref{tab:co_sim_settings}）作用于流体。同时，StarCCM+提供流体作用于罐体的三维力与力矩，再施加到TruckSim的半挂车模型中。该协同仿真方法实现了车辆动力学与CFD之间的实时（仿真中）交互，并在Simulink中搭建了联合仿真模型，如附录图\ref{fig:simulink_model}所示，包含StarCCM+的CFD仿真通信模块、与TruckSim通信的车辆模型、液体晃动观测用无迹卡尔曼滤波（Unscented Kalman Filter, UKF）与STL模型\cite{Komasa2023observing}、用于简化液体晃动的DLP模型、MPC+MFASMC组合控制器等。
+        为了更好地验证所提出的防侧翻路径跟踪控制方法的有效性，本研究构建了如图~\ref{fig:cosim_arch}所示的车辆-流体耦合协同仿真平台。采用有限体积法（Finite Volume Method, FVM）对流体进行精确建模，基于CFD方法。设计了MATLAB函数与Java宏，以实现Simulink与StarCCM+之间的数据交互。创建了两个标志文件和两个数据交换文件，用于参数级交互，如图~\ref{fig:cosim_arch}所示。在每个时间步长内，TruckSim在StarCCM+中提供半挂车的加速度与角速度，通过改变重力模型分量与用户自定义体积力（详见表~\ref{tab:co_sim_settings}）作用于流体。同时，StarCCM+提供流体作用于罐体的三维力与力矩，再施加到TruckSim的半挂车模型中。该协同仿真方法实现了车辆动力学与CFD之间的实时（仿真中）交互，并在Simulink中搭建了联合仿真模型\cite{KomasaQi2026MasterThesis_repo}，包含StarCCM+的CFD仿真通信模块、与TruckSim通信的车辆模型、液体晃动观测用无迹卡尔曼滤波（Unscented Kalman Filter, UKF）与STL模型\cite{Komasa2023observing}、用于简化液体晃动的DLP模型、MPC+MFASMC组合控制器等。
         
         \begin{figure}
         \centering
@@ -1019,7 +1207,7 @@
 
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_corner_x.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_corner_x.png}
             \caption{左转弯工况车辆状态}
             \label{fig:s_corner_x}
             \end{figure}
@@ -1028,7 +1216,7 @@
             
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_corner_u.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_corner_u.png}
             \caption{左转弯工况控制输入}
             \label{fig:s_corner_u}
             \end{figure}
@@ -1070,7 +1258,7 @@
             在控制量变化上，如图~\ref{fig:s_slc_u}所示，ART需通过转向控制来抵消晃动，故出现了转向指令频繁波动的情况；ART+DB在前段通过左右不断变化的差动制动来抵消晃动，转向角则保持平稳，加之MFASMC的跟踪误差补偿，使得跟踪更加精确；在轨迹跟踪结束后，ART+DB组通过持续差动的方式来抑制换道过程中产生的晃动，辅助车辆更快恢复稳定状态。对于PT+DB组，其制动在换道开始时才介入，已经为时已晚。
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_slc_x.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_slc_x.png}
             \caption{单移线工况车辆状态}
             \label{fig:s_slc_x}
             \end{figure}
@@ -1079,7 +1267,7 @@
 
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_slc_u.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_slc_u.png}
             \caption{单移线工况控制输入}
             \label{fig:s_slc_u}
             \end{figure}
@@ -1107,7 +1295,7 @@
 
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_dlc_x.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_dlc_x.png}
             \caption{双移线工况车辆状态}
             \label{fig:s_dlc_x}
             \end{figure}
@@ -1118,14 +1306,14 @@
 
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_dlc_u.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_dlc_u.png}
             \caption{双移线工况控制输入}
             \label{fig:s_dlc_u}
             \end{figure}
         
         \subsubsection{麋鹿工况救车实验}  
         \label{subsub:deer}
-            半侧翻模态即一侧车轮离地时的车辆状态，通过现实中的实例可确定，半侧翻模态下存在状态子空间，通过前轮转角完全可控，半侧翻态及其可控性详细说明见附录\ref{sub:semirollover}小节；第\ref{chap:architecture}章\ref{subsubsec:resource_analysis}小节明确了车端需要具备规控降级能力，需确保在一些特殊情况下，如人误操作/绊倒性侧翻等一些特殊情况下车辆不可避免地已经陷入了半侧翻状态时，车辆仍然具备一定的自救能力。
+            半侧翻模态即一侧车轮离地时的车辆状态，通过现实中的实例可确定，半侧翻模态下存在状态子空间，通过前轮转角完全可控\cite{KomasaQi2026MasterThesis_repo}；第\ref{chap:architecture}章\ref{subsubsec:resource_analysis}小节明确了车端需要具备规控降级能力，需确保在一些特殊情况下，如人误操作/绊倒性侧翻等一些特殊情况下车辆不可避免地已经陷入了半侧翻状态时，车辆仍然具备一定的自救能力。
 
             本小节描述了麋鹿工况救车实验，实验场景如图\ref{fig:s_deer_illust}所示，模拟的是车上存在安全员的情况下行驶正在以\SI{80}{km/h}的速度行驶。突然从道路左侧出现奔跑穿过道路的麋鹿数只，而安全员面对突发的情况选择向右侧猛打方向并为了避免冲出道路再打回的情况。车辆在第\SI{4.7}{s}左侧车轮完全离地，达到了半侧翻的状态。借此，达到了一个已经无可避免的半侧翻状态事实，并在此刻切换控制器，以检验控制器对于此类非线性极强的半侧翻工况是否能够依然成功应对实现防侧翻救车。
 
@@ -1144,13 +1332,13 @@
             轨迹跟踪情况如图~\ref{fig:s_deer_track}所示，PT组和PT+DB组由于没有考虑防侧翻的转向控制，在打回方向时仍然向着目标轨迹靠近，故直接发生了侧翻；ART组在切换控制器后果断选择了反打方向朝着远离目标轨迹的方向，但由于没有车速控制，此时车辆的状态已经超过了单纯依靠前轮转角可控的边界，故继续向前行驶并仍然发生了侧翻；ART+DB组在ART组基础上加入了差动制动，此时车辆不仅迅速反打方向逆操舵，而且猛烈制动。此时并没有对向车轮，全部轮胎纵向力用来给车辆减速并提供横摆力矩，车辆减慢速度的同时继续远离期望轨迹，并在摆脱半侧翻状态后迅速靠近期望轨迹，恢复了正常跟踪。
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_deer_x.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_deer_x.png}
             \caption{麋鹿工况车辆状态}
             \label{fig:s_deer_x}
             \end{figure}
             \begin{figure}
             \centering
-            \includegraphics[width=0.8\linewidth]{fig/chap4/s_deer_u.png}
+            \includegraphics[width=0.7\linewidth]{fig/chap4/s_deer_u.png}
             \caption{麋鹿工况控制输入}
             \label{fig:s_deer_u}
             \end{figure}
