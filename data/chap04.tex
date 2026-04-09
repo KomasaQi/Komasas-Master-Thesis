@@ -1318,118 +1318,118 @@
             车辆通过如图~\ref{fig:hardware}所示的程序架构实现防侧翻路径跟踪功能。感知层提供液体状态估计与目标级预测信息；决策与规划层基于预定义全局参考路径与路径重规划器进行决策；控制层主要由实现防侧翻路径跟踪的MPC组成。算法在机器人操作系统（Robot Operating System, ROS）Ubuntu 20.04环境下运行，其中MPC算法采用C++实现以保证实时性，其余节点大部分采用Python实现。本章全套控制算法与配套编写的定位、规划等自动驾驶代码开源在Github仓库HitchOpen-THICV-Stack中\cite{KomasaQi2025HitchOpen-THICV-Stack_repo}，配套算法经过2025年首届HitchOpen世界AI竞速锦标赛线上与天门山实车赛完善验证。
 
 
-    \subsection{模型试验与验证}
-        \label{sub:model_experiment}
-        本小节基于上一节搭建的缩比例液罐车平台，推导了车辆动力学与流体动力学相似性原理，并开展了模型跟踪实验及前述最危险的双移线工况实验验证。
+\section{模型试验与验证}
+    \label{sub:model_experiment}
+    本节基于上一节搭建的缩比例液罐车平台，推导了车辆动力学与流体动力学相似性原理，并开展了模型跟踪实验及前述最危险的双移线工况实验验证。
 
-        \subsubsection{缩比模型相似性准则与工况设计}
-            \label{subsub:similarity}
-            相似性是采用模型替代原型开展试验的必要条件。对于同一物理过程，若两种现象在各对应点、对应时刻的物理量成比例，且矢量对应方向一致，则称这两种现象相似\cite{BookFluidMechanics}。采用模型车辆替代实车开展极限工况下的控制效果验证，需同时保证车辆动力学与流体动力学相似。
+    \subsection{缩比模型相似性准则与工况设计}
+        \label{subsub:similarity}
+        相似性是采用模型替代原型开展试验的必要条件。对于同一物理过程，若两种现象在各对应点、对应时刻的物理量成比例，且矢量对应方向一致，则称这两种现象相似\cite{BookFluidMechanics}。采用模型车辆替代实车开展极限工况下的控制效果验证，需同时保证车辆动力学与流体动力学相似。
 
-            本文中，车辆动力学相似特指侧翻动力学相似，可通过静态稳定系数（Static Stability Factor, SSF）定量表征。如图\ref{fig:mod_similarity}所示，若模型的所有几何参数与质量分布均按比例系数$\lambda > 0$缩放，且实车与模型的静态稳定系数相同，则实车与模型仅在横向加速度相同时发生侧翻，即$ a_{y,vhl} = a_{y,mdl}$，但受实际条件限制，真实模型难以满足严格比例缩放条件，因此需引入修正系数$\lambda^{'}$
+        本文中，车辆动力学相似特指侧翻动力学相似，可通过静态稳定系数（Static Stability Factor, SSF）定量表征。如图\ref{fig:mod_similarity}所示，若模型的所有几何参数与质量分布均按比例系数$\lambda > 0$缩放，且实车与模型的静态稳定系数相同，则实车与模型仅在横向加速度相同时发生侧翻，即$ a_{y,vhl} = a_{y,mdl}$，但受实际条件限制，真实模型难以满足严格比例缩放条件，因此需引入修正系数$\lambda^{'}$
 
-            \begin{equation}
-            \lambda^{'} = \frac{SSF_{vhl}}{SSF_{mdl}} = \frac{T_{w,vhl}}{h_{cg,vhl}} \cdot \frac{h_{cg,mdl}}{T_{w,mdl}}
-            \end{equation}
+        \begin{equation}
+        \lambda^{'} = \frac{SSF_{vhl}}{SSF_{mdl}} = \frac{T_{w,vhl}}{h_{cg,vhl}} \cdot \frac{h_{cg,mdl}}{T_{w,mdl}}
+        \end{equation}
 
-            即满足式\eqref{eq:similarity}时试验具有相似性
-      
-            \begin{equation}
-            a_{y,vhl} = \lambda^{'}a_{y,mdl}
-            \label{eq:similarity}
-            \end{equation}
+        即满足式\eqref{eq:similarity}时试验具有相似性
+    
+        \begin{equation}
+        a_{y,vhl} = \lambda^{'}a_{y,mdl}
+        \label{eq:similarity}
+        \end{equation}
 
-            \begin{figure}
-            \centering
-            \subcaptionbox{模型相似性条件\label{fig:mod_similarity}}
-                {\includegraphics[width=1.0\linewidth]{fig/chap4/mod_similarity2.png}}
-            \subcaptionbox{换道特征数与双移线设计\label{fig:lane_change_char}}
-                {\includegraphics[width=1.0\linewidth]{fig/chap4/lane_change_char.png}}
-            \subcaptionbox{模型车试验参考轨迹 \label{fig:exp_ref_traj}}
-                {\includegraphics[width=1.0\linewidth]{fig/chap4/exp_ref_traj.jpg}}
-            \caption{相似性准则与模型车试验参考轨迹设计}
-            \label{fig:exp_ref_pic}
-            \end{figure}
-
-
-            对于带自由液面的流体，其流动主要受惯性力主导，因此采用弗劳德数$Fr$作为相似准则，其中$Fr = \frac{v_f}{\sqrt{gL}}$。式中$v_f$为流体特征速度，通常取平均流速$\bar{v_f}$；$g$为重力加速度，在横向激励下附加加速度较小，可认为$G=g$。罐体内部小幅线性晃动时，液体可近似为单摆，其摆长近似取罐体半径$R$。晃动频率$\omega$随$R$增大而降低，满足关系
-
-         
-            \begin{equation}
-            \left. \omega \propto \sqrt{\frac{g}{R}}\Rightarrow\omega_{mdl} = \sqrt{\lambda}\omega_{vhl} \right.
-            \end{equation}
-
-            由上述关系可知，对于罐体液体晃动，只要横向加速度差异不大，合加速度即可近似为$g$。因此，实车罐体与模型罐体中液体的弗劳德数可认为相等，即
-
-      
-            \begin{equation}
-            \begin{split}
-            Fr_{mdl} &= \frac{v_{mdl}}{\sqrt{G_{mdl}L_{mdl}}} = \frac{\omega_{mdl}R_{mdl}}{\sqrt{gR_{mdl}}} 
-            = \omega_{mdl}\sqrt{\frac{R_{mdl}}{g}}\\ &= \sqrt{\lambda}\omega_{vhl}\sqrt{\frac{R_{vhl}}{\lambda}} = \omega_{vhl}\sqrt{\frac{R_{vhl}}{g}} \approx Fr_{vhl}
-            \end{split}
-            \end{equation}
-
-            同时，有液体晃动固有频率随$R$减小而增加，为使得晃动过程相位与真实比例车辆相同，即当车辆运行在测试轨迹对应位置时液体也晃动到相同位置，需满足额外的时间约束：
-            \begin{equation}
-                \sqrt{\lambda}T_{veh}=T_{mdl}
-                \label{eq:time_constraint}
-            \end{equation}
-
-            综上，只要设计轨迹同时满足式\eqref{eq:similarity}所示的横向加速度关系以及式\eqref{eq:time_constraint}所示的时间约束，模型半挂罐车的横向侧翻动力学特性与液体晃动特性均可认为与原型车辆相似。
-            
-
-            本研究设计如图~\ref{fig:exp_ref_path}所示的闭环路径开展实验验证。其中包含两个主要工况，中低速蛇形绕桩和高速短距双移线，并包括其他辅助工况如稳态回转、左转弯等；中低速蛇形绕桩工况用于测试算法中低速无侧翻风险下的轨迹跟踪性能，而高速短距双移线工况基于上述相似性原理设计，用于验证算法在有侧翻危险时的防侧翻控制性能。假设第一次变道的持续时间为\(t\)，变道长度为\(L\)，变道宽度为\(W\)，则侧向速度\(v_y\)满足\(v_y \propto W/t\)，而持续时间\(t\)满足\(t \propto L/v_x\)。侧向加速度\(a_y\)满足\(a_y \propto \Delta v_y / t \propto v_y / t\)。据此，定义变道特征数如式\eqref{eq:lane_change_char}所示，如图~\ref{fig:lane_change_char}。
-
-            \begin{equation}
-            A_{y} = \frac{W}{L^{2}}{v_{x}}^{2} \propto a_{y}
-            \label{eq:lane_change_char}
-            \end{equation}
-
-            由于模型车速相比实车车速更低，为实现相同的侧向加速度满足相似性原则，需设计更小的变道长度\(L\)以满足式\eqref{eq:lane_change_char}。
-
-            
-        \subsubsection{试验结果分析}
-            \label{subsub:exp_analysis}
-
-            实验采用与仿真相同的控制器参数：控制频率\SI{20}{Hz}、预测时域$N_p = 15$、控制步长$N_c = 5$、约束步长$N_r = 5$。实验对比了防侧翻控制与纯跟踪控制两种策略的效果，如图~\ref{fig:cond_pic}所示，包括中低速蛇形绕桩时的轨迹跟踪效果以及高速短距双移线时的防侧翻及液体晃动抑制效果。轨迹跟踪情况如图\ref{fig:exp_traj}所示。车辆状态如图~\ref{fig:exp_x}所示。
-            
-            \begin{figure}
-            \centering
-            \subcaptionbox{工况1中低速蛇形绕桩实拍情况\label{fig:cond1_pic}}
-                {\includegraphics[width=1.0\linewidth]{fig/chap4/cond1_pic.jpg}}
-            \subcaptionbox{工况2高速短距双移线实拍情况 \label{fig:cond2_pic}}
-                {\includegraphics[width=1.0\linewidth]{fig/chap4/cond2_pic.jpg}}
-            \caption{模型车试验实拍情况}
-            \label{fig:cond_pic}
-            \end{figure}
+        \begin{figure}
+        \centering
+        \subcaptionbox{模型相似性条件\label{fig:mod_similarity}}
+            {\includegraphics[width=1.0\linewidth]{fig/chap4/mod_similarity2.png}}
+        \subcaptionbox{换道特征数与双移线设计\label{fig:lane_change_char}}
+            {\includegraphics[width=1.0\linewidth]{fig/chap4/lane_change_char.png}}
+        \subcaptionbox{模型车试验参考轨迹 \label{fig:exp_ref_traj}}
+            {\includegraphics[width=1.0\linewidth]{fig/chap4/exp_ref_traj.jpg}}
+        \caption{相似性准则与模型车试验参考轨迹设计}
+        \label{fig:exp_ref_pic}
+        \end{figure}
 
 
-            两组实验中车辆在蛇形绕桩时中低速误差均保持在较小水平，维持了较高跟踪精度；在中高速稳态回转时防侧翻控制由于采用多点跟踪方法从而实现了更高跟踪精度；两种方法车速在全程基本保持一致，在双移线时均保持约\SI{2.5}{m/s}的行驶速度。如图~\ref{fig:exp_traj}所示，防侧翻组延迟驶回原车道，将LTR控制在软约束范围内，在避免侧翻事故发生的前提下尽可能保证了路径跟踪效果。防侧翻组将挂车侧倾角控制在\SI{\pm 5}{\degree}以内，液面最大倾角约为\SI{15}{\degree}；而纯跟踪控制组仅关注路径跟踪，虽跟踪误差较小，但过大的横向加速度引发了剧烈的液体晃动。尽管防侧翻支架的存在避免了实际侧翻事故，但图\ref{fig:cond2_pic}显示，纯跟踪控制组的防侧翻支架分别在工况相对时间\SIrange{3}{3.5}{s}和\SIrange{4}{4.5}{s}触地——这在实车场景下等同于侧翻事故。
+        对于带自由液面的流体，其流动主要受惯性力主导，因此采用弗劳德数$Fr$作为相似准则，其中$Fr = \frac{v_f}{\sqrt{gL}}$。式中$v_f$为流体特征速度，通常取平均流速$\bar{v_f}$；$g$为重力加速度，在横向激励下附加加速度较小，可认为$G=g$。罐体内部小幅线性晃动时，液体可近似为单摆，其摆长近似取罐体半径$R$。晃动频率$\omega$随$R$增大而降低，满足关系
 
-            纯跟踪控制组在第一次变道结束时和第二次变道结束时，挂车侧倾角分别达到约\SI{6}{\degree}和\SI{7}{\degree}，相比之下防侧翻组的侧倾角最大降低了\SI{42}{\percent}。纯跟踪控制组的LTR在工况相对时间\SI{3}{s}和\SI{4.5}{s}时达到1，表明此时已存在侧翻风险。纯跟踪控制组出现了剧烈且显著非线性的液体晃动，其液面倾角多次达到\SI{20}{\degree}以上；而防侧翻组始终将晃动角度控制在\SIrange{-15}{15}{\degree}范围内，剧烈的液体晃动是引发侧翻的主要原因之一。
+        
+        \begin{equation}
+        \left. \omega \propto \sqrt{\frac{g}{R}}\Rightarrow\omega_{mdl} = \sqrt{\lambda}\omega_{vhl} \right.
+        \end{equation}
 
-            \begin{figure}
-            \centering
-            \includegraphics[width=1.0\linewidth]{fig/chap4/exp_traj.jpg}
-            \caption{模型车试验轨迹跟踪情况}
-            \label{fig:exp_traj}
-            \end{figure}
+        由上述关系可知，对于罐体液体晃动，只要横向加速度差异不大，合加速度即可近似为$g$。因此，实车罐体与模型罐体中液体的弗劳德数可认为相等，即
 
-            \begin{figure}
-            \centering
-            \includegraphics[width=1.0\linewidth]{fig/chap4/exp_x.jpg}
-            \caption{模型车试验车辆状态量变化}
-            \label{fig:exp_x}
-            \end{figure}
+    
+        \begin{equation}
+        \begin{split}
+        Fr_{mdl} &= \frac{v_{mdl}}{\sqrt{G_{mdl}L_{mdl}}} = \frac{\omega_{mdl}R_{mdl}}{\sqrt{gR_{mdl}}} 
+        = \omega_{mdl}\sqrt{\frac{R_{mdl}}{g}}\\ &= \sqrt{\lambda}\omega_{vhl}\sqrt{\frac{R_{vhl}}{\lambda}} = \omega_{vhl}\sqrt{\frac{R_{vhl}}{g}} \approx Fr_{vhl}
+        \end{split}
+        \end{equation}
 
-            车辆控制量变化如图~\ref{fig:exp_u}所示，可以看出横向控制方面，防侧翻控制组倾向于输出更平缓的转角以抑制液体晃动并减小LTR峰值。求解器时间平均在\SI{15.4}{ms}，峰值求解时间小于\SI{25}{ms}，满足工程应用的实时性条件。
+        同时，有液体晃动固有频率随$R$减小而增加，为使得晃动过程相位与真实比例车辆相同，即当车辆运行在测试轨迹对应位置时液体也晃动到相同位置，需满足额外的时间约束：
+        \begin{equation}
+            \sqrt{\lambda}T_{veh}=T_{mdl}
+            \label{eq:time_constraint}
+        \end{equation}
 
-            \begin{figure}
-            \centering
-            \includegraphics[width=1.0\linewidth]{fig/chap4/exp_u.jpg}
-            \caption{模型车试验车辆控制量变化}
-            \label{fig:exp_u}
-            \end{figure}
+        综上，只要设计轨迹同时满足式\eqref{eq:similarity}所示的横向加速度关系以及式\eqref{eq:time_constraint}所示的时间约束，模型半挂罐车的横向侧翻动力学特性与液体晃动特性均可认为与原型车辆相似。
+        
+
+        本研究设计如图~\ref{fig:exp_ref_path}所示的闭环路径开展实验验证。其中包含两个主要工况，中低速蛇形绕桩和高速短距双移线，并包括其他辅助工况如稳态回转、左转弯等；中低速蛇形绕桩工况用于测试算法中低速无侧翻风险下的轨迹跟踪性能，而高速短距双移线工况基于上述相似性原理设计，用于验证算法在有侧翻危险时的防侧翻控制性能。假设第一次变道的持续时间为\(t\)，变道长度为\(L\)，变道宽度为\(W\)，则侧向速度\(v_y\)满足\(v_y \propto W/t\)，而持续时间\(t\)满足\(t \propto L/v_x\)。侧向加速度\(a_y\)满足\(a_y \propto \Delta v_y / t \propto v_y / t\)。据此，定义变道特征数如式\eqref{eq:lane_change_char}所示，如图~\ref{fig:lane_change_char}。
+
+        \begin{equation}
+        A_{y} = \frac{W}{L^{2}}{v_{x}}^{2} \propto a_{y}
+        \label{eq:lane_change_char}
+        \end{equation}
+
+        由于模型车速相比实车车速更低，为实现相同的侧向加速度满足相似性原则，需设计更小的变道长度\(L\)以满足式\eqref{eq:lane_change_char}。
+
+        
+    \subsection{试验结果分析}
+        \label{subsub:exp_analysis}
+
+        实验采用与仿真相同的控制器参数：控制频率\SI{20}{Hz}、预测时域$N_p = 15$、控制步长$N_c = 5$、约束步长$N_r = 5$。实验对比了防侧翻控制与纯跟踪控制两种策略的效果，如图~\ref{fig:cond_pic}所示，包括中低速蛇形绕桩时的轨迹跟踪效果以及高速短距双移线时的防侧翻及液体晃动抑制效果。轨迹跟踪情况如图\ref{fig:exp_traj}所示。车辆状态如图~\ref{fig:exp_x}所示。
+        
+        \begin{figure}
+        \centering
+        \subcaptionbox{工况1中低速蛇形绕桩实拍情况\label{fig:cond1_pic}}
+            {\includegraphics[width=1.0\linewidth]{fig/chap4/cond1_pic.jpg}}
+        \subcaptionbox{工况2高速短距双移线实拍情况 \label{fig:cond2_pic}}
+            {\includegraphics[width=1.0\linewidth]{fig/chap4/cond2_pic.jpg}}
+        \caption{模型车试验实拍情况}
+        \label{fig:cond_pic}
+        \end{figure}
+
+
+        两组实验中车辆在蛇形绕桩时中低速误差均保持在较小水平，维持了较高跟踪精度；在中高速稳态回转时防侧翻控制由于采用多点跟踪方法从而实现了更高跟踪精度；两种方法车速在全程基本保持一致，在双移线时均保持约\SI{2.5}{m/s}的行驶速度。如图~\ref{fig:exp_traj}所示，防侧翻组延迟驶回原车道，将LTR控制在软约束范围内，在避免侧翻事故发生的前提下尽可能保证了路径跟踪效果。防侧翻组将挂车侧倾角控制在\SI{\pm 5}{\degree}以内，液面最大倾角约为\SI{15}{\degree}；而纯跟踪控制组仅关注路径跟踪，虽跟踪误差较小，但过大的横向加速度引发了剧烈的液体晃动。尽管防侧翻支架的存在避免了实际侧翻事故，但图\ref{fig:cond2_pic}显示，纯跟踪控制组的防侧翻支架分别在工况相对时间\SIrange{3}{3.5}{s}和\SIrange{4}{4.5}{s}触地——这在实车场景下等同于侧翻事故。
+
+        纯跟踪控制组在第一次变道结束时和第二次变道结束时，挂车侧倾角分别达到约\SI{6}{\degree}和\SI{7}{\degree}，相比之下防侧翻组的侧倾角最大降低了\SI{42}{\percent}。纯跟踪控制组的LTR在工况相对时间\SI{3}{s}和\SI{4.5}{s}时达到1，表明此时已存在侧翻风险。纯跟踪控制组出现了剧烈且显著非线性的液体晃动，其液面倾角多次达到\SI{20}{\degree}以上；而防侧翻组始终将晃动角度控制在\SIrange{-15}{15}{\degree}范围内，剧烈的液体晃动是引发侧翻的主要原因之一。
+
+        \begin{figure}
+        \centering
+        \includegraphics[width=1.0\linewidth]{fig/chap4/exp_traj.jpg}
+        \caption{模型车试验轨迹跟踪情况}
+        \label{fig:exp_traj}
+        \end{figure}
+
+        \begin{figure}
+        \centering
+        \includegraphics[width=1.0\linewidth]{fig/chap4/exp_x.jpg}
+        \caption{模型车试验车辆状态量变化}
+        \label{fig:exp_x}
+        \end{figure}
+
+        车辆控制量变化如图~\ref{fig:exp_u}所示，可以看出横向控制方面，防侧翻控制组倾向于输出更平缓的转角以抑制液体晃动并减小LTR峰值。求解器时间平均在\SI{15.4}{ms}，峰值求解时间小于\SI{25}{ms}，满足工程应用的实时性条件。
+
+        \begin{figure}
+        \centering
+        \includegraphics[width=1.0\linewidth]{fig/chap4/exp_u.jpg}
+        \caption{模型车试验车辆控制量变化}
+        \label{fig:exp_u}
+        \end{figure}
 
 
 
