@@ -25,16 +25,16 @@
 
 % 学位论文指导小组、公开评阅人和答辩委员会名单
 % 本科生不需要
-% \input{data/committee} % TODO:解注释
+\input{data/committee} % TODO:解注释
 
 % 使用授权的说明
 % 本科生开题报告不需要
 % \copyrightpage 
 % 将签字扫描后授权文件 scan-copyright.pdf 替换原始页面
-% \copyrightpage[file=doc/scan-copyright.pdf] % TODO:解注释
+\copyrightpage[file=doc/school-copyright.pdf] % TODO:解注释
 
 \frontmatter
-% \input{data/abstract}  % TODO:解注释
+\input{data/abstract}  % TODO:解注释
 
 % 目录
 \tableofcontents
@@ -42,20 +42,20 @@
 % 插图和附表清单
 % 本科生的插图索引和表格索引需要移至正文之后、参考文献前
 % \listoffiguresandtables  % 插图和附表清单（仅限研究生）
-% \listoffigures           % 插图清单 % TODO:解注释
-% \listoftables            % 附表清单 % TODO:解注释
+\listoffigures           % 插图清单 % TODO:解注释
+\listoftables            % 附表清单 % TODO:解注释
 
 % 符号对照表
-% \input{data/denotation} % TODO:解注释
+\input{data/denotation} % TODO:解注释
 
 
 % 正文部分
 \mainmatter
-% \input{data/chap01} % 绪论 % TODO:解注释
-% \input{data/chap02} % 车云协同架构 % TODO:解注释
-% \input{data/chap03} % 车云协同防侧翻规划 % TODO:解注释
-% \input{data/chap04} % 车液耦合建模与控制 + 实验
-% \input{data/chap05} % 总结与展望
+\input{data/chap01} % 绪论 % TODO:解注释
+\input{data/chap02} % 车云协同架构 % TODO:解注释
+\input{data/chap03} % 车云协同防侧翻规划 % TODO:解注释
+\input{data/chap04} % 车液耦合建模与控制 + 实验
+\input{data/chap05} % 总结与展望
 
 
 % 其他部分
@@ -77,9 +77,9 @@
 
 % 声明
 % 本科生开题报告不需要
-\statement % TODO:解注释
+% \statement % TODO:解注释
 % 将签字扫描后的声明文件 scan-statement.pdf 替换原始页面
-% \statement[file=doc/scan-statement.pdf]
+\statement[file=doc/scan-statement.pdf]
 % 本科生编译生成的声明页默认不加页脚，插入扫描版时再补上；
 % 研究生编译生成时有页眉页脚，插入扫描版时不再重复。
 % 也可以手动控制是否加页眉页脚
@@ -88,15 +88,15 @@
 
 % 个人简历、在学期间完成的相关学术成果
 % 本科生可以附个人简历，也可以不附个人简历
-% \input{data/resume} % TODO:解注释
+\input{data/resume} % TODO:解注释
 
 % 指导教师/指导小组评语
 % 本科生不需要
-% \input{data/comments} % TODO:解注释
+\input{data/comments} % TODO:解注释
 
 % 答辩委员会决议书
 % 本科生不需要
-% \input{data/resolution} % TODO:解注释
+\input{data/resolution} % TODO:解注释
 
 % 本科生的综合论文训练记录表（扫描版）
 % \record{file=scan-record.pdf}
