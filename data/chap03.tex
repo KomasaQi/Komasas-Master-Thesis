@@ -106,12 +106,14 @@
     \end{figure}
 
     \subsubsection*{(1)训练数据结构}
-      通过采集SUMO历史交通数据并在不同时刻构建以该时刻自车沿路网前向距离$D_{ahead}=\SI{700}{m}$，后向距离$D_{behind}=\SI{300}{m}$的图结构路网，将过去历史时域和预测时域$T=\SI{20}{s}$（本研究中历史时域与预测时域相等）以及当前选定时刻$k$的车辆数据映射到该交通图网络结构上作为每个对应节点的动态特征:
+      高速场景下液罐车限速\SI{80}{km/h}、乘用车限速\SI{120}{km/h}，乘用车\SI{20}{s}最大行驶距离约\SI{666.7}{m}，后方高速车辆可追及自车形成交互。为覆盖全部潜在交互范围并满足模型拓扑恒定要求，经取整与余量预留，通过采集SUMO历史交通数据并在不同时刻构建以该时刻自车沿路网前向距离$D_{ahead}=\SI{700}{m}$，后向距离$D_{behind}=\SI{300}{m}$的图结构路网，将过去历史时域和预测时域$T=\SI{20}{s}$（本研究中历史时域与预测时域相等）以及当前选定时刻$k$的车辆数据映射到该交通图网络结构上作为每个对应节点的动态特征:
       \begin{equation}
       \mathrm{v}_i = F_{i,stat} \oplus F_{i,vehs}^{-T+k:k} \oplus F_{i,ego}^{-T+k:k},\mathrm{v}_i \in \mathcal{V}^k 
       \end{equation}
       
       其中$F_{i,stat}$为静态特征，包含路网静态信息（如车道数、交通流方向等）；$F_{i,vehs}^{-T+k:k}$为历史加当前时刻周车动态特征（如速度、加速度、相对距离等）；$F_{i,ego}^{-T+k:k}$为历史与当前时刻自车占据情况，$\oplus$为向量拼接（Concatenete）操作，$\mathcal{V}^k$表示第$k$时刻的图结构路网节点集合。所有时刻的边特征集$\mathcal{E}$属于静态特征均保持不变。
+
+    
       
     \subsubsection*{(2)特征提取器设计}
       图编码器采用多层图神经网络结构，对输入的图结构路网进行特征提取与局部、全局信息聚合，并加入时间编码与动作编码引导生成，通过邻居节点与边的特征传递与更新局部特征，通过全局线性注意力捕捉交通场景中的时空依赖关系与交互作用，生成下一时刻$k+1$的节点动态特征变化速度向量集$v^\bm{\theta}(F_{dyn}^{k+1})$以实现图扩散（$\bm{\theta}$为Graphflow模型参数）。
@@ -304,12 +306,14 @@
 
       \begin{table}
         \centering
-        \caption{车辆状态特征维度与索引定义}  % 表格标题
+        \caption{决策模型输入输出特征维度与索引定义}  % 表格标题
         \begin{tabularx}{\linewidth}{Xl}  % X列自适应宽度，l列左对齐（索引列）
           \toprule
           特征描述 & 索引/维度 \\  % 表头贴合你的示例风格
           \midrule
-          \multirow{8}{*}{自车状态} & 到终点距离、剩余车道距离：0-1 \\
+          \multirow{1}{*}{交通图输入} & 如\ref{sec:traffic_graph_representation}节所述 \\
+          \midrule
+          \multirow{8}{*}{自车状态输入} & 到终点距离、剩余车道距离：0-1 \\
           & 纵向/横向速度、绝对航向角(cos/sin)：2-5 \\
           & 灯语状态、匝道/主路、车道索引/偏移：6-11 \\
           & 当前限速、道路进度、车辆长/宽：12-15 \\
@@ -318,11 +322,13 @@
           & 下条车道限速、可通行车道mask：28-35（mask7维） \\
           & 换道状态(one-hot)：36-52（17维） \\
           \midrule  % 分隔自车/他车，贴合三线表极简风格
-          \multirow{5}{*}{他车状态} & 存在性、相对位置(x/y)、相对速度(vx/vy)：0-4 \\
+          \multirow{5}{*}{他车状态输入} & 存在性、相对位置(x/y)、相对速度(vx/vy)：0-4 \\
           & 相对航向角(cos/sin)、车道索引/偏移/主路标识：5-9 \\
           & 当前限速、最高车速、灯语状态(左/右/刹车)：10-14 \\
           & 车辆长/宽、vclass、导航意图(one-hot)：15-20（导航3维） \\
           & MEI、1/RTTC、1/最近距离、车辆类别vtype：21-24 \\
+          \midrule  % 分隔自车/他车，贴合三线表极简风格
+          \multirow{1}{*}{控制输出} & 换道决策序列：(0,:)、期望加速度序列：(1,:)  \\
           \bottomrule
         \end{tabularx}
         \label{tab:vehicle_feature}  % 表格交叉引用标签
@@ -807,7 +813,7 @@
 
       在持续加速5次不同程度双移线的5-Pins工况、左转弯工况、高速双移线工况共3种典型工况下（工况同样将在第\ref{chap04_antirollover_control}章的仿真部分详细介绍），对简化液罐车运动动力学耦合模型效果进行验证。如图~\ref{fig:kinodynamic_results}所示，引入尾部动力学后挂车轨迹预测误差与LTR动力学预测误差水平都得到有效降低。
   \subsection{约束迭代LQR问题构造}
-    基于上述模型构建的防侧翻避障轨迹规划问题是多变量、多约束的非凸优化问题，如序列二次规划（Sequential Quadratic Programming，SQP）\cite{gill1981practical}是此类问题的通用求解器之一，通过不断将原始问题近似为一系列QP问题实现求解，但由于并未针对问题的特殊形式进行优化，故在求解时间上相对较慢。由于轨迹规划问题符合最优控制问题基本框架，本小节将提出改进的约束iLQR规划器（Constrainted iLQR, CILQR）求解轨迹规划问题，其通过迭代求解LQR问题实现初始解向真值的收敛，并通过逐渐加强的控制屏障函数（Control Barrier Function, CBF）保证约束的施加并逐渐演化无限趋近于完全约束问题，为以保证约束满足和初解包容，避免了原始CILQR方法对初解完全可行的要求。
+    基于上述模型构建的防侧翻避障轨迹规划问题是多变量、多约束的非凸优化问题，如序列二次规划（Sequential Quadratic Programming，SQP）\cite{gill1981practical}是此类问题的通用求解器之一，通过不断将原始问题近似为一系列QP问题实现求解，但由于并未针对问题的特殊形式进行优化，故在求解时间上相对较慢。由于轨迹规划问题符合最优控制问题基本框架，本小节将提出改进的约束迭代线性二次调节器（constrained iterative linear quadratic regulator, CILQR）求解轨迹规划问题，其通过迭代求解线性二次调节器问题实现初始解向真值的收敛，并通过逐渐加强的控制屏障函数（Control Barrier Function, CBF）保证约束的施加并逐渐演化无限趋近于完全约束问题，为以保证约束满足和初解包容，避免了原始CILQR方法对初解完全可行的要求。
 
     标准iLQR问题形式为：
     \begin{equation}
@@ -980,7 +986,7 @@
     \subsubsection*{(3)仿真结果与分析}
       在仿真结果评价指标上，采用可单车级计算的指标，分为安全、高效、舒适/经济、规则、导航5个维度进行评价。
 
-      其中安全指标包含经典一维替代安全指标（Surrogate Safety Index, SSI）TTC的倒数、二维SSI 2D-TTC(本文用1/RTTC表示)的倒数、Trailer-MEI（为本文提出的二维替代安全指标。其通过改进MEI指标，通过离散化时间分别计算安全预测时域内\emph{所有关键时刻}下可能包含挂车的两车牵引车与挂车\emph{两两排列组合MEI指标}并取最大值，使得包含半挂车的二维风险计算成为可能\cite{KomasaQi2026MasterThesis_repo}。）、裁剪的车头距离（Head Way, HW）的倒数4个指标。1/TTC能更好反映跟车/被跟车时的安全情况，1/RTTC能反映传统计算方式下考虑二维轮廓的SSI，Trailer-MEI使得SSI计算更为接近现实，而加入1/HW的目的是反映车辆并列行驶的行为，液罐车属于高危车辆，不管是有意还是被迫，与他车并列行驶都属于潜在的危险行为，需加速或主动减速拉开车距。
+      其中安全指标包含经典一维替代安全指标（Surrogate Safety Index, SSI）TTC的倒数、二维SSI 2D-TTC(本文用1/RTTC表示)的倒数、面向半挂车的修正紧急因子（trailer-oriented modified emergency index, Trailer-MEI）、裁剪的车头距离（Head Way, HW）的倒数4个指标。Trailer-MEI为本文提出的二维替代安全指标，其通过改进MEI指标，通过离散化时间分别计算安全预测时域内\emph{所有关键时刻}下可能包含挂车的两车牵引车与挂车\emph{两两排列组合MEI指标}并取最大值，使得包含半挂车的二维风险计算成为可能\cite{KomasaQi2026MasterThesis_repo}。1/TTC能更好反映跟车/被跟车时的安全情况，1/RTTC能反映传统计算方式下考虑二维轮廓的SSI，Trailer-MEI使得SSI计算更为接近现实，而加入1/HW的目的是反映车辆并列行驶的行为，液罐车属于高危车辆，不管是有意还是被迫，与他车并列行驶都属于潜在的危险行为，需加速或主动减速拉开车距。
       
       高效指标包含通行效率指标，计算逻辑与式\eqref{eq:effi_reward}基本相同，但从图平均计算转换为对明确的单车进行计算。舒适/经济指标为加速度二范数指标，计算方法与式\eqref{eq:conf_reward}完全相同。规则指标包含靠右行驶敬礼与超速惩罚，计算方法与式\eqref{eq:conf_reward}完全相同；导航指标也与式\eqref{eq:nav_reward}逻辑相同。
 
@@ -1012,7 +1018,7 @@
           {\includegraphics[width=0.87\linewidth]{fig/chap3/r_ttc_inv.png}}
         \subcaptionbox{1/RTTC指标得分对比图 \label{fig:r_rttc_inv}}
           {\includegraphics[width=0.87\linewidth]{fig/chap3/r_rttc_inv.png}}
-        \subcaptionbox{Trailer-MEI指标得分对比图 \label{fig:r_mei}}
+        \subcaptionbox{面向半挂车的修正紧急因子指标得分对比图 \label{fig:r_mei}}
           {\includegraphics[width=0.87\linewidth]{fig/chap3/r_mei.png}}
         \subcaptionbox{车头时距1/HW指标得分对比图 \label{fig:r_hw_inv}}
           {\includegraphics[width=0.87\linewidth]{fig/chap3/r_hw_inv.png}}
@@ -1113,7 +1119,5 @@
   \item 建立考虑液体晃动的车端规划模型，构造带安全约束的迭代LQR求解流程，实现应急避障与防侧翻轨迹生成。
   \item 设计仿真实验与关键周车筛选机制，从云端决策效果与车端规划效果两方面验证方法有效性与鲁棒性。
 \end{enumerate}
-
-
 
 

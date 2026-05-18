@@ -267,7 +267,7 @@
   \end{proof}
   故上述流匹配过程在未来预测上应满足连续性方程，从而保证了通过条件流匹配学习得到的边缘向量场的正确性。同时，可以保证自车和周车存在概率在宏观扩散过程中保持一致，即使原本集中的概率扩散到更宽阔的道路空间中以更低的概率存在。
 
-  \subsection{Trailer-MEI指标推导计算}
+  \subsection{面向半挂车的修正紧急因子指标推导计算}
   \label{sub:trailer_mei_proof}
     目前一维替代安全指标（Surrogate Safty Index, SSI）如碰撞时间（Time to Collision, TTC）、车头时距（Time Head Way, THW）等仅在跟车情况下有效，不考虑车辆真实宽度与几何形状，对二维空间中的碰撞无法有效监测；而二维碰撞指标如RTTC虽考虑二维几何形状，对斜碰等问题可以探测，但计算过于乐观且不考虑不同撞击重叠面积风险的不同。Cheng等震碎上述问题在2024年提出紧急因子（Emergency Index, EI）\cite{chenghao2025emergency_index}安全评价指标，并在2025年进一步提出修正紧急因子（Modified Emergency Index, MEI）\cite{chenhao2025mei}。
 
@@ -284,7 +284,7 @@
     \end{figure}
     TEM定义为自车和周车都匀速直线运动的前提假设下，两车轮廓最早发生重叠的时间，若不发生重叠则$\text{TEM} = \infty$。
 
-    MEI经过对比测试，相比于现有二维SSI能够有效反映车辆实际风险，且计算速度很快，经过C++编译后单次计算时间大约在\SIrange{6}{10}{\micro s}。但MEI仍存在一些问题，如其匀速直线运动假设过强，且针对如环岛等匀速恒定前轮转角的情况适用性较差，以及针对本文而言，其无法计算辆车中其一或全部为半挂车时的风险，即只能针对两辆单车计算风险。为对包含挂车的车辆对（Vehicle Pair）计算MEI指标，本文提出Trailer-MEI方法。
+    MEI经过对比测试，相比于现有二维SSI能够有效反映车辆实际风险，且计算速度很快，经过C++编译后单次计算时间大约在\SIrange{6}{10}{\micro s}。但MEI仍存在一些问题，如其匀速直线运动假设过强，且针对如环岛等匀速恒定前轮转角的情况适用性较差，以及针对本文而言，其无法计算辆车中其一或全部为半挂车时的风险，即只能针对两辆单车计算风险。为对包含挂车的车辆对（Vehicle Pair）计算MEI指标，本文提出面向半挂车的修正紧急因子（trailer-oriented modified emergency index, Trailer-MEI）方法。
 
     假设半挂车的牵引车部分匀速直线运动，挂车后轴轨迹为曳物线（tractix），如图~\ref{fig:drag_line}所示，设铰接角为$\gamma_{g}$，牵引车车速为$v_{1x}$，其解析形式可描述为式\eqref{eq:theta}到式\eqref{eq:trailer_traj}。其中铰接角随时间变化为$\gamma_{g}(t)$如式\eqref{eq:theta}所示，则牵引车轨迹直线为式\eqref{eq:tractor_traj}，挂车曳物线为式\eqref{eq:trailer_traj}。
 

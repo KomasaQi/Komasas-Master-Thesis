@@ -1125,7 +1125,7 @@
         
     \subsection{仿真验证与分析}
         \label{sub:simulation_verification}
-        本小结在左转弯、高速单移线和短距双移线共3个极限工况下对本章提出的防侧翻跟踪控制方法进行了对比验证，对比方法包括TruckSim默认的纯跟踪控制（Preview Tracking, PT）、将PT与LQR差动制动结合（这也是文献中最常见的方法\cite{Reviewer2_SunWencai2022,zhaoweiqiang2019semitrailer}，简称PT+DB）、不包含差动制动控制与MFASMC补偿的纯转向控制\cite{KomasaQi2025AntiRollover_TITS}（简称“防侧翻轨迹跟踪”，Anti-rollover Tracking, ART，是\ref{sub:multi_constraint_mpc}节算法的简化公开发表版）以及本研究的包含差动制动控制与MFASMC补偿的防侧翻轨迹跟踪（简称ART+DB）。
+        本小结在左转弯、高速单移线和短距双移线共3个极限工况下对本章提出的防侧翻跟踪控制方法进行了对比验证，对比方法包括TruckSim默认的纯跟踪控制（Preview Tracking, PT）、将纯跟踪控制与差动制动（Differential Braking, DB）结合的方法（这也是文献中最常见的方法\cite{Reviewer2_SunWencai2022,zhaoweiqiang2019semitrailer}，简称PT+DB）、不包含差动制动控制与MFASMC补偿的纯转向控制\cite{KomasaQi2025AntiRollover_TITS}（简称“防侧翻轨迹跟踪”，Anti-rollover Tracking, ART，是\ref{sub:multi_constraint_mpc}节算法的简化公开发表版）以及本研究的包含差动制动控制与MFASMC补偿的防侧翻轨迹跟踪（简称ART+DB）。
 
         \subsubsection{左转弯工况}
         \label{subsub:corner}
@@ -1430,6 +1430,14 @@
         \caption{模型车试验车辆控制量变化}
         \label{fig:exp_u}
         \end{figure}
+
+        \begin{figure}
+        \centering
+        \includegraphics[width=1.0\linewidth]{fig/chap4/slack_iter.jpg}
+        \caption{模型车试验求解时间与松弛变量变化}
+        \label{fig:slack_iter}
+        \end{figure}
+
 
 
 
