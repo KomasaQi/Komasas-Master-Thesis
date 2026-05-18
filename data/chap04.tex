@@ -2,7 +2,7 @@
 
 \chapter{车端防侧翻轨迹跟踪控制与模型试验}
 \label{chap04_antirollover_control}
-根据第\ref{chap03_vehicle_cloud_collaborate}章关于车云协同液罐车防侧翻体系架构的分析，为抑制某些突发已无法避免的因素导致的状态性风险，防止其最终演变为后果性风险，车端需要具备状态性风险实时识别与干预能力，并保证失效冗余，才能阻止其发展为事故，其中核心在于车辆实时稳定性干预与失效应急预案的保障。本章聚焦于车端防侧翻轨迹跟踪控制，首先以车液耦合动力学建模切入介绍横纵耦合液体晃动建模，其次构建优化实现车液耦合动力学模型在防侧翻轨迹跟踪控制上的应用，最后搭建车液耦合联合仿真平台以及通过缩比例模型车试验验证车端稳定性干预能力。
+根据第\ref{chap03_vehicle_cloud_collaborate}章关于车云协同液罐车防侧翻体系架构的分析，车端需要具备状态性风险的实时识别与干预能力，并通过失效冗余防止风险进一步演变为事故。其核心在于两点：一是车辆实时稳定性干预，二是失效条件下的应急处置保障。本章聚焦于车端防侧翻轨迹跟踪控制。首先，建立车液耦合动力学模型并介绍横纵耦合液体晃动建模方法；其次，构建面向防侧翻轨迹跟踪控制的优化问题；最后，搭建车液耦合联合仿真平台，并通过缩比例模型车试验验证车端稳定性干预能力。
 
 
 \section{横纵向耦合液体晃动建模}
@@ -17,7 +17,9 @@
     \label{fig:sloshing_modeling}
     \end{figure}
 
-    二维晃动模型对于垂向力、侧向力以及侧倾力矩三个指标的建模精度已经可以达到非常高\cite{Komasa2023observing}，但仍然只能反映三个模态且仅限于二维晃动时的情况才能保证高精度。而实际中由于纵向加速度和横摆角加速度客观存在，液体在罐内的晃动是三维的，除了横纵向流动的耦合外，液体在腔室间的转移造成的稳态俯仰力矩偏差、车辆转向时横摆角加速度激励引起的液体在罐体两侧方向相反的晃动，造成横摆力矩的巨大波动等都是未被反映在模型中的动态，而其对行驶稳定性同样有着重要影响。同时，根据\ref{subsubsec:resource_analysis}节资源分析的结果，云端为满足建立高效高保真车液耦合仿真平台满足算法仿真测试需求，需构建高保真液罐车动力学仿真模型以及高保真仿真工况与仿真器，而罐液耦合模型的建立是上述高保真快速仿真的液罐车动力学模型的基本前提。故需要建立支持更多关键模态表达，且满足快速计算需求的机械等效模型。
+    二维晃动模型对于垂向力、侧向力以及侧倾力矩三个指标已能达到较高建模精度\cite{Komasa2023observing}，但其高精度通常依赖二维晃动假设，难以完整反映实际罐内液体运动。真实行驶过程中，纵向加速度和横摆角加速度客观存在，液体晃动具有明显三维特征。除横纵向流动耦合外，液体在腔室间转移会造成稳态俯仰力矩偏差；车辆转向时，横摆角加速度还会激励罐体两侧方向相反的液体晃动，并引起横摆力矩波动。这些动态均会影响行驶稳定性，但难以由传统二维模型充分表达。
+
+    同时，根据第~\ref{subsubsec:resource_analysis}节资源分析的结果，云端需构建高效高保真的车液耦合仿真平台，以支撑算法仿真测试。该平台依赖高保真液罐车动力学仿真模型、典型仿真工况和仿真器，而罐液耦合模型是高保真快速仿真的基础。因此，需要建立一种既能表达更多关键模态，又能满足快速计算需求的机械等效模型。
 
     \subsection{滑动伸缩天平模型}
         \label{sub:sliding_telescopic_libra_model}
@@ -206,7 +208,7 @@
             \begin{equation}
             z = F(x,y) = \mathrm{Re}\left( -k_z \left( 1 - \left| \frac{x}{k_x} \right|^a - \left| \frac{y}{k_y} \right|^a \right)^{\frac{1}{a}} \right) + k_z + h
             \end{equation}
-            其中$a = 2 + k_\alpha |x_0|^{k_e}$，$\mathrm{Re}(\cdot)$表示取实部。
+            \noindent 其中，$a = 2 + k_\alpha |x_0|^{k_e}$，$\mathrm{Re}(\cdot)$表示取实部。
 
             \begin{equation}
             z = \mathrm{Re}\left( -b_p \mathrm{sign}(a_p - |x|) \left( 1 - \left( \frac{x}{a_p} \right)^2 \right) \right)
@@ -369,7 +371,7 @@
             &\quad + (m_0 h_0 + m_p h_p)g \phi_2 + m_p h_p l_p \ddot{\theta} - m_p l_p g \theta
             \end{aligned}
             \end{equation}
-            其中对一般的单摆，侧向加速度$\ddot{y} = \dot{v}_{y2} + \dot{\psi}_2 v_{x2}$。当存在两个摆模型时，其摆动自由度可以分别被命名为$\theta_1$和$\theta_2$。两者均适用于上述方程。对于两个自由度$\theta_1$和$\theta_2$而言，其在式\eqref{eq:single_pendulum_ddtheta}上的区别仅仅在于侧向加速度$\ddot{y}$的输入。
+            \noindent 其中，对一般的单摆，侧向加速度$\ddot{y} = \dot{v}_{y2} + \dot{\psi}_2 v_{x2}$。当存在两个摆模型时，其摆动自由度可以分别被命名为$\theta_1$和$\theta_2$。两者均适用于上述方程。对于两个自由度$\theta_1$和$\theta_2$而言，其在式\eqref{eq:single_pendulum_ddtheta}上的区别仅仅在于侧向加速度$\ddot{y}$的输入。
             \begin{equation}
             \ddot{\theta} + \frac{1}{l_p} \ddot{y} - \frac{h_p}{l_p} \ddot{\phi}_2 + \frac{g}{l_p} \theta + \frac{g}{l_p} \phi_2 + c_d \dot{\theta} \approx 0
             \label{eq:single_pendulum_ddtheta}
@@ -667,7 +669,7 @@
         \begin{equation}
         X = \left[ v_{1y}\ \dot{\psi}_1\ \phi_1\ \dot{\phi}_1\ v_{2y}\ \dot{\psi}_2\ \phi_2\ \dot{\phi}_2\ \theta_1\ \dot{\theta}_1\ \theta_2\ \dot{\theta}_2\ v_{1x}\ \psi_1\ Y_1\ X_1 \right]^T
         \end{equation}
-        其中$v_{1y}$为牵引车侧向速度、$\dot{\psi}_1$为牵引车航向角速度、$\phi_1$为牵引车侧倾角、$\dot{\phi}_1$为牵引车侧倾角速度、$v_{2y}$挂车侧向速度、$\dot{\psi}_2$挂车航向角速度、$\phi_2$为挂车侧倾角、$\dot{\phi}_2$为挂车侧倾角速度、$\theta_1$为双摆前摆角度、$\dot{\theta}_1$为双摆前摆角速度、$\theta_2$为双摆后摆角度、$\dot{\theta}_2$为双摆后摆角速度、$v_{1x}$为牵引车随车体坐标系下的纵向速度、$Y_1$为牵引车在大地坐标系下的Y轴坐标、$X_1$为牵引车在大地坐标系下的X轴坐标。由于纵向晃动对于加速的影响可以忽略，故不采用三摆模型，而是双摆模型。
+        \noindent 其中，$v_{1y}$为牵引车侧向速度、$\dot{\psi}_1$为牵引车航向角速度、$\phi_1$为牵引车侧倾角、$\dot{\phi}_1$为牵引车侧倾角速度、$v_{2y}$挂车侧向速度、$\dot{\psi}_2$挂车航向角速度、$\phi_2$为挂车侧倾角、$\dot{\phi}_2$为挂车侧倾角速度、$\theta_1$为双摆前摆角度、$\dot{\theta}_1$为双摆前摆角速度、$\theta_2$为双摆后摆角度、$\dot{\theta}_2$为双摆后摆角速度、$v_{1x}$为牵引车随车体坐标系下的纵向速度、$Y_1$为牵引车在大地坐标系下的Y轴坐标、$X_1$为牵引车在大地坐标系下的X轴坐标。由于纵向晃动对于加速的影响可以忽略，故不采用三摆模型，而是双摆模型。
         \begin{figure}
         \centering
         \includegraphics[width=0.6\linewidth]{fig/chap4/control_scheme.png}
@@ -691,7 +693,7 @@
         \dot{X} = A_c X + B_c u, \quad
         A_c = T_c M^{-1} A_0 T_c^{-1} X,\quad B_c = T_c M^{-1} B_0
         \end{equation}
-        其中$M$、$A_0$、$B_0$、$T_c$的详细展开见式\ref{eq:M}、式\ref{eq:A_0}、式\ref{eq:B_0}、式\ref{eq:T_c}。
+        \noindent 其中，$M$、$A_0$、$B_0$、$T_c$的详细展开见式\eqref{eq:M}、式\eqref{eq:A_0}、式\eqref{eq:B_0}、式\eqref{eq:T_c}。
         
         \setcounter{MaxMatrixCols}{20} % 至少 >= 16
 
@@ -714,7 +716,7 @@
         \end{bmatrix}_{16 \times 16}
         \label{eq:M}
         \end{equation}
-        其中各个子项为：
+        \noindent 其中，各个子项为：
         \begin{equation*}
         \begin{aligned}
         m_{11} &= m_1 v_{1x} c, \quad
@@ -757,7 +759,7 @@
         \end{bmatrix}
         \label{eq:A_0}
         \end{equation}
-        其中各个子项为：
+        \noindent 其中，各个子项为：
         \begin{equation*}
         \begin{aligned}
         a_{11} &= (a + c)k_1 + (c - b)k_2, \quad
@@ -811,7 +813,7 @@
         \label{eq:discrete_state_space}
         \end{equation}
 
-        其中$k$表示第$k$时刻，离散状态转移矩阵$A$与输入矩阵$B$采用如下方式获得
+        \noindent 其中，$k$表示第$k$时刻，离散状态转移矩阵$A$与输入矩阵$B$采用如下方式获得：
 
         \begin{equation}
         \begin{bmatrix}
@@ -823,7 +825,7 @@
         \end{bmatrix} \right)
         \end{equation}
 
-        其中$T_s$为离散化模型的时间步长，$\text{expm}(\cdot)$为矩阵指数函数，$n_x$和$n_u$分别为模型的状态量个数和控制量个数，对于式\eqref{eq:discrete_state_space}分别为$n_x = 16$和$n_u = 6$。
+        \noindent 其中，$T_s$为离散化模型的时间步长，$\text{expm}(\cdot)$为矩阵指数函数，$n_x$和$n_u$分别为模型的状态量个数和控制量个数，对于式\eqref{eq:discrete_state_space}分别为$n_x = 16$和$n_u = 6$。
 
         离散化状态转移矩阵$A$与输入矩阵$B$中$v_{1x}$与$v_{2x}$在计算时代入当前时刻的值，每个时刻重新计算矩阵$A$与$B$，形成线性时变模型。
 
@@ -857,7 +859,7 @@
 
 
 
-            尽管横向误差是跟踪控制中广泛使用的状态变量\cite{Reviewer1_FuzzySteering}，可实现如图\ref{fig:linear_tracker}所示的线性跟踪，但本研究采用绝对位置 \(Y_1, X_1\) 作为状态变量，以构建绝对跟踪器\cite{ShengboEbenLi2024reinforcement}，从而更精确地预测跟踪过程中的高阶动力学。同时，通过将预测时域延长至1.5~3 s（覆盖约1 s的液体晃动周期\cite{Komasa2023observing}），可捕捉LTR动力学中的潜在间隙，提升MPC的有效性，相比简化动力学的线性跟踪器，能更好地保证车辆稳定性与安全性。
+            尽管横向误差是跟踪控制中广泛使用的状态变量\cite{Reviewer1_FuzzySteering}，可实现如图~\ref{fig:linear_tracker}所示的线性跟踪，但本研究采用绝对位置 \(Y_1, X_1\) 作为状态变量，以构建绝对跟踪器\cite{ShengboEbenLi2024reinforcement}，从而更精确地预测跟踪过程中的高阶动力学。同时，通过将预测时域延长至1.5~3 s（覆盖约1 s的液体晃动周期\cite{Komasa2023observing}），可捕捉LTR动力学中的潜在间隙，提升MPC的有效性，相比简化动力学的线性跟踪器，能更好地保证车辆稳定性与安全性。
 
             \begin{figure}
             \centering
@@ -873,7 +875,7 @@
             \begin{equation}
             y = [Y_1\ X_1\ \psi_1\ \dot{\theta}_1\ \dot{\theta}_2\ \mathrm{LTR}_{eql}\ v_{x1}]
             \end{equation}
-            其中的状态量可以按照作用分为三个部分：
+            \noindent 其中，状态量可以按照作用分为三个部分：
             (1) 轨迹跟踪所用的车辆姿态$\psi_1$（减去了控制开始时刻的偏移量，这样可以避免角度超过限度后重新计算的问题）；
             (2) 正常行驶时抑晃所用的液体等效线性双摆的摆动角速度$\dot{\theta}_1\ \dot{\theta}_2$（由于摆动时这个系统是一个circle的相图，所以我们限制住速度这一个坐标轴其实就可以从很大程度上限制住角度）；
             (3) 极端工况防侧翻所用的基于悬架力等效载荷转移率$\mathrm{LTR}_{eql}$。
@@ -882,7 +884,7 @@
             \begin{equation}
             \mathrm{LTR}_{eql} = c_r(-k_{r1}\phi_1 - c_1 \dot{\phi}_1 - k_{r2}\phi_2 - c_2 \dot{\phi}_2)
             \end{equation}
-            其中系数$c_r$为
+            \noindent 其中，系数$c_r$为：
             \begin{equation}
             c_r = \frac{2}{\frac{T_{w1} + T_{w2}}{2}(m_1 + m_2)g}
             \end{equation}
@@ -923,7 +925,7 @@
             \xi_{k+1} = \begin{bmatrix} x_{k+1} \\ u_k \end{bmatrix} = \begin{bmatrix} A_d & B_d \\ 0 & I_{N_u} \end{bmatrix} \begin{bmatrix} x_k \\ u_{k-1} \end{bmatrix} + \begin{bmatrix} B_d \\ I_{N_u} \end{bmatrix} \Delta u_k \\
             = A \xi_k + B \Delta u_k
             \end{equation}
-            其中$N_y$为输出量个数，输出方程为
+            \noindent 其中，$N_y$为输出量个数，输出方程为：
             \begin{equation}
             \eta_k = [C_d\ 0] \begin{bmatrix} x_k \\ u_{k-1} \end{bmatrix} = C \xi_k
             \end{equation}
@@ -967,13 +969,13 @@
             \begin{equation}
             Y = \Psi \xi_k + \Theta \Delta U
             \end{equation}
-            其中$T$和$\Pi$是为了加快运算速度而定义的压缩映射矩阵，子向量$q = [1\ 0]^T$，$\pi = [1\ 0]$，$N_c$和$N_r$分别为决策变量和约束时域个数，$N_c, N_r \leq N_p$。数列$\{q_1, q_2, \dots, q_{N_c - 1}\}$和$\{p_1, p_2, \dots, p_{N_r - 1}\}$任意元素大于等于1，且通常是递增。通过更多地减少预测时域内距当前时刻较远时刻的决策变量和输出量约束来极大减小二次规划的峰值求解时间，同时仅对控制量解的最优性产生小于\SI{1}{\percent}的影响\cite{shengbo2015fastmpc}。这对于状态维数较多的半挂液罐车的实时控制来说是必要的措施。
+            \noindent 其中，$T$和$\Pi$是为了加快运算速度而定义的压缩映射矩阵，子向量$q = [1\ 0]^T$，$\pi = [1\ 0]$，$N_c$和$N_r$分别为决策变量和约束时域个数，$N_c, N_r \leq N_p$。数列$\{q_1, q_2, \dots, q_{N_c - 1}\}$和$\{p_1, p_2, \dots, p_{N_r - 1}\}$任意元素大于等于1，且通常是递增。通过更多地减少预测时域内距当前时刻较远时刻的决策变量和输出量约束来极大减小二次规划的峰值求解时间，同时仅对控制量解的最优性产生小于\SI{1}{\percent}的影响\cite{shengbo2015fastmpc}。这对于状态维数较多的半挂液罐车的实时控制来说是必要的措施。
 
             令
             \begin{equation}
             E = \Psi \xi_k,\ Q_Q = I_{N_p} \otimes Q,\ R_R = I_{N_p} \otimes R
             \end{equation}
-            其中$Q \in S_{++}^{N_y}$，$R \in S_+^{N_u}$，$\otimes$表示克罗内克积。
+            \noindent 其中，$Q \in S_{++}^{N_y}$，$R \in S_+^{N_u}$，$\otimes$表示克罗内克积。
 
             定义代价函数为
             \begin{equation}
@@ -1034,7 +1036,7 @@
             \end{equation}
             定义对控制变量$v_{des}$的约束为：
             $W = I_{N_p} \otimes w$
-            其中$w = [0\ 0\ 0\ 0\ 0\ 0\ 1]$用于提取出$v_x$
+            \noindent 其中，$w = [0\ 0\ 0\ 0\ 0\ 0\ 1]$用于提取出$v_x$。
             \begin{equation}
             \begin{aligned}
             v_{des} &\leq v_{1x} + \Delta v_{thrld,1} \\
@@ -1129,10 +1131,10 @@
 
         \subsubsection{左转弯工况}
         \label{subsub:corner}
-            根据规范\cite{WJG203-2006}，左转与右转均需满足最小转弯半径要求。对于右转工况，当设计车速超过\SI{20}{km/h}时，需采用\SIrange{10}{20}{m}的路缘半径\cite{UrbanCrossDesign}。受半挂车运动学约束影响，其转弯半径需求更大\cite{CrossCornerRadius}。为保证液罐半挂车平稳转弯，本研究选取\SI{15}{m}的右转半径。当从最内侧车道左转至另一最内侧车道时，左转半径为\SI{28.125}{m}，相当于在基础右转半径上增加3.5个车道宽度，如图\ref{fig:s_corner_illust}所示。仿真中，车辆初始速度设置为\SI{35}{km/h}，对应左转前绿灯放行时的行驶速度。
+            根据规范\cite{WJG203-2006}，左转与右转均需满足最小转弯半径要求。对于右转工况，当设计车速超过\SI{20}{km/h}时，需采用\SIrange{10}{20}{m}的路缘半径\cite{UrbanCrossDesign}。受半挂车运动学约束影响，其转弯半径需求更大\cite{CrossCornerRadius}。为保证液罐半挂车平稳转弯，本研究选取\SI{15}{m}的右转半径。当从最内侧车道左转至另一最内侧车道时，左转半径为\SI{28.125}{m}，相当于在基础右转半径上增加3.5个车道宽度，如图~\ref{fig:s_corner_illust}所示。仿真中，车辆初始速度设置为\SI{35}{km/h}，对应左转前绿灯放行时的行驶速度。
 
    
-            如图\ref{fig:s_corner_track}至图\ref{fig:s_corner_xu}所示，控制器通过模型预测控制预判潜在侧翻风险，采取更平缓的转向动作以避免侧翻，同时通过小幅转向调整抵消液体晃动的影响。在跟踪效果上，如图~\ref{fig:s_corner_track}所示，PT和PT+DB组实现了轨迹近乎完美的跟踪效果，ART组为缓解侧翻压力向外偏移最多，而ART+DB组由于存在误差补偿与差动缓解侧翻趋势，跟踪偏移量比ART更小。车辆状态及控制量变化如图~\ref{fig:s_corner_xu}所示，ART组与ART+DB组由于主动进行了轨迹外扩从而避免了侧翻发生，\(\text{LTR}_{eql}\)被成功控制在±0.75的软约束范围内，在允许路径存在可接受范围内小幅偏离的同时，有效防止了侧翻，且ART+DB组由于差动制动附加力矩辅助\(\text{LTR}_{eql}\)峰值减小。
+            如图~\ref{fig:s_corner_track}至图~\ref{fig:s_corner_xu}所示，控制器通过模型预测控制预判潜在侧翻风险，采取更平缓的转向动作以避免侧翻，同时通过小幅转向调整抵消液体晃动的影响。在跟踪效果上，如图~\ref{fig:s_corner_track}所示，PT和PT+DB组实现了轨迹近乎完美的跟踪效果，ART组为缓解侧翻压力向外偏移最多，而ART+DB组由于存在误差补偿与差动缓解侧翻趋势，跟踪偏移量比ART更小。车辆状态及控制量变化如图~\ref{fig:s_corner_xu}所示，ART组与ART+DB组由于主动进行了轨迹外扩从而避免了侧翻发生，\(\text{LTR}_{eql}\)被成功控制在±0.75的软约束范围内，在允许路径存在可接受范围内小幅偏离的同时，有效防止了侧翻，且ART+DB组由于差动制动附加力矩辅助\(\text{LTR}_{eql}\)峰值减小。
 
             相比之下，仅考虑路径跟踪而未顾及车辆动力学与液体影响的PT组在第\SI{6}{s}时发生了侧翻。尽管该路径对常规车辆可能是安全的，但对于液罐车却存在极高的侧翻风险。在加入差动制动后，额外的横摆力矩与车速降低共同作用实现了安全结果，但仍无法避免LTR在至少1秒内达到-1，证明了转向控制在极端工况下的主导作用地位。速度控制上，PT+DB组由于路线问题被迫严重减速，ART略微减速，ART+DB组通过补偿控制且外扩较小实现了更为平滑的车速控制。
 
@@ -1160,7 +1162,7 @@
 
         \subsubsection{高速单移线工况}
         \label{subsub:slc}
-            高速单车道变道（Single Lane Change, SLC）场景依据SAE-J2179标准设置，如图\ref{fig:s_slc_illust}所示。初始车速设定为\SI{88}{km/h}，要求在\SI{61}{m}范围内完成向左侧宽度为\SI{4.392}{m}车道的变道操作。采用三阶Hermite插值法对关键点进行插值处理，确保参考路径曲率平滑变化。
+            高速单车道变道（Single Lane Change, SLC）场景依据SAE-J2179标准设置，如图~\ref{fig:s_slc_illust}所示。初始车速设定为\SI{88}{km/h}，要求在\SI{61}{m}范围内完成向左侧宽度为\SI{4.392}{m}车道的变道操作。采用三阶Hermite插值法对关键点进行插值处理，确保参考路径曲率平滑变化。
             \begin{figure}
             \centering
             \includegraphics[width=0.8\linewidth]{fig/chap4/s_slc_illust.png}
@@ -1173,7 +1175,7 @@
             \caption{单移线工况跟踪情况分析}
             \label{fig:s_slc_track}
             \end{figure}
-            图\ref{fig:s_slc_track}结果表明，ART+DB组跟踪效果良好；为防止侧翻，ART组在\SI{50}{m} 处（变道动作发生前）即开始进行小幅转向调整但受极端工况及MPC控制器施加的软约束（$|\text{LTR}_{eql}| < 0.75$）影响，控制器以牺牲部分跟踪性能为代价保障防侧翻安全；PT和PT+DB组在发生侧翻前跟踪效果良好。
+            图~\ref{fig:s_slc_track}结果表明，ART+DB组跟踪效果良好；为防止侧翻，ART组在\SI{50}{m} 处（变道动作发生前）即开始进行小幅转向调整但受极端工况及MPC控制器施加的软约束（$|\text{LTR}_{eql}| < 0.75$）影响，控制器以牺牲部分跟踪性能为代价保障防侧翻安全；PT和PT+DB组在发生侧翻前跟踪效果良好。
             
             车辆状态变化如图~\ref{fig:s_slc_xu}所示，PT与PT+DB在变道完成后的第\SI{6}{s}均发生侧翻。防侧翻控制组虽牺牲了部分跟踪性能，但跟踪误差仍处于可接受范围，且始终将LTR维持在安全区间内。在速度控制上，ART只进行转向控制故几乎并未损失速度；而ART+DB由于控制考虑横纵向耦合，通过试加差动制动时增加对应期望速度从而同样几乎为损失速度；PT并没有制动控制，故在侧翻前同样未损失速度；PT+DB即便启用差速制动后，车速被降至\SI{50}{km/h}左右，仍无法避免侧翻事故的发生，这是由于差动制动直到接近侧翻状态才介入，已无法扭转即将侧翻的现状。
             \begin{figure}
@@ -1191,7 +1193,7 @@
 
         \subsubsection{短距双移线工况}
         \label{subsub:dlc}
-            短距双车道变换（Double Lane Change, DLC）工况如图\ref{fig:s_dlc_illust}所示，该工况下要求车辆以\SI{70}{km/h}的速度，在\SI{30}{m}距离内完成\SI{3.5}{m}的侧向变道，随后直线行驶\SI{30}{m}，再在\SI{30}{m}内驶回原车道。
+            短距双车道变换（Double Lane Change, DLC）工况如图~\ref{fig:s_dlc_illust}所示，该工况下要求车辆以\SI{70}{km/h}的速度，在\SI{30}{m}距离内完成\SI{3.5}{m}的侧向变道，随后直线行驶\SI{30}{m}，再在\SI{30}{m}内驶回原车道。
             
 
             根据仿真试验，PT组在\SI{62}{km/h}的速度下即发生侧翻，表明本研究设定的\SI{70}{km/h}试验速度具有较高风险。轨迹跟踪情况如图~\ref{fig:s_dlc_track}所示，PT组在\SI{70}{km/h}的初速度下，在约第\SI{6}{s}发生侧翻，其他所有组均未发生侧翻；PT+DB组维持相同轨迹，跟踪情况较好；ART组在\SI{60}{m}处提前开始转向，减小了变道幅度，并提前缓慢换回，整体牺牲了很多跟踪精度；ART+DB组轨迹基本与PT+DB组相同，跟踪效果较好。
@@ -1224,7 +1226,7 @@
         \label{subsub:deer}
             半侧翻模态即一侧车轮离地时的车辆状态，通过现实中的实例可确定，半侧翻模态下存在状态子空间，通过前轮转角完全可控\cite{KomasaQi2026MasterThesis_repo}；第\ref{chap:architecture}章\ref{subsubsec:resource_analysis}小节明确了车端需要具备规控降级能力，需确保在一些特殊情况下，如人误操作/绊倒性侧翻等一些特殊情况下车辆不可避免地已经陷入了半侧翻状态时，车辆仍然具备一定的自救能力。
 
-            本小节描述了麋鹿工况救车实验，实验场景如图\ref{fig:s_deer_illust}所示，模拟的是车上存在安全员的情况下行驶正在以\SI{80}{km/h}的速度行驶。突然从道路左侧出现奔跑穿过道路的麋鹿数只，而安全员面对突发的情况选择向右侧猛打方向并为了避免冲出道路再打回的情况。车辆在第\SI{4.7}{s}左侧车轮完全离地，达到了半侧翻的状态。借此，达到了一个已经无可避免的半侧翻状态事实，并在此刻切换控制器，以检验控制器对于此类非线性极强的半侧翻工况是否能够依然成功应对实现防侧翻救车。
+            本小节描述了麋鹿工况救车实验，实验场景如图~\ref{fig:s_deer_illust}所示。该场景模拟车辆以\SI{80}{km/h}行驶且车上存在安全员时，道路左侧突然出现横穿目标，安全员紧急向右猛打方向并随后回正的情况。车辆在第\SI{4.7}{s}左侧车轮完全离地，进入半侧翻状态。本文在此刻切换控制器，用以检验控制器能否在强非线性半侧翻工况下实现防侧翻救车。
 
             \begin{figure}
             \centering
@@ -1326,7 +1328,7 @@
         \label{subsub:similarity}
         相似性是采用模型替代原型开展试验的必要条件。对于同一物理过程，若两种现象在各对应点、对应时刻的物理量成比例，且矢量对应方向一致，则称这两种现象相似\cite{BookFluidMechanics}。采用模型车辆替代实车开展极限工况下的控制效果验证，需同时保证车辆动力学与流体动力学相似。
 
-        本文中，车辆动力学相似特指侧翻动力学相似，可通过静态稳定系数（Static Stability Factor, SSF）定量表征。如图\ref{fig:mod_similarity}所示，若模型的所有几何参数与质量分布均按比例系数$\lambda > 0$缩放，且实车与模型的静态稳定系数相同，则实车与模型仅在横向加速度相同时发生侧翻，即$ a_{y,vhl} = a_{y,mdl}$，但受实际条件限制，真实模型难以满足严格比例缩放条件，因此需引入修正系数$\lambda^{'}$
+        本文中，车辆动力学相似特指侧翻动力学相似，可通过静态稳定系数（Static Stability Factor, SSF）定量表征。如图~\ref{fig:mod_similarity}所示，若模型的所有几何参数与质量分布均按比例系数$\lambda > 0$缩放，且实车与模型的静态稳定系数相同，则实车与模型仅在横向加速度相同时发生侧翻，即$ a_{y,vhl} = a_{y,mdl}$。但受实际条件限制，真实模型难以满足严格比例缩放条件，因此需引入修正系数$\lambda^{'}$
 
         \begin{equation}
         \lambda^{'} = \frac{SSF_{vhl}}{SSF_{mdl}} = \frac{T_{w,vhl}}{h_{cg,vhl}} \cdot \frac{h_{cg,mdl}}{T_{w,mdl}}
@@ -1391,7 +1393,7 @@
     \subsection{试验结果分析}
         \label{subsub:exp_analysis}
 
-        实验采用与仿真相同的控制器参数：控制频率\SI{20}{Hz}、预测时域$N_p = 15$、控制步长$N_c = 5$、约束步长$N_r = 5$。实验对比了防侧翻控制与纯跟踪控制两种策略的效果，如图~\ref{fig:cond_pic}所示，包括中低速蛇形绕桩时的轨迹跟踪效果以及高速短距双移线时的防侧翻及液体晃动抑制效果。轨迹跟踪情况如图\ref{fig:exp_traj}所示。车辆状态如图~\ref{fig:exp_x}所示。
+        实验采用与仿真相同的控制器参数：控制频率\SI{20}{Hz}、预测时域$N_p = 15$、控制步长$N_c = 5$、约束步长$N_r = 5$。实验对比了防侧翻控制与纯跟踪控制两种策略的效果，如图~\ref{fig:cond_pic}所示，包括中低速蛇形绕桩时的轨迹跟踪效果以及高速短距双移线时的防侧翻及液体晃动抑制效果。轨迹跟踪情况如图~\ref{fig:exp_traj}所示。车辆状态如图~\ref{fig:exp_x}所示。
         
         \begin{figure}
         \centering
@@ -1404,7 +1406,9 @@
         \end{figure}
 
 
-        两组实验中车辆在蛇形绕桩时中低速误差均保持在较小水平，维持了较高跟踪精度；在中高速稳态回转时防侧翻控制由于采用多点跟踪方法从而实现了更高跟踪精度；两种方法车速在全程基本保持一致，在双移线时均保持约\SI{2.5}{m/s}的行驶速度。如图~\ref{fig:exp_traj}所示，防侧翻组延迟驶回原车道，将LTR控制在软约束范围内，在避免侧翻事故发生的前提下尽可能保证了路径跟踪效果。防侧翻组将挂车侧倾角控制在\SI{\pm 5}{\degree}以内，液面最大倾角约为\SI{15}{\degree}；而纯跟踪控制组仅关注路径跟踪，虽跟踪误差较小，但过大的横向加速度引发了剧烈的液体晃动。尽管防侧翻支架的存在避免了实际侧翻事故，但图\ref{fig:cond2_pic}显示，纯跟踪控制组的防侧翻支架分别在工况相对时间\SIrange{3}{3.5}{s}和\SIrange{4}{4.5}{s}触地——这在实车场景下等同于侧翻事故。
+        两组实验中，车辆在蛇形绕桩时的中低速误差均保持在较小水平，维持了较高跟踪精度；在中高速稳态回转时，防侧翻控制由于采用多点跟踪方法，实现了更高跟踪精度。两种方法车速在全程基本保持一致，在双移线时均保持约\SI{2.5}{m/s}的行驶速度。
+
+        如图~\ref{fig:exp_traj}所示，防侧翻组延迟驶回原车道，将LTR控制在软约束范围内，在避免侧翻事故发生的前提下尽可能保证了路径跟踪效果。防侧翻组将挂车侧倾角控制在\SI{\pm 5}{\degree}以内，液面最大倾角约为\SI{15}{\degree}；而纯跟踪控制组仅关注路径跟踪，虽跟踪误差较小，但过大的横向加速度引发了剧烈的液体晃动。图~\ref{fig:cond2_pic}显示，纯跟踪控制组的防侧翻支架分别在工况相对时间\SIrange{3}{3.5}{s}和\SIrange{4}{4.5}{s}触地。尽管防侧翻支架避免了实际侧翻事故，但该现象在实车场景下等同于侧翻事故。
 
         纯跟踪控制组在第一次变道结束时和第二次变道结束时，挂车侧倾角分别达到约\SI{6}{\degree}和\SI{7}{\degree}，相比之下防侧翻组的侧倾角最大降低了\SI{42}{\percent}。纯跟踪控制组的LTR在工况相对时间\SI{3}{s}和\SI{4.5}{s}时达到1，表明此时已存在侧翻风险。纯跟踪控制组出现了剧烈且显著非线性的液体晃动，其液面倾角多次达到\SI{20}{\degree}以上；而防侧翻组始终将晃动角度控制在\SIrange{-15}{15}{\degree}范围内，剧烈的液体晃动是引发侧翻的主要原因之一。
 
