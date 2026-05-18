@@ -1,0 +1,18 @@
+# LaTeX build output
+out/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.xdv
+*.synctex.gz
+*.synctex(busy)
+
+# Large source/editing files
+*.sai2
+*.psd
+*.kra
