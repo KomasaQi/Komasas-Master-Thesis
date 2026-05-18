@@ -6,7 +6,7 @@
 \section{研究背景及意义}
 \label{sec:background_and_significance}
 
-  我国危化品公路运输需求持续增长，液罐车已成为危化品运输的主要载体。统计显示，2025年我国危化品运输总额已接近3万亿元，其中超过\SI{80}{\percent}依赖液罐车公路运输\cite{qianyuyan2023}；截至2025年，危化品运输车辆总数已超过36万辆，其中液罐车接近19万辆，占比达\SI{52.8}{\percent}\cite{zhongguowuliulianhehui2022}。与此同时，液罐车运输安全问题尤为突出。2011年至2025年间，我国危化品罐车重大事故已超过1万5千起，其中\SI{78.7}{\percent}发生于液罐车行驶过程中，\SI{62.7}{\percent}由车辆侧翻引起\cite{liuhuipling2023, chengshuo2023, lijian2014,chenxiaoyong2023, wangyang2023}。在货车严重伤亡事故中，液罐车侧翻事故占比超过\SI{31}{\percent}，在液罐车单方面事故中侧翻占比接近\SI{70}{\percent}\cite{authority_tank_truck2022}。可见，侧翻已成为液罐车运行安全中的典型风险问题。
+  我国危化品公路运输需求持续增长，液罐车已成为危化品运输的主要载体。统计显示，2025年我国危化品运输总额已接近3万亿元，其中超过\SI{80}{\percent}依赖液罐车公路运输\cite{qianyuyan2023}；截至2025年，危化品运输车辆总数已超过36万辆，其中液罐车接近19万辆，占比达\SI{52.8}{\percent}\cite{zhongguowuliulianhehui2022}。与此同时，液罐车运输安全问题尤为突出。2011年至2025年间，我国危化品罐车重大事故已超过1.5万起，其中\SI{78.7}{\percent}发生于液罐车行驶过程中，\SI{62.7}{\percent}由车辆侧翻引起\cite{liuhuipling2023, chengshuo2023, lijian2014,chenxiaoyong2023, wangyang2023}。在货车严重伤亡事故中，液罐车侧翻事故占比超过\SI{31}{\percent}，在液罐车单方面事故中侧翻占比接近\SI{70}{\percent}\cite{authority_tank_truck2022}。可见，侧翻已成为液罐车运行安全中的典型风险问题。
 
   液罐车侧翻事故往往伴随严重次生灾害，造成重大人员伤亡和财产损失。如图~\ref{fig:severe_results}所示，2020年浙江温岭G15高速液化石油气罐车侧翻爆炸事故造成20人死亡、175人受伤，并导致大量房屋倒塌和损毁\cite{wenling_accident2022}。近年来，四川江油、山东威海、广西百色、北京东六环、湖南邵阳等地亦相继发生液罐车因超速、避让、急转向等诱发的侧翻事故。由于液罐车所运载介质多为液化石油气、液化天然气、汽柴油、甲醇等易燃易爆危化品，相关事故常进一步引发泄漏、燃烧、爆炸及环境污染等严重后果\cite{qianyuyan2023, baijinghua2023}。因此，如何降低液罐车运行过程中的侧翻风险，已成为危化品道路运输安全保障中的关键问题。
 
@@ -120,7 +120,7 @@
 
       防侧翻运动规划的核心是在轨迹生成阶段显式约束可能诱发侧翻的横向激励与姿态响应，因此首先需要合理刻画侧翻风险。现有研究常用指标大致可分为三类：一类是以SSF、DSF为代表的稳定性判据，适合描述车辆几何与动力学层面的稳定裕度\cite{huston2014ssf,jin2007critical,heyuancha0_2010factor}；一类是以LTR及其变体为代表的载荷转移指标，能够较直接反映车轮接地载荷变化，是当前防侧翻规划与控制中最常用的动态风险指标\cite{zhang2016pulsed,zhao2019hinfty,jin2021heavytruck}；另一类是TTR、ZMP及多参数联合指标，更适用于风险预警、触发逻辑或综合安全评估\cite{wanying2020antirolover,zeng2017bpnn,jinliqiang2017yujing,jin2016tripped,jin2019triaxle,imine2015switched}。总体而言，LTR兼具物理可解释性和动态敏感性，在防侧翻运动规划中应用最为广泛。
 
-      在此基础上，现有防侧翻规划通常是在通用轨迹规划框架中引入侧倾动力学约束或风险代价，以限制侧向加速度、横摆响应和载荷转移峰值。按方法形式划分，相关研究大体可归纳为搜索、采样、几何参数化、优化和学习五类。搜索类方法如A*、Hybrid A*、DP和Lattice Planner等\cite{likhachev2009planning,kurzer2016hybrida,dong2023ecocruising,werling2010frenet}，具有较好的可行性搜索能力，但受限于状态离散化，较难细致表达连续动力学约束和风险演化；采样类方法如PRM、RRT及其变体\cite{kuwata2009realtime,karaman2011sampling,klemm2015rrtconnect,fan2024birrt}，适合复杂环境中的可行域探索，但结果一致性和约束稳定性相对不足；几何参数化方法基于回旋曲线、贝塞尔曲线、B样条等直接构造连续轨迹\cite{brezak2014clothoids,rastelli2014continuouscurvature,phanhuu2021bsplines,gotte2018splinebased,hegedus2020realtime}，计算效率较高，但对复杂约束和多目标权衡的表达能力有限。相比之下，优化方法能够将避障约束、轨迹平滑性与LTR、TTR等防侧翻指标统一纳入目标函数或约束条件，因此已成为防侧翻规划研究的主要方向\cite{rasekhipour2017pfmpc,jin2021heavytruck,cheng2019longitudinal,li2019rollover,dong2023ecocruising}；学习方法则多以强化学习及Safe RL为基础，试图在复杂交互环境中直接学习兼顾安全与效率的行为策略\cite{wu2024rlsurvey,zhang2023intersectionrl,irshayyid2024highwayrl,zhang2024saferl_tits,gu2024saferl_tpami,garcia2015saferl}，但其性能仍高度依赖场景覆盖、奖励设计和安全约束构造。
+      在此基础上，现有防侧翻规划通常是在通用轨迹规划框架中引入侧倾动力学约束或风险代价，以限制侧向加速度、横摆响应和载荷转移峰值。按方法形式划分，相关研究大体可归纳为搜索、采样、几何参数化、优化和学习五类。搜索类方法如A星算法（A-star, A*）、混合A星算法（Hybrid A*）、动态规划（Dynamic Programming, DP）和格点规划器（Lattice Planner）等\cite{likhachev2009planning,kurzer2016hybrida,dong2023ecocruising,werling2010frenet}，具有较好的可行性搜索能力，但受限于状态离散化，较难细致表达连续动力学约束和风险演化；采样类方法如概率路图法（Probabilistic Roadmap, PRM）、快速拓展随机树（Rapidly-exploring Random Tree, RRT）及其变体\cite{kuwata2009realtime,karaman2011sampling,klemm2015rrtconnect,fan2024birrt}，适合复杂环境中的可行域探索，但结果一致性和约束稳定性相对不足；几何参数化方法基于回旋曲线、贝塞尔曲线、B样条等直接构造连续轨迹\cite{brezak2014clothoids,rastelli2014continuouscurvature,phanhuu2021bsplines,gotte2018splinebased,hegedus2020realtime}，计算效率较高，但对复杂约束和多目标权衡的表达能力有限。相比之下，优化方法能够将避障约束、轨迹平滑性与载荷转移率（Load Transfer Ratio, LTR）、侧翻时间（Time to Rollover, TTR）等防侧翻指标统一纳入目标函数或约束条件，因此已成为防侧翻规划研究的主要方向\cite{rasekhipour2017pfmpc,jin2021heavytruck,cheng2019longitudinal,li2019rollover,dong2023ecocruising}；学习方法则多以强化学习及安全强化学习（Safe Reinforcement Learning, Safe RL）为基础，试图在复杂交互环境中直接学习兼顾安全与效率的行为策略\cite{wu2024rlsurvey,zhang2023intersectionrl,irshayyid2024highwayrl,zhang2024saferl_tits,gu2024saferl_tpami,garcia2015saferl}，但其性能仍高度依赖场景覆盖、奖励设计和安全约束构造。
 
       对半挂式液罐车而言，防侧翻规划比普通车辆更为复杂。半挂结构引入牵引车--挂车铰接耦合，使规划过程除满足牵引车本体避障外，还需兼顾挂车轨迹约束、铰接角稳定性和防折叠要求\cite{zongchangfu2014identification,niezhigen2015heavyduty}；液体晃动进一步与横摆、侧倾和路径变化相互耦合，使规划问题由一般动力学可行性问题演化为受强安全约束主导的耦合规划问题。因此，液罐车防侧翻规划不仅要控制轨迹几何形状，还要限制由路径变化激发的侧倾风险累积。
 
@@ -206,7 +206,7 @@
 
     在这一背景下，车路云一体化为智能车辆系统提供了新的工程组织方式，其核心在于将车辆、路侧基础设施、云端计算资源和平台服务进行系统级连接，以支撑广域感知、协同决策与闭环控制\cite{likeqiang2020cloudcontrol,likeqiang2020principles,icv2023whiteroadcloud,ran2023vrc,guo2023greeniov}。在系统抽象层面，该类对象通常可归纳为智能汽车信息物理系统（Intelligent Vehicle Cyber-Physical System, IVCPS）。因此，车路云一体化更适合作为工程建设范式，而IVCPS则是其对应的系统形态表达；本文研究的车云协同液罐车防侧翻（Cloud-based Collaborative Tank Truck Rollover Prevention, CT2ROP）可视为IVCPS中一个面向安全的典型场景任务。
 
-    围绕此类复杂交通系统，国内外已形成若干代表性参考架构。例如，美国交通部发布的CVRIA和ARC-IT从企业、功能、物理、通信和服务等多个视角描述网联交通系统组成与交互关系\cite{hejazi2022iottov2x,usdot2024arcit93}；欧盟C-MobILE项目面向C-ITS系统，从上下文、功能、通信、应用和信息等视角开展架构描述，并探索了基于SysML的建模方法\cite{cmobile2024project,lu2018citsdeployment,ferrandez2018cmobilecase}；国内则已形成智能汽车信息物理系统参考架构1.0/2.0、ICV-7S框架以及车路云一体化系统云控基础平台功能场景参考架构等成果\cite{caicv2019cpsarch10,caicv2021cpsarch20,xu2023mbseivcps,sae2024cloudplatformarch10}。这些参考架构为车路云复杂系统提供了多视角描述框架，有助于明确系统组成、交互关系与功能边界，但其主要作用仍在于“描述系统”和“规范系统”，对于特定任务场景下如何将需求逐步落实为能力、功能、逻辑和资源配置，并形成可分析、可验证、可迭代的架构方案，支持仍然有限。
+    围绕此类复杂交通系统，国内外已形成若干代表性参考架构。例如，美国交通部发布的网联车辆参考实施架构（Connected Vehicle Reference Implementation Architecture, CVRIA）和协同式智能交通系统参考架构（Architecture Reference for Cooperative and Intelligent Transportation, ARC-IT）从企业、功能、物理、通信和服务等多个视角描述网联交通系统组成与交互关系\cite{hejazi2022iottov2x,usdot2024arcit93}；欧盟C-MobILE项目面向协同式智能交通系统（Cooperative Intelligent Transport Systems, C-ITS），从上下文、功能、通信、应用和信息等视角开展架构描述，并探索了基于SysML的建模方法\cite{cmobile2024project,lu2018citsdeployment,ferrandez2018cmobilecase}；国内则已形成智能汽车信息物理系统参考架构1.0/2.0、ICV-7S框架以及车路云一体化系统云控基础平台功能场景参考架构等成果\cite{caicv2019cpsarch10,caicv2021cpsarch20,xu2023mbseivcps,sae2024cloudplatformarch10}。这些参考架构为车路云复杂系统提供了多视角描述框架，有助于明确系统组成、交互关系与功能边界，但其主要作用仍在于“描述系统”和“规范系统”，对于特定任务场景下如何将需求逐步落实为能力、功能、逻辑和资源配置，并形成可分析、可验证、可迭代的架构方案，支持仍然有限。
 
     为增强复杂系统架构设计的可实施性，基于模型的系统工程（Model-Based Systems Engineering, MBSE）逐渐被引入智能网联汽车领域。MBSE以模型替代传统文本作为设计载体，强调需求、功能、逻辑与物理模型之间的一致性和可追踪性，因此在复杂系统需求分解、功能分配和接口分析方面具有明显优势。面向IVCPS相关任务，已有研究开始探索基于MBSE的场景架构设计，例如围绕云控预测性巡航控制（Cloud-based Predictive Cruise Control, CPCC）系统的建模工作，体现了面向具体任务开展体系建模的工程化路线\cite{xu2023mbseivcps}。但MBSE仍主要面向边界相对明确的单一系统设计，对于多场景并行、跨场景耦合和持续演进条件下的体系问题支撑有限。
 
@@ -281,7 +281,6 @@
   再次，从车端执行层面，面向局部实时约束与临险工况，构建具有防侧翻能力的规划控制方法，使车辆在跟踪上层参考的同时保持侧倾稳定性，并在云端建议失效或场景突变时提供安全兜底。
 
   最后，从验证评估层面，面向防侧翻任务进行车液耦合仿真与模型车实验验证评估，对所提出的方法进行评估，形成从理论设计到验证闭环的完整支撑。
-
 
 
 
